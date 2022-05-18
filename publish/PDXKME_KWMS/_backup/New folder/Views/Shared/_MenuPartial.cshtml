@@ -1,0 +1,162 @@
+﻿
+@{
+    
+     
+    string strChecForEng = "";
+    string strChecForAr = "";
+    string strSetActiveEng = "";
+    string strSetActiveAr = "";
+    
+    if (Session["SelectedLang"] != null)
+    {
+        if (Session["SelectedLang"].ToString() == "ar-AE")
+        {
+            strSetActiveAr = "class=active";
+            strChecForAr = "selected=selected";
+        }
+        else if (Session["SelectedLang"].ToString() == "en-GB")
+        {
+            strChecForEng = "selected=selected";
+            strSetActiveEng = "class=active";
+        }
+    }
+    
+    
+    
+    }
+ 
+  
+
+
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><img src="@Url.Content("~/Images/newlogo.png")"  alt="Komatsu" style=" height: 25px;  margin: -10px 0 0 -9px;  width: 120px;"/></a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+   
+
+   @if (Session["userID"]!=null)
+   {
+
+
+       
+       
+        <ul class="nav navbar-nav">
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.Quotation <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="@Url.Action("QuotationInquiry","Inquiry",null)">@Resources.Resource.QuotationInquiry </a></li>
+           <li><a href="@Url.Action("Index", "QuotationCondition", null)">@Resources.Resource.QuotationCondition </a></li>
+             <li><a href="@Url.Action("Index", "QuotationDetails", null)">@Resources.Resource.QuotationDetail </a></li>
+
+
+
+           @* <li class="divider"></li>*@
+            
+          </ul>
+        </li>
+      </ul>
+       
+       
+        <ul class="nav navbar-nav">
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.User <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+           <li><a href="">@Resources.Resource.AccountSettings</a></li>
+             <li><a href="@Url.Action("ChangePassword", "User", null)">@Resources.Resource.User_ChangePassword</a></li>
+              
+              <li><a href="@Url.Action("CreateNewUser", "User", null)">User Creation</a></li>
+              <li><a href="@Url.Action("UserInquiryForm", "UserInquiry", null)">@Resources.Resource.User_Inquiry</a></li>
+
+           @* <li class="divider"></li>*@
+            
+          </ul>
+        </li>
+      </ul>
+       
+   }
+ 
+ 
+
+
+
+
+  <ul class="nav navbar-nav  navbar-right">
+        <li class="active"> @Html.Partial("_LoginPartial")</li>
+       
+      </ul>
+            
+            
+
+
+     <ul class="nav navbar-nav navbar-right ">
+        
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><img style="  margin-bottom: -22px; margin-top: -22px; width: 37px;"  src="@Url.Content("~/Images/global.png")"  alt="Language"/> @* @Resources.Resource.Language *@<span class="caret"></span></a>
+          <ul id="ulLang" class="dropdown-menu" role="menu">
+          
+           <li  value="en-GB"  > <a  href="#">English </a></li>
+           @foreach (PDXWEB.Models.LanguageModel item in (List<PDXWEB.Models.LanguageModel>)Session["Languages"])
+                 {
+                
+                  <li  value="@item.key"  > <a  href="#"> @item.value </a></li>
+               
+               
+                      
+                 }
+
+                 
+
+
+             
+ 
+             
+
+           @* <li class="divider"></li>*@
+            
+          </ul>
+        </li>
+      </ul>
+
+
+  
+           
+
+
+@*
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">  
+       
+       @Resources.Resource.SelectedLanguage  
+        
+  <select   class=" form-control" id="ddlLanguage"  name="ddlLanguage"   > 
+                    <option></option>
+                    <option value="en-GB" @strChecForEng  >English</option>
+                    <option value="ar-AE" @strChecForAr    >اللغة العربية</option>
+                  
+                </select>
+
+
+
+
+
+        </div>
+        
+      </form>
+
+*@
+
+    </div>
+  </div>
+ 
+</nav>

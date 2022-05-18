@@ -1,0 +1,15 @@
+﻿
+
+<script>
+var error="@Session["Error"].ToString()";
+//$("#lblMsg").html("@Session["Error"].ToString()").attr("style","color:red !important");
+$("#lblMessage").html("@Session["Error"].ToString()").attr("style","color:red !important");
+
+           txtError="@Session["Error"].ToString()";
+               txtErrorType="@Session["ErrorType"].ToString()";
+               DisplayModal(txtErrorType,txtError) ; 
+               var urlToNav="@ViewBag.URl";
+               if(urlToNav!=null && urlToNav!=""){ window.open(urlToNav);}
+        
+  //$("#ErrorModal").modal();
+</script>

@@ -1,0 +1,154 @@
+﻿@model IEnumerable<PDXWEB.Models.SalesInvoice.SalesInvoieInquiry.SalesInvoiceInquiryViewModel>
+@{
+    Layout = null;
+}
+@{ ViewBag.Title = @Resources.Resource.SalesInvoiceInquiry; }
+@if (Model != null)
+{
+    if (Model.Count() > 0)
+    {
+        WebGrid grid = new WebGrid(rowsPerPage: ViewBag.PageSize, canPage: true,
+           ajaxUpdateContainerId: "main", canSort: true, ajaxUpdateCallback: "afterLoad"
+           );
+
+        grid.Bind(source: Model,
+                   rowCount: ViewBag.TotalRows,
+                   autoSortAndPage: false); 
+
+    <div id="main" class=" ">
+        @if (ViewBag.TotalRows > 10)
+        {
+            if (ViewBag.PageNum != null)
+            {
+                grid.PageIndex = ViewBag.PageNum;
+            }            
+            
+            <div class="NewPaging row   " id="HeadPaging" style="text-align: center">
+                <div class="span9">
+                    @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")</div>
+            </div>
+        }
+        else
+        {
+            grid.PageIndex = 0;
+        }
+        <div class="datagrid table-responsive" style="overflow: auto;">
+            @grid.Table(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "UserInquiryId" }, columns: grid.Columns(
+
+
+
+                grid.Column("InvoiceNumber", @Resources.Resource.thInvoiceNo, style: "col-numeric", format: @<text><label
+                    id="l_InvoiceNo" style="font-size: 10px ! important; margin-right: 5px !important;
+                    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.InvoiceNumber</label></text>),
+
+                grid.Column("DistributorCode", @Resources.Resource.DistributorCodeDesc, style: "col-alpha", format: @<text><label
+                    id="l_CustomerCode" style="font-size: 10px ! important; margin-right: 8px !important;
+                    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.DistributorCode</label></text>),
+
+                grid.Column("DistributorName", @Resources.Resource.DistributorNameDesc, style: "col-alpha", format: @<text><label
+                    id="l_CustomerName" style="font-size: 10px ! important; margin-right: 8px !important;
+                    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.DistributorName</label></text>),
+                                                    
+                grid.Column("CustomerCode", @Resources.Resource.lblCustomerCode, style: "col-alpha", format: @<text><label
+                    id="l_CustomerName" style="font-size: 10px ! important; margin-right: 8px !important;
+                    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.CustomerCode</label></text>),
+
+                grid.Column("CurrencyCode", @Resources.Resource.thCurrency, style: "col-alpha", format: @<text><label
+                    id="l_CurrencyCode" style="font-size: 10px ! important; margin-right: 8px !important;
+                    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.CurrencyCode</label></text>),
+
+                grid.Column("PaymentTermCode", @Resources.Resource.thPaymentTerm, style: "col-alpha", format: @<text><label
+                    id="l_PaymentTermCode" style="font-size: 10px ! important; margin-right: 8px !important;
+                    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.PaymentTermCode</label></text>),
+
+                grid.Column("DeliveryTerm", @Resources.Resource.thDeliveryTerm, style: "col-alpha", format: @<text><label
+                    id="l_Usance" style="font-size: 10px ! important; margin-right: 8px !important;
+                    padding-left: 2px !important; font-family: verdana ! important; font-weight: normal;
+                    color: rgb(51, 51, 51) ! important;">@item.DeliveryTerm</label></text>),
+
+                grid.Column("Quantity", @Resources.Resource.thQuantity, style: "col-numeric", format: @<text><label
+                    id="l_Quantity" style="font-size: 10px ! important; margin-right: 5px !important;
+                    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.Quantity</label></text>),
+
+                grid.Column("TotalInvoiceAmount", @Resources.Resource.thInvoiceAmount, style: "col-numeric", format: @<text><label
+                    id="l_TotalInvoiceAmount" style="font-size: 10px ! important; margin-right: 5px !important;
+                    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.TotalInvoiceAmount</label></text>),
+
+                grid.Column("InvoiceDate", @Resources.Resource.thInvoiceDate, style: "col-alpha", format: @<text><label
+                    id="l_InvoiceDate" style="font-size: 10px ! important; margin-right: 8px !important;
+                    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.InvoiceDate</label></text>),
+
+                grid.Column(null, null, style: "no-width", format: @<input type="hidden" name="Warehouse" value="@item.SPOI"/>)
+
+
+
+                                              ) //grid Columns
+
+                                              )
+        </div>
+        @Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+        @if (Request.QueryString["page"] != null)
+        {
+            <script type="text/javascript">
+        currentPageNo = "@Request.QueryString["page"].ToString()";
+    
+            </script>
+        }
+    </div>
+    }
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        afterLoad();
+        var Message = "@ViewBag.Message";
+        var messageType = "@ViewBag.MessageType";
+        if (Message != "" && Message != null) {
+            txtError = Message;
+            txtErrorType = "0";
+            if (messageType != null && messageType != "") { txtErrorType = messageType }
+            DisplayModal(txtErrorType, txtError);
+
+
+        }
+        else {
+            $("#btnDownload").attr("disabled", false);
+            $("#ddlFileType").attr("disabled", false);
+        }
+    });      //
+  
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var Modelcount = "@ViewBag.TotalRows";
+        if (Modelcount <= 10) {
+            $("#HeadPaging").css("display", "none");
+        }
+        else {
+
+        }
+    });   //ready end
+    
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#TimeStamp").css("display", "none");
+
+    });  //doc.ready end
+ 
+</script>
+<script>
+    $("thead th").each(function (index) {
+        var columnClass = $('tbody tr:eq(0) td:eq(' + index + ')').attr('class');
+        $(this).removeAttr('class');
+        $(this).addClass(columnClass);
+    });
+</script>

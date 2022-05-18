@@ -1,0 +1,195 @@
+﻿@{     
+	bool isInternetExplorer = false;
+	if (Request.Browser.Browsers.Contains("ie"))
+	{
+		isInternetExplorer = true;
+		if (Request.Browser.MajorVersion < 8)
+		{
+		}
+	} 
+    }
+    <style>
+    label.btn-default{ color:White !important}
+    .bootstrap-filestyle input[type=text]{ height:29px !important}
+    </style>
+<script src="@Url.Content("~/Scripts/FileUpload/bootstrap-filestyle.min.js")" type="text/javascript"></script>
+  <div class="container childcontent ">
+     <div class="panel panelInquiryControls panel-primary panelWidth">
+    
+        <div class="panel-heading PanelTitle"  >
+         
+         <h3 class="panel-title pull-left " > @Resources.Resource.FileUpload</h3>           
+              
+        </div>
+        <div class="panel-body">  
+         
+            <div class="row">
+       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+         @Resources.Resource.ClickSelectFilesToUploadFiles .
+       @if (isInternetExplorer)
+				{
+					<form id="frmIEUpload" action="@Url.Action("FileUploadIEAdmin", "FileUpload", null, Request.Url.Scheme)" enctype="multipart/form-data"  method="post" >
+					<input type="file" id="FileUpload" class="filestyle form-control1" name="FileUpload" data-buttontext="Browse"  style=" display:none"/>
+						<input type="submit" value="Upload" />
+					</form>
+				}
+				else
+				{
+					<input type="file" id="fuUploadCSV" class="filestyle form-control1" data-buttontext="Browse" style=" display:none" />
+				}
+       </div>
+    </div>
+    <div id="uploaded">
+    </div>
+ 
+    </div>
+    </div>
+    </div>
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					&times;</button>
+				<h4 class="modal-title">
+					@Resources.Resource.FileUpload</h4>
+			</div>
+			<div class="modal-body" id="modalBody">
+             <div class="row">
+                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><img alt="Error" src="" class="imgError" /></div> 
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10"><label class="lblMessageText" style="color:Red !important" ></label><br />
+                    <a href="" class="FileURL" target="_blank">Download</a>
+                    
+                    </div> 
+                   
+                   </div>
+				 
+			</div>
+			<div class="modal-footer">
+				<button style="text-align: center; margin-left: auto !important; float: none !important;"
+					id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+					@Resources.Resource.btnOK
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".panelInquiryControls").prepend("<div id='divLoading'></div>");     
+    
+    
+    
+     });
+
+</script>
+     @if (!isInternetExplorer) 
+     {
+     
+     <script>
+ 
+ 
+$('#fuUploadCSV').on("change",function (){
+var totalFiles = document.getElementById("fuUploadCSV").files.length;
+		 if (totalFiles.toString() == "0") 
+		 {
+		  $("#btnImport").attr("disabled","disabled");
+		  
+		 }
+		 else
+		 {                             
+					 var ext = $(this).val().split('.').pop().toLowerCase();
+					if(false) 
+					{
+//						$("#btnImport").attr("disabled","disabled");
+//						 $("#lblMessage").html("").attr("style", "color:red");
+////                        txtError = "invalid file Formate ";
+//					   txtError = "@Resources.Resource.MsgInfo27";
+//					   txtErrorType = "0";
+//					   DisplayModal(txtErrorType, txtError);  
+						 
+						  
+				   
+					}
+					else 
+					{
+					 var formData = new FormData();
+		 var totalFiles = document.getElementById("fuUploadCSV").files.length;
+		 
+		 for (var i = 0; i < totalFiles; i++) {
+			 var file = document.getElementById("fuUploadCSV").files[i];
+			 formData.append("FileUpload", file);
+		 }
+		 $.ajax({
+			 type: "POST",
+			  url:"@Url.Action("FileUploadAdmin", "FileUpload", null, Request.Url.Scheme)",      
+			 data: formData,
+			 contentType: false,
+			 processData: false,
+			 beforeSend: function (xhr) {
+			  
+			 }, 
+
+			 success: function (PartsDetails) {
+              if(CheckForSessionExpiry(PartsDetails))
+            {
+            SessionExpiredRedirect();
+            return;
+            }
+				    var linkToFile='<a href='+PartsDetails; +'> Download'+'</a>';
+                      
+                    txtError="File Uploaded Successfully ";
+                    $(".FileURL").show();
+                    $(".FileURL").attr("href",PartsDetails);
+             
+		   txtErrorType = "1";
+		   DisplayModal(txtErrorType, txtError);    
+
+			 },
+			 error: function (data) {  
+			//txtError = "Failed to retreive data";
+            $(".FileURL").hide();
+			 txtError = "@Resources.Resource.MsgInfo3";
+		   txtErrorType = "0";
+		   DisplayModal(txtErrorType, txtError);        
+				
+				
+			 }
+		 })
+				 
+					
+					}
+
+		 }
+
+ 
+
+
+
+});
+
+	 
+	 
+	  
+	</script>
+     
+     
+     }
+     
+     @if (ViewBag.URL!=null)
+{
+    <script>
+        $(document).ready(function () {
+            txtError = "File Uploaded Successfully ";
+            $(".FileURL").show();
+            $(".FileURL").attr("href", "@ViewBag.URL");
+            txtErrorType = "1";
+            DisplayModal(txtErrorType, txtError);    
+
+        });
+    
+    </script>
+    
+    
+}

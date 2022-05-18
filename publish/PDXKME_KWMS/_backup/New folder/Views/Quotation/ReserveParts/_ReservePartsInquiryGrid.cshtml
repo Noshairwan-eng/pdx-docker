@@ -1,0 +1,135 @@
+﻿@*
+  Partial view created by rMehmood @Nov 25, 2020
+  This Partial view contains Reserve Parts Inquiry Grid
+*@
+
+@model IEnumerable<PDXWEB.Models.Quotation.ReserveParts.ReservePartsInquiryModel>
+@{
+    Layout = null;
+}
+@{
+
+    /*Set title*/
+    ViewBag.Title = @Resources.Resource.ReservePartsInquiry;
+}
+@*check if model is not null*@
+@if (Model != null)
+{
+    if (Model.Count() > 0)
+    {
+        WebGrid grid = new WebGrid(rowsPerPage: ViewBag.PageSize, canPage: true,
+           ajaxUpdateContainerId: "main", canSort: true, ajaxUpdateCallback: "afterLoad"
+           );
+        
+        grid.Bind(source: Model,
+        rowCount: ViewBag.TotalRows, 
+        autoSortAndPage: false); 
+
+    <div id="main" class="clsMainDivReservePart">
+
+        @if (ViewBag.TotalRows > 10)
+        {        
+            if (ViewBag.PageNum != null)///hst004.
+            {
+                /*Set grid page*/
+                grid.PageIndex = ViewBag.PageNum;
+            }            
+            
+            /*define pager for grid*/
+            <div class="NewPaging row   " id="HeadPaging" style="text-align: center">
+                <div class="span9">
+                    @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")</div>
+            </div>
+        }
+        else
+        {
+            /*set grid page zero*/
+            grid.PageIndex = 0;
+        }
+        <div class="datagrid table-responsive" style="overflow: auto;">
+            @grid.Table(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",        
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "UserInquiryId" },
+                           columns: grid.Columns(
+                        grid.Column("DistributorCode", @Resources.Resource.thDistributorCodeDes, canSort: true, style: "col-alpha"),
+                        grid.Column("CustomerCode", @Resources.Resource.thCustomerCodeDes, canSort: true, style: "col-alpha"),
+                        grid.Column("DBOrderNumber", @Resources.Resource.DistributorOrderNoDesc, style: "col-alpha", format: @<text><label
+                  id="l_DBOrderNumber" style="font-size: 10px ! important; margin-left: 1px !important;
+                  font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.DBOrderNumber</label></text>),
+                                    grid.Column("QuotationNumber", @Resources.Resource.thQuotationNo, style: "col-alpha", format: @<text><label
+                                  id="l_QuotationNo" style="font-size: 10px ! important; margin-right: 8px !important;
+                                 font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.QuotationNumber</label></text>),
+
+                     grid.Column("ProcessedPartNumber", @Resources.Resource.thPartNo, style: "col-alpha", format: @<text><label
+                         id="l_ProcessedPartNumber" style="font-size: 10px ! important; margin-right: 3px !important;
+                         font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.ProcessedPartNumber</label></text>),
+                        grid.Column("RequestedQuantity", @Resources.Resource.RequestedQuantityDesc, style: "col-numeric", format: @<text><label
+                         id="l_RequestedQuantity" style="font-size: 10px ! important; margin-right: 4px !important;
+                         font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.RequestedQuantity</label></text>),
+                         grid.Column("AcceptedQuantity", @Resources.Resource.AcceptedQuantityDesc, style: "col-numeric", format: @<text><label
+                         id="l_AcceptedQuantity" style="font-size: 10px ! important; margin-right: 4px !important;
+                         font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.AcceptedQuantity</label></text>),
+                       grid.Column("ReserveQuantity", @Resources.Resource.ReserveQuantityDesc, style: "col-numeric", format: @<text><label
+                         id="l_ReserveQuantity" style="font-size: 10px ! important; margin-right: 4px !important;
+                         font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.ReserveQuantity</label></text>)
+              ) //grid.columns
+                                                                  )
+
+
+         
+    </div>
+        @Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+        @if (Request.QueryString["page"] != null)
+        {
+            <script type="text/javascript">
+                  currentPageNo = "@Request.QueryString["page"].ToString()";    
+            </script>
+        }
+    </div>
+    }
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+       /*This method is define in main view*/
+        afterLoad();
+        var Message = "@ViewBag.Message";
+        var messageType = "@ViewBag.MessageType";
+        if (Message != "" && Message != null) {
+            txtError = Message;
+            txtErrorType = "0";
+            if (messageType != null && messageType != "") { txtErrorType = messageType }
+            DisplayModal(txtErrorType, txtError);
+
+
+        }
+        else {
+            /*disable download button*/
+            $("#btnDownload").attr("disabled", false);
+            $("#ddlFileType").attr("disabled", false);
+        }
+
+        var Modelcount = "@ViewBag.TotalRows";
+        if (Modelcount <= 10) {
+            $("#HeadPaging").css("display", "none");
+        }
+
+
+    }); // document. ready end here
+
+    $("thead th").each(function (index) {
+        var columnClass = $('tbody tr:eq(0) td:eq(' + index + ')').attr('class');
+        $(this).removeAttr('class');
+        $(this).addClass(columnClass);
+    });
+  
+</script>
+
+
+
+

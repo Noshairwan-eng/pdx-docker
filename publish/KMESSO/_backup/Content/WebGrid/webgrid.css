@@ -1,0 +1,226 @@
+﻿/*
+ 
+    /// FILE: webgrid.css
+    /// Css File For WebGrid 
+    /// </summary>
+    /// <remarks>
+    /// Created by Yasir Mehmood @ 07-July-2015
+    /// </remarks>
+    /// <history>
+    /// hst104:Align WebGrid td's and th's Text 
+   
+    /// Other Charges name are not updating on  update 
+    
+
+*/
+
+ .jqGrid
+ {
+     min-height:450px !important;
+ }
+
+.table 
+{
+  
+font-size:12px !important;
+font-family:Arial !important; 
+/* font-weight:bold !important;*/
+    
+}
+  
+/*    .table tr:hover
+{
+background-color:#F0F0F0  !important;
+}
+*/
+     
+.table tr:not(.highlight):hover {
+background-color:#F0F0F0  !important;
+}
+     
+     
+.table tr
+{
+padding:0px !important;
+margin:0px ! important;
+text-align:center !important;
+          
+}
+.table tr td
+{
+padding:5px !important;
+margin:5px  !important;
+}
+
+#PartsInquiry tr td,#PartsInquiry tr th
+{
+white-space:nowrap;
+         
+}
+    
+#UserInquiryId tr td,#UserInquiryId tr th
+{
+white-space:nowrap;
+         
+}
+.gridTable 
+{
+margin: 5px;padding: 3px;
+border: 1px #c8c8c8 solid;
+border-collapse: collapse;min-width: 550px;
+background-color: #fff;
+color:#fff;
+/* font-size: 16px;*/
+font-size: 10px !important;
+font-family:Verdana !important;
+/* font-weight:bold !important;*/
+    
+      
+/* font-weight:bold;*/
+}
+      
+.gridHead th
+{
+font-weight: bold;
+background-color:#000099; /*#030D8D;*/
+color: #fff;
+padding: 2px;
+text-align: center;
+    
+    
+}
+.gridHead a:link,.gridHead a:visited,.gridHead a:active,.gridHead a:hover
+{
+color: #fff !important;
+}
+.gridHead a:hover 
+{
+text-decoration:underline;
+}
+.gridTable tr.gridAltRow
+{
+background-color: #efeeef;
+}
+.gridTable tr:hover
+{
+background-color:#FAC902;
+}
+.gridAltRow td
+{
+padding: 4px;
+margin: 5px;
+color: #333;
+height:35px !important;
+vertical-align:middle !important;
+}
+    
+.gridRow td
+{
+padding: 4px;
+margin: 5px;
+color: #333;
+height:35px !important;
+vertical-align:middle !important;
+}
+.gridFooter td
+{
+padding: 4px;
+background-color: #c7d1d6;
+/*color: #999;*/
+font-size: 12px;
+text-align: center;
+}
+/********To change header Paging style  ********/   
+.HeadPaging a
+{
+/*
+font-weight: bold;    
+border: 1px #333 solid;
+font-size: 10px;
+text-decoration:none;
+padding: 3px;    
+color: #333; */
+background-color: #A7C942;
+color: #FFFFFF;
+padding-bottom: 4px;
+padding-top: 5px;
+text-align: left;
+    
+}
+    
+.HeadPager
+{
+-moz-user-select: none;
+display: inline-block;
+font-size: 1.6rem;
+ 
+}
+    
+.gridFooter a
+{
+font-weight: bold;   
+border: 1px #333 solid;   
+text-decoration:none;
+/* background-color:gray;*/
+/* color: #333; */
+}
+    
+.PagingStyle
+{
+text-align: center; position: absolute; margin: 2px 0px 0px 395px
+}
+  
+th
+{
+width:30px;
+}
+        
+tfoot
+{
+display:none;
+height:0px !important;
+}
+.table
+{
+margin: 10px 2px 2px 0 !important;
+    
+}
+@media screen and (max-width: 767px) 
+{
+.PagingStyle
+{
+text-align: center; position: absolute; margin: 2px 0px 0px 150px
+}
+}
+    
+@media Screen and (min-width:768px) and (max-width:991px)
+{
+.PagingStyle
+{
+text-align: center; position: absolute; margin: 2px 0px 0px 240px
+}
+     
+}
+@media screen and (max-width: 450px) 
+{
+         
+.pagination > li > a, .pagination > li > span {
+position: relative;
+float: left;
+padding: 6px 5px;
+}
+.PagingStyle
+{
+text-align: center; position: absolute; margin: 2px 0px 0px 35px
+}
+}
+.wgErrorColumn
+{
+color:Red !important;
+      
+} 
+  /*hst104*/
+.table-striped thead tr th , .table-striped thead tr th a,#UserInquiryId thead tr th
+{
+margin-left: -2px  !important;
+}

@@ -1,0 +1,888 @@
+﻿@*
+hst001: Imran Shahzad @ 07-June-2017
+        - Added textbox for Expiry Date and used DateTimePicker to select Date.
+*@
+@model KME_SSO.Models.clsUser
+<style type="text/css">
+ #header
+    {
+        background-color: rgb(0,0,153) !important;
+        height: 30px !important;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0px;
+        padding: 0px;
+        text-align: center;
+    }
+    .modal-content
+    {
+        width: 60%;
+        margin-top: 16%;
+        margin-left: 20%;
+        margin-bottom: 0px !important;
+    }
+    input[type=radio], input[type=checkbox]
+    {
+        vertical-align:sub;
+    }
+    
+    .labelWidth {
+    padding-top: 6px;
+    height: 26px;
+    font-weight: normal;
+}
+    @@media screen and (max-width:400px)
+    {
+        #Activelbl
+        {
+            width:80%;
+        }
+    }
+    @@media screen and (min-width:539px) and (max-width:690px)
+    {
+        #btnAssignSelected
+        {
+            margin-right:100px !important;
+        }
+    }
+     @@media screen and (min-width:691px) and (max-width:720px)
+    {
+        #btnAssignSelected
+        {
+            margin-right:200px !important;
+        }
+    }
+    .btnStyle {
+    background-color:rgb(0,0,153) !important;
+    border: 1px solid #384E97;
+    color: White;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Calibri;
+    font-size: 15px;
+    font-weight: normal;
+    height: 26px;
+    margin: 2px 6px 4px 4px;
+    min-width: 75px;
+    width: 90px;
+    padding: 0 24px;
+    text-decoration: none;
+    padding-left:35px !important;
+    
+}
+.btnStyle:disabled
+{
+    background-color: #9DBDEE !important;
+            color: #333;
+            text-decoration: none;
+}
+.btnStyle:hover
+{
+    background-color: #9DBDEE !important;
+           
+            text-decoration: none;
+}
+.btnStyle:focus
+{
+    background-color: rgb(0,0,153) !important;
+           
+            text-decoration: none;
+}
+.btnStyle:active
+{
+    background-color: #9DBDEE !important;
+         
+            text-decoration: none;
+            
+}
+@* hst001 *@
+#txtExpiryDate,.txtDatePicker
+{         
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-image:url('./Images/calendar.png');        
+}
+   
+</style>
+<div id="dvUserDetails">
+    <div class="modal-body About-modal-body panel-primary">
+        <div class="col-xs-12 ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"
+            id="header" style="background: rgb(0,0,153) !important; color: rgb(255,255,255) !important;
+            padding-top: 5px; margin-bottom: 10px;">
+            <label id="popHeader">@ViewBag.PopupTitle</label>
+            <button type="button" style="color: rgb(255,255,255) !important; background: rgb(0,0,153) !important;
+                border: 0px; float: right; padding-top: 0px !important;" data-dismiss="modal">
+                <img width="20" height="20" src="~/Images/CloseIcon.png" /></button>
+        </div>
+    </div>
+    <div id="content-div">
+        <div class="innerbar" id="ButtonBar" style="padding-left: 11px; padding-right: 11px;">
+            <button onclick="SaveUserDetails()" id="btnSaveUser" class="btnStyle Savebtn">
+                @ViewBag.SaveTitle</button>
+            <button onclick="ClearUserDetails()" id="btnClearDetails" class="btnStyle Clearbtn">
+                @ViewBag.ClearTitle</button>
+        </div>
+        <div class="row " style="padding-left: 15px !important; margin-top: 20px !important;
+            padding-right: 15px !important;">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("User ID", "User ID", new { @id = "lblUserID", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @* @Html.TextBox("txtUserID", null, new { @id = "txtUserID", @class = "DisplayInLine form-control InputElements" })*@
+                        @{
+                            if (!Model.IsSelected)
+                            {
+                            @Html.TextBoxFor(model => model.UserID, new { @id = "txtUserIDEdit", @class = "DisplayInLine form-control InputElements", @maxlength = 10 })
+                            }
+                            else if (Model.IsSelected)
+                            {
+                            @Html.TextBoxFor(model => model.UserID, new { @id = "txtUserIDEdit", @class = "DisplayInLine form-control InputElements", @maxlength = 10, @readonly = true })
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("Password", "Password", new { @id = "lblPassword", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @* @Html.TextBox("txtPassword", null, new { @id = "txtPassword", @class = "DisplayInLine form-control InputElements" })*@
+                        @Html.PasswordFor(model => model.Password, new { value = Model.Password, @id = "txtPassword", @class = "DisplayInLine form-control InputElements", @maxlength = 15 })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("User Name", "User Name", new { @id = "lblUserName", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @*@Html.TextBox("txtUserName", null, new { @id = "txtUserName", @class = "DisplayInLine form-control InputElements" })*@
+                        @Html.TextBoxFor(model => model.UserName, new { @id = "txtUserNameEdit", @class = "DisplayInLine form-control InputElements", @maxlength = 20 })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("Designation", "Designation", new { @id = "lblDesignation", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @*@Html.TextBox("txtDesignation", null, new { @id = "txtDesignation", @class = "DisplayInLine form-control InputElements" })*@
+                        @Html.TextBoxFor(model => model.Designation, new { @id = "txtDesignation", @class = "DisplayInLine form-control InputElements", @maxlength = 50 })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("E-mail", "E-mail", new { @id = "lblEmail", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @* @Html.TextBox("txtEmail", null, new { @id = "txtEmail", @class = "DisplayInLine form-control InputElements" })
+*@
+                        @Html.TextBoxFor(model => model.UserEmail, new { @id = "txtEmail", @class = "DisplayInLine form-control InputElements", @maxlength = 50 })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("User Account", "User Account", new { @id = "lblAccount", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @Html.RadioButton("radAccount", "Active", @Model.isActive ? true : false, new { @id = "radActive" })
+                        @Html.Label("Active", new {@id="Activelbl", @class = "labelWidth" ,@style = "min-height: 16px;"})
+                        @Html.RadioButton("radAccount", "Inactive", @Model.isActive ? false : true, new { @id = "radInactive"})
+                        @Html.Label("Inactive", new { @class = "labelWidth", @style = "min-height: 16px;" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("Telephone No.", "Telephone No.", new { @id = "lblTelephone", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @Html.TextBoxFor(model => model.Telephone, new { @id = "txtTelephone", @class = "DisplayInLine form-control InputElements", @maxlength = 50 })
+                        @*@Html.TextBox("txtTelephone", null, new { @id = "txtTelephone", @class = "DisplayInLine form-control InputElements" })*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("Role", "Role", new { @id = "lblRole", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @Html.DropDownList("ddlRoles", ViewBag.lstUserRoles as List<SelectListItem>, new { @class = "form-control InputElements" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("Distributor", "Distributor", new { @id = "lblDistributor", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @Html.DropDownList("ddlDistributorPopup", ViewBag.lstDistributor as List<SelectListItem>, new { @class = "form-control InputElements" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("Sub-Role", "Sub-Role", new { @id = "lblSubRole", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @Html.DropDownList("ddlSubRole", ViewBag.lstSubRole as List<SelectListItem>, new { @class = "form-control InputElements" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- hst001 -->
+        <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin" style="padding-left: 0px;">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl " style="padding-right: 0px;">
+                        @Html.Label("Expiry Date", "Expiry Date", new { @id = "lblExpiryDate", @class = "labelWidth" })
+                    </div>
+                        <div class="col-xs-8 col-sm-4 col-md-8 col-lg-8 AnalysisLbl ">
+                        @Html.TextBoxFor(model => model.ExpiryDate, new { @id = "txtExpiryDate", @maxlength = 50, @style = "  background-color:White !important;", @class = "calendarPicker form-control InputElements txtDatePicker" })
+                    </div>
+                 
+                    
+                </div>
+            </div>
+              
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="divCustomerName" style="display: none;">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                        @Html.Label("Customer Name", "Customer Name", new { @id = "lblCustomer", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                        @Html.DropDownList("ddlCustomerNamePopup", ViewBag.lstCustomerNames as List<SelectListItem>, new { @class = "form-control InputElements" })
+                    </div>
+                </div>
+            </div>
+                
+        </div>
+        <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row RowBottomMargin" style="padding-left: 0px;">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl " style="padding-right: 0px;">
+                        @Html.Label("Application Access", "Application Access", new { @id = "lblApplicationAccess", @class = "labelWidth" })
+                    </div>
+                        <div class="col-xs-8 col-sm-4 col-md-8 col-lg-8 AnalysisLbl ">
+                        @Html.CheckBoxFor(model => model.hasKOWA, new { @id = "chkKOWA", @class = "DisplayInLine InputElements " })
+                        @Html.Label("KOWA", new { @for = "chkKOWA", @class = "DisplayInLine InputElements labelWidth", @style = "min-height: 16px;" })
+                        @Html.CheckBoxFor(model => model.hasPDX, new { @id = "chkPDX", @class = "DisplayInLine InputElements " })
+                        @Html.Label("PDX", new { @for = "chkPDX", @class = "DisplayInLine InputElements labelWidth", @style = "min-height: 16px;" })
+                    </div>
+                 
+                    
+                </div>
+            </div>
+                
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    function onAssignSelectedPressed() {
+        var availableUserList = document.getElementById("items");
+        var assignedUserList = document.getElementById("Assigned");
+        var ItemsArray = availableUserList.getElementsByTagName("li");
+        var checkedIndexes = [];
+        for (var i = 0; i < ItemsArray.length; i++) {
+            var listItem = ItemsArray[i];
+            var chkBox = listItem.getElementsByTagName("input")[0];
+            if (chkBox.checked) {
+                checkedIndexes.push(listItem);
+            }
+        }
+
+
+        for (var j = 0; j < checkedIndexes.length; j++) {
+            var newItem = checkedIndexes[j];
+            var appName = $(newItem).text().split("(version")[0].trim();
+            var newChkBox = newItem.getElementsByTagName("input")[0];
+            newChkBox.checked = false;
+            var appExists = false;
+            var ItemsArrayAssigned = assignedUserList.getElementsByTagName("li");
+            for (var l = 0; l < ItemsArrayAssigned.length; l++) {
+
+                var listItemAssigned = ItemsArrayAssigned[l];
+                var appNameAssigned = $(listItemAssigned).text().split("(version")[0].trim();
+                if (appName == appNameAssigned)
+                    appExists = true;
+            }
+            if (!appExists) {
+                assignedUserList.appendChild(newItem);
+                //availableUserList.removeChild(
+            }
+
+        }
+
+        //        for (var j = 0; j < checkedIndexes.length; j++) {
+        //            availableUserList.removeChild(checkedIndexes[j]);
+        //        }
+        enableSaveButton();
+        sortAssignedApps();
+
+    }
+
+    function onAssignAllPressed() {
+        var availableUserList = document.getElementById("items");
+        var assignedUserList = document.getElementById("Assigned");
+        var ItemsArray = availableUserList.getElementsByTagName("li");
+        var checkedIndexes = [];
+        for (var k = 0; k < ItemsArray.length; k++) {
+            var listItem = ItemsArray[k];
+            checkedIndexes.push(listItem);
+        }
+        for (var k = 0; k < checkedIndexes.length; k++) {
+            var newItem = checkedIndexes[k];
+            var appName = $(newItem).text().split("(version")[0].trim();
+            var newChkBox = newItem.getElementsByTagName("input")[0];
+            newChkBox.checked = false;
+            var appExists = false;
+            var ItemsArrayAssigned = assignedUserList.getElementsByTagName("li");
+            for (var l = 0; l < ItemsArrayAssigned.length; l++) {
+
+                var listItemAssigned = ItemsArrayAssigned[l];
+                var appNameAssigned = $(listItemAssigned).text().split("(version")[0].trim();
+                if (appName == appNameAssigned)
+                    appExists = true;
+            }
+            if (!appExists) {
+                assignedUserList.appendChild(newItem);
+                //availableUserList.removeChild(
+            }
+        }
+        //availableUserList.innerHTML = '';
+        enableSaveButton();
+        sortAssignedApps();
+
+    }
+
+    //Removes Selected Users from Assigned and Adds them back to Available
+    function onRemoveSelectedPressed() {
+        var availableUserList = document.getElementById("items");
+        var assignedUserList = document.getElementById("Assigned");
+        var ItemsArray = assignedUserList.getElementsByTagName("li");
+        var checkedIndexes = [];
+        for (var i = 0; i < ItemsArray.length; i++) {
+            var listItem = ItemsArray[i];
+            var chkBox = listItem.getElementsByTagName("input")[0];
+            if (chkBox.checked) {
+                var appName = $(listItem).text().trim();
+                var trimAppName = appName.split("(version")[0].trim();
+                if (trimAppName != "Komatsu App Store")
+                    checkedIndexes.push(listItem);
+            }
+        }
+
+        for (var j = 0; j < checkedIndexes.length; j++) {
+            assignedUserList.removeChild(checkedIndexes[j]);
+        }
+        for (var j = 0; j < checkedIndexes.length; j++) {
+            var newItem = checkedIndexes[j];
+            var newChkBox = newItem.getElementsByTagName("input")[0];
+            newChkBox.checked = false;
+            availableUserList.appendChild(newItem);
+        }
+
+        enableSaveButton();
+        sortAvailableApps();
+    }
+
+    //Removes all Items in Assigned users and adds them back to in Availabled Users List
+    function onRemoveAllPressed() {
+
+        var availableUserList = document.getElementById("items");
+        var assignedUserList = document.getElementById("Assigned");
+        var ItemsArray = assignedUserList.getElementsByTagName("li");
+        var checkedIndexes = [];
+
+        for (var k = 0; k < ItemsArray.length; k++) {
+            var listItem = ItemsArray[k];
+            var appName = $(listItem).text().trim();
+            var trimAppName = appName.split("(version")[0].trim();
+            if (trimAppName != "Komatsu App Store")
+                checkedIndexes.push(listItem);
+        }
+
+        for (var k = 0; k < checkedIndexes.length; k++) {
+            var newItem = checkedIndexes[k];
+            var newChkBox = newItem.getElementsByTagName("input")[0];
+            newChkBox.checked = false;
+
+            availableUserList.appendChild(newItem);
+        }
+        //assignedUserList.innerHTML = '';
+        sortAvailableApps();
+        enableSaveButton();
+    }
+
+    function sortAssignedApps() {
+        var items = $('#assigned li').get();
+        items.sort(function (a, b) {
+
+            var keyA = $(a).text();
+            var keyB = $(b).text();
+            var result = keyA.toUpperCase().localeCompare(keyB.toUpperCase());
+            return result;
+
+        });
+        var ul = $('#assigned');
+        $.each(items, function (i, li) {
+            ul.append(li);
+        });
+    }
+    //    function sortAvailableApps() {
+    //        var items = $('#items li').get();
+    //        items.sort(function (a, b) {
+
+    //            var keyA = $(a).text().split("(version")[0].trim();
+    //            var keyB = $(b).text().split("(version")[0].trim(); ;
+    //            var result = keyA.toUpperCase().localeCompare(keyB.toUpperCase());
+    //            //debugger;
+    //            if (result == 0) {
+    //                var codeA = parseInt(a.getElementsByTagName("input")[2].value);
+    //                var codeB = parseInt(b.getElementsByTagName("input")[2].value);
+    //                if (codeA > codeB)
+    //                    result = -1;
+    //                else if (codeA < codeB)
+    //                      result = 1;
+    //                else result = 0;
+    //            }
+    //            return result;
+
+    //        });
+    //        var ul = $('#items');
+    //        $.each(items, function (i, li) {
+    //            ul.append(li);
+    //        });
+    //    }
+    //    function enableSaveButton() {
+    //        $("#btnSave").removeAttr('disabled');
+    //    }
+
+    // Code Added by farrukh  /////
+
+
+
+    function sortAvailableApps() {
+        var items = $('#items li').get();
+        items.sort(function (a, b) {
+            debugger;
+            var keyA = $(a).text().split("(version")[0].trim();
+            var keyB = $(b).text().split("(version")[0].trim();
+            var result = keyA.toUpperCase().localeCompare(keyB.toUpperCase());
+
+            if (result == 0) {
+
+
+
+                if ((a.getElementsByTagName("input")[2].value) === "" && b.getElementsByTagName("input")[2].value === "") {
+                    keyA = $(a).text().split("(version")[1].trim();
+                    keyB = $(b).text().split("(version")[1].trim();
+
+                    var str1 = keyA.substring(0, keyA.length - 1);
+                    var str2 = keyB.substring(0, keyB.length - 1);
+
+                    var compareResult = compareVersionNumbers(str2, str1);
+
+                    //                    if (compareResult < 0) {
+
+                    //                        result = 1;
+                    //                    }
+                    //                    else if (compareResult > 0) {
+
+                    //                        result = 1;
+                    //                    }
+                    //                    else {
+                    //                        result = 0;
+                    //                    }
+                    result = compareResult;
+
+                }
+                else {
+                    var codeA = parseInt(a.getElementsByTagName("input")[2].value);
+                    var codeB = parseInt(b.getElementsByTagName("input")[2].value);
+
+                    if (codeA > codeB)
+                        result = -1;
+                    else if (codeA < codeB)
+                        result = 1;
+                    else result = 0;
+                }
+
+
+
+            }
+            return result;
+
+        });
+        var ul = $('#items');
+        $.each(items, function (i, li) {
+            ul.append(li);
+        });
+    }
+    function enableSaveButton() {
+        $("#btnSave").removeAttr('disabled');
+    }
+
+
+    $(function () {
+
+        $(document).ready(function () {
+            //hst001
+            var dateFormat="@Session["DateCultureCalendar"].ToString()";  
+            if(dateFormat==null || dateFormat=="")
+            {
+                dateFormat="mm/dd/yy"
+            }
+            InitializeCalander(dateFormat, "", ""); //from refrencing JavaScript File
+            //hst001 - End
+            //$("input#chkSendEmail").prop("checked", false);
+
+
+            var bnText = $("#btnClearDetails").text().trim();
+            if (bnText == "Reset") {
+                $("#btnClearDetails").addClass("Resetbtn");
+                $("#btnClearDetails").removeClass("Clearbtn");
+
+                var selectedRole = $("select#ddlRoles option:selected").val();
+                if (selectedRole == "6") {
+                    $("#divCustomerName").show();
+                }
+            }
+            else {
+                $("#ddlRoles").prop('selectedIndex', -1);
+            }
+
+
+        });
+
+
+        $('#approve-btn').click(function () {
+            $('#modal-container').modal('hide');
+        });
+
+        $("#ddlRoles").change(function () {
+            var Role = $('select#ddlRoles option:selected').val();
+            if (Role == "6") {
+                $("#divCustomerName").show();
+            }
+            else {
+                $("#divCustomerName").prop('selectedIndex', -1);
+                $("#divCustomerName").hide();
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("onRoleChange", "UserRegistration")',
+                traditional: true,
+                datatype: "json",
+                data: { strRoleID: Role },
+                success: function (data) {
+                    $('select#ddlSubRole').empty();
+                    $.each(data, function (i) {
+                        var optionhtml = '<option value="' +
+                data[i].Value + '">' + data[i].Text + '</option>';
+                        $("select#ddlSubRole").append(optionhtml);
+
+                    });
+
+                },
+                error: function (response) {
+                }
+
+            });
+
+            var selectedDistributor = $('select#ddlDistributorPopup option:selected').val();
+
+            if (selectedDistributor != null && selectedDistributor != undefined && selectedDistributor.trim() != "") {
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCustomerNames", "UserRegistration")',
+                    traditional: true,
+                    datatype: "json",
+                    data: { distributorCode: selectedDistributor },
+                    success: function (data) {
+                        $('select#ddlCustomerNamePopup').empty();
+                        $.each(data, function (i) {
+                            var optionhtml = '<option value="' +
+                data[i].Value + '">' + data[i].Text + '</option>';
+                            $("select#ddlCustomerNamePopup").append(optionhtml);
+
+                        });
+
+                    },
+                    error: function (response) {
+                    }
+
+                });
+            }
+        });
+
+        $("#ddlDistributorPopup").change(function () {
+
+            var Role = $('select#ddlRoles option:selected').val();
+            var dist = $('select#ddlDistributorPopup option:selected').val();
+            if (Role == "6") {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCustomerNames", "UserRegistration")',
+                    traditional: true,
+                    datatype: "json",
+                    data: { distributorCode: dist },
+                    success: function (data) {
+                        $('select#ddlCustomerNamePopup').empty();
+                        $.each(data, function (i) {
+                            var optionhtml = '<option value="' +
+                data[i].Value + '">' + data[i].Text + '</option>';
+                            $("select#ddlCustomerNamePopup").append(optionhtml);
+
+                        });
+
+                    },
+                    error: function (response) {
+                    }
+
+                });
+            }
+        });
+    });
+
+    function SaveUserDetails() {
+
+        var userID = $("#txtUserIDEdit").val();
+        var password = $("#txtPassword").val();
+        var userName = $("#txtUserNameEdit").val();
+        var designation = $("#txtDesignation").val();
+        var email = $("#txtEmail").val();
+        var isActive = $("#radActive").is(":checked");
+        var telephone = $("#txtTelephone").val();
+        var selectedRole = $("#ddlRoles").val();
+        var selectedDistributor = $("#ddlDistributorPopup").val();
+        var selectedSubRole = $("#ddlSubRole").val();
+        var selectedCustomer = $("#ddlCustomerNamePopup").val();
+        var isKOWA = $("#chkKOWA").is(":checked");
+        var isPDX = $("#chkPDX").is(":checked");
+        var expiryDate = $("#txtExpiryDate").val();//hst001
+
+        //        var assignedUserList = document.getElementById("Assigned");
+        //        var ItemsArray = assignedUserList.getElementsByTagName("li");
+        //        var checkedApps = '';
+        //        for (var i = 0; i < ItemsArray.length; i++) {
+        //            var listItem = ItemsArray[i];
+        //            var appId = listItem.getElementsByTagName("label")[0];
+        //            checkedApps += appId.id + ',';
+        //        }
+
+        var mandatory = 0;
+
+
+        if (userID == null || userID == undefined || userID.trim() == "") {
+            mandatory++;
+            $("#txtUserIDEdit").addClass("required");
+        }
+        if (userName == null || userName == undefined || userName.trim() == "") {
+            mandatory++;
+            $("#txtUserNameEdit").addClass("required");
+        }
+        if (password == null || password == undefined || password.trim() == "") {
+            mandatory++;
+            $("#txtPassword").addClass("required");
+        }
+        if (selectedRole == null || selectedRole == undefined || selectedRole.trim() == "") {
+            mandatory++;
+            $("#ddlRoles").addClass("required");
+        }
+
+        var eval = true;
+        if (email.length > 0) {
+            eval = isValidEmailAddress(email);
+            if (!eval) {
+                mandatory++;
+                $("#txtEmail").addClass("required");
+            }
+        }
+        var tval = true;
+        if (telephone.length > 0) {
+            tval = validatePhone(telephone);
+            if (!tval) {
+                mandatory++;
+                $("#txtTelephone").addClass("required");
+            }
+        }
+
+        if (selectedRole == "6" || selectedRole == "3") {
+            if (selectedDistributor == null || selectedDistributor == undefined || selectedDistributor.trim() == "") {
+                mandatory++;
+                $("#ddlDistributorPopup").addClass("required");
+            }
+        }
+
+        if (selectedRole == "6") {
+            if (selectedCustomer == null || selectedCustomer == undefined || selectedCustomer.trim() == "") {
+                mandatory++;
+                $("#ddlCustomerNamePopup").addClass("required");
+            }
+        }
+
+        if (mandatory == 0) {
+            $("#txtUserIDEdit").removeClass("required");
+            $("#txtUserNameEdit").removeClass("required");
+            $("#txtPassword").removeClass("required");
+            $("#ddlRoles").removeClass("required");
+            $("#txtTelephone").removeClass("required");
+            $("#txtEmail").removeClass("required");
+            $("#ddlDistributorPopup").removeClass("required");
+            $("#ddlCustomerNamePopup").removeClass("required");
+
+            var Params = {};
+            Params = { UserID: userID, UserName: userName, Password: password, Designation: designation, isActive: isActive, Telephone: telephone,
+                UserEmail: email, iRole: selectedRole, distribCode: selectedDistributor, CustomerID: selectedCustomer, iSubRole: selectedSubRole,
+                hasPDX: isPDX, hasKOWA: isKOWA, ExpiryDate: expiryDate//hst001- Added param ExpiryDate
+            };
+
+            var btnTitle = $("#btnSaveUser").text().trim();
+            $("#txtPassword").removeClass("invalid");
+            if (btnTitle == "Save") {
+                var urlsave = '@Url.Action("SaveNewUser", "UserRegistration", null)';
+                $.post(urlsave, Params, function (data) {
+                    if (data == "0") {
+                        DisplayModal("0", "An account with same User ID already exists.", "Add New User");
+                    }
+                    else if (data == "1") {
+                        DisplayModal("0", "Failed to save User Information.", "Add New User");
+                    }
+                    else if (data == "2")
+                    {
+                        $("#txtPassword").addClass("invalid");
+                        DisplayPasswordStrengthModal("0", "", "Update User")
+                    }
+                    else {
+                        if (data != "")//hst001
+                        {
+                            $("#txtExpiryDate").val(data);//hst001
+                        }
+                        DisplayModal("1", "User created successfully.", "Add New User");
+                        $("#txtUserIDEdit").prop("disabled", true);
+                        $("#btnSaveUser").text('Update');
+                        $("#btnClearDetails").text('Reset');
+                        $("#popHeader").text('Modify User');
+                        $("#btnClearDetails").addClass("Resetbtn");
+                        $("#btnClearDetails").removeClass("Clearbtn");
+                    }
+                });
+            }
+            else {
+                var urlsave = '@Url.Action("ModifyUser", "UserRegistration", null)';
+                $.post(urlsave, Params, function (data) {
+                    if (data != "1" && data !="2" && data!="3") {
+                        if (data != "")//hst001
+                        {
+                            $("#txtExpiryDate").val(data);
+                        }
+                        DisplayModal("1", "User Information updated successfully.", "Update User");
+                    }
+                    else if (data == "2")
+                    {
+                        $("#txtPassword").addClass("invalid");
+                        DisplayPasswordStrengthModal("0", "", "Update User")
+                    }
+                    else if (data == "3")
+                    {
+                        $("#txtPassword").addClass("invalid");
+                        DisplayModal("0", "You cannot use one of last 5 user's password. Please choose a new password", "Update User");
+                    }
+
+                    else {
+                        DisplayModal("0", "Failed to update User Information.", "Update User");
+                    }
+                });
+            }
+        }
+
+        else {
+            if (!eval) {
+            }
+            else if (!tval) {
+            }
+            else {
+            }
+        }
+
+    }
+
+    function ClearUserDetails() {
+
+        var btnTitle = $("#btnSaveUser").text().trim();
+
+        if (btnTitle == "Save") {
+            $("#txtUserIDEdit").val('');
+            $("#txtPassword").val('');
+            $("#txtUserNameEdit").val('');
+            $("#txtDesignation").val('');
+            $("#txtEmail").val('');
+            $("#radActive").prop("checked", true);
+            $("#txtTelephone").val('');
+            $("#ddlRoles").prop('selectedIndex', -1);
+            $("#ddlDistributorPopup").prop('selectedIndex', -1);
+            $("#ddlSubRole").prop('selectedIndex', -1);
+            $("#ddlCustomerNamePopup").prop('selectedIndex', -1);
+            $("#divCustomerName").hide();
+            $("#chkKOWA").prop("checked", false);
+            $("#chkPDX").prop("checked", false);
+            $('select#ddlSubRole').empty();
+            $('select#ddlCustomerNamePopup').empty();
+            $("#txtExpiryDate").val('');//hst001
+
+            $("#txtUserIDEdit").removeClass("required");
+            $("#txtUserNameEdit").removeClass("required");
+            $("#txtPassword").removeClass("required");
+            $("#ddlRoles").removeClass("required");
+            $("#txtTelephone").removeClass("required");
+            $("#txtEmail").removeClass("required");
+            $("#ddlDistributorPopup").removeClass("required");
+            $("#ddlCustomerNamePopup").removeClass("required");
+
+        }
+        else {
+            var userID = $("#txtUserIDEdit").val();
+            $("#dvUserDetails").load('@(Url.Action("UpdateAction", "UserRegistration", null, Request.Url.Scheme))?uID=' + userID);
+        }
+    }
+
+    $("#txtUserIDEdit").keydown(function (e) {
+
+        var isDisabled = $('#txtUserIDEdit').prop('readonly');
+
+        if (isDisabled) {
+            var key = (e.which) ? e.which : e.keyCode;
+
+            if (key == 8) {
+                e.preventDefault();
+            }
+        }
+    });
+</script>

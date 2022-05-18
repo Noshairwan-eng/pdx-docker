@@ -1,0 +1,56 @@
+﻿<link href="@Url.Content("~/Content/JBoxToolTips/jBox.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/JBoxToolTips/jBox.min.js")" type="text/javascript"></script>
+ 
+ <div class="container childcontent ">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left ">
+                @Resources.Resource.QuotationInquiry</h3>
+        </div> 
+        <div class="panel-body">
+             
+            <div class="FormElements">
+                <div class="row">
+                     
+                     
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-field SizeOnXs ">
+                            @Html.Label(@Resources.Resource.lblDistributerOrderNo)
+                        </div>
+                        <div class="editor-field SizeOnXs ">
+                            @Html.TextBox("txtDBOrder", null, new { @class = "form-control InputElements"    })
+                        </div>
+                    </div>
+                     
+                </div>
+                @*row end*@
+                 
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on("click", function () { 
+    
+//        var tb1 = $("#txtDBOrder");
+//    if(isNullOrWhitespace(tb1.val()))
+//    {
+//        tb1.tooltip({ items: tb1, content: "Displaying on click"});
+//        tb1.tooltip("open");}else{
+//                tb1.tooltip( "option", { disabled: true } );
+//            }
+
+       
+});
+    
+   
+function isNullOrWhitespace(input) {
+            if (input == null) return true;
+            return input.replace(/\s/g, '').length < 1;
+        }
+
+
+      
+
+
+</script>

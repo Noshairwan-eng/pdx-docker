@@ -1,0 +1,99 @@
+﻿ @if (true)
+ {
+     string str = "";
+ }
+@if (ViewData.Model != null)
+{
+    
+     <div id="main" class="datagrid table-responsive" style="  height: 300px; " >
+    <table class="table table-striped table-hover">
+ <thead>
+ <tr class="gridHead">
+ @foreach (var item in ViewBag.Columns)
+ {
+
+     if (item.ToString() == "Part No")
+     {
+      <th style=" text-align:left">     
+     @item.ToString()
+     </th>
+     }
+     else if(item.ToString() == "0000" || item.ToString() == "KLTD Stock")
+     {
+         <th style=" text-align:right !important">        
+     @item.ToString()
+     </th>
+     }
+     else
+     {
+      <th style=" text-align:right">        
+     @item.ToString()
+     </th>
+     }
+ }
+</tr>
+
+
+ </thead>
+ <tbody>
+ 
+@foreach (var item in ViewData.Model)
+{
+<tr class="gridRow"> 
+ @for (int i = 0; i < Enumerable.Count(ViewBag.Columns); i++)
+ {
+     if (i == 0)
+     {
+          <td style=" text-align:left"> @item[i].ToString() </td>
+     }
+     else if (i == 2)
+     {
+         <td style=" text-align:right !important"> <label id="lblKMEStock" style="font-size: 10px ! important;margin-right: 4px !important;font-family: verdana ! important;font-weight: normal;color: rgb(51, 51, 51) ! important;">@item[i].ToString()</label> </td>
+     }
+     else if (i == 3)
+     {
+         <td style=" text-align:right !important"> <label id="lblKLTDStock"style="font-size: 10px ! important;margin-right: 4px !important;font-family: verdana ! important;font-weight: normal;color: rgb(51, 51, 51) ! important;">@item[i].ToString()</label> </td>
+     }
+     else
+     {
+        <td style=" text-align:right"> @item[i].ToString() </td>
+     }
+
+ }
+
+
+ </tr>   
+}
+
+
+ </tbody>
+</table>
+    
+    
+    </div>
+    
+}
+ 
+
+  
+
+    <script type="text/javascript">
+
+        var Message = "@ViewBag.Message";
+ 
+        if (Message != "" && Message != null) {
+
+//                $("#lblmsg").html("");
+//                $("#lblmsg").html(Message).attr("style", "color:red !important");
+//                $("#MessageModal").modal();
+                txtError = Message;
+                txtErrorType = "0";
+                DisplayModal(txtErrorType, txtError);  
+            }
+        
+  
+  </script>
+
+
+
+

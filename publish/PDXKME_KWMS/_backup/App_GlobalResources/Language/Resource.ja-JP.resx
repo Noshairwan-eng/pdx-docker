@@ -1,0 +1,1820 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AcceptedQuantityDesc" xml:space="preserve">
+    <value>Accepted QuantityJ</value>
+  </data>
+  <data name="BackOrderDesc" xml:space="preserve">
+    <value>Back OrderJ</value>
+  </data>
+  <data name="BackOrderDirectShipmentCodeDesc" xml:space="preserve">
+    <value>Back Order Direct Shipment CodeJ</value>
+  </data>
+  <data name="bntDownloadCSV" xml:space="preserve">
+    <value>Download CSVJ</value>
+  </data>
+  <data name="bntNext" xml:space="preserve">
+    <value>NextJ</value>
+  </data>
+  <data name="bntPrevious" xml:space="preserve">
+    <value>PreviousJ</value>
+  </data>
+  <data name="BoxQuantityDesc" xml:space="preserve">
+    <value>Box QuantityJ</value>
+  </data>
+  <data name="btnAdd" xml:space="preserve">
+    <value>AddJ</value>
+  </data>
+  <data name="btnAddPrats" xml:space="preserve">
+    <value>Add PartsJ</value>
+  </data>
+  <data name="btnCalculate" xml:space="preserve">
+    <value>CalculateJ</value>
+  </data>
+  <data name="btnCancel" xml:space="preserve">
+    <value>CancelJ</value>
+  </data>
+  <data name="btnChange" xml:space="preserve">
+    <value>ChangeJ</value>
+  </data>
+  <data name="btnClear" xml:space="preserve">
+    <value>ClearJ</value>
+  </data>
+  <data name="btnCondition" xml:space="preserve">
+    <value>ConditionJ</value>
+  </data>
+  <data name="btnConditions" xml:space="preserve">
+    <value>ConditionsJ</value>
+  </data>
+  <data name="btnConvertToStockOrder" xml:space="preserve">
+    <value>Convert To S/T OrderJ</value>
+  </data>
+  <data name="btnCopy" xml:space="preserve">
+    <value>CopyJ</value>
+  </data>
+  <data name="btnCopyQuotation" xml:space="preserve">
+    <value>Copy QuotationJ</value>
+  </data>
+  <data name="btnCopyToSo" xml:space="preserve">
+    <value>Copy To Sale OrderJ</value>
+  </data>
+  <data name="btnDelete" xml:space="preserve">
+    <value>DeleteJ</value>
+  </data>
+  <data name="btnDetail" xml:space="preserve">
+    <value>DetailJ</value>
+  </data>
+  <data name="btnDownload" xml:space="preserve">
+    <value>DownloadJ</value>
+  </data>
+  <data name="btnDownloadCSV" xml:space="preserve">
+    <value>Download CSVJ</value>
+  </data>
+  <data name="btnExportData" xml:space="preserve">
+    <value>Export DataJ</value>
+  </data>
+  <data name="btnExportPartMasterData" xml:space="preserve">
+    <value>Export PM DataJ</value>
+  </data>
+  <data name="btnImport" xml:space="preserve">
+    <value>ImportJ</value>
+  </data>
+  <data name="btnImportData" xml:space="preserve">
+    <value>Import DataJ</value>
+  </data>
+  <data name="btnInterchangeability" xml:space="preserve">
+    <value>InterchangeabilityJ</value>
+  </data>
+  <data name="btnLogin" xml:space="preserve">
+    <value>LoginJ</value>
+  </data>
+  <data name="btnNew" xml:space="preserve">
+    <value>NewJ</value>
+  </data>
+  <data name="btnNext" xml:space="preserve">
+    <value>NextJ</value>
+  </data>
+  <data name="btnOK" xml:space="preserve">
+    <value>OKJ</value>
+  </data>
+  <data name="btnOrderConfirmation" xml:space="preserve">
+    <value>Order ConfirmationJ</value>
+  </data>
+  <data name="btnPrevious" xml:space="preserve">
+    <value>PreviousJ</value>
+  </data>
+  <data name="btnPrint" xml:space="preserve">
+    <value>PrintJ</value>
+  </data>
+  <data name="btnReset" xml:space="preserve">
+    <value>ResetJ</value>
+  </data>
+  <data name="btnSave" xml:space="preserve">
+    <value>SaveJ</value>
+  </data>
+  <data name="btnSearch" xml:space="preserve">
+    <value>SearchJ</value>
+  </data>
+  <data name="btnStockSearch" xml:space="preserve">
+    <value>Stock SearchJ</value>
+  </data>
+  <data name="btnUpdate" xml:space="preserve">
+    <value>UpdateJ</value>
+  </data>
+  <data name="CancelledDesc" xml:space="preserve">
+    <value>CancelledJ</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change PasswordJ</value>
+  </data>
+  <data name="CharacterCodeDesc" xml:space="preserve">
+    <value>Character CodeJ</value>
+  </data>
+  <data name="ClickSelectFilesToUploadFiles" xml:space="preserve">
+    <value>Click select files to upload filesJ</value>
+  </data>
+  <data name="CommodityCodeNewDesc" xml:space="preserve">
+    <value>Commodity Code NewJ</value>
+  </data>
+  <data name="CommodityCodeOldDesc" xml:space="preserve">
+    <value>CommodityCodeOldJ</value>
+  </data>
+  <data name="CommodityGroupCodeNewDesc" xml:space="preserve">
+    <value>CommoditGroup Code NewJ</value>
+  </data>
+  <data name="CommodityGroupCodeOldDesc" xml:space="preserve">
+    <value>Commodity Group Code OldJ</value>
+  </data>
+  <data name="Consignment" xml:space="preserve">
+    <value>ConsignmentJ</value>
+  </data>
+  <data name="ConsignmentInquiry" xml:space="preserve">
+    <value>Consignment InquiryJ</value>
+  </data>
+  <data name="ConsignmentOrderCondition" xml:space="preserve">
+    <value>COnsignment Order ConditionJ</value>
+  </data>
+  <data name="ConsignmentOrderDetails" xml:space="preserve">
+    <value>Consignment Order DetailJ</value>
+  </data>
+  <data name="ConvertToStockTransferOrder" xml:space="preserve">
+    <value>Convert ToStock Transfer OrderJ</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Copyright © 2015 - Komatsu Middle East FZEJ</value>
+  </data>
+  <data name="CopyToSalesOrder" xml:space="preserve">
+    <value>Copy To Sales OrderJ</value>
+  </data>
+  <data name="CountryOfOriginDesc" xml:space="preserve">
+    <value>Country Of OriginJ</value>
+  </data>
+  <data name="CreateNewUser" xml:space="preserve">
+    <value>Create New UserJ</value>
+  </data>
+  <data name="CurrencyDesc" xml:space="preserve">
+    <value>CurrencyJ</value>
+  </data>
+  <data name="DataBase" xml:space="preserve">
+    <value>DataBaseJ</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>DeleteJ</value>
+  </data>
+  <data name="DiscountPerItemDesc" xml:space="preserve">
+    <value>Discount Per ItemJ</value>
+  </data>
+  <data name="DistributorCodeDesc" xml:space="preserve">
+    <value>Distributor CodeJ</value>
+  </data>
+  <data name="DistributorNameDesc" xml:space="preserve">
+    <value>Distributor NameJ</value>
+  </data>
+  <data name="DistributorOrderNoDesc" xml:space="preserve">
+    <value>Distributor Order NoJ</value>
+  </data>
+  <data name="EOReserveQuantityDesc" xml:space="preserve">
+    <value>Eemergency Order Reserve QuantityJ</value>
+  </data>
+  <data name="FileUpload" xml:space="preserve">
+    <value>File UploadJ</value>
+  </data>
+  <data name="FindADistributor" xml:space="preserve">
+    <value>Find a DistributorJ</value>
+  </data>
+  <data name="HAboutKomatsu" xml:space="preserve">
+    <value>About Komatsu:J</value>
+  </data>
+  <data name="HAddress" xml:space="preserve">
+    <value>ADDRESS:J</value>
+  </data>
+  <data name="HContactUs" xml:space="preserve">
+    <value>Contact Us:J</value>
+  </data>
+  <data name="HKomatsuGenuineParts" xml:space="preserve">
+    <value>Komatsu Genuine Parts:J</value>
+  </data>
+  <data name="HKomatsuMiddleEastFZE" xml:space="preserve">
+    <value>Komatsu Middle East FZEJ</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>HomeJ</value>
+  </data>
+  <data name="HowToOrder" xml:space="preserve">
+    <value>How To OrderJ</value>
+  </data>
+  <data name="HrefCreateNewAccount" xml:space="preserve">
+    <value>Create New AccountJ</value>
+  </data>
+  <data name="HrefForgotPassword" xml:space="preserve">
+    <value>Forgot Password?J</value>
+  </data>
+  <data name="HSCodeLocalDesc" xml:space="preserve">
+    <value>HS Code LocalJ</value>
+  </data>
+  <data name="HUsefulLinks" xml:space="preserve">
+    <value>Useful Links:J</value>
+  </data>
+  <data name="IncreaseMachineEfficiency" xml:space="preserve">
+    <value>Increase Machine EfficiencyJ</value>
+  </data>
+  <data name="interchangeabilityInformation" xml:space="preserve">
+    <value>Interchangeability InformationJ</value>
+  </data>
+  <data name="InterchangeableCodeDesc" xml:space="preserve">
+    <value>Interchangeable CodeJ</value>
+  </data>
+  <data name="InterchangeablityInformation" xml:space="preserve">
+    <value>InterchangeablityInformationJ</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>Invalid Credentials !J</value>
+  </data>
+  <data name="InvoiceData" xml:space="preserve">
+    <value>Invoice DataJ</value>
+  </data>
+  <data name="InvoicedDesc" xml:space="preserve">
+    <value>InvoicedJ</value>
+  </data>
+  <data name="KLTDLeadProductionPerMonthDesc" xml:space="preserve">
+    <value>KLTD Lead Production Per MonthJ</value>
+  </data>
+  <data name="KMEEOReserveDesc" xml:space="preserve">
+    <value>KME EO ReserveJ</value>
+  </data>
+  <data name="KMEListPriceDesc" xml:space="preserve">
+    <value>KME List PriceJ</value>
+  </data>
+  <data name="LatestPartNumberDesc" xml:space="preserve">
+    <value>Latest Part NumberJ</value>
+  </data>
+  <data name="lblAccessLevel" xml:space="preserve">
+    <value>Access LevelJ</value>
+  </data>
+  <data name="lblAdjustedPrice" xml:space="preserve">
+    <value>Adjusted Price(-)J</value>
+  </data>
+  <data name="lblAll" xml:space="preserve">
+    <value>AllJ</value>
+  </data>
+  <data name="lblAllocatedRights" xml:space="preserve">
+    <value>Allocated RightsJ</value>
+  </data>
+  <data name="lblAllocation" xml:space="preserve">
+    <value>AllocationJ</value>
+  </data>
+  <data name="lblAllocationOnOrderAvailableQty" xml:space="preserve">
+    <value>Allocation OnOrder (Available Qty)J</value>
+  </data>
+  <data name="lblAreaCode" xml:space="preserve">
+    <value>Area CodeJ</value>
+  </data>
+  <data name="lblAvailableMark" xml:space="preserve">
+    <value>Available MarkJ</value>
+  </data>
+  <data name="lblAvailableMarks" xml:space="preserve">
+    <value>Available MarksJ</value>
+  </data>
+  <data name="lblAvailableRights" xml:space="preserve">
+    <value>Avaialable RightsJ</value>
+  </data>
+  <data name="lblBackOrderDirectShipmentCode" xml:space="preserve">
+    <value>BODSJ</value>
+  </data>
+  <data name="lblBillingRates" xml:space="preserve">
+    <value>Billing RatesJ</value>
+  </data>
+  <data name="lblBoxQuantity" xml:space="preserve">
+    <value>Box QuantityJ</value>
+  </data>
+  <data name="lblCGA" xml:space="preserve">
+    <value>CG-AJ</value>
+  </data>
+  <data name="lblCGB" xml:space="preserve">
+    <value>CG-BJ</value>
+  </data>
+  <data name="lblCGC" xml:space="preserve">
+    <value>CG-CJ</value>
+  </data>
+  <data name="lblCGD" xml:space="preserve">
+    <value>CG-Dj</value>
+  </data>
+  <data name="lblCGE" xml:space="preserve">
+    <value>CG-Ej</value>
+  </data>
+  <data name="lblCGF" xml:space="preserve">
+    <value>CG-Fj</value>
+  </data>
+  <data name="lblCharacterCode" xml:space="preserve">
+    <value>Character Codej</value>
+  </data>
+  <data name="lblComments" xml:space="preserve">
+    <value>Commentsj</value>
+  </data>
+  <data name="lblCommodityCodeNew" xml:space="preserve">
+    <value>Commodity Code (New)j</value>
+  </data>
+  <data name="lblCommodityCodeOld" xml:space="preserve">
+    <value>Commodity Code (Old)j</value>
+  </data>
+  <data name="lblCommodityGroupCodeNew" xml:space="preserve">
+    <value>Commodity Group Code (New)j</value>
+  </data>
+  <data name="lblCommodityGroupCodeOld" xml:space="preserve">
+    <value>Commodity Group Code (Old)j</value>
+  </data>
+  <data name="lblConditionsOnly" xml:space="preserve">
+    <value>Conditions Onlyj</value>
+  </data>
+  <data name="lblConfirmPassword" xml:space="preserve">
+    <value>Confirm Passwordj</value>
+  </data>
+  <data name="lblConsignmentWareHouse" xml:space="preserve">
+    <value>CS Ware Housej</value>
+  </data>
+  <data name="lblCopy" xml:space="preserve">
+    <value>Copyj</value>
+  </data>
+  <data name="lblCopyMethod" xml:space="preserve">
+    <value>Copy Methodj</value>
+  </data>
+  <data name="lblCountryCode" xml:space="preserve">
+    <value>Country Codej</value>
+  </data>
+  <data name="lblCountryOfOrigin" xml:space="preserve">
+    <value>Country Of Originj</value>
+  </data>
+  <data name="lblCreationDate" xml:space="preserve">
+    <value>Creation Datej</value>
+  </data>
+  <data name="lblCreationDateFrom" xml:space="preserve">
+    <value>Fromj</value>
+  </data>
+  <data name="lblCreationDateTo" xml:space="preserve">
+    <value>Toj</value>
+  </data>
+  <data name="lblCurrency" xml:space="preserve">
+    <value>Currencyj</value>
+  </data>
+  <data name="lblCustomerDetail" xml:space="preserve">
+    <value>Customer Detailj</value>
+  </data>
+  <data name="lblDataBase" xml:space="preserve">
+    <value>Data Base:j</value>
+  </data>
+  <data name="lblDateFrom" xml:space="preserve">
+    <value>Fromj</value>
+  </data>
+  <data name="lblDateTo" xml:space="preserve">
+    <value>Toj</value>
+  </data>
+  <data name="lblDeliveryTerm" xml:space="preserve">
+    <value>Delivery Termj</value>
+  </data>
+  <data name="lblDescriptionOfConversion" xml:space="preserve">
+    <value>Description Of Conversionj</value>
+  </data>
+  <data name="lblDistributerName" xml:space="preserve">
+    <value>DB Namej</value>
+  </data>
+  <data name="lblDistributerOrderNo" xml:space="preserve">
+    <value>DB Order Noj</value>
+  </data>
+  <data name="lblDistributorCode" xml:space="preserve">
+    <value>DB Codej</value>
+  </data>
+  <data name="lblDistributorName" xml:space="preserve">
+    <value>DB Namej</value>
+  </data>
+  <data name="lblDistributorOrderNo" xml:space="preserve">
+    <value>DB Order Noj</value>
+  </data>
+  <data name="lblDistributorOrderNoDesc" xml:space="preserve">
+    <value>Distributor Order Noj</value>
+  </data>
+  <data name="lblDoNotConsiderEo" xml:space="preserve">
+    <value>Do Not Consider Eoj</value>
+  </data>
+  <data name="lblEmailId" xml:space="preserve">
+    <value>Email Idj</value>
+  </data>
+  <data name="lblEngineSerialNo" xml:space="preserve">
+    <value>Engine Serial Noj</value>
+  </data>
+  <data name="lblExchangeRate" xml:space="preserve">
+    <value>Exchange Ratej</value>
+  </data>
+  <data name="lblExpiryDate" xml:space="preserve">
+    <value>Expiry Datej</value>
+  </data>
+  <data name="lblFixPrice" xml:space="preserve">
+    <value>Fix Pricej</value>
+  </data>
+  <data name="lblFromBuyBackOrder" xml:space="preserve">
+    <value>From Buy Back Orderj</value>
+  </data>
+  <data name="lblFromKMEWarehouse" xml:space="preserve">
+    <value>From KME Warehousej</value>
+  </data>
+  <data name="lblGenerationMangement" xml:space="preserve">
+    <value>Generation Mangementj</value>
+  </data>
+  <data name="lblGrandTotal" xml:space="preserve">
+    <value>Grand Totalj</value>
+  </data>
+  <data name="lblGrossMargin" xml:space="preserve">
+    <value>Gross Marginj</value>
+  </data>
+  <data name="lblHSCodeLocal" xml:space="preserve">
+    <value>HS Code Localj</value>
+  </data>
+  <data name="lblInterchangeableCode" xml:space="preserve">
+    <value>Interchangeable Codej</value>
+  </data>
+  <data name="lblInvoiceNo" xml:space="preserve">
+    <value>Invoice Noj</value>
+  </data>
+  <data name="lblKLTDLeadTimeProductionMonth" xml:space="preserve">
+    <value>KLTD Lead Time (Production) 'Month'j</value>
+  </data>
+  <data name="lblKMEListPrice" xml:space="preserve">
+    <value>KME List Pricej</value>
+  </data>
+  <data name="lblKMEListPriceUSD020" xml:space="preserve">
+    <value>KME List Price (USD020)j</value>
+  </data>
+  <data name="lblKMEOrderRank" xml:space="preserve">
+    <value>KME Order Rankj</value>
+  </data>
+  <data name="lblLineNo" xml:space="preserve">
+    <value>Line Noj</value>
+  </data>
+  <data name="lblLoadingPort" xml:space="preserve">
+    <value>Loading Portj</value>
+  </data>
+  <data name="lblManufacturer" xml:space="preserve">
+    <value>Manufacturerj</value>
+  </data>
+  <data name="lblMemo" xml:space="preserve">
+    <value>Memoj</value>
+  </data>
+  <data name="lblMixPackingAllowed" xml:space="preserve">
+    <value>Mix Packing Allowedj</value>
+  </data>
+  <data name="lblModelCode" xml:space="preserve">
+    <value>Model Codej</value>
+  </data>
+  <data name="lblModelGroupCode" xml:space="preserve">
+    <value>Model Group Codej</value>
+  </data>
+  <data name="lblModelInformation" xml:space="preserve">
+    <value>Model Informationj</value>
+  </data>
+  <data name="lblNewPassword" xml:space="preserve">
+    <value>New Passwordj</value>
+  </data>
+  <data name="lblOldPassword" xml:space="preserve">
+    <value>Old Passwordj</value>
+  </data>
+  <data name="lblOrderFromDate" xml:space="preserve">
+    <value>Order From Datej</value>
+  </data>
+  <data name="lblOrderNo" xml:space="preserve">
+    <value>Order Noj</value>
+  </data>
+  <data name="lblOrderProbability" xml:space="preserve">
+    <value>Order Probabilityj</value>
+  </data>
+  <data name="lblOrderRecieveDate" xml:space="preserve">
+    <value>Order Recv Datej</value>
+  </data>
+  <data name="lblOrderToDate" xml:space="preserve">
+    <value>Order To Datej</value>
+  </data>
+  <data name="lblOrderType" xml:space="preserve">
+    <value>Order Typej</value>
+  </data>
+  <data name="lblOriginalQuotationNo" xml:space="preserve">
+    <value>Orig Quotation Noj</value>
+  </data>
+  <data name="lblOtherCharges" xml:space="preserve">
+    <value>Other Chargesj</value>
+  </data>
+  <data name="lblOtherCharges1" xml:space="preserve">
+    <value>Other ChargersJ 1</value>
+  </data>
+  <data name="lblOtherCharges2" xml:space="preserve">
+    <value>Other ChargesJ 2</value>
+  </data>
+  <data name="lblPartDescription" xml:space="preserve">
+    <value>Part Descriptionj</value>
+  </data>
+  <data name="lblPartialShipmentAllowed" xml:space="preserve">
+    <value>Partial Shipment Allowedj</value>
+  </data>
+  <data name="lblPartNo" xml:space="preserve">
+    <value>Part Noj</value>
+  </data>
+  <data name="lblPartNoLatest" xml:space="preserve">
+    <value>Part No(Latest)j</value>
+  </data>
+  <data name="lblPassword" xml:space="preserve">
+    <value>Passwordj</value>
+  </data>
+  <data name="lblPaymentTerm" xml:space="preserve">
+    <value>Payment Termj</value>
+  </data>
+  <data name="lblPersonIncharge" xml:space="preserve">
+    <value>Person Inchargej</value>
+  </data>
+  <data name="lblPickingAllowed" xml:space="preserve">
+    <value>Picking Allowedj</value>
+  </data>
+  <data name="lblPreferedOrigins" xml:space="preserve">
+    <value>Prefered Originj</value>
+  </data>
+  <data name="lblPreferedOrigion" xml:space="preserve">
+    <value>Prefered Originsj</value>
+  </data>
+  <data name="lblPriceCode" xml:space="preserve">
+    <value>Price Codej</value>
+  </data>
+  <data name="lblPriceSettingCode" xml:space="preserve">
+    <value>Price Setting Codej</value>
+  </data>
+  <data name="lblProductionLot" xml:space="preserve">
+    <value>Production Lotj</value>
+  </data>
+  <data name="lblQuantityByUnit" xml:space="preserve">
+    <value>Quantity By Unitj</value>
+  </data>
+  <data name="lblQuotationNo" xml:space="preserve">
+    <value>Quotation Noj</value>
+  </data>
+  <data name="lblQuotationValidityDate" xml:space="preserve">
+    <value>Quotation Validity Datej</value>
+  </data>
+  <data name="lblReCalculate" xml:space="preserve">
+    <value>Re-Calculatej</value>
+  </data>
+  <data name="lblRecommendationNo" xml:space="preserve">
+    <value>Recommendation Noj</value>
+  </data>
+  <data name="lblRegion" xml:space="preserve">
+    <value>Regionj</value>
+  </data>
+  <data name="lblReNumbering" xml:space="preserve">
+    <value>Re Numberingj</value>
+  </data>
+  <data name="lblRequestedDeliveryTime" xml:space="preserve">
+    <value>Requested Delivery Timej</value>
+  </data>
+  <data name="lblRequestedTransferDate" xml:space="preserve">
+    <value>Req Transfer Datej</value>
+  </data>
+  <data name="lblReserve" xml:space="preserve">
+    <value>Reservej</value>
+  </data>
+  <data name="lblReserveStock" xml:space="preserve">
+    <value>Reserve Stockj</value>
+  </data>
+  <data name="lblReturnableCode" xml:space="preserve">
+    <value>Returnable Codej</value>
+  </data>
+  <data name="lblRole" xml:space="preserve">
+    <value>Rolej</value>
+  </data>
+  <data name="lblSaleOrderNo" xml:space="preserve">
+    <value>Sale Order Noj</value>
+  </data>
+  <data name="lblSalePriceList" xml:space="preserve">
+    <value>Sale Price Listj</value>
+  </data>
+  <data name="lblSalesPriceList" xml:space="preserve">
+    <value>Sales Price Listj</value>
+  </data>
+  <data name="lblSearchBy" xml:space="preserve">
+    <value>Search Byj</value>
+  </data>
+  <data name="lblSelectAll" xml:space="preserve">
+    <value>Select Allj</value>
+  </data>
+  <data name="lblSerialNo" xml:space="preserve">
+    <value>Serial Noj</value>
+  </data>
+  <data name="lblServiceNewsNo" xml:space="preserve">
+    <value>Service News Noj</value>
+  </data>
+  <data name="lblShippingAddress" xml:space="preserve">
+    <value>Shipping Addressj</value>
+  </data>
+  <data name="lblShippingCharges" xml:space="preserve">
+    <value>Shipping Chargesj</value>
+  </data>
+  <data name="lblSomeOfLineHaveErrorsDoYouWantToSeeErrorLog" xml:space="preserve">
+    <value>Some Of Line have errors do you want to see error log?j</value>
+  </data>
+  <data name="lblStatus" xml:space="preserve">
+    <value>Statusj</value>
+  </data>
+  <data name="lblStockTransferOrder" xml:space="preserve">
+    <value>Stock Transfer Orderj</value>
+  </data>
+  <data name="lblStockTransferOrderNo" xml:space="preserve">
+    <value>Stock Transfer Order Noj</value>
+  </data>
+  <data name="lblSubstitutionCode" xml:space="preserve">
+    <value>Substitution Codej</value>
+  </data>
+  <data name="lblSupplierBornDate" xml:space="preserve">
+    <value>Supplier Born Datej</value>
+  </data>
+  <data name="lblTaxRate" xml:space="preserve">
+    <value>Tax Ratej</value>
+  </data>
+  <data name="lblTotalCostPrice" xml:space="preserve">
+    <value>Total Cost Pricej</value>
+  </data>
+  <data name="lblTotalDiscount" xml:space="preserve">
+    <value>Total Discountj</value>
+  </data>
+  <data name="lblTotalNetAmount" xml:space="preserve">
+    <value>Total Net Amountj</value>
+  </data>
+  <data name="lblTotalPriceAmount" xml:space="preserve">
+    <value>Total Price Amountj</value>
+  </data>
+  <data name="lblTotalSellingPrice" xml:space="preserve">
+    <value>Total Selling Pricej</value>
+  </data>
+  <data name="lblTotalTax" xml:space="preserve">
+    <value>Total Taxj</value>
+  </data>
+  <data name="lblTotalWeight" xml:space="preserve">
+    <value>Total Weightj</value>
+  </data>
+  <data name="lblTransferRequestNo" xml:space="preserve">
+    <value>Transfer Req Noj</value>
+  </data>
+  <data name="lblTransferToWareHouse" xml:space="preserve">
+    <value>Transfer To WareHousej</value>
+  </data>
+  <data name="lblTransportation" xml:space="preserve">
+    <value>Transportationj</value>
+  </data>
+  <data name="lblTrsnsferOrderNo" xml:space="preserve">
+    <value>Transfer Order Noj</value>
+  </data>
+  <data name="lblUnitPrice" xml:space="preserve">
+    <value>UnitPricej</value>
+  </data>
+  <data name="lblUnloadingPort" xml:space="preserve">
+    <value>Unloading Portj</value>
+  </data>
+  <data name="lblUnProcess" xml:space="preserve">
+    <value>UnProcessj</value>
+  </data>
+  <data name="lblUsance" xml:space="preserve">
+    <value>Usancej</value>
+  </data>
+  <data name="lblUseCurrentNo" xml:space="preserve">
+    <value>Use Current Noj</value>
+  </data>
+  <data name="lblUseCurrentPrice" xml:space="preserve">
+    <value>Use Current Pricej</value>
+  </data>
+  <data name="lblUseHsCode" xml:space="preserve">
+    <value>Use HS Codej</value>
+  </data>
+  <data name="lblUseReserveStock" xml:space="preserve">
+    <value>Reserve Stockj</value>
+  </data>
+  <data name="lblUserId" xml:space="preserve">
+    <value>User Idj</value>
+  </data>
+  <data name="lblUserName" xml:space="preserve">
+    <value>User Namej</value>
+  </data>
+  <data name="lblWareHouse" xml:space="preserve">
+    <value>Ware Housej</value>
+  </data>
+  <data name="lblWareHouseFrom" xml:space="preserve">
+    <value>WareHouse Fromj</value>
+  </data>
+  <data name="lblWareHouses" xml:space="preserve">
+    <value>WareHousesj</value>
+  </data>
+  <data name="lblWareHouseTo" xml:space="preserve">
+    <value>WareHouse Toj</value>
+  </data>
+  <data name="lblWayOfGivingLineNo" xml:space="preserve">
+    <value>Way Of Giving Line Noj</value>
+  </data>
+  <data name="lblWeightgm" xml:space="preserve">
+    <value>Weight(gm)j</value>
+  </data>
+  <data name="Legends" xml:space="preserve">
+    <value>Legendsj</value>
+  </data>
+  <data name="LineNoDesc" xml:space="preserve">
+    <value>Line Noj</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Loginj</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logoutj</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>Masterj</value>
+  </data>
+  <data name="Master_lblDataBase" xml:space="preserve">
+    <value>Databasej</value>
+  </data>
+  <data name="ModelCodeDesc" xml:space="preserve">
+    <value>ModelCodej</value>
+  </data>
+  <data name="ModelGroupCodeDesc" xml:space="preserve">
+    <value>Model Group Cpodej</value>
+  </data>
+  <data name="MortalityDesc" xml:space="preserve">
+    <value>Mortalityj</value>
+  </data>
+  <data name="Msg119" xml:space="preserve">
+    <value>is successfully Converted to Stock Transfer Orderj</value>
+  </data>
+  <data name="MsgInfo1" xml:space="preserve">
+    <value>Selected operation could not be performed, Sales Order No is not presentj</value>
+  </data>
+  <data name="MsgInfo10" xml:space="preserve">
+    <value>No Data Exist for Search Creteriaj</value>
+  </data>
+  <data name="MsgInfo100" xml:space="preserve">
+    <value>invalid CSV formatj</value>
+  </data>
+  <data name="MsgInfo101" xml:space="preserve">
+    <value>No detail lines are present to be saved. Please enter some details first.j</value>
+  </data>
+  <data name="MsgInfo102" xml:space="preserve">
+    <value>Data has not been Exported successfullyj</value>
+  </data>
+  <data name="MsgInfo103" xml:space="preserve">
+    <value>Record(s) has been deletedj</value>
+  </data>
+  <data name="MsgInfo104" xml:space="preserve">
+    <value>No Record(s) Selectedj</value>
+  </data>
+  <data name="MsgInfo105" xml:space="preserve">
+    <value>Quotation could not be copied to Sales Order, some of the line(s) have invalid unit price. Do you want to view log file?j</value>
+  </data>
+  <data name="MsgInfo106" xml:space="preserve">
+    <value>Quotation could not be copied to sales Order. please revise the quotation. Do you want to view log file?j</value>
+  </data>
+  <data name="MsgInfo107" xml:space="preserve">
+    <value>OTYPYNErrorj</value>
+  </data>
+  <data name="MsgInfo108" xml:space="preserve">
+    <value>Sale Order Conditions data not existj</value>
+  </data>
+  <data name="MsgInfo109" xml:space="preserve">
+    <value>Condition data not exist for order noj</value>
+  </data>
+  <data name="MsgInfo11" xml:space="preserve">
+    <value>No data exist to printj</value>
+  </data>
+  <data name="MsgInfo110" xml:space="preserve">
+    <value>No Detail Is Present Against The Specified Order No.j</value>
+  </data>
+  <data name="MsgInfo111" xml:space="preserve">
+    <value>No rights assigned to userj</value>
+  </data>
+  <data name="MsgInfo112" xml:space="preserve">
+    <value>One of the supplied values (UserId,UserName,Password) exceeds the maximum limit allowed,please revise themj</value>
+  </data>
+  <data name="MsgInfo113" xml:space="preserve">
+    <value>User Already Exist..j</value>
+  </data>
+  <data name="MsgInfo114" xml:space="preserve">
+    <value>User Created Successfully.j</value>
+  </data>
+  <data name="MsgInfo115" xml:space="preserve">
+    <value>User Updated Successfullyj</value>
+  </data>
+  <data name="MsgInfo116" xml:space="preserve">
+    <value>Detail does not exist for this Transfer Request.j</value>
+  </data>
+  <data name="MsgInfo117" xml:space="preserve">
+    <value>Only Confirmed Request Can be Converted to ST.j</value>
+  </data>
+  <data name="MsgInfo118" xml:space="preserve">
+    <value>Transfer Requestj</value>
+  </data>
+  <data name="MsgInfo12" xml:space="preserve">
+    <value>The Detail data does not exists for the specifed Quotationj</value>
+  </data>
+  <data name="MsgInfo120" xml:space="preserve">
+    <value>Exchange rates missing against transfer expenses.j</value>
+  </data>
+  <data name="MsgInfo121" xml:space="preserve">
+    <value>Only numeric are allowedj</value>
+  </data>
+  <data name="MsgInfo122" xml:space="preserve">
+    <value>Invalid Part No/Quantityj</value>
+  </data>
+  <data name="MsgInfo123" xml:space="preserve">
+    <value>Record(s) has been deletedj</value>
+  </data>
+  <data name="MsgInfo124" xml:space="preserve">
+    <value>No Record(s) Selectedj</value>
+  </data>
+  <data name="MsgInfo125" xml:space="preserve">
+    <value>Selected Line Cannot be Deletedj</value>
+  </data>
+  <data name="MsgInfo126" xml:space="preserve">
+    <value>No data found against requested part no.j</value>
+  </data>
+  <data name="MsgInfo127" xml:space="preserve">
+    <value>Please perform Search proior to data exportj</value>
+  </data>
+  <data name="MsgInfo128" xml:space="preserve">
+    <value>Please Import the file first.j</value>
+  </data>
+  <data name="MsgInfo129" xml:space="preserve">
+    <value>plesae uplod filej</value>
+  </data>
+  <data name="MsgInfo13" xml:space="preserve">
+    <value>Quotation was created with Old List Price, so cannot be copiedj</value>
+  </data>
+  <data name="MsgInfo130" xml:space="preserve">
+    <value>Invalid file please upload csv file onlyj</value>
+  </data>
+  <data name="MsgInfo131" xml:space="preserve">
+    <value>csv file is emptyj</value>
+  </data>
+  <data name="MsgInfo132" xml:space="preserve">
+    <value>Invalid CSV Filej</value>
+  </data>
+  <data name="MsgInfo133" xml:space="preserve">
+    <value>Invoie data already exists.j</value>
+  </data>
+  <data name="MsgInfo134" xml:space="preserve">
+    <value>Picking data not found...!j</value>
+  </data>
+  <data name="MsgInfo135" xml:space="preserve">
+    <value>OperationSuccessfullj</value>
+  </data>
+  <data name="MsgInfo136" xml:space="preserve">
+    <value>Condition data dose not exist against the Order Noj</value>
+  </data>
+  <data name="MsgInfo137" xml:space="preserve">
+    <value>Exceptionj</value>
+  </data>
+  <data name="MsgInfo138" xml:space="preserve">
+    <value>Customer details does not exist for the specified Sales Order No.j</value>
+  </data>
+  <data name="MsgInfo139" xml:space="preserve">
+    <value>There is error in some rows.j</value>
+  </data>
+  <data name="MsgInfo14" xml:space="preserve">
+    <value>Copy To SO is not Allowed for specified Order Typej</value>
+  </data>
+  <data name="MsgInfo140" xml:space="preserve">
+    <value>Please Select Stock Pointj</value>
+  </data>
+  <data name="MsgInfo141" xml:space="preserve">
+    <value>Please revise requested quantity forj</value>
+  </data>
+  <data name="MsgInfo142" xml:space="preserve">
+    <value>Records updated successfully.j</value>
+  </data>
+  <data name="MsgInfo143" xml:space="preserve">
+    <value>No Change in Data !j</value>
+  </data>
+  <data name="MsgInfo144" xml:space="preserve">
+    <value>No detail lines are present to be saved. Please enter some details first.j</value>
+  </data>
+  <data name="MsgInfo145" xml:space="preserve">
+    <value>Data has been Exported successfullyj</value>
+  </data>
+  <data name="MsgInfo146" xml:space="preserve">
+    <value>LineNoj = </value>
+  </data>
+  <data name="MsgInfo147" xml:space="preserve">
+    <value> not enough stock. Record can not be updated.j</value>
+  </data>
+  <data name="MsgInfo148" xml:space="preserve">
+    <value>Unit Price entered is not valid. Record can not be updated.j</value>
+  </data>
+  <data name="MsgInfo149" xml:space="preserve">
+    <value>not enough stock. Record can not be updated.j</value>
+  </data>
+  <data name="MsgInfo15" xml:space="preserve">
+    <value>Please Perform Copy To SO Operation from Quotation Inquiry Screenj</value>
+  </data>
+  <data name="MsgInfo150" xml:space="preserve">
+    <value>Quantity entered is not valid. Record can not be updated.j</value>
+  </data>
+  <data name="MsgInfo151" xml:space="preserve">
+    <value>Part description entered is not valid. Record can not be updated.j</value>
+  </data>
+  <data name="MsgInfo152" xml:space="preserve">
+    <value>Part number entered is not valid. Record can not be updated.j</value>
+  </data>
+  <data name="MsgInfo153" xml:space="preserve">
+    <value>Entered Part's information was not found. Record can not be updated.j</value>
+  </data>
+  <data name="MsgInfo16" xml:space="preserve">
+    <value>Quotation can't be Cancelled as Quotation Detail Exists!j</value>
+  </data>
+  <data name="MsgInfo17" xml:space="preserve">
+    <value>Quotation cannot be confirmed as detail does not existj</value>
+  </data>
+  <data name="MsgInfo18" xml:space="preserve">
+    <value>No Record Foundj</value>
+  </data>
+  <data name="MsgInfo19" xml:space="preserve">
+    <value>Data saved successfullyj</value>
+  </data>
+  <data name="MsgInfo2" xml:space="preserve">
+    <value>Quotations status with cancelled can be deleted onlyj</value>
+  </data>
+  <data name="MsgInfo20" xml:space="preserve">
+    <value>Are you sure you want to delete selected part?j</value>
+  </data>
+  <data name="MsgInfo21" xml:space="preserve">
+    <value>Maximum allowed limit is 9j</value>
+  </data>
+  <data name="MsgInfo22" xml:space="preserve">
+    <value>Maximum allowed limit is 6j</value>
+  </data>
+  <data name="MsgInfo23" xml:space="preserve">
+    <value>Maximum allowed limit is 20j</value>
+  </data>
+  <data name="MsgInfo24" xml:space="preserve">
+    <value>Text Not allowed in quotation no fieldj</value>
+  </data>
+  <data name="MsgInfo25" xml:space="preserve">
+    <value>An Error Occured While Deleting Partsj</value>
+  </data>
+  <data name="MsgInfo26" xml:space="preserve">
+    <value>An Error Occured While performing calculationj</value>
+  </data>
+  <data name="MsgInfo27" xml:space="preserve">
+    <value>invalid file Formatej</value>
+  </data>
+  <data name="MsgInfo28" xml:space="preserve">
+    <value>Please Select CSV Filej</value>
+  </data>
+  <data name="MsgInfo29" xml:space="preserve">
+    <value>Part Number cannot be repeated within the Quotationj</value>
+  </data>
+  <data name="MsgInfo3" xml:space="preserve">
+    <value>An error Occuredj</value>
+  </data>
+  <data name="MsgInfo30" xml:space="preserve">
+    <value>Requested Quantity cannot be greater than the Order Limit, Please revise itj</value>
+  </data>
+  <data name="MsgInfo31" xml:space="preserve">
+    <value>Duplicate Part Numberj</value>
+  </data>
+  <data name="MsgInfo32" xml:space="preserve">
+    <value>, Please revise the order quantity for Line Numberj</value>
+  </data>
+  <data name="MsgInfo33" xml:space="preserve">
+    <value>Please Enter Quotation Noj</value>
+  </data>
+  <data name="MsgInfo34" xml:space="preserve">
+    <value>Quotation successfully converted to sale Orderj</value>
+  </data>
+  <data name="MsgInfo35" xml:space="preserve">
+    <value>User Id must be less than 10 charactersj</value>
+  </data>
+  <data name="MsgInfo36" xml:space="preserve">
+    <value>User Name  must be less than 20 charactersj</value>
+  </data>
+  <data name="MsgInfo37" xml:space="preserve">
+    <value>Password Cannot exceed 15 charactersj</value>
+  </data>
+  <data name="MsgInfo38" xml:space="preserve">
+    <value>Password Must be 5 Charcaters and abovej</value>
+  </data>
+  <data name="MsgInfo39" xml:space="preserve">
+    <value>Invalid Email Addressj</value>
+  </data>
+  <data name="MsgInfo4" xml:space="preserve">
+    <value>Only Confirmed Quotation can be copied to Sales Orderj</value>
+  </data>
+  <data name="MsgInfo40" xml:space="preserve">
+    <value>No Rights Allocated to Userj</value>
+  </data>
+  <data name="MsgInfo41" xml:space="preserve">
+    <value>Role Registration Errorj</value>
+  </data>
+  <data name="MsgInfo42" xml:space="preserve">
+    <value>Mininum password length is 4j</value>
+  </data>
+  <data name="MsgInfo43" xml:space="preserve">
+    <value>Confirm password dose not match with New passwordj</value>
+  </data>
+  <data name="MsgInfo44" xml:space="preserve">
+    <value>Invalid username/passwordj</value>
+  </data>
+  <data name="MsgInfo45" xml:space="preserve">
+    <value>Enter PartNo OR Statusj</value>
+  </data>
+  <data name="MsgInfo46" xml:space="preserve">
+    <value>Data has been Exported successfullyj</value>
+  </data>
+  <data name="MsgInfo47" xml:space="preserve">
+    <value>Please Perform Convert To Order Operation from Stock Transfer Inquiry Screenj</value>
+  </data>
+  <data name="MsgInfo48" xml:space="preserve">
+    <value>Quotation cannot be confirmed as detail does not existj</value>
+  </data>
+  <data name="MsgInfo49" xml:space="preserve">
+    <value>Data Updated successfullyj</value>
+  </data>
+  <data name="MsgInfo5" xml:space="preserve">
+    <value>Please Specify Date Fromj</value>
+  </data>
+  <data name="MsgInfo50" xml:space="preserve">
+    <value>Detail does not exist for this Transfer Requestj</value>
+  </data>
+  <data name="MsgInfo51" xml:space="preserve">
+    <value>Please Enter Transfer Request Noj</value>
+  </data>
+  <data name="MsgInfo52" xml:space="preserve">
+    <value>Please select csv  filej</value>
+  </data>
+  <data name="MsgInfo53" xml:space="preserve">
+    <value>invalid file Formatej</value>
+  </data>
+  <data name="MsgInfo54" xml:space="preserve">
+    <value>Please select CSV File to uploadj</value>
+  </data>
+  <data name="MsgInfo55" xml:space="preserve">
+    <value>An error occured while uploading filej</value>
+  </data>
+  <data name="MsgInfo56" xml:space="preserve">
+    <value>Some lines were not converted to order,would you like to view log ?j</value>
+  </data>
+  <data name="MsgInfo57" xml:space="preserve">
+    <value>Detail contain error line so it cannot be convertedj</value>
+  </data>
+  <data name="MsgInfo58" xml:space="preserve">
+    <value>Please enter at least one Part Noj</value>
+  </data>
+  <data name="MsgInfo59" xml:space="preserve">
+    <value>Please enter Part Noj</value>
+  </data>
+  <data name="MsgInfo6" xml:space="preserve">
+    <value>From date can not be greater than To date.j</value>
+  </data>
+  <data name="MsgInfo60" xml:space="preserve">
+    <value>Are you sure you want to delete selected record?j</value>
+  </data>
+  <data name="MsgInfo61" xml:space="preserve">
+    <value>Please Perform Copy To SO Operation  from Consignment Inquiry Screenj</value>
+  </data>
+  <data name="MsgInfo62" xml:space="preserve">
+    <value>status cannot be changed as detail dose not existj</value>
+  </data>
+  <data name="MsgInfo63" xml:space="preserve">
+    <value>Record Inserted Successfullyj</value>
+  </data>
+  <data name="MsgInfo64" xml:space="preserve">
+    <value>Please enter Order Noj</value>
+  </data>
+  <data name="MsgInfo65" xml:space="preserve">
+    <value>Only confirmed order can be processed..!j</value>
+  </data>
+  <data name="MsgInfo66" xml:space="preserve">
+    <value>Error occured during processingj</value>
+  </data>
+  <data name="MsgInfo67" xml:space="preserve">
+    <value>Please generate invoice first !j</value>
+  </data>
+  <data name="MsgInfo68" xml:space="preserve">
+    <value>Quotation can not be copied with selected Options,As detail doese not existj</value>
+  </data>
+  <data name="MsgInfo69" xml:space="preserve">
+    <value>Please enter the order noj</value>
+  </data>
+  <data name="MsgInfo7" xml:space="preserve">
+    <value>An error occures while deleting recordj</value>
+  </data>
+  <data name="MsgInfo70" xml:space="preserve">
+    <value>Login failed for userj</value>
+  </data>
+  <data name="MsgInfo71" xml:space="preserve">
+    <value>Invalid DataBasej</value>
+  </data>
+  <data name="MsgInfo72" xml:space="preserve">
+    <value>wrong old passwordj</value>
+  </data>
+  <data name="MsgInfo73" xml:space="preserve">
+    <value>New entered password is same as existing password.Chose different passwordj</value>
+  </data>
+  <data name="MsgInfo74" xml:space="preserve">
+    <value>Password updation process failedj</value>
+  </data>
+  <data name="MsgInfo75" xml:space="preserve">
+    <value>Password successfully updatedj</value>
+  </data>
+  <data name="MsgInfo76" xml:space="preserve">
+    <value>No record exist against search criteriaj</value>
+  </data>
+  <data name="MsgInfo77" xml:space="preserve">
+    <value>Plese enter sale order noj</value>
+  </data>
+  <data name="MsgInfo78" xml:space="preserve">
+    <value>Plese enter distributor order noj</value>
+  </data>
+  <data name="MsgInfo79" xml:space="preserve">
+    <value>No Data Found for the specified criteria. Please Check again with different inputs.j</value>
+  </data>
+  <data name="MsgInfo8" xml:space="preserve">
+    <value>Quotations status with cancelled can be deleted onlyj</value>
+  </data>
+  <data name="MsgInfo80" xml:space="preserve">
+    <value>Enter part no OR select statusj</value>
+  </data>
+  <data name="MsgInfo81" xml:space="preserve">
+    <value>Input atleast one part Noj</value>
+  </data>
+  <data name="MsgInfo82" xml:space="preserve">
+    <value>No record exist against entered criteria try different criteriaj</value>
+  </data>
+  <data name="MsgInfo83" xml:space="preserve">
+    <value>Invoice already exist For Selected Order Noj</value>
+  </data>
+  <data name="MsgInfo84" xml:space="preserve">
+    <value>Generated Invoice no against Order Noj</value>
+  </data>
+  <data name="MsgInfo85" xml:space="preserve">
+    <value>isj</value>
+  </data>
+  <data name="MsgInfo86" xml:space="preserve">
+    <value>Some thing went wrongj</value>
+  </data>
+  <data name="MsgInfo87" xml:space="preserve">
+    <value>Only confirmed order can be processed..!j</value>
+  </data>
+  <data name="MsgInfo88" xml:space="preserve">
+    <value>Cannot copy quotation because it contains consignment part(s).j</value>
+  </data>
+  <data name="MsgInfo89" xml:space="preserve">
+    <value>Detail does not exist Quotation can not be copied with selected Options!j</value>
+  </data>
+  <data name="MsgInfo9" xml:space="preserve">
+    <value>Record successfuly deletedj</value>
+  </data>
+  <data name="MsgInfo90" xml:space="preserve">
+    <value>Some of the line have error(s)j</value>
+  </data>
+  <data name="MsgInfo91" xml:space="preserve">
+    <value>Invalid Part No/Quantityj</value>
+  </data>
+  <data name="MsgInfo92" xml:space="preserve">
+    <value>Some of the part no/quantity exceeds maximum allowed limit,please revise themj</value>
+  </data>
+  <data name="MsgInfo93" xml:space="preserve">
+    <value>Record has been update successfullyj</value>
+  </data>
+  <data name="MsgInfo94" xml:space="preserve">
+    <value>Cannot use consignment Part(s).j</value>
+  </data>
+  <data name="MsgInfo95" xml:space="preserve">
+    <value>Discount Amount should be less than Unit Pricej</value>
+  </data>
+  <data name="MsgInfo96" xml:space="preserve">
+    <value>Quotatoin cannot be completed, Part Number cannot be repeated within the Quotationj</value>
+  </data>
+  <data name="MsgInfo97" xml:space="preserve">
+    <value>Quotation cannot be completed, Requested Quantity cannot be greater than the Order Limit, Please revise itj</value>
+  </data>
+  <data name="MsgInfo98" xml:space="preserve">
+    <value>Detail lines could not be imported from CSV File.j</value>
+  </data>
+  <data name="MsgInfo99" xml:space="preserve">
+    <value>Data in the file is not appropriate to be imported.j</value>
+  </data>
+  <data name="MultiplePartsStockInquiry" xml:space="preserve">
+    <value>Multiple Parts Stock Inquiryj</value>
+  </data>
+  <data name="OrderConfirmation" xml:space="preserve">
+    <value>Order Confirmationj</value>
+  </data>
+  <data name="OrderConfirmationReportView" xml:space="preserve">
+    <value>OrderConfirmationReportViewj</value>
+  </data>
+  <data name="OrderDateDesc" xml:space="preserve">
+    <value>Order Datej</value>
+  </data>
+  <data name="OrderQuantityDesc" xml:space="preserve">
+    <value>Order Quantityj</value>
+  </data>
+  <data name="OrderStatusInquiryByOrderNo" xml:space="preserve">
+    <value>Order Status Inquiry By OrderNoj</value>
+  </data>
+  <data name="OrderStatusInquiryByPartNo" xml:space="preserve">
+    <value>Order Status Inquiry By Part Noj</value>
+  </data>
+  <data name="OrderTypeDesc" xml:space="preserve">
+    <value>Order Typej</value>
+  </data>
+  <data name="PackedQuantityDesc" xml:space="preserve">
+    <value>Packed Quantityj</value>
+  </data>
+  <data name="PartMasterInquiry" xml:space="preserve">
+    <value>Part Master Inquiryj</value>
+  </data>
+  <data name="PartsOperation" xml:space="preserve">
+    <value>Parts Operationj</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Passwordj</value>
+  </data>
+  <data name="PersonInchargeDesc" xml:space="preserve">
+    <value>Person Inchargej</value>
+  </data>
+  <data name="PickingInstructedDesc" xml:space="preserve">
+    <value>Picking Instructedj</value>
+  </data>
+  <data name="PrintLeadTimeDesc" xml:space="preserve">
+    <value>Print Lead timej</value>
+  </data>
+  <data name="ProductionLotDesc" xml:space="preserve">
+    <value>Production Lotj</value>
+  </data>
+  <data name="QuantityByUnitDesc" xml:space="preserve">
+    <value>Quantity By Unitj</value>
+  </data>
+  <data name="Quotation" xml:space="preserve">
+    <value>Quotationj</value>
+  </data>
+  <data name="QuotationCondition" xml:space="preserve">
+    <value>Quotation Conditionj</value>
+  </data>
+  <data name="QuotationCopy" xml:space="preserve">
+    <value>Quotation Copyj</value>
+  </data>
+  <data name="QuotationDetail" xml:space="preserve">
+    <value>Quotation Detailsj</value>
+  </data>
+  <data name="QuotationInquiry" xml:space="preserve">
+    <value>Quotation Inquiryj</value>
+  </data>
+  <data name="RequestedPartNoDesc" xml:space="preserve">
+    <value>Requested Part Noj</value>
+  </data>
+  <data name="RequestedQuantityDesc" xml:space="preserve">
+    <value>Requested Quantityj</value>
+  </data>
+  <data name="ReturnableCodeDesc" xml:space="preserve">
+    <value>ReturnableCodej</value>
+  </data>
+  <data name="SalesOrder" xml:space="preserve">
+    <value>Sales Orderj</value>
+  </data>
+  <data name="SalesOrderNoDesc" xml:space="preserve">
+    <value>Sales Order Noj</value>
+  </data>
+  <data name="ServiceAndSupport" xml:space="preserve">
+    <value>Service &amp; Supportj</value>
+  </data>
+  <data name="ServiceNewsNumberDesc" xml:space="preserve">
+    <value>Service News Numberj</value>
+  </data>
+  <data name="ShippingInstructedDesc" xml:space="preserve">
+    <value>Shipping Instructedj</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign Inj</value>
+  </data>
+  <data name="StockAllocatedDesc" xml:space="preserve">
+    <value>Stock Allocatedj</value>
+  </data>
+  <data name="StockAvailableDesc" xml:space="preserve">
+    <value>Stock Availablej</value>
+  </data>
+  <data name="StockInquiry" xml:space="preserve">
+    <value>Stock Inquiryj</value>
+  </data>
+  <data name="StockStatus" xml:space="preserve">
+    <value>Stock Statusj</value>
+  </data>
+  <data name="StockTransferRequestCondition" xml:space="preserve">
+    <value>Stock Transfer Request Conditionj</value>
+  </data>
+  <data name="StockTransferRequestDetail" xml:space="preserve">
+    <value>Stock Transfer Request Detailj</value>
+  </data>
+  <data name="StockTransferRequestInquiry" xml:space="preserve">
+    <value>Stock Transfer Request Inquiryj</value>
+  </data>
+  <data name="StrategicStock" xml:space="preserve">
+    <value>Strategic Stockj</value>
+  </data>
+  <data name="SubLineNoDesc" xml:space="preserve">
+    <value>Sub Line Noj</value>
+  </data>
+  <data name="SupplierBornDateDesc" xml:space="preserve">
+    <value>Supplier Born Datej</value>
+  </data>
+  <data name="SystemSupport" xml:space="preserve">
+    <value>System Supportj</value>
+  </data>
+  <data name="TaxAmountDesc" xml:space="preserve">
+    <value>Tax Amountj</value>
+  </data>
+  <data name="Test" xml:space="preserve">
+    <value>Testj</value>
+  </data>
+  <data name="th0001FreeStockQuantity" xml:space="preserve">
+    <value>0001(FSQ)j</value>
+  </data>
+  <data name="th0001FreeStockQuantityDesc" xml:space="preserve">
+    <value>Free Stock Quantity in Warehouse 0001j</value>
+  </data>
+  <data name="th0011FreeStockQuantity" xml:space="preserve">
+    <value>0011(FSQ)j</value>
+  </data>
+  <data name="th0011FreeStockQuantityDesc" xml:space="preserve">
+    <value>Free Stock Quantity in Ware House 0011j</value>
+  </data>
+  <data name="th0021FreeStockQuantity" xml:space="preserve">
+    <value>0021(FSQ)j</value>
+  </data>
+  <data name="th0021FreeStockQuantityDesc" xml:space="preserve">
+    <value>Free stock Quantity in Ware House 0021j</value>
+  </data>
+  <data name="thAcceptedQuantity" xml:space="preserve">
+    <value>Aqj</value>
+  </data>
+  <data name="thAccessLevel" xml:space="preserve">
+    <value>Access Levelj</value>
+  </data>
+  <data name="thBackOrder" xml:space="preserve">
+    <value>Boj</value>
+  </data>
+  <data name="thBoxQuantity" xml:space="preserve">
+    <value>Box Quantityj</value>
+  </data>
+  <data name="thCancelled" xml:space="preserve">
+    <value>CNCj</value>
+  </data>
+  <data name="thCancelledQuantity" xml:space="preserve">
+    <value>Cancelled Quantityj</value>
+  </data>
+  <data name="thCharacterCode" xml:space="preserve">
+    <value>CCj</value>
+  </data>
+  <data name="thCommodityCodeNew" xml:space="preserve">
+    <value>CC(New)j</value>
+  </data>
+  <data name="thCommodityCodeOld" xml:space="preserve">
+    <value>CG(Old)j</value>
+  </data>
+  <data name="thCommodityGroupCodeNew" xml:space="preserve">
+    <value>CGC(New)j</value>
+  </data>
+  <data name="thCommodityGroupCodeOld" xml:space="preserve">
+    <value>CGC(Old)j</value>
+  </data>
+  <data name="thCountry" xml:space="preserve">
+    <value>Countryj</value>
+  </data>
+  <data name="thCountryOfOrigin" xml:space="preserve">
+    <value>CTOj</value>
+  </data>
+  <data name="thCreatinDate" xml:space="preserve">
+    <value>CreationDatej</value>
+  </data>
+  <data name="thCreationDate" xml:space="preserve">
+    <value>Creation Datej</value>
+  </data>
+  <data name="thCTO" xml:space="preserve">
+    <value>CTOj</value>
+  </data>
+  <data name="thCurrency" xml:space="preserve">
+    <value>Curj</value>
+  </data>
+  <data name="thDiscountPerItem" xml:space="preserve">
+    <value>DPIj</value>
+  </data>
+  <data name="thDistributorCode" xml:space="preserve">
+    <value>DB Codej</value>
+  </data>
+  <data name="thDistributorName" xml:space="preserve">
+    <value>DB Namej</value>
+  </data>
+  <data name="thDistributorOrderNo" xml:space="preserve">
+    <value>DB.R.Noj</value>
+  </data>
+  <data name="thEOReserveQuantity" xml:space="preserve">
+    <value>EORQj</value>
+  </data>
+  <data name="thError" xml:space="preserve">
+    <value>Errorj</value>
+  </data>
+  <data name="thErrorDescription" xml:space="preserve">
+    <value>Error Descriptionj</value>
+  </data>
+  <data name="thExpiryDate" xml:space="preserve">
+    <value>Expiry Datej</value>
+  </data>
+  <data name="thHSCodeLocal" xml:space="preserve">
+    <value>HSCLj</value>
+  </data>
+  <data name="thInterchangeability" xml:space="preserve">
+    <value>INTCj</value>
+  </data>
+  <data name="thInterChangeableCode" xml:space="preserve">
+    <value>InterChangeable Codej</value>
+  </data>
+  <data name="thInvoiced" xml:space="preserve">
+    <value>INVj</value>
+  </data>
+  <data name="thInvoiceNo" xml:space="preserve">
+    <value>Invoice Noj</value>
+  </data>
+  <data name="thKLTDLeadProductionPerMonth" xml:space="preserve">
+    <value>KLTD LTj</value>
+  </data>
+  <data name="thKLTDLocation" xml:space="preserve">
+    <value>KLTD Locationj</value>
+  </data>
+  <data name="thKLTDTotal" xml:space="preserve">
+    <value>KLTD Totalj</value>
+  </data>
+  <data name="thKMEEOReserve" xml:space="preserve">
+    <value>KME EORj</value>
+  </data>
+  <data name="thKMEListPrice" xml:space="preserve">
+    <value>KME LPRj</value>
+  </data>
+  <data name="thKMEOnOrder" xml:space="preserve">
+    <value>KME On Orderj</value>
+  </data>
+  <data name="thKMEStock" xml:space="preserve">
+    <value>KME Stockj</value>
+  </data>
+  <data name="thLatestPartNumber" xml:space="preserve">
+    <value>LPNj</value>
+  </data>
+  <data name="thLineNo" xml:space="preserve">
+    <value>LNj</value>
+  </data>
+  <data name="thModelCode" xml:space="preserve">
+    <value>MCj</value>
+  </data>
+  <data name="thModelGroupCode" xml:space="preserve">
+    <value>MGCj</value>
+  </data>
+  <data name="thMortality" xml:space="preserve">
+    <value>Mortalityj</value>
+  </data>
+  <data name="thOnOrderQuantity" xml:space="preserve">
+    <value>OOQj</value>
+  </data>
+  <data name="thOrderDate" xml:space="preserve">
+    <value>Odj</value>
+  </data>
+  <data name="thOrderQuantity" xml:space="preserve">
+    <value>O.Qtyj</value>
+  </data>
+  <data name="thOrderRank" xml:space="preserve">
+    <value>Order Rankj</value>
+  </data>
+  <data name="thOrderRecievedDate" xml:space="preserve">
+    <value>Order Recieved Datej</value>
+  </data>
+  <data name="thOrderType" xml:space="preserve">
+    <value>Otj</value>
+  </data>
+  <data name="thOthers" xml:space="preserve">
+    <value>Othersj</value>
+  </data>
+  <data name="thPackedQuantity" xml:space="preserve">
+    <value>PPCj</value>
+  </data>
+  <data name="thPartDescription" xml:space="preserve">
+    <value>Part descriptionj</value>
+  </data>
+  <data name="thPartNo" xml:space="preserve">
+    <value>Part Noj</value>
+  </data>
+  <data name="thPersonIncharge" xml:space="preserve">
+    <value>PICj</value>
+  </data>
+  <data name="thPickingInstructed" xml:space="preserve">
+    <value>Pij</value>
+  </data>
+  <data name="thPriceAmount" xml:space="preserve">
+    <value>Price Amountj</value>
+  </data>
+  <data name="thPrintLeadTime" xml:space="preserve">
+    <value>PLTj</value>
+  </data>
+  <data name="thProcessedPartNo" xml:space="preserve">
+    <value>Processed Part Noj</value>
+  </data>
+  <data name="thProductionLot" xml:space="preserve">
+    <value>PLj</value>
+  </data>
+  <data name="thQuantityByUnit" xml:space="preserve">
+    <value>QBUj</value>
+  </data>
+  <data name="thQuotationNo" xml:space="preserve">
+    <value>Quotation Noj</value>
+  </data>
+  <data name="thQuotationSubNo" xml:space="preserve">
+    <value>Revision Noj</value>
+  </data>
+  <data name="thRegistrationDate" xml:space="preserve">
+    <value>Registration Datej</value>
+  </data>
+  <data name="thRegistrstionDate" xml:space="preserve">
+    <value>Registration Datej</value>
+  </data>
+  <data name="thRejectedQuantity" xml:space="preserve">
+    <value>Rejected Quantityj</value>
+  </data>
+  <data name="thRemarks" xml:space="preserve">
+    <value>Remarksj</value>
+  </data>
+  <data name="thRequestedPartNo" xml:space="preserve">
+    <value>Req Part Noj</value>
+  </data>
+  <data name="thRequestedQuantity" xml:space="preserve">
+    <value>RQj</value>
+  </data>
+  <data name="thReturnableCode" xml:space="preserve">
+    <value>RCj</value>
+  </data>
+  <data name="thSaleOrderNo" xml:space="preserve">
+    <value>Sale Order Noj</value>
+  </data>
+  <data name="thSalesOrderNo" xml:space="preserve">
+    <value>SO.NO.j</value>
+  </data>
+  <data name="thSalesOrderType" xml:space="preserve">
+    <value>Sales Order Typej</value>
+  </data>
+  <data name="thSelect" xml:space="preserve">
+    <value>Selectj</value>
+  </data>
+  <data name="thSellingPrice" xml:space="preserve">
+    <value>Selling Pricej</value>
+  </data>
+  <data name="thServiceNewsNumber" xml:space="preserve">
+    <value>SSNj</value>
+  </data>
+  <data name="thShippingInstructed" xml:space="preserve">
+    <value>Sij</value>
+  </data>
+  <data name="thStatus" xml:space="preserve">
+    <value>Statusj</value>
+  </data>
+  <data name="thStockAllocated" xml:space="preserve">
+    <value>Saj</value>
+  </data>
+  <data name="thStockAllocatedQuantity" xml:space="preserve">
+    <value>Stock Allocated Quantityj</value>
+  </data>
+  <data name="thStockAvailable" xml:space="preserve">
+    <value>SAj</value>
+  </data>
+  <data name="thSubLineNo" xml:space="preserve">
+    <value>SLNj</value>
+  </data>
+  <data name="thSuppliedPartNo" xml:space="preserve">
+    <value>Supplied Part Noj</value>
+  </data>
+  <data name="thSupplierBornDate" xml:space="preserve">
+    <value>Sup B. Datej</value>
+  </data>
+  <data name="thTaxAmount" xml:space="preserve">
+    <value>Taj</value>
+  </data>
+  <data name="thTaxRate" xml:space="preserve">
+    <value>Tax Ratej</value>
+  </data>
+  <data name="thTotalNetAmount" xml:space="preserve">
+    <value>Total Net Amountj</value>
+  </data>
+  <data name="thTotalPriceAmount" xml:space="preserve">
+    <value>Total Price Amountj</value>
+  </data>
+  <data name="thTransferOrderNo" xml:space="preserve">
+    <value>Transfer Order Noj</value>
+  </data>
+  <data name="thTransferQuantity" xml:space="preserve">
+    <value>Transfer Qtyj</value>
+  </data>
+  <data name="thTransferRequestNo" xml:space="preserve">
+    <value>Transfer Request Noj</value>
+  </data>
+  <data name="thUnitPrice" xml:space="preserve">
+    <value>Unit Pricej</value>
+  </data>
+  <data name="thUnprocess" xml:space="preserve">
+    <value>UNPj</value>
+  </data>
+  <data name="thUserId" xml:space="preserve">
+    <value>User Idj</value>
+  </data>
+  <data name="thUserName" xml:space="preserve">
+    <value>User Namej</value>
+  </data>
+  <data name="thWareHouse" xml:space="preserve">
+    <value>WareHousej</value>
+  </data>
+  <data name="thWeight" xml:space="preserve">
+    <value>Weightj</value>
+  </data>
+  <data name="thWeightgm" xml:space="preserve">
+    <value>Weight(gm)j</value>
+  </data>
+  <data name="UnprocessDesc" xml:space="preserve">
+    <value>Unprocessj</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Userj</value>
+  </data>
+  <data name="UserCreation" xml:space="preserve">
+    <value>User Creationj</value>
+  </data>
+  <data name="UserInquiry" xml:space="preserve">
+    <value>User Inquiryj</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User Namej</value>
+  </data>
+  <data name="ViewReport" xml:space="preserve">
+    <value>View Reportj</value>
+  </data>
+  <data name="WareHouseStockStatus" xml:space="preserve">
+    <value>Ware House Stock Statusj</value>
+  </data>
+  <data name="WareHouseStockStatusMultipleParts" xml:space="preserve">
+    <value>WareHouse Stock Status (Multiple Parts)j</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Helloj</value>
+  </data>
+  <data name="WelcomeKME" xml:space="preserve">
+    <value>Welcome toj</value>
+  </data>
+  <data name="WelcomeKMEName" xml:space="preserve">
+    <value>Komatsuj</value>
+  </data>
+  <data name="WelcomeKMERegion" xml:space="preserve">
+    <value>Middle Eastj</value>
+  </data>
+  <data name="KMEEORQDesc" xml:space="preserve">
+    <value>KME Emergency Reserve Qty</value>
+    <comment>20160311</comment>
+  </data>
+  <data name="thKMEEORQ" xml:space="preserve">
+    <value>KME EOR</value>
+    <comment>20160311</comment>
+  </data>
+</root>

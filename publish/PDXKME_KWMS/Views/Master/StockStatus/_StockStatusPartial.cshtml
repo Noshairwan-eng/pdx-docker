@@ -1,0 +1,100 @@
+﻿  
+ @{
+     string str = "";
+     if (Session["Error"]!=null && Session["Error"].ToString()!="")
+     {
+         str = Session["Error"].ToString();
+     }
+ }
+
+@if (ViewData.Model != null)
+{
+     
+     <div id="main" class="datagrid table-responsive" >
+    <table class="table table-striped table-hover">
+ <thead> 
+ <tr class="gridHead">
+ @foreach (var item in ViewBag.Columns)
+ {
+     if (item.ToString()=="PartNo")
+     {
+      <th style=" text-align:left">     
+     @item.ToString()
+     </th>
+     }
+     else
+     {
+      <th style=" text-align:right">        
+     @item.ToString()
+     </th>
+     }
+
+
+ }
+</tr>
+
+
+ </thead>
+ <tbody>
+ 
+@foreach (var item in ViewData.Model)
+{
+<tr class="gridRow"> 
+ @for (int i = 0; i < Enumerable.Count(ViewBag.Columns); i++)
+ {
+     if (i==0)
+     {
+          <td style=" text-align:left"> @item[i].ToString() </td>
+     }
+     else
+     {
+        <td style=" text-align:right"> <label style="color: rgb(51, 51, 51) !important;font-family: verdana !important;font-size: 10px !important;font-weight: normal;margin-right: 3px !important;">@item[i].ToString() </label>       </td>
+     }
+
+
+ }
+
+
+ </tr>   
+}
+
+
+ </tbody>
+</table>
+    
+    
+    </div>
+    <script>
+        $("#btnExport").removeAttr("disabled");
+        
+    </script>
+}
+else
+{
+    <script>
+        $("#btnExport").attr("disabled", true);
+        
+        
+        </script>
+}
+
+  <script type="text/javascript">
+ 
+      $(document).ready(function () {
+          // lblMessage = "@Session["Error"].ToString()"; 
+          var error = "@str";
+          if (error != "") {
+
+
+              txtError = "@str";
+              txtErrorType = "@Session["ErrorType"].ToString()";
+              DisplayModal(txtErrorType, txtError);
+              $("#btnExportData").attr("disabled", true);
+              $("#ddlFileType").attr("disabled", true);
+          }
+      }); 
+
+  </script>
+
+
+

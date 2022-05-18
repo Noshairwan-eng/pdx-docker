@@ -1,0 +1,48 @@
+﻿@if ( Session["dtErrorRows"]!=null)
+{
+    <script type="text/javascript">
+      //  $('#LogModal').off('hidden');
+        //  $("#lblLogModal").html("Some lines were not converted to order,would you like to view log ?").attr("style", "color:red !important");
+        txtError = "@HttpContext.Current.Session["Error"].ToString()";
+      
+        $("#lblLogModal").html("@Resources.Resource.MsgInfo56").attr("style", "color:red !important");
+        var img = $('<img id="dynamic">');
+        img.attr('src', '@Url.Content("~/Images/error.png")');
+        img.prependTo('#lblLogModal');        
+        $("#LogModal").modal('show');
+
+      
+    </script>
+}
+
+else if (Session["Error"] != null && Session["Error"].ToString().Contains("errors"))
+{
+    
+    <script>
+        //  $('#LogModal').off('hidden');
+        $("#dynamicImage").remove();
+        //        $("#lblMessage").html("Detail contain error line so it cannot be converted ").attr("style", "color:red !important");
+        $("#lblMessage").html("@Resources.Resource.MsgInfo57").attr("style", "color:red !important");
+        var img = $('<img id="dynamicImage">');
+        img.attr('src', '@Url.Content("~/Images/error.png")');
+    
+        img.prependTo('#divModalBody');
+        $("#ErrorModal").modal('show');
+      
+
+       // $('#LogModal').off('hidden.bs.modal');
+    </script>
+    
+    
+    
+}
+else
+{
+      <script>
+        txtError= "@Session["Error"].ToString()";
+        txtErrorType="@Session["ErrorType"].ToString()";
+       DisplayModal(txtErrorType,txtError) ;
+          $("#MessageModal").modal();
+       </script>
+     
+}

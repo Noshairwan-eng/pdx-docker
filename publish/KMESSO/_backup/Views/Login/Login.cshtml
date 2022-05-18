@@ -1,0 +1,602 @@
+﻿@*hst001 : Noshairwan Farooq |25-01-2022| Made change so users can update password if it is expired.*@ 
+
+@{
+    Layout = null;
+    ViewBag.Title = "SSO - Login";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KME Distributor Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+    <script src="~/Scripts/Messages/ModalHelper.js" type="text/javascript"></script>
+    <script src="~/Scripts/Jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <link href="~/Content/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Bootstrap/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/BootStrap/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/BootStrap/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/JqueryUI/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/spin.js" type="text/javascript"></script>
+    <style type="text/css">
+
+        .FormGroupTopMargin {
+            /*margin-top:20%;*/
+            padding-left: 5%;
+        }
+
+        .ControllWidth {
+            width: 95%;
+        }
+
+        @@media screen and (min-width:1075px) {
+            #LeftSignInPortion {
+                width: 33% !important;
+                margin-right: 8%;
+            }
+        }
+
+        @@media screen and (max-width:1075px) {
+            .ControllWidth {
+                width: 95% !important;
+            }
+        }
+
+        @@media screen and (max-width:840px) {
+            .btnStyleLogin {
+                width: 110px !important;
+                padding: 0 !important;
+            }
+        }
+
+        @@media screen and (max-width:768px) {
+            .btnStyleLogin {
+                width: 100px !important;
+                padding: 0 !important;
+            }
+        }
+
+        @@media screen and (max-width:767px) {
+            .LoginRightSide {
+                display: none !important;
+            }
+
+            #LeftSignInPortion {
+                width: 60% !important;
+                margin-left: 15%;
+            }
+        }
+
+        @@media screen and (max-width: 580px) {
+            #LeftSignInPortion {
+                width: 70% !important;
+                margin-left: 13%;
+            }
+        }
+
+        @@media screen and (max-width: 440px) {
+            .btnStyleLogin {
+                width: 75px !important;
+                padding: 0 !important;
+                padding-left: 20px !important;
+            }
+
+            .LoginRightSide {
+                display: none !important;
+            }
+
+            #LeftSignInPortion {
+                width: 80% !important;
+                margin-left: 9%;
+            }
+        }
+
+        .btnStyleLogin {
+            background-color: rgb(0,0,153) !important;
+            border: 1px solid #384E97;
+            color: White;
+            cursor: pointer;
+            display: inline-block;
+            font-family: Calibri;
+            font-size: 15px;
+            font-weight: normal;
+            height: 26px;
+            margin: 2px 6px 4px 4px;
+            min-width: 75px;
+            width: 108px;
+            padding: 0 24px;
+            text-decoration: none;
+        }
+
+            .btnStyleLogin:hover {
+                background-color: #9DBDEE !important;
+                color: #333;
+                text-decoration: none;
+            }
+
+            .btnStyleLogin:focus,
+            .btnStyleLogin.focus {
+                background-color: #9DBDEE;
+            }
+
+            .btnStyleLogin:active,
+            .btnStyleLogin.active {
+                background-image: none;
+                outline: 0;
+                -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+                box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+                margin-top: 1px;
+            }
+
+        .form-background-color {
+            background-color: White;
+            margin-left: 5%;
+            min-height: 392px;
+            border: 1px solid #0000ff !important;
+            ;
+        }
+
+        .signTitle {
+            font-family: Calibri !important;
+            font-weight: normal !important;
+            font-style: normal !important;
+            font-size: 3em !important;
+            color: #384E97 !important;
+        }
+
+        @@media screen and (min-width:768px) {
+            .Poweredby {
+                text-align: right !important;
+                margin-right: 1%;
+                width: 44% !important;
+            }
+
+            .Copyright {
+                text-align: left !important;
+                margin-left: 1%;
+                width: 54% !important;
+            }
+        }
+
+        @@keyframes blinker {
+
+            0% {
+                opacity: 1.0;
+            }
+
+            25% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 0.0;
+            }
+
+            75% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1.0;
+            }
+        }
+
+        #TestVersion {
+            animation: blinker 1s linear infinite;
+            animation-duration: 1s;
+            font-size: 15px;
+            color: Red;
+        }
+        .invalid {
+            border:1px solid red;
+        }
+    </style>
+</head>
+<body style="padding-right: 0px;">
+    <div id="spin">
+    </div>
+    <div id="fadder">
+    </div>
+    <div id="home">
+        <div class="site-header">
+            <div class="container" id="">
+                <div class="row">
+                    <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                        <img src="@Url.Content("~/Images/login_banner.png")" alt="Komatsu" style=" width:100%" />
+                    </div>
+                    <div class="col-lg-6 col-md-5 col-sm-3 col-xs-6 ForSmallestLeft" style="padding-top: 5px;
+                                text-align: left;">
+                        @*  <label  id="TestVersion" style="display: inline;">
+                                Test Version
+                            </label>*@
+
+                    </div>
+                    <div style="margin-top:15%;">
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-11 " id="LeftSignInPortion">
+                            <div class="form-group FormGroupTopMargin form-background-color">
+                                <div class="editor-label SizeOnXs clsEdtLabel signTitle">
+                                    @Html.Label("Sign In", new { @style = "margin-top:20px;" })
+
+                                </div>
+                                <div class="editor-label SizeOnXs clsEdtLabel" style="margin-top: 20px;">
+                                    @Html.Label("User ID")
+                                </div>
+                                <div class="editor-label SizeOnXs" style="margin-bottom: 10px;">
+                                    <input type="text" id="txtUserName" class="form-control validationcontrols ControllWidth"
+                                           value="" style="display: inline !important" />
+                                </div>
+                                <div class="editor-label SizeOnXs" style="min-height:25px;">
+                                    <span id="spnUserName" style="color: Red; display: none;">User ID is Required.</span>
+                                </div>
+                                <div class="editor-label SizeOnXs clsEdtLabel">
+                                    @Html.Label("Password")
+                                </div>
+                                <div class="editor-label SizeOnXs" style="margin-bottom: 10px;">
+                                    <input type="password" id="txtPassword" maxlength="15" class="form-control validationcontrols ControllWidth"
+                                           value="" style="display: inline !important" />
+                                </div>
+                                <div class="editor-label SizeOnXs" style="min-height:25px;">
+                                    <span id="spnPswd" style="color: Red; display: none;">Password is Required.</span>
+                                </div>
+                                <div id="errorDiv" class="editor-label SizeOnXs" style="min-height:40px;">
+                                    <!-- msg for login error -->
+                                    <p id="lblLoginError" style="color: Red; font-size: 13px; font-weight: bold; display: none;">
+                                        Please download Komatsu App Store Application from below mentioned link to use your
+                                        assigned applications.
+                                    </p>
+                                </div>
+                                <!---->
+                                <div class="editor-label SizeOnXs clsEdtLabel" style="margin-top: 15px;">
+                                    <button class="btnStyleLogin" id="btnLogin" onclick="login();">Sign In</button>
+                                    <button class="btnStyleLogin" id="btnClear" style="float: right; margin-right: 5%;">
+                                        Clear
+                                    </button>
+                                </div>
+                                <div class="editor-label SizeOnXs clsEdtLabel" style="margin-top: 20px; display: none;">
+                                    <a id="lblForgotPassword" href="#Forgot" style="text-align: right; font-size: small;
+                                        float: right; margin-right: 5%;">Forgot Password? </a>
+                                    <!--onclick="forgotPasswordClicked();" -->
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-11 ">
+                            <div class="LoginRightSide">
+                                <img src="@Url.Content("~/Images/right-side-pic.png")" alt="Komatsu" width="100%" style="height:393px !important; width:98%; border:1px solid #CCC;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid loginFooter" style="background-color: #384E97;color:White;margin-top:5%;">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12 Copyright" style="text-align:center; font-weight:400; float:left">
+                            Copyright (c) 2016. Komatsu Middle East FZE. All rights reserved.
+                        </div>
+                        <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12 Poweredby" style="text-align:center; font-weight:400; float:right">
+                            <b>Powered By: </b><a href="http://www.kpsoft.com.pk/" target="_blank"
+                                                  style="color:White !important">Komatsu Pakistan Soft (Pvt.) Ltd</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*hst001 Start ================= *@
+
+    @*MODAL FOR CHANGING PASSWORD*@
+    <div class="modal fade" id="ChangePasswordModal">
+        <div class="modal-dialog" style="padding-top:150px;width:360px;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title panel-title">Change Password</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="padding:10px !important">
+                    <div class="row" style="padding:0px;margin:0px;">
+                        <div class="col-md-12" style="margin-bottom:5px;">
+                            <label style="color:red;">
+                                Your password is expired please change your password
+                            </label>
+
+                            <form>
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input type="password" class="form-control" id="txtNewPassword" placeholder=" New Password" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <input type="password" class="form-control" id="txtConfirmPassword" placeholder=" Confirm Password" />
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button style="width: 80px; height: 25px; text-align: center; float: none !important;
+                    padding: 0px; padding-left: 20px;" id="btnUpdatePass" class="btn btnOk center-block">
+                        Update
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*MODAL TO INDCATE THE PASSWORD STRENGTH ERROR*@
+    <div class="modal fade" id="PasswordStrengthModal">
+        <div class="modal-dialog" style="padding-top:150px;width:410px;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="padding:10px !important">
+                    <div class="row" style="padding:0px;margin:0px;">
+                        <div class="col-md-3" style="text-align:center;margin-bottom:5px;">
+                            <img class="imgError" src="./images/error.png" />
+                        </div>
+                        <div class="col-md-9" style="margin-bottom:5px;">
+                            <p>
+                                <label>
+                                    Please choose a password that contains:
+                                </label>
+                                <ul style="padding-left:15px;">
+                                    <li>Both Numbers and Alphabets.</li>
+                                    <li>Both Uppercase and Lowercase characters.</li>
+                                    <li>At least one special character.</li>
+                                </ul>
+
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button style="width: 80px; height: 25px; text-align: center; float: none !important;
+                    padding: 0px; padding-left: 12px;" id="btnOk" class="btn btnOk center-block"
+                            data-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @*MODAL TO SHOW MESSAGES*@
+    <div class="modal fade" id="MessageModal" role="dialog">
+        <div class="modal-dialog" style="width: 360px; padding-top: 150px;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header panel-heading PanelTitle panelTitleHeight">
+                    <button type="button" class="close" data-dismiss="modal">
+                    </button>
+                    <h4 class="modal-title panel-title" id="PopupMessageTitle">
+                    </h4>
+                </div>
+                <div class="modal-body MessageBody" id="modalBody">
+                    <div class="col-xs-3">
+                        <img style="display: inline !important" class="imgError" />
+                    </div>
+                    <div class="col-xs-9" style="padding-top: 6px">
+                        <label style="display: inline !important; font-weight: normal !important; vertical-align: sub !important;"
+                               id="lblMessageText" class="lblError">
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer MessageFooter">
+                    <button style="width: 80px; height: 25px; text-align: center; float: none !important;
+                    padding: 0px; padding-left: 12px;" id="btnOk" class="btn btnOk center-block"
+                            data-dismiss="modal">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*hst001 End================== *@
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#txtUserName').focus();
+            $("#txtUserName").keyup(function (event) {
+                if (event.keyCode == 13) {
+                    $("#btnLogin").click();
+                }
+            });
+            $("#txtPassword").keyup(function (event) {
+                if (event.keyCode == 13) {
+                    $("#btnLogin").click();
+                }
+            });
+
+            $("#btnClear").click(function () {
+
+                $("#txtUserName").val('');
+                $("#txtPassword").val('');
+                $("#spnUserName").hide();
+                $("#spnPswd").hide();
+                $('#lblLoginError').hide();
+
+            });
+
+        })//doc.ready end
+
+        function login() {
+            $('#spnUserName').hide();
+            $('#spnPswd').hide();
+            $('#lblLoginError').hide();
+            var selectedDB = $('#ddDatabase').val();
+            if ($('#txtUserName').val().length == 0 || $('#txtPassword').val().length == 0) {
+                if ($('#txtUserName').val().length == 0) {
+                    $('#spnUserName').show();
+                }
+
+                if ($('#txtPassword').val().length == 0) {
+                    $('#spnPswd').show();
+                }
+            }
+            else {
+                var userName = $('#txtUserName').val();
+                var password = $('#txtPassword').val();
+
+                var url = '@Url.Action("Authenticate", "Login")';
+                var spinner = spin();
+                $.post(url, { "strUserName": userName, "strPassword": password, "databaseName": selectedDB }, function (data) {
+                    if (data != null) {
+                        var result = data.toString();
+
+                        if (result != '0') {
+                           
+                            unspin(spinner);
+                            var span = document.getElementById('lblLoginError');
+                            var errorText = '';
+                            if (result == '1') {
+                                errorText = 'Server not available. Please contact system administrator.';
+                            }
+                            else if (result == '2') {
+                                errorText = 'Invalid User ID or Password. Please check and try again.';
+                            }
+                            else if (result == '3') {
+                                errorText = 'Your account is not active. Please contact system administrator.';
+                            }
+                            else if (result == '4') {
+                                errorText = "You don't have rights to access KOWA application. Please contact system administrator.";
+                            }
+                            else if (result == '5') {
+                                errorText = "Your account is expired. Please contact system administrator.";
+                            }
+                            else if (result == '6') {
+                                $("#ChangePasswordModal").modal();
+                            }
+                            else if (result == '7') {
+                                errorText = "Your account has been disabled because of too many incorrect password attempts. Please contact system administrator.";
+                            }
+                            else if (result == '8') {
+                                errorText = "You have only 1 incorrect attempt left. Your account will be disabled if another incorrect attempt is made.";
+                            }
+                            else if (result == '9') {
+                                errorText = "Invalid User ID or Password. Please try again.";
+                            }
+                            if ('textContent' in span) {
+                                span.textContent = errorText;
+                            } else {
+                                span.innerText = errorText;
+                            }
+                            $('#lblLoginError').show();
+
+                        }
+                        else {
+
+                            var homeUrl = '@Url.Action("Index", "Dashboard")';
+                            window.location.href = homeUrl;
+                            //unspin(spinner);
+                        }
+
+                    }
+                }
+                 );
+            }
+
+        }
+
+
+        // hst001 Start =============================================================================================
+
+        $("#btnUpdatePass").on("click", UpdatePassword);
+        $("#MessageModal").on("hidden.bs.modal", function () {
+            $("#txtPassword").focus();
+        });
+        function UpdatePassword() {
+            var userID = $("#txtUserName").val();
+            var oldPass = $("#txtPassword").val();
+            var newPass = $("#txtNewPassword").val();
+            var confirmPass = $("#txtConfirmPassword").val();
+            $("#txtNewPassword").removeClass("invalid");
+            $("#txtConfirmPassword").removeClass("invalid");
+
+            // Validation : Checking if New password and Confirm password are same
+            if (newPass != confirmPass) {
+                $("#txtNewPassword").addClass("invalid");
+                $("#txtConfirmPassword").addClass("invalid");
+                DisplayModal("0", "Confirm password does not match with New password", "Password Mismatch");
+                return;
+            }
+
+            // Validation : Checking if New Password is Equal to Old Password
+            if (newPass == oldPass) {
+                $("#txtNewPassword").addClass("invalid");
+                DisplayModal("0", "You cannot use the same password.", "Password Update");
+                return;
+            }
+
+
+            // Making Password Change Request
+            var url = '@Url.Action("ChangePassword", "Login")';
+            var spinner = spin();
+            $.post(
+                url,
+                { "strUserID": userID, "strOldPassword": oldPass, "strNewPassword": newPass },
+                function (response) {
+                    unspin(spinner);
+                    if (response != null) {
+                        
+                        if (response.status == "success") {                            
+                            $("#ChangePasswordModal").modal("toggle");
+                            DisplayModal("1", "Your password is updated successfully, please login with the new password.", "Password Update");
+                            $("#txtPassword").val("").focus();
+                        }
+                        else {
+                            if (response.error == "1") {
+                                $("#PasswordStrengthModal").modal();
+                                return;
+                            }
+                            else if (response.error == "2") {
+                                DisplayModal("0", "Error occured while updating password. Please try again.", "Password Update");
+                                return;
+                            }
+                            else if (response.error == "3") {
+                                $("#txtNewPassword").addClass("invalid");
+                                DisplayModal("0", "You cannot use one of your last 5 passwords. Please choose a new password.", "Password Update");
+                                return;
+                            }
+
+                        }
+                    }
+                    else {
+                        DisplayModal("0", "Error occured while updating password", "Process Failed");
+
+                    }
+                }
+            );
+
+        }
+
+        // hst001 End ===============================================================================================
+    </script>
+</body>
+</html>

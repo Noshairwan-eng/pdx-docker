@@ -1,0 +1,2 @@
+OrderType	Distributor Code	Customer Code	Sales Order No	LineNo	OrderSubLineNo	Distributor Ref No	OrderDate	PartNo	Part Description	CTO	Order QTY	Accepted QTY	OnHold	UnProcessed	BackOrder	Stock Alloc	Picking Instructed	Packed	Shipping Instructed	Invoiced	Cancelled	Remarks	Warehouse	Sold	
+SO	522K	SBPSRV	167502	1	0	Test	11/11/2021	01010-61660	BOLT	ZZ	1	1	0	0	0	1	0	0	0	0	0			0	

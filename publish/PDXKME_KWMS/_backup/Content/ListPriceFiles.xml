@@ -1,0 +1,30 @@
+<ListPrices>
+    <MainListPrice path="../UploadedFiles/ListPrices/KMELP023.csv" name="KMELP023">
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-01012020.csv" name="SUPP-KMELP023-01012020">
+        </SupplementaryListPrice>
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-01012021.csv" name="SUPP-KMELP023-01012021">
+        </SupplementaryListPrice>
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-28012020.csv" name="SUPP-KMELP023-28012020">
+        </SupplementaryListPrice>
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-10022020.csv" name="SUPP-KMELP023-10022020">
+        </SupplementaryListPrice>
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-14022020.csv" name="SUPP-KMELP023-14022020">
+        </SupplementaryListPrice> 
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-17022020.csv" name="SUPP-KMELP023-17022020">
+        </SupplementaryListPrice>                                                
+    </MainListPrice>
+    <MainListPrice path="../UploadedFiles/ListPrices/KMELP024.csv" name="KMELP024">  
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-01012020.csv" name="SUPP-KMELP023-01012020">
+        </SupplementaryListPrice>
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-01012021.csv" name="SUPP-KMELP023-01012021">
+        </SupplementaryListPrice>
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-28012020.csv" name="SUPP-KMELP023-28012020">
+        </SupplementaryListPrice>	
+    </MainListPrice>  
+    <MainListPrice path="../UploadedFiles/ListPrices/KMELP025.csv" name="KMELP025"> 
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-01012020.csv" name="SUPP-KMELP023-01012020">
+        </SupplementaryListPrice>
+        <SupplementaryListPrice path="../UploadedFiles/ListPrices/SUPP-KMELP023-01012021.csv" name="SUPP-KMELP023-01012021">
+        </SupplementaryListPrice>	
+    </MainListPrice>           
+</ListPrices>

@@ -1,0 +1,6 @@
+OrderType,Distributor Code,Customer Code,Sales Order No,LineNo,OrderSubLineNo,Distributor Ref No,OrderDate,PartNo,Part Description,CTO,Order QTY,Accepted QTY,OnHold,UnProcessed,BackOrder,Stock Alloc,Picking Instructed,Packed,Shipping Instructed,Invoiced,Cancelled,Remarks,Warehouse,Sold,
+KA,9963,REG,167484,1,0,,05/11/2021,07063-01100,ELEMENT,ZZ,1,1,0,0,0,0,0,0,0,1,0,,,0,
+KA,9963,REG,167484,2,0,,05/11/2021,175-49-11580,ELEMENT,ZZ,2,2,0,0,0,0,0,0,0,2,0,,,0,
+KA,9963,REG,167484,3,0,,05/11/2021,600-211-1231,CARTRIDGE OIL,ZZ,2,2,0,0,0,0,0,0,0,2,0,,,0,
+KA,9963,REG,167484,4,0,,05/11/2021,600-311-8321,CARTRIDGE FUEL,ZZ,2,2,0,0,0,0,0,0,0,2,0,,,0,
+KA,9963,REG,167484,5,0,,05/11/2021,6128-81-7043,ELEMENT ASS Y,ZZ,1,1,0,0,0,0,0,0,0,1,0,,,0,

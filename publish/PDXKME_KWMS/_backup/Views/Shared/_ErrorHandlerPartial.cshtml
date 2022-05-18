@@ -1,0 +1,9 @@
+﻿@if (Session["Error"]!=null && Session["ErrorType"]!=null)
+{
+       <script>
+        txtError= "@Session["Error"].ToString()";
+        txtErrorType="@Session["ErrorType"].ToString()";
+       DisplayModal(txtErrorType,txtError) ;
+          $("#MessageModal").modal();
+       </script>
+}

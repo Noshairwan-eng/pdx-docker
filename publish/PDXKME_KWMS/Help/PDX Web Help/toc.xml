@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<toc>
+  <item url="Documents/applicationdashboard.htm">
+    <title><![CDATA[Application Dashboard]]></title>
+    <tooltip><![CDATA[Application Dashboard]]></tooltip>
+  </item>
+  <item url="Documents/quotation.htm">
+    <title><![CDATA[Quotation]]></title>
+    <tooltip><![CDATA[Quotation]]></tooltip>
+    <item url="Documents/quotationinquiry.htm">
+      <title><![CDATA[Quotation Inquiry]]></title>
+      <tooltip><![CDATA[Quotation Inquiry]]></tooltip>
+      <item url="Documents/howtoviewquotationin.htm">
+        <title><![CDATA[How to View Quotation Inquiries?]]></title>
+        <tooltip><![CDATA[How to View Quotation Inquiries?]]></tooltip>
+      </item>
+      <item url="Documents/howtodeleteaquotatio.htm">
+        <title><![CDATA[How to Delete a Quotation Inquiry?]]></title>
+        <tooltip><![CDATA[How to Delete a Quotation Inquiry?]]></tooltip>
+      </item>
+      <item url="Documents/howtocreatenewquotat.htm">
+        <title><![CDATA[How to Create New Quotation?]]></title>
+        <tooltip><![CDATA[How to Create New Quotation?]]></tooltip>
+      </item>
+      <item url="Documents/howtodownloadquotati.htm">
+        <title><![CDATA[How to Download Quotation Inquiries?]]></title>
+        <tooltip><![CDATA[How to Download Quotation Inquiries?]]></tooltip>
+      </item>
+      <item url="Documents/howtoprintaquotation.htm">
+        <title><![CDATA[How to Print a Quotation?]]></title>
+        <tooltip><![CDATA[How to Print a Quotation?]]></tooltip>
+      </item>
+      <item url="Documents/howtomakecopyofexist.htm">
+        <title><![CDATA[How to Make Copy of Existing Quotation?]]></title>
+        <tooltip><![CDATA[How to Make Copy of Existing Quotation?]]></tooltip>
+      </item>
+      <item url="Documents/howtonavigatetoquota.htm">
+        <title><![CDATA[How to navigate to Quotation Condition from Quotation Inquiry?]]></title>
+        <tooltip><![CDATA[How to navigate to Quotation Condition from Quotation Inquiry?]]></tooltip>
+      </item>
+      <item url="Documents/howtonavigatetoquota1.htm">
+        <title><![CDATA[How to navigate to Quotation Detail from Quotation Inquiry?]]></title>
+        <tooltip><![CDATA[How to navigate to Quotation Detail from Quotation Inquiry?]]></tooltip>
+      </item>
+      <item url="Documents/howtomakeasalesorder.htm">
+        <title><![CDATA[How to make a Sales Order from Quotation?]]></title>
+        <tooltip><![CDATA[How to make a Sales Order from Quotation?]]></tooltip>
+      </item>
+      <item url="Documents/howtovieworderconfir.htm">
+        <title><![CDATA[How to View Order Confirmation?]]></title>
+        <tooltip><![CDATA[How to View Order Confirmation?]]></tooltip>
+      </item>
+    </item>
+    <item url="Documents/quotationcondition.htm">
+      <title><![CDATA[Quotation Condition]]></title>
+      <tooltip><![CDATA[Quotation Condition]]></tooltip>
+      <item url="Documents/whatisthepurposeofqu.htm">
+        <title><![CDATA[What is the purpose of Quotation Number?]]></title>
+        <tooltip><![CDATA[What is the purpose of Quotation Number?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthepurposeofor.htm">
+        <title><![CDATA[What is the purpose of Original Quotation Number field?]]></title>
+        <tooltip><![CDATA[What is the purpose of Original Quotation Number field?]]></tooltip>
+      </item>
+      <item url="Documents/whatisquotationvalid.htm">
+        <title><![CDATA[What is “Quotation Validity Date” and how it affects quotations?]]></title>
+        <tooltip><![CDATA[What is “Quotation Validity Date” and how it affects quotations?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthepurposeofdb.htm">
+        <title><![CDATA[What is the purpose of DB Order Number field?]]></title>
+        <tooltip><![CDATA[What is the purpose of DB Order Number field?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthedbcodewhati.htm">
+        <title><![CDATA[What is the DB code? What is its purpose?]]></title>
+        <tooltip><![CDATA[What is the DB code? What is its purpose?]]></tooltip>
+      </item>
+      <item url="Documents/howdbnamefieldispopu.htm">
+        <title><![CDATA[How DB Name field is populated?]]></title>
+        <tooltip><![CDATA[How DB Name field is populated?]]></tooltip>
+      </item>
+      <item url="Documents/whatissalepricelist.htm">
+        <title><![CDATA[What is Sale Price List?]]></title>
+        <tooltip><![CDATA[What is Sale Price List?]]></tooltip>
+      </item>
+      <item url="Documents/whatiscurrency.htm">
+        <title><![CDATA[What is Currency?]]></title>
+        <tooltip><![CDATA[What is Currency?]]></tooltip>
+      </item>
+      <item url="Documents/whatisordertypeandwh.htm">
+        <title><![CDATA[What is order type? And what is the purpose of choosing an order type?]]></title>
+        <tooltip><![CDATA[What is order type? And what is the purpose of choosing an order type?]]></tooltip>
+      </item>
+      <item url="Documents/whatisexchangeratean.htm">
+        <title><![CDATA[What is exchange rate and what is its purpose?]]></title>
+        <tooltip><![CDATA[What is exchange rate and what is its purpose?]]></tooltip>
+      </item>
+      <item url="Documents/whatisorderprobabili.htm">
+        <title><![CDATA[What is order probability?]]></title>
+        <tooltip><![CDATA[What is order probability?]]></tooltip>
+      </item>
+      <item url="Documents/whatisstatusandwhate.htm">
+        <title><![CDATA[What is “Status” and what each status means?]]></title>
+        <tooltip><![CDATA[What is “Status” and what each status means?]]></tooltip>
+      </item>
+      <item url="Documents/whatdoestaxratefield.htm">
+        <title><![CDATA[What does “Tax Rate” field do?]]></title>
+        <tooltip><![CDATA[What does “Tax Rate” field do?]]></tooltip>
+      </item>
+      <item url="Documents/whatisusanceandwhati.htm">
+        <title><![CDATA[What is “Usance” and what is its usage?]]></title>
+        <tooltip><![CDATA[What is “Usance” and what is its usage?]]></tooltip>
+      </item>
+      <item url="Documents/whataredeliveryterms.htm">
+        <title><![CDATA[What are delivery terms and what they define?]]></title>
+        <tooltip><![CDATA[What are delivery terms and what they define?]]></tooltip>
+      </item>
+      <item url="Documents/onwhatbasisthedelive.htm">
+        <title><![CDATA[On what basis the Delivery Term is loaded?]]></title>
+        <tooltip><![CDATA[On what basis the Delivery Term is loaded?]]></tooltip>
+      </item>
+      <item url="Documents/whatisregion.htm">
+        <title><![CDATA[What is “Region”?]]></title>
+        <tooltip><![CDATA[What is “Region”?]]></tooltip>
+      </item>
+      <item url="Documents/whatistransportation.htm">
+        <title><![CDATA[What is “Transportation”?]]></title>
+        <tooltip><![CDATA[What is “Transportation”?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthemeaningofre.htm">
+        <title><![CDATA[What is the meaning of “Requested Delivery Time”?]]></title>
+        <tooltip><![CDATA[What is the meaning of “Requested Delivery Time”?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthemeaningofex.htm">
+        <title><![CDATA[What is the meaning of “Exit Point”?]]></title>
+        <tooltip><![CDATA[What is the meaning of “Exit Point”?]]></tooltip>
+      </item>
+      <item url="Documents/whatarepaymentterms.htm">
+        <title><![CDATA[What are “Payment Terms”?]]></title>
+        <tooltip><![CDATA[What are “Payment Terms”?]]></tooltip>
+      </item>
+      <item url="Documents/whatareloadingandunl.htm">
+        <title><![CDATA[What are “Loading” and “Unloading” ports?]]></title>
+        <tooltip><![CDATA[What are “Loading” and “Unloading” ports?]]></tooltip>
+      </item>
+      <item url="Documents/whoispersonincharge.htm">
+        <title><![CDATA[Who is “Person In-Charge”?]]></title>
+        <tooltip><![CDATA[Who is “Person In-Charge”?]]></tooltip>
+      </item>
+      <item url="Documents/howdoesbillingratesa.htm">
+        <title><![CDATA[How does “Billing Rates” affect pricing on quotation?]]></title>
+        <tooltip><![CDATA[How does “Billing Rates” affect pricing on quotation?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthepurposeofpr.htm">
+        <title><![CDATA[What is the purpose of Premium Rate field?]]></title>
+        <tooltip><![CDATA[What is the purpose of Premium Rate field?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthepurposeofsh.htm">
+        <title><![CDATA[What is the purpose of “Shipping Address”?]]></title>
+        <tooltip><![CDATA[What is the purpose of “Shipping Address”?]]></tooltip>
+      </item>
+      <item url="Documents/whatismodelinformati.htm">
+        <title><![CDATA[What is “Model Information” and when it is required?]]></title>
+        <tooltip><![CDATA[What is “Model Information” and when it is required?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthepurposeoftw.htm">
+        <title><![CDATA[What is the purpose of two fields “Memo” and “Comments”?]]></title>
+        <tooltip><![CDATA[What is the purpose of two fields “Memo” and “Comments”?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthecustomercod.htm">
+        <title><![CDATA[What is the Customer code? What is its purpose?]]></title>
+        <tooltip><![CDATA[What is the Customer code? What is its purpose?]]></tooltip>
+      </item>
+      <item url="Documents/whatdoesregmeanincus.htm">
+        <title><![CDATA[What does “REG” mean in Customer Code?]]></title>
+        <tooltip><![CDATA[What does “REG” mean in Customer Code?]]></tooltip>
+      </item>
+    </item>
+    <item url="Documents/creatingnewquotation.htm">
+      <title><![CDATA[Creating New Quotation]]></title>
+      <tooltip><![CDATA[Creating New Quotation]]></tooltip>
+    </item>
+    <item url="Documents/howtoupdateinquiryst.htm">
+      <title><![CDATA[How to Update Inquiry Status?]]></title>
+      <tooltip><![CDATA[How to Update Inquiry Status?]]></tooltip>
+    </item>
+    <item url="Documents/quotationdetail.htm">
+      <title><![CDATA[Quotation Detail]]></title>
+      <tooltip><![CDATA[Quotation Detail]]></tooltip>
+      <item url="Documents/howtosearchquotation.htm">
+        <title><![CDATA[How to search Quotation Detail on Quotation Detail screen?]]></title>
+        <tooltip><![CDATA[How to search Quotation Detail on Quotation Detail screen?]]></tooltip>
+      </item>
+      <item url="Documents/whatdoesselectallche.htm">
+        <title><![CDATA[What does “Select All” checkbox do?]]></title>
+        <tooltip><![CDATA[What does “Select All” checkbox do?]]></tooltip>
+      </item>
+      <item url="Documents/howtoaddquotationdet.htm">
+        <title><![CDATA[How to add quotation details manually?]]></title>
+        <tooltip><![CDATA[How to add quotation details manually?]]></tooltip>
+      </item>
+      <item url="Documents/howtoaddquotationdet1.htm">
+        <title><![CDATA[How to add quotation details by importing parts information?]]></title>
+        <tooltip><![CDATA[How to add quotation details by importing parts information?]]></tooltip>
+      </item>
+      <item url="Documents/whatdoesimportbutton.htm">
+        <title><![CDATA[What does “Import” button do?]]></title>
+        <tooltip><![CDATA[What does “Import” button do?]]></tooltip>
+      </item>
+      <item url="Documents/whatistheformatofcsv.htm">
+        <title><![CDATA[What is the format of CSV file to import on quotation detail screen?]]></title>
+        <tooltip><![CDATA[What is the format of CSV file to import on quotation detail screen?]]></tooltip>
+      </item>
+      <item url="Documents/whathappenswhenauser.htm">
+        <title><![CDATA[What happens when a user selects invalid CSV file?]]></title>
+        <tooltip><![CDATA[What happens when a user selects invalid CSV file?]]></tooltip>
+      </item>
+      <item url="Documents/howtodeletedetaillin.htm">
+        <title><![CDATA[How to delete detail line(s) from quotation detail?]]></title>
+        <tooltip><![CDATA[How to delete detail line(s) from quotation detail?]]></tooltip>
+      </item>
+      <item url="Documents/howtodownloaddetaild.htm">
+        <title><![CDATA[How to download detail data from quotation?]]></title>
+        <tooltip><![CDATA[How to download detail data from quotation?]]></tooltip>
+      </item>
+      <item url="Documents/whatdoescalculatebut.htm">
+        <title><![CDATA[What does calculate button do?]]></title>
+        <tooltip><![CDATA[What does calculate button do?]]></tooltip>
+      </item>
+      <item url="Documents/canaprocessedpartbed.htm">
+        <title><![CDATA[Can a processed part be different from requested part?]]></title>
+        <tooltip><![CDATA[Can a processed part be different from requested part?]]></tooltip>
+      </item>
+      <item url="Documents/canacceptedquantityb.htm">
+        <title><![CDATA[Can accepted quantity be lesser then requested quantity?]]></title>
+        <tooltip><![CDATA[Can accepted quantity be lesser then requested quantity?]]></tooltip>
+      </item>
+      <item url="Documents/whicherrorscanoccurw.htm">
+        <title><![CDATA[Which errors can occur while calculating quotation detail?]]></title>
+        <tooltip><![CDATA[Which errors can occur while calculating quotation detail?]]></tooltip>
+      </item>
+      <item url="Documents/whataretherulesforin.htm">
+        <title><![CDATA[What are the rules for interchangeability?]]></title>
+        <tooltip><![CDATA[What are the rules for interchangeability?]]></tooltip>
+      </item>
+      <item url="Documents/howstockallocationis.htm">
+        <title><![CDATA[How stock allocation is made for the chained parts?]]></title>
+        <tooltip><![CDATA[How stock allocation is made for the chained parts?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthepurposeofli.htm">
+        <title><![CDATA[What is the purpose of “Line” and “Sub Line No” fields in detail grid?]]></title>
+        <tooltip><![CDATA[What is the purpose of “Line” and “Sub Line No” fields in detail grid?]]></tooltip>
+      </item>
+      <item url="Documents/howunitpriceofaparti.htm">
+        <title><![CDATA[How “Unit Price” of a part is calculated in case of Billing Rate settings?]]></title>
+        <tooltip><![CDATA[How “Unit Price” of a part is calculated in case of Billing Rate settings?]]></tooltip>
+      </item>
+      <item url="Documents/howunitpriceofaparti1.htm">
+        <title><![CDATA[How “Unit Price” of a part is calculated in case of Discount Rate settings?]]></title>
+        <tooltip><![CDATA[How “Unit Price” of a part is calculated in case of Discount Rate settings?]]></tooltip>
+      </item>
+      <item url="Documents/howtocalculatepricea.htm">
+        <title><![CDATA[How to calculate “Price Amount”?]]></title>
+        <tooltip><![CDATA[How to calculate “Price Amount”?]]></tooltip>
+      </item>
+      <item url="Documents/howtocalculatesellin.htm">
+        <title><![CDATA[How to calculate “Selling Price”?]]></title>
+        <tooltip><![CDATA[How to calculate “Selling Price”?]]></tooltip>
+      </item>
+      <item url="Documents/howtaxiscalculated.htm">
+        <title><![CDATA[How “Tax” is calculated?]]></title>
+        <tooltip><![CDATA[How “Tax” is calculated?]]></tooltip>
+      </item>
+      <item url="Documents/howtotaldiscountisca.htm">
+        <title><![CDATA[How “Total Discount” is calculated?]]></title>
+        <tooltip><![CDATA[How “Total Discount” is calculated?]]></tooltip>
+      </item>
+      <item url="Documents/whatareshippingcharg.htm">
+        <title><![CDATA[What are “Shipping Charges”?]]></title>
+        <tooltip><![CDATA[What are “Shipping Charges”?]]></tooltip>
+      </item>
+      <item url="Documents/whatareothercharges1.htm">
+        <title><![CDATA[What are “Other Charges 1 and 2”?]]></title>
+        <tooltip><![CDATA[What are “Other Charges 1 and 2”?]]></tooltip>
+      </item>
+      <item url="Documents/howgrandtotalamounti.htm">
+        <title><![CDATA[How “Grand Total” amount is calculated?]]></title>
+        <tooltip><![CDATA[How “Grand Total” amount is calculated?]]></tooltip>
+      </item>
+      <item url="Documents/whatdoesupdatebutton.htm">
+        <title><![CDATA[What does “Update” button do?]]></title>
+        <tooltip><![CDATA[What does “Update” button do?]]></tooltip>
+      </item>
+      <item url="Documents/whenrequestedquantit.htm">
+        <title><![CDATA[When requested quantity gets hold on quotation?]]></title>
+        <tooltip><![CDATA[When requested quantity gets hold on quotation?]]></tooltip>
+      </item>
+      <item url="Documents/canausermanuallyinpu.htm">
+        <title><![CDATA[Can a user manually input unit price?]]></title>
+        <tooltip><![CDATA[Can a user manually input unit price?]]></tooltip>
+      </item>
+      <item url="Documents/howtosearchstockfrom.htm">
+        <title><![CDATA[How to search stock from Quotation Detail screen?]]></title>
+        <tooltip><![CDATA[How to search stock from Quotation Detail screen?]]></tooltip>
+      </item>
+    </item>
+    <item url="Documents/reserveparts.htm">
+      <title><![CDATA[Reserve Parts]]></title>
+      <tooltip><![CDATA[Reserve Parts]]></tooltip>
+      <item url="Documents/howtosearchreservepa.htm">
+        <title><![CDATA[How to search reserve parts?]]></title>
+        <tooltip><![CDATA[How to search reserve parts?]]></tooltip>
+      </item>
+      <item url="Documents/howtoexportreservepa.htm">
+        <title><![CDATA[How to export reserve parts information?]]></title>
+        <tooltip><![CDATA[How to export reserve parts information?]]></tooltip>
+      </item>
+    </item>
+  </item>
+  <item>
+    <title><![CDATA[Sales Order]]></title>
+    <tooltip><![CDATA[Sales Order]]></tooltip>
+    <item url="Documents/orderstatusinquiryby.htm">
+      <title><![CDATA[Order Status Inquiry by Order No.]]></title>
+      <tooltip><![CDATA[Order Status Inquiry by Order No.]]></tooltip>
+      <item url="Documents/howtosearchrecordsby.htm">
+        <title><![CDATA[How to search records by Sales Order No.?]]></title>
+        <tooltip><![CDATA[How to search records by Sales Order No.?]]></tooltip>
+      </item>
+      <item url="Documents/howtosearchrecordsby1.htm">
+        <title><![CDATA[How to search records by Distributor Order No.?]]></title>
+        <tooltip><![CDATA[How to search records by Distributor Order No.?]]></tooltip>
+      </item>
+      <item url="Documents/whatisthepurposeofst.htm">
+        <title><![CDATA[What is the purpose of Status dropdown?]]></title>
+        <tooltip><![CDATA[What is the purpose of Status dropdown?]]></tooltip>
+      </item>
+      <item url="Documents/whathappensifstocktr.htm">
+        <title><![CDATA[What happens if Stock Transfer Order checkbox is marked?]]></title>
+        <tooltip><![CDATA[What happens if Stock Transfer Order checkbox is marked?]]></tooltip>
+      </item>
+      <item url="Documents/howtodownloadorderst.htm">
+        <title><![CDATA[How to download order status inquiries by order no.?]]></title>
+        <tooltip><![CDATA[How to download order status inquiries by order no.?]]></tooltip>
+      </item>
+      <item url="Documents/whatdoesnextandprevi.htm">
+        <title><![CDATA[What does “Next” and “Previous” buttons do?]]></title>
+        <tooltip><![CDATA[What does “Next” and “Previous” buttons do?]]></tooltip>
+      </item>
+      <item url="Documents/howcanwedownloadinvo.htm">
+        <title><![CDATA[How can we download Invoice from Status Inquiry Screen?]]></title>
+        <tooltip><![CDATA[How can we download Invoice from Status Inquiry Screen?]]></tooltip>
+      </item>
+    </item>
+    <item url="Documents/orderstatusinquiryby1.htm">
+      <title><![CDATA[Order Status Inquiry by Part No.]]></title>
+      <tooltip><![CDATA[Order Status Inquiry by Part No.]]></tooltip>
+      <item url="Documents/howtosearchrecordsby2.htm">
+        <title><![CDATA[How to search records by Part No.?]]></title>
+        <tooltip><![CDATA[How to search records by Part No.?]]></tooltip>
+      </item>
+      <item url="Documents/howtosearchrecordsby3.htm">
+        <title><![CDATA[How to search records by Status?]]></title>
+        <tooltip><![CDATA[How to search records by Status?]]></tooltip>
+      </item>
+      <item url="Documents/whathappensifstocktr1.htm">
+        <title><![CDATA[What happens if Stock Transfer Order checkbox is marked?]]></title>
+        <tooltip><![CDATA[What happens if Stock Transfer Order checkbox is marked?]]></tooltip>
+      </item>
+      <item url="Documents/howtoviewinvoicenoin.htm">
+        <title><![CDATA[How to view Invoice No., Invoice Date, and Shipment Date?]]></title>
+        <tooltip><![CDATA[How to view Invoice No., Invoice Date, and Shipment Date?]]></tooltip>
+      </item>
+      <item url="Documents/howcanwedownloadinvo1.htm">
+        <title><![CDATA[How can we download Invoice from Status Inquiry Screen?]]></title>
+        <tooltip><![CDATA[How can we download Invoice from Status Inquiry Screen?]]></tooltip>
+      </item>
+    </item>
+  </item>
+  <item>
+    <title><![CDATA[Sales Invoice]]></title>
+    <tooltip><![CDATA[Sales Invoice]]></tooltip>
+    <item url="Documents/salesinvoiceinquiry.htm">
+      <title><![CDATA[Sales Invoice Inquiry]]></title>
+      <tooltip><![CDATA[Sales Invoice Inquiry]]></tooltip>
+      <item url="Documents/howtoaccesssalesinvo.htm">
+        <title><![CDATA[How to access Sales Invoice Inquiry?]]></title>
+        <tooltip><![CDATA[How to access Sales Invoice Inquiry?]]></tooltip>
+      </item>
+      <item url="Documents/whatarethesearchcrit.htm">
+        <title><![CDATA[What are the search criteria on Sales Invoice Inquiry Screen?]]></title>
+        <tooltip><![CDATA[What are the search criteria on Sales Invoice Inquiry Screen?]]></tooltip>
+      </item>
+      <item url="Documents/whataretheoptionsfor.htm">
+        <title><![CDATA[What are the options for downloading the invoice?]]></title>
+        <tooltip><![CDATA[What are the options for downloading the invoice?]]></tooltip>
+      </item>
+    </item>
+  </item>
+  <item url="Documents/listprice.htm">
+    <title><![CDATA[List Price]]></title>
+    <tooltip><![CDATA[List Price]]></tooltip>
+    <item url="Documents/howtodownloadcomplet.htm">
+      <title><![CDATA[How to download complete list price version?]]></title>
+      <tooltip><![CDATA[How to download complete list price version?]]></tooltip>
+    </item>
+    <item url="Documents/howtodownloadalistpr.htm">
+      <title><![CDATA[How to download a list price revision?]]></title>
+      <tooltip><![CDATA[How to download a list price revision?]]></tooltip>
+    </item>
+  </item>
+  <item url="Documents/mastermanagement.htm">
+    <title><![CDATA[Master Management]]></title>
+    <tooltip><![CDATA[Master Management]]></tooltip>
+    <item url="Documents/stockinquiry.htm">
+      <title><![CDATA[Stock Inquiry]]></title>
+      <tooltip><![CDATA[Stock Inquiry]]></tooltip>
+      <item url="Documents/howtoaccessstockinqu.htm">
+        <title><![CDATA[How to access Stock Inquiry screen?]]></title>
+        <tooltip><![CDATA[How to access Stock Inquiry screen?]]></tooltip>
+      </item>
+      <item url="Documents/howtosearchstockstat.htm">
+        <title><![CDATA[How to search stock status of a part?]]></title>
+        <tooltip><![CDATA[How to search stock status of a part?]]></tooltip>
+      </item>
+      <item url="Documents/howtoviewoptionparts.htm">
+        <title><![CDATA[How to view option parts?]]></title>
+        <tooltip><![CDATA[How to view option parts?]]></tooltip>
+      </item>
+      <item url="Documents/whendoeskmelprcolumn.htm">
+        <title><![CDATA[When does KME LPR column gets available in search results?]]></title>
+        <tooltip><![CDATA[When does KME LPR column gets available in search results?]]></tooltip>
+      </item>
+      <item url="Documents/whendoesdnetpricecol.htm">
+        <title><![CDATA[When does DNet Price column gets available in search results?]]></title>
+        <tooltip><![CDATA[When does DNet Price column gets available in search results?]]></tooltip>
+      </item>
+      <item url="Documents/howtoexportpartstock.htm">
+        <title><![CDATA[How to export part stock status information?]]></title>
+        <tooltip><![CDATA[How to export part stock status information?]]></tooltip>
+      </item>
+    </item>
+    <item url="Documents/partmasterinquiry.htm">
+      <title><![CDATA[Part Master Inquiry]]></title>
+      <tooltip><![CDATA[Part Master Inquiry]]></tooltip>
+      <item url="Documents/howtoaccesspartmaste.htm">
+        <title><![CDATA[How to access Part Master screen?]]></title>
+        <tooltip><![CDATA[How to access Part Master screen?]]></tooltip>
+      </item>
+      <item url="Documents/howtosearchpartinfor.htm">
+        <title><![CDATA[How to search part information?]]></title>
+        <tooltip><![CDATA[How to search part information?]]></tooltip>
+      </item>
+    </item>
+    <item url="Documents/multiplepartsstockin.htm">
+      <title><![CDATA[Multiple Parts Stock Inquiry]]></title>
+      <tooltip><![CDATA[Multiple Parts Stock Inquiry]]></tooltip>
+      <item url="Documents/howtoaccessmultiplep.htm">
+        <title><![CDATA[How to access Multiple Parts Stock Inquiry screen?]]></title>
+        <tooltip><![CDATA[How to access Multiple Parts Stock Inquiry screen?]]></tooltip>
+      </item>
+      <item url="Documents/howtosearchpartsinfo.htm">
+        <title><![CDATA[How to search parts information?]]></title>
+        <tooltip><![CDATA[How to search parts information?]]></tooltip>
+      </item>
+      <item url="Documents/whendoeskmelprcolumn1.htm">
+        <title><![CDATA[When does KME LPR column gets available in search results?]]></title>
+        <tooltip><![CDATA[When does KME LPR column gets available in search results?]]></tooltip>
+      </item>
+      <item url="Documents/whendoesdnetpricecol1.htm">
+        <title><![CDATA[When does DNet Price column gets available in search results?]]></title>
+        <tooltip><![CDATA[When does DNet Price column gets available in search results?]]></tooltip>
+      </item>
+      <item url="Documents/howtoviewpartsinterc.htm">
+        <title><![CDATA[How to view parts interchangeability information?]]></title>
+        <tooltip><![CDATA[How to view parts interchangeability information?]]></tooltip>
+      </item>
+      <item url="Documents/howtoviewoptionparts1.htm">
+        <title><![CDATA[How to view option parts information?]]></title>
+        <tooltip><![CDATA[How to view option parts information?]]></tooltip>
+      </item>
+    </item>
+    <item url="Documents/uploadpartsfile.htm">
+      <title><![CDATA[Upload Parts File]]></title>
+      <tooltip><![CDATA[Upload Parts File]]></tooltip>
+    </item>
+  </item>
+  <item url="Documents/usermodule.htm">
+    <title><![CDATA[User Module]]></title>
+    <tooltip><![CDATA[User Module]]></tooltip>
+  </item>
+  <item url="Documents/help.htm">
+    <title><![CDATA[Help]]></title>
+    <tooltip><![CDATA[Help]]></tooltip>
+  </item>
+</toc>

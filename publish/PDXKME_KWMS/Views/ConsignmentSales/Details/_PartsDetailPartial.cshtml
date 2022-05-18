@@ -1,0 +1,418 @@
+﻿@model IEnumerable<PDXWEB.Models.Consignment.OrderDetails.OrderDetailsMainModel>
+@{
+    string strMessage = "";
+    string strMessageType = "";
+    string strStatus = "";
+    string strRole = "";
+    string strModelCount = "";
+    if (Session["Error"] != null && Session["Error"].ToString()!="")
+    {
+        strMessage = Session["Error"].ToString();
+        strMessageType = Session["ErrorType"].ToString();
+        
+    }
+    if (Session["Status"] != null)
+    {
+        strStatus = Session["Status"].ToString().Trim(); 
+    }
+    if (Session["Role"] != null)
+    {
+        strRole = Session["Role"].ToString();
+    }
+    if (Model.Count() > 0)
+    {
+        strModelCount = Model.Count().ToString();
+    }
+    
+}
+@if (Model != null && Model.Count() > 0)
+{
+    WebGrid grid = new WebGrid(source: Model,
+    canSort: true,
+    rowsPerPage: 10,
+    ajaxUpdateContainerId: "main",
+    ajaxUpdateCallback: "AfterLoad",
+    canPage: true);                
+ 
+    <div id="main" class="datagrid  " style="height: 288px;">
+        @if (Model.Count() > 10)
+        {
+            <div class="NewPaging PagingStyle">
+                @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")
+            </div>
+        }
+        @grid.Table(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "ConsignmentDetailsGrid" },
+                           columns: grid.Columns(
+                           //@* grid.Column("Select", style: "col1", format: @<text><input type="checkbox" class="chkSelect" /></text>),*@
+grid.Column("Line_No", @Resources.Resource.thLineNo, style: "rightAlign", format: @<text><label id="l_Line_No"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.Line_No</label></text>),
+//  grid.Column("Line_No", @Resources.Resource.thLineNo),
+grid.Column("Sub_LineNo", @Resources.Resource.thSubLineNo, style: "rightAlign", format: @<text><label id="l_Sub_LineNo"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.Sub_LineNo</label></text>),
+//grid.Column("Sub_LineNo", @Resources.Resource.thSubLineNo),
+ grid.Column("CTO", @Resources.Resource.thCTO, style: "leftAlign", format: @<text><label id="l_CTO"  style="font-size: 10px ! important;  margin-left: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.CTO</label></text>),
+//   grid.Column("CTO", @Resources.Resource.thCTO),
+  grid.Column("ReqPart", @Resources.Resource.thRequestedPartNo, style: "leftAlign", format: @<text><label id="l_ReqPart"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.ReqPart</label></text>),
+//grid.Column("ReqPart", @Resources.Resource.thRequestedPartNo),
+   grid.Column("ProcessedPart", @Resources.Resource.thProcessedPartNo, style: "leftAlign", format: @<text><label id="l_ProcessedPart"  style="font-size: 10px ! important;  margin-left: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.ProcessedPart</label></text>),
+// grid.Column("ProcessedPart", @Resources.Resource.thProcessedPartNoleftAlign
+    grid.Column("PartDesc", @Resources.Resource.thPartDescription, style: "leftAlign", format: @<text><label id="l_PartDesc"  style="font-size: 10px ! important;  margin-left: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.PartDesc</label></text>),
+//    grid.Column("PartDesc", @Resources.Resource.thPartDescription),
+grid.Column("ReqQty", @Resources.Resource.thRequestedQuantity, style: "rightAlign", format: @<text><label id="l_ReqQty"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.ReqQty</label></text>),
+// grid.Column("ReqQty", @Resources.Resource.thRequestedQuantity),
+grid.Column("CancelledQty", @Resources.Resource.thCancelledQuantity, style: "rightAlign", format: @<text><label id="l_CancelledQty"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.CancelledQty</label></text>),
+//grid.Column("CancelledQty", @Resources.Resource.thCancelledQuantity),
+grid.Column("RejectedQty", @Resources.Resource.thRejectedQuantity, style: "rightAlign", format: @<text><label id="l_RejectedQty"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.RejectedQty</label></text>),
+// grid.Column("RejectedQty", @Resources.Resource.thRejectedQuantity),
+grid.Column("AcptQty", @Resources.Resource.thAcceptedQuantity, style: "rightAlign", format: @<text><label id="l_thAcceptedQuantity"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.AcptQty</label></text>),
+//  grid.Column("AcptQty", @Resources.Resource.thAcceptedQuantity),
+//grid.Column("UnitPrice", @Resources.Resource.thUnitPrice),
+grid.Column("UnitPrice", @Resources.Resource.thUnitPrice, style: "rightAlign", format: @<text><label id="l_UnitPrice"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  "> @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.UnitPrice.ToString())</label></text>),
+//   grid.Column("UnitPrice", @Resources.Resource.thUnitPrice, style: "col1", format: @<text></text>),
+grid.Column("Discount", @Resources.Resource.thDiscountPerItem, style: "rightAlign", format: @<text><label id="l_Discount"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  "> @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.Discount.ToString())</label></text>),
+//     grid.Column("Discount", @Resources.Resource.thDiscountPerItem),
+//grid.Column("PriceAmount", @Resources.Resource.thPriceAmount),
+ grid.Column("PriceAmount", @Resources.Resource.thPriceAmount, style: "rightAlign", format: @<text><label id="l_PriceAmount"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  "> @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.PriceAmount.ToString())</label></text>),
+// grid.Column("TaxRate", @Resources.Resource.thTaxRate),
+grid.Column("TaxRate", @Resources.Resource.thTaxRate, style: "rightAlign", format: @<text><label id="l_TaxRate"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  "> @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.TaxRate.ToString())</label></text>),
+grid.Column("TaxAmount", @Resources.Resource.thTaxAmount, style: "rightAlign", format: @<text><label id="l_TaxAmount"  style="font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  "> @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.TaxAmount.ToString())</label></text>),
+//grid.Column("PriceAmount", @Resources.Resource.thPriceAmount, style: "col1", format: @<text> @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.PriceAmount.ToString())</text>),
+//   grid.Column("TaxAmount", @Resources.Resource.thTaxAmount),
+//grid.Column("StockAllocatedQty", @Resources.Resource.thStockAllocatedQuantity),
+grid.Column("StockAllocatedQty", @Resources.Resource.thStockAllocatedQuantity, style: "rightAlign", format: @<text><label id="l_StockAllocatedQty"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.StockAllocatedQty</label></text>),
+//grid.Column("SellingPrice", @Resources.Resource.thSellingPrice),
+ grid.Column("SellingPrice", @Resources.Resource.thSellingPrice, style: "rightAlign", format: @<text><label id="l_SellingPrice"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  "> @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.SellingPrice.ToString())</label></text>) ,
+//grid.Column("SellingPrice", @Resources.Resource.thSellingPrice, style: "col1", format: @<text> @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.SellingPrice.ToString())</text>),
+grid.Column("Weight", @Resources.Resource.thWeightgm, style: "rightAlign", format: @<text><label id="l_Weight"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.Weight.ToString())</label></text>),
+//grid.Column("Weight", @Resources.Resource.thWeightgm),
+grid.Column("ErrorMark", @Resources.Resource.thError, style: "leftAlign", format: @<text><label id="l_ErrorMark"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.ErrorMark</label></text>),
+// grid.Column("ErrorMark", @Resources.Resource.thError, style: "wgErrorColumn"),
+ grid.Column("ErrorDesc", @Resources.Resource.thErrorDescription, style: "leftAlign", format: @<text><label id="l_ErrorDesc"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.ErrorDesc</label></text>)
+@*//   grid.Column("ErrorDesc", @Resources.Resource.thErrorDescription, style: "wgErrorColumn")
+*@
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     )
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ) @* grid.GetHtml *@
+    </div>@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+ 
+    <script>
+        $("#chkSelectAll").removeAttr("disabled", true);
+        $(".group-span-filestyle").removeAttr("disabled", true);
+
+
+    </script>
+        ///Check if Session
+        if (strMessage != "")
+        {
+    <script>
+
+        txtError = "@strMessage";
+        txtErrorType = "@strMessageType";
+               DisplayModal(txtErrorType, txtError);
+  
+        
+    </script>
+        }
+
+
+}
+
+else
+{
+    <div id="main" class="datagrid">
+        <table data-swhgcallback="AfterLoad" data-swhgcontainer="main" data-swhgajax="true"
+            id="ConsignmentDetailsGrid" class="table table-striped table-hover">
+            <thead>
+                <tr class="gridHead">
+                     
+                    <th scope="col">
+                        @Resources.Resource.thLineNo
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thSubLineNo
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thCTO
+                    </th>
+                    <th scope="col">
+                       @Resources.Resource.thRequestedPartNo
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thProcessedPartNo
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thPartDescription
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thRequestedQuantity
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thCancelledQuantity
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thRejectedQuantity
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thAcceptedQuantity
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thUnitPrice
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thDiscountPerItem
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thPriceAmount
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thTaxRate
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thTaxAmount
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thStockAllocatedQuantity
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thSellingPrice
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thWeightgm
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thError
+                    </th>
+                    <th scope="col">
+                        @Resources.Resource.thErrorDescription
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+  
+    if (!string.IsNullOrEmpty(strMessage))
+    {
+        <script>
+
+            txtError = "@strMessage";
+            txtErrorType = "@strMessageType";
+            DisplayModal(txtErrorType, txtError);
+         
+
+    </script>
+    }
+
+
+}
+@if (Session["OrderDetailsInfo"] != null)
+{
+    var DetailsData = Session["OrderDetailsInfo"] as PDXWEB.Models.Consignment.OrderDetails.OrderDetailsModel;//.StockTransferReqDetails.StockTransReqInqModel;
+       
+    <script type="text/javascript">
+        $("#txtStatus").val("@DetailsData.txtStatus");
+        $("#txtCurrency").val("@DetailsData.txtCurrency");
+        $("#txtCustomerID").val("@DetailsData.txtCustomerID");
+        $("#txtCustomerName").val("@DetailsData.txtCustomerName");
+        $("#txtTotalSellingPrice").val(" @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(DetailsData.txtTotalSellingPrice)");
+        $("#txtTotalTax").val(" @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(DetailsData.txtTotalTax)");
+        $("#txtTotalNetAmount").val(" @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(DetailsData.txtTotalNetAmount)");
+        $("#txtTotalWeight").val(" @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(DetailsData.txtTotalWeight)");
+        fixPrice = "@DetailsData.FixPrice";
+    </script>
+    foreach (var item in ((PDXWEB.Models.Consignment.OrderDetails.OrderDetailsModel)Session["OrderDetailsInfo"]).WareHouseList)
+    {
+        var Elements = " <input type='checkbox' style='margin-left:5px' checked='checked' disabled='disabled'  id=" + @item.Text + " name= " + @item.Text + " />   " + " <label for= " + @item.Text + ">" + @item.Text + "</label>";
+    <script>
+
+        $(".divWareHouses").html(""); ///To Avoid Duplicate Elements Rendering,Empty the Container First..
+        $(".divWareHouses").append("@Html.Raw(Elements)");  
+        
+        
+    </script>  
+       
+    }
+    foreach (var item in ((PDXWEB.Models.Consignment.OrderDetails.OrderDetailsModel)Session["OrderDetailsInfo"]).PrefferedOriginsList)
+    {
+        var Elements = " <input type='checkbox'  style='margin-left:5px' checked='checked' disabled='disabled' id=" + @item.Text + " name= " + @item.Text + " />   " + " <label for= " + @item.Text + ">" + @item.Text + "</label>";
+    <script>
+        $(".divOrigins").html(""); ///To Avoid Duplicate Elements Rendering,Empty the Container First..
+        $(".divOrigins").append("@Html.Raw(Elements)");
+        var cto = "<option value=" + "@item.Text" + ">" + "@item.Text" + "</option>";
+        $(".hiddenCTO").find('option').remove();
+
+        $(".ddlCTO").append(cto);
+        
+    </script>  
+    }
+}
+else
+{
+    <script type="text/javascript">
+        $("#txtStatus").val("");
+        $("#txtCurrency").val("");
+        $("#txtCustomerID").val("");
+        $("#txtCustomerName").val("");
+        $("#txtTotalSellingPrice").val("");
+        $("#txtTotalTax").val("");
+        $("#txtTotalNetAmount").val("");
+        $("#txtTotalWeight").val("");
+
+
+        $(".divOrigins").html("")
+        $(".divWareHouses").html("")
+        $(".hiddenCTO").find('option').remove();
+    </script>
+}
+@if (strStatus != "1")///Check, if Status is Not inProcess,
+{
+    <script>
+
+        $("#fuUploadCSV").attr("disabled", true);
+        $("#btnImport").attr("disabled", true);
+        $("#btnAddParts").attr("disabled", true);
+        $("#btnCalculate").attr("disabled", true);
+        $("#btnSave").attr("disabled", true);
+        $("#btnDelete").attr("disabled", true);
+        $("#btnUpdate").attr("disabled", true);
+       // $("#btnDownload").attr("disabled", true);
+        $("#chkSelectAll").attr("disabled", true);
+        $(".group-span-filestyle").attr("disabled", true);
+
+    </script>
+    if (strStatus == "")
+    {
+    <script type="text/javascript">       
+        $(".controlsGroup input,.controlsGroup button").each(function () {
+
+            $(this).attr("disabled", true)
+        });
+        status = "@strStatus";
+    </script>
+    }
+    else
+    {
+    <script type="text/javascript">
+
+        $(".controlsGroup input,.controlsGroup button").each(function () {
+            if ($(this).attr("id") == "btnDownload")///Dont Disable Download Button if Details Exist and Status is No InProcess
+            {
+                $(this).removeAttr("disabled")
+            }
+            else {
+                $(this).attr("disabled", true)
+            }
+
+        });
+        status = "@strStatus";
+    </script>
+    }
+
+
+}
+else
+{
+    if (strModelCount == "")///Check, if Total Parts Count is Zero and Status is InProcess
+    {
+            
+    <script type="text/javascript">
+        status = "@strStatus";
+        $("#btnUpdate").attr("disabled", true); ///,then Disable Save  and
+        $("#btnCalculate").attr("disabled", true); /// Calculate Button and
+        $("#btnDelete").attr("disabled", true); /// Delete Button
+        $("#btnDownload").attr("disabled", true); /// Delete Button
+        status = "@strStatus";
+        $(".controlsGroup input,.controlsGroup button").each(function () {
+            if ($(this).attr("id") == "btnDelete" || $(this).parent("div").hasClass("bootstrap-filestyle") || $(this).attr("id") == "btnDownload" || $(this).attr("id") == "btnUpdate" || $(this).attr("id") == "btnCalculate") {
+                ////Dont Enable Calculate and Update Button if Status is   In-Process  and Model count is Zero
+            }
+            else {
+                $(this).removeAttr("disabled")///Enable all Buttons  
+            }
+
+        });
+      
+            
+
+    </script>
+
+    }///In other case ,Enable all Buttons
+    else
+    {
+    <script type="text/javascript">
+        status = "@strStatus";
+        $("#chkSelectAll").removeAttr("disabled", true);
+        $(".group-span-filestyle").removeAttr("disabled", true);
+
+        $("#btnImport").removeAttr("disabled")
+        $("#btnAddParts").removeAttr("disabled")
+        $("#btnCalculate").removeAttr("disabled")
+        $("#btnSave").removeAttr("disabled")
+       // $("#btnDelete").removeAttr("disabled")
+        $("#btnUpdate").removeAttr("disabled")
+        $("#btnDownload").removeAttr("disabled")
+        $(".group-span-filestyle").removeAttr("disabled")
+        $("#chkSelectAll").removeAttr("disabled")
+
+
+
+
+
+
+
+        $(".controlsGroup input,.controlsGroup button").each(function () {
+            if ($(this).attr("id") == "btnDelete" || $(this).parent("div").hasClass("bootstrap-filestyle")) {
+                
+            }
+            else {
+                $(this).removeAttr("disabled")
+            }
+
+        });
+      
+            
+
+    </script>
+    }
+
+}
+<script type="text/javascript">
+    //Shabbir	
+    totalPartsCount = @Model.Count();
+    CurrentRole = "@strRole";
+    AfterLoad();
+    //Shabbir		
+     if(status != "1")
+      {
+        $("#chkSelectAll").attr('disabled','disabled');
+      }
+      
+      var data = @Html.Raw(Json.Encode(Model));
+//    $(document).on("change", "#chkSelectAll", function () {
+//        if (this.checked) 
+//        {
+//           var data = @*@Html.Raw(Json.Encode(Model));*@
+//           AddItemsForSelectAll(data); 
+//        }
+//        else
+//        {
+//            RemoveItemsForSelectAll();
+//        }
+//        });
+    
+
+</script>
+@if (strModelCount == "")
+{
+       <script>
+
+           $("#outer").find("input[type=text]").each(function () {
+               $(this).val("0");
+           });
+       </script>
+   }

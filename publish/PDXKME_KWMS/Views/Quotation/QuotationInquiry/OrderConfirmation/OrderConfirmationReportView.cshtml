@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = @Resources.Resource.OrderConfirmationReportView;
+}
+
+
+<div class="container childcontent ">
+    <div id="main" class="reportframe" style="margin: 0px 0px 4px -6px  ; width: 100% ! important;">
+        <object data="@Url.Content("~/AspNetForms/QuotationInquiryReport/QuotationReport.aspx")" style="height: 1250px; width: 100%;">     </object>
+    </div>
+</div>
+
+<script>
+
+
+
+    window.addEventListener('beforeunload', function (e) {
+        e.preventDefault();
+        DisposeReport();
+        //window.onbeforeunload = null;
+    });
+
+    function DisposeReport() {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("demo").innerHTML = this.responseText;
+            }
+        };
+
+        var url = '@Url.Action("DisposeCrystalReport", "OrderConfirmation")' ;   
+        xhttp.open("POST", url, true);
+        xhttp.send();
+    }
+</script>

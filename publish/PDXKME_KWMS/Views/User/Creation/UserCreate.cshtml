@@ -1,0 +1,2270 @@
+﻿@*hst001: Noshairwan Farooq |27-10-2021| : Added new Rights Control*@
+@*hst002: Noshairwan Farooq |22-01-2022| : Added password expiry date control*@
+
+@model PDXWEB.Models.User.UserCreationViewModel
+@{
+    ViewBag.Title = "Create New User";
+}
+@Styles.Render("~/css/RightsControl")
+<script type="text/javascript" src="https://use.fontawesome.com/a3eda90245.js"></script>
+@Scripts.Render("~/bundles/InquiryJSBundle")
+@Styles.Render("~/Content/InquiryCSSBundle")
+@Scripts.Render("~/bundles/FancyTreeJS")
+@Styles.Render("~/css/FancyTreeCSS")
+<script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
+<script src="~/Scripts/AngularJS/angular.js"></script>
+@*@Scripts.Render("~/bundles/AngularScript");*@
+<style type="text/css">
+    .ValidationError {
+        border-color: rgb(0,190,0);
+        background-color: #ddd;
+    }
+
+    #ExpiryDate {
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-image: url('../Images/calendar.png');
+    }
+    #PasswordExpiryDate {
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-image: url('../Images/calendar.png');
+    }
+
+    legend {
+        width: auto;
+    }
+
+    button.multiselect {
+        border: 1px solid grey !important
+    }
+
+    @@media screen and (min-width: 1200px) {
+        .TreeButtons {
+            padding-top: 45px;
+            margin: 0px -9px -2px -23px !important
+        }
+
+        .AllocatedRights {
+            width: 44%;
+        }
+
+        .AvailableRights {
+            width: 44.667%
+        }
+
+        #UsersToCopy {
+            width: 123%;
+        }
+
+        .TreeButtons button {
+            width: 80px !important;
+            margin-bottom: 2px !important;
+        }
+    }
+
+    .panel-body {
+        padding-top: 6px !important;
+    }
+
+    .dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+        background-color: white;
+        color: #fff;
+        outline: 0none;
+        text-decoration: none;
+    }
+
+    .btn-group, .btn-group-vertical {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        width: 75% !important;
+    }
+
+    @@media screen and (max-width: 767px) {
+        button.multiselect {
+            background-color: White !important;
+            border-radius: 1px;
+            color: White;
+            font-family: sans-serif,open sans;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            height: 26px !important;
+            padding: 4px 12px;
+            text-decoration: none;
+            border-radius: 6px;
+            width: 97% !important;
+        }
+
+        .InputElements {
+            width: 97% !important;
+        }
+
+        .TreeButtons button, .TreeButtons select {
+            width: 100% !important;
+            margin-bottom: 2px;
+        }
+
+
+
+        .AllocatedRights {
+        }
+
+        .AvailableRights {
+            margin-bottom: 8px;
+        }
+
+        #UsersToCopy {
+        }
+
+        .TopMarginAtXs {
+            margin-top: 5px;
+            width: 100% !important;
+        }
+    }
+
+    @@media screen and (min-width: 768px) and (max-width: 991px) {
+        .divRolesContainer {
+            width: 275px !important;
+        }
+
+        .TreeButtons {
+            margin-left: 9px;
+            padding: 44px 0 0 !important;
+        }
+
+        .AllocatedRights {
+            margin-left: -8px;
+        }
+
+        .AvailableRights {
+            margin-left: -22px;
+            width: 43.5%;
+        }
+
+        .TreeButtons button {
+            margin-bottom: 2px;
+            width: 56px !important;
+        }
+
+        #UsersToCopy {
+            width: 103% !important;
+        }
+
+        #divViewSubData {
+            padding-left: 21px;
+        }
+    }
+
+    @@media screen and (min-width: 992px) and (max-width: 1199px) {
+        .divRolesContainer {
+            width: 368px !important;
+        }
+
+        .TreeButtons {
+            margin-left: -10px;
+            padding: 44px 0 0 !important;
+        }
+
+        .AllocatedRights {
+            margin-left: -14px;
+        }
+
+        .AvailableRights {
+            margin-left: -19px;
+            width: 45.5%;
+        }
+
+        .TreeButtons button {
+            margin-bottom: 2px;
+            width: 67px !important;
+        }
+
+        #UsersToCopy {
+            width: 90% !important;
+        }
+
+        #divViewSubData {
+            padding-left: 21px;
+        }
+    }
+
+    .ui-datepicker {
+        font-size: 11px;
+        z-index: 999 !important;
+    }
+
+    @@media screen and (max-width: 414px) {
+
+        .InputElements {
+            width: 96% !important;
+        }
+    }
+</style>
+<div id="divLoading" class="loader1">
+</div>
+<div class="container childcontent ">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left ">
+                @Resources.Resource.CreateNewUser
+            </h3>
+        </div>
+        <div class="panel-body">
+            <button id="btnNew " class="btn btn-primary btn-sm TopMarginAtXs" onclick="location.href='@Url.Action("CreateNewUser", "User", null)'">
+                @Resources.Resource.btnNew
+            </button>
+            <button id="btnSaveRoleRegistration" class="btn btn-primary btn-sm TopMarginAtXs">
+                @Resources.Resource.btnSave
+            </button>
+            <span id="spnMsg"></span>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        <label>
+                            @Resources.Resource.lblUserId
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.TextBoxFor(model => model.UserID, new { @class = "form-control   InputElements", style = "display: inline;" })
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-field SizeOnXs ">
+                        <label>
+                            @Resources.Resource.lblUserName
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control   InputElements", style = "display: inline;" })
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="display:none">
+                    <div class="editor-label SizeOnXs">
+                        <label>
+                            @Resources.Resource.Password
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control   InputElements", type = "password", style = "display: inline" })
+                        <span></span>
+                    </div>
+                </div>
+                @*<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-field SizeOnXs ">
+                        <label>
+                            @Resources.Resource.lblPasswordExpiry
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.TextBoxFor(model => model.PasswordExpiryDate, new { @class = " calendarPicker form-control InputElements", style = "background-color:white ;display:inline" })
+                        <span></span>
+                    </div>
+                </div>*@
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-field SizeOnXs ">
+                        <label>
+                            @Resources.Resource.lblPasswordExpiry
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.TextBoxFor(model => model.PasswordExpiryDate, new { @class = " calendarPicker form-control InputElements", style = "background-color:white ;display:inline" })
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-field SizeOnXs ">
+                        <label>
+                            @Resources.Resource.lblRole
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.DropDownList("UserRole", Model.UserRole1 as List<SelectListItem>, new { @class = "form-control  InputElements", style = "display: inline;" })
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        <label>
+                            @Resources.Resource.lblDistributorCode
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.DropDownList("CustomerCode", Model.CustomerCode1 as List<SelectListItem>, new { @class = "form-control  InputElements", style = "display: inline;" })
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-field SizeOnXs ">
+                        <label>
+                            @Resources.Resource.lblEmailId
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control InputElements", style = "display: inline;", maxlength = "50" })
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        <label>
+                            @Resources.Resource.lblStatus
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.DropDownList("UserStatus", Model.UserStatus1 as List<SelectListItem>, new { @class = "form-control InputElements", style = "display: inline;" })
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-field SizeOnXs ">
+                        <label>
+                            @Resources.Resource.lblExpiryDate
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.TextBoxFor(model => model.ExpiryDate, new { @class = " calendarPicker form-control InputElements", style = "background-color:white ;display:inline" })
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        <label style="color:red !important;">
+                            @Resources.Resource.lblIncorrectAttempts
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        <div class="editor-field SizeOnXs ">
+                            @Html.TextBoxFor(model => model.IncorrectPassworAttempts, new { @class = "form-control InputElements", style = "background-color:white ;display:inline", @readonly = "readonly" })
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        <label>
+                            @Resources.Resource.lblAssignDBCodes
+                        </label>
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                        @Html.DropDownList("ddlCustToAsssign", Model.DistributorsToAssign, new { multiple = "multiple", style = "display:none" })
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            @*<div id="divViewSubData" class="ViewSubData row" style="padding-top: 115px;">
+                    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12 AvailableRights">
+                        <fieldset class="fieldset" style="border: 1px solid grey; border-radius: 3px">
+                            <legend><b>Available Rights</b> </legend>
+                            <div class="divRolesContainer" style="height: 250px; overflow: auto;">
+                                <div id="treeAvailableRoles">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 TreeButtons">
+                        <button id="btnAddRight" class="btn btn-primary btn-sm" style="width: 80px;" title="Add"
+                                onclick="AllocateRoles()">
+                            &gt;
+                        </button>
+                        <button id="btnCopyAllRights" class="btn btn-primary btn-sm" style="width: 80px;"
+                                title="Add" onclick="CopyAllTree()">
+                            &gt; &gt;
+                        </button>
+                        @Html.DropDownList("UsersToCopy", Model.UsersToCopy as List<SelectListItem>, new { @class = "form-control input-sm" })
+                        <button id="btnCopyRights" class="btn btn-primary btn-sm" style="width: 80px;" title="Copy Rights">
+                            Copy
+                        </button>
+                        <button id="btnRemoveRight" class="btn btn-primary btn-sm" style="width: 80px;" title="Remove"
+                                onclick="RemoveRoles()">
+                            &lt;
+                        </button>
+                        <button id="btnRemoveAllRights" class="btn btn-primary btn-sm" style="width: 80px;"
+                                title="RemoveAll" onclick="RemoveAllRights()">
+                            &lt; &lt;
+                        </button>
+                    </div>
+                    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12 AllocatedRights">
+                        <fieldset class="fieldset  " style="border: 1px solid grey; border-radius: 3px">
+                            <legend><b>Allocated Rights</b> </legend><span class="spnAllocatedRights"></span>
+                            <div class="divRolesContainer" style="height: 250px; overflow: auto;">
+                                <div id="treeAllocatedRoles">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>*@
+
+            <div ng-app="PDX" ng-controller="RightsAllocationCtrl" class="RightsControl">
+                <div class="row" style="margin-top: 20px;">
+                    @*===================Available Rights Box=========================*@
+                    <div class="col-md-5 col-rights">
+                        <div class="panel panelInquiryControls panel-primary panelWidth rights-box">
+                            <div class="panel-heading PanelTitle">
+                                <h3 class="panel-title pull-left ">
+                                    Available Rights
+                                </h3>
+                            </div>
+                            <div class="rights-box-body" id="style-3">
+
+                                <div class="nav-wrapper">
+                                    <ul class="nav nav-pills" style="display: -webkit-box;">
+                                        <li ng-repeat="right in AvailableRights">
+                                            <a ng-click="AvTabSelected(right)" id="av_module_{{right.RightName}}"
+                                               class="nav-pill" data-toggle="pill" href="#av_top_{{right.RightName}}">{{right.RightText}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content scrollbar" style="margin-top: 10px;">
+                                    <div ng-repeat="right in AvailableRights" id="av_top_{{right.RightName}}" class="tab-pane">
+                                        <div id="accordion">
+                                            <div ng-repeat="mid_right in right.Rights">
+                                                <div class="right-control collapsed" id="av_mid_{{mid_right.RightName}}" data-toggle="collapse" data-target="#av_{{mid_right.RightName}}" aria-controls="av_{{mid_right.RightName}}" ng-click="av_SelectMidRightLine( mid_right)">
+                                                    {{mid_right.RightText}} <span class='fa fa-check-square mid-right-check-box' id="av_check_mid_{{mid_right.RightName}}" ng-click="av_SelectMidRight(mid_right, $event)"></span>
+                                                </div>
+                                                <div id="av_{{mid_right.RightName}}" class="collapse" data-parent="#accordion">
+                                                    <div ng-repeat="base_right in mid_right.Rights">
+                                                        <div ng-if="base_right.Allocated==false">
+                                                            <div class='right-item' id='av_base_{{base_right.RightName}}' ng-click="av_SelectBaseRight(base_right, mid_right)">
+                                                                <a>{{base_right.RightText}}</a> <span class='fa fa-check-circle right-check-box'
+                                                                                                      id="av_check_base_{{base_right.RightName}}"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div ng-if="base_right.Allocated==true">
+                                                            <div class='right-item' id='av_base_{{base_right.RightName}}'>
+                                                                <a>{{base_right.RightText}}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*MIDDLE CONTROLS*@
+
+                    <div class="col-md-2 col-rights-controls">
+
+                        <button class="btn btn-primary btn-sm TopMarginAtXs btnRightsControl" ng-click="AllocateSelectedRights()">
+                            >
+                        </button>
+                        <button class="btn btn-primary btn-sm TopMarginAtXs btnRightsControl" ng-click="AllocatedAllRights()">
+                            >>
+                        </button>
+                        <select class="form-control btnRightsControl" id="ddDistributorCode">
+                            @foreach (var item in Model.UsersToCopy as List<SelectListItem>)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <button class="btn btn-primary btn-sm TopMarginAtXs btnRightsControl" ng-click="CopyRights()">
+                            Copy
+                        </button>
+                        <button class="btn btn-primary btn-sm TopMarginAtXs btnRightsControl" ng-click="RevokeSelectedRights()">
+                            <
+                        </button>
+                        <button class="btn btn-primary btn-sm TopMarginAtXs btnRightsControl" ng-click="RevokeAllRights()">
+                            <<
+                        </button>
+
+                    </div>
+
+
+                    @*=======================Allocated Rights Box=================*@
+                    <div class="col-md-5 col-rights">
+                        <div class="panel panelInquiryControls panel-primary panelWidth rights-box">
+                            <div class="panel-heading PanelTitle">
+                                <h3 class="panel-title pull-left ">
+                                    Allocated Rights &nbsp;&nbsp;<span id="lblErrorMessage">*Please allocate atleast 1 right to this user.</span>
+                                </h3>
+                            </div>
+                            <div class="rights-box-body">
+                                <div class="nav-wrapper">
+                                    <ul class="nav nav-pills" style="display: -webkit-box">
+                                        <li ng-repeat="right in AvailableRights">
+                                            <a ng-click="AllTabSelected(right)" id="all_module_{{right.RightName}}"
+                                               data-toggle="pill" style="text-decoration: none" class="nav-pill" href="#all_top_{{right.RightName}}">
+                                                {{right.RightText}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content scrollbar" style="margin-top: 10px;">
+                                    <div ng-repeat="right in AvailableRights" id="all_top_{{right.RightName}}" class="tab-pane">
+                                        <div id="all_accordion">
+                                            <div ng-repeat="mid_right in right.Rights">
+                                                <div ng-if="mid_right.Allocated==true">
+                                                    <div class="right-control" id="all_mid_{{mid_right.RightName}}" data-toggle="collapse" data-target="#all_{{mid_right.RightName}}">
+                                                        {{mid_right.RightText}}
+                                                        <input type="hidden" class="clsAllocatedRight" value="{{mid_right.RightName}}" />
+                                                        <span class='fa fa-minus-square mid-right-check-box' id="all_check_mid_{{mid_right.RightName}}" ng-click="all_SelectMidRight(mid_right, $event)"></span>
+                                                    </div>
+                                                </div>
+                                                <div id="all_{{mid_right.RightName}}" class="collapse" data-parent="#all_accordion">
+                                                    <div ng-repeat="base_right in mid_right.Rights">
+                                                        <div ng-if="base_right.Allocated==true">
+                                                            <div class='right-item' id='all_base_{{base_right.RightName}}' ng-click="all_SelectBaseRight(base_right)">
+                                                                <a>{{base_right.RightText}}</a>
+                                                                <input type="hidden" class="clsAllocatedRight" value="{{base_right.RightName}}" />
+                                                                <span class='fa fa-minus-circle right-check-box' id="all_check_base_{{base_right.RightName}}"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+
+        </div>
+    </div>
+</div>
+
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="ErrorModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.CreateNewUser
+                    </h4>
+                </div>
+                <div class="modal-body" id="divModalBody">
+                    <span id="lblMessage"></span>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.UserInquiry
+                    </h4>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <img class="imgError" />
+                    <label id="lblMessageText" class="lblError"></label>
+                </div>
+                <div class="modal-footer">
+                    <button style=" text-align:center;float: none !important;" id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* Model Dialoge *@
+<div id="divInterestDetails">
+</div>
+<br />
+
+
+
+<script>
+
+    var txtErrorType;
+    var txtError;
+    $(document).on('keydown', '#UserID', function (e) {
+        ///Ignore Backspace
+        if (this.value.length > 9 && e.keyCode != 8)
+        {
+            $(this).next("span").html("@Resources.Resource.MsgInfo35").attr("style", "color:red;white-space:nowrap;");
+            e.preventDefault()
+            return false;
+        }
+    });
+    $(document).on('keydown', '#UserName', function (e) {
+        ///Ignore Backspace
+        if (this.value.length > 19 && e.keyCode != 8)
+        {
+            $(this).next("span").html("@Resources.Resource.MsgInfo36").attr("style", "color:red;white-space:nowrap;");
+            e.preventDefault()
+            return false;
+        }
+    });
+    $(document).on('keydown', '#Password', function (e) {
+        if (this.value.length > 14 && e.keyCode != 8) ///Ignore Backspace
+        {
+            $(this).next("span").html("@Resources.Resource.MsgInfo37").attr("style", "color:red;white-space:nowrap;");
+            e.preventDefault()
+            return false;
+        }
+    });
+</script>
+<script>
+	  var userIdFromForm;
+	$(document).ready(function ()
+    {
+
+    //hst002 - Cond: when 'User Role' is 'Administrator/EndUser' then add empty option in dropdown
+    if($.trim($("#UserRole").val()) != "3")
+     {
+        if(!$("#CustomerCode").hasClass("Appended"))
+        {
+            $("#CustomerCode").prepend( '<option value="" class="EmptyOption"></option>' ).addClass("Appended").val("");
+        }
+     }
+     else //when 'User Role' is 'Dealer' then remove empty option in dropdown
+     {
+         $(".EmptyOption").remove();
+         $("#CustomerCode").removeClass("Appended");
+     }
+
+     $('#Email').keypress(function (event) {
+             var key = event.which;
+
+             if (this.value.length >= 50 && key != 8 && key != 13) {
+                 return false;
+             }
+         })
+
+     $('#ddlCustToAsssign').multiselect({
+            onDropdownHide: function(event) {
+                event.preventDefault();
+                // to reload the page
+
+          },   nonSelectedText: ''
+        });
+
+ $(".SizeOnXs .btn-group").addClass("open");
+ $(".multiselect-container").attr("style","height:100px !important;  box-shadow: 0 0 0 rgba(0, 0, 0, 0);");
+     //hstU001 start
+     var dateFormat="@Session["DateCulture"].ToString()";
+     if(dateFormat==null || dateFormat==""){dateFormat="mm/dd/yy"}
+     InitializeCalander(dateFormat,"","");//from refrencing JavaScript File
+      //hstU001 end
+
+        userIdFromForm = GetParameterValues('strUserId');
+        if(userIdFromForm != null && userIdFromForm != "")
+            $("#UserID").attr("disabled",true);
+
+        //hst002 - Cond: when user role is 'Administrator/EndUser' then disable 'DB Code' dropdown.
+        if($("#UserRole").val()!="3")
+        {
+            $("#CustomerCode").attr("disabled", true)
+        }
+
+		var postData={strUserId:userIdFromForm};
+		if (userIdFromForm != null && userIdFromForm != "" && true==false)
+		{
+		$.post("@Url.Action("CreateNewUser", "User", null)",postData,function (UserData)
+		{
+
+						if (isRealValue(UserData))
+						{
+						    $.each(UserData.CustomerCode1, function (index, itemData) {
+						    $('#CustomerCode').val( itemData.Value); });
+						    $.each(UserData.UserRole1, function (index, itemData) {
+						    $('#UserRole').val( itemData.Value); });
+						    $("#Email").val(UserData.Email);
+						    $.each(UserData.UserStatus1, function (index, itemData) {
+						    $('#UserStatus').val( itemData.Value); });
+						    if (isRealValue(UserData.RolesTree))
+						    {
+						     SetAllocatedRights(UserData.RolesTree);
+						    }
+
+						}
+		 });
+
+
+		}
+
+
+
+
+        $("#btnNew").click(function ()
+        {
+			window.location.href = "@Url.Action("CreateNewUser", "User", null)";
+		});
+		 $("#UserRole").change(function ()
+         {
+			 if ($(this).val() != "3")
+             {
+                $("#CustomerCode").attr("disabled", true);
+			 }
+			 else {
+				 $("#CustomerCode").attr("disabled", false);
+			 }
+		 });
+
+		});
+		$("#Password").on('change', function (e)
+        {
+			if ($.trim($(this).val()) == "")
+            {
+			}
+			else
+            {
+				if ($.trim($(this).val()).length < 5)
+                {
+                  $(this).next("span").html("@Resources.Resource.MsgInfo38").attr("style", "color:red;white-space:nowrap;");
+				}
+
+				else
+                {
+					$(this).next("span").html("");
+				}
+			}
+		});
+		$("#Email").on('change', function ()
+        {
+
+				if (!isValidEmailAddress($.trim($(this).val()))) {
+                    $(this).next("span").html("@Resources.Resource.MsgInfo39").attr("style", "color:red; white-space: nowrap;");
+				}
+				else
+                {
+				}
+
+		});
+
+</script>
+<script>
+    function GetParameterValues(param) {
+        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < url.length; i++) {
+            var urlparam = url[i].split('=');
+            if (urlparam[0] == param) {
+                return urlparam[1];
+            }
+        }
+    }
+    function isRealValue(obj) {
+        return obj && obj !== "null" && obj !== "undefined";
+    }
+</script>
+<script>
+    function isValidEmailAddress(emailAddress) {
+        var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+        return pattern.test(emailAddress);
+    };
+
+</script>
+<script type="text/javascript">
+    var PDXAvailableRightsAll = [];
+    function CopyAllTree() {
+        $("#treeAllocatedRoles").fancytree("destroy");
+        $("#treeAllocatedRoles").fancytree(
+            {
+                checkbox: true,
+                selectMode: 2,
+                source: PDXAvailableRightsAll,
+                expanded: true,
+                select: function (event, data) {
+                    var selNodes = data.tree.getSelectedNodes();
+                    lstSelectedNodes = selNodes;
+                    lstAllocatedRoles = selNodes;
+                    var selKeys = $.map(selNodes, function (node) {
+                        return "[" + node.key + "]: '" + node.title + "'";
+                    });
+                },
+                loadChildren: function (event, data) {
+                    data.node.visit(function (subNode) {
+                        if (subNode.isUndefined() && subNode.isExpanded()) {
+                            subNode.load();
+                        }
+                    });
+                },
+                cookieId: "fancytree-Cb2",
+                idPrefix: "fancytree-Cb2-"
+            });
+    }
+    function RemoveAllRights() {
+        $("#treeAllocatedRoles").fancytree("destroy");
+        $("#treeAllocatedRoles").fancytree();
+    }
+
+</script>
+<script type="text/javascript">
+    function ValidateInput() {
+        var falseCounter = 0;
+        $("input[type=text],  input[type=password],select").each(function () {
+
+            if ($(this).attr("id") != "ExpiryDate" && $(this).attr("id") != "ddlCustToAsssign")
+            {
+                if ($(this).attr("id") == "Email")
+                {
+                    $(this).next("span").html(" ");
+                }
+                else
+                {
+                    if ($.trim($(this).val()) == "")
+                    {
+                        if ($(this).attr("id") == "CustomerCode")
+                        {
+                            //cond: in case user role
+                            if ($.trim($("#UserRole").val()) == "3")
+                            {
+                                $(this).attr("style", "border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;display: inline");
+                                falseCounter++;
+                            }
+                            else
+                            {
+                                $(this).attr("style", "");
+                            }
+                        }
+                        else
+                        {
+                            $(this).attr("style", "border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;display: inline");
+                            falseCounter++;
+                        }
+                    }
+                    else {
+                        $(this).attr("style", "");
+                        $(this).next("span").html("");
+                    }
+                }
+            }
+        });
+
+        if ($.trim($("#Password").val()) != "" && $.trim($("#Password").val()).length > 0 && $.trim($("#Password").val()).length < 5) {
+            $("#Password").next("span").html("@Resources.Resource.MsgInfo38").attr("style", "color:red");
+        }
+        if ($.trim($("#Email").val()) == "") {
+        } else {
+            if (!isValidEmailAddress($.trim($("#Email").val()))) {
+                $("#Email").next("span").html("@Resources.Resource.MsgInfo39").attr("style", "color:red; white-space: nowrap;");
+                falseCounter++;
+            }
+        }
+        //var iniallocTree = $("#treeAllocatedRoles").fancytree("getTree");
+        //if (typeof iniallocTree.$container == "undefined") {
+        //    falseCounter++;
+        //    $(".spnAllocatedRights").html("*").attr("style", "color:red");
+        //    $(".AllocatedRights legend").attr("style", "")
+        //}
+        if (falseCounter > 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    //variables to hold Available and Allocated Roles
+    var lstAvailableRoles;
+    var lstAllocatedRoles;
+    var lstSelectedNodes;
+</script>
+<script type="text/javascript">
+    //This Script is Used to Load Role Info from Controller into Role Registration View
+    //when User is redirected from Role Inquiry to Role Registration View.
+    function SetRoleInfo(RoleInfo) {
+        //Role Name
+        $('#tbxRoleName')[0].value = RoleInfo[0].RoleName;
+        $('#tbxRoleName').attr('readonly', 'true');
+        //Role Description
+        $('#tbxRoleDescription')[0].value = RoleInfo[0].RoleDescription;
+        //Default Role
+        $("#ddlDefaultRole").val(RoleInfo[0].DefaultRole);
+        //Role Status
+        $('.checkbox').each(function (i, obj) {
+            if (RoleInfo[0].Status.toUpperCase() == "TRUE") {
+                this.checked = true;
+            }
+            else {
+                this.checked = false;
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    //This Script is used to add available rigths to Available Rights Div.
+    function SetAvailableRights(lstAvailableRights) {
+        var MIRCSAvailableRights = [];
+        //Get the data from ViewBag and convert into FancyTree supported JSON Format
+        //with required properties and Initialize the FancyTree with Data.
+        if (lstAvailableRights != null) {
+            if (lstAvailableRights.length > 0) {
+                for (var v = 0; v < lstAvailableRights.length; v++) {
+                    if (lstAvailableRights[v].ResourceID.length == 3) {
+                        var CurrentView = lstAvailableRights[v].ResourceID;
+                        var MIRCSAvailableRightsChildren = [];
+                        //get childrens of current view
+                        for (var c = 0; c < lstAvailableRights.length; c++) {
+                            if (lstAvailableRights[c].ResourceID.length == 10) {
+                                if (CurrentView.toUpperCase() == lstAvailableRights[c].ResourceID.substring(0, 3).toUpperCase()) {
+                                    var MIRCSAvailableRightsChildrensChildren = []
+                                    var CurrentView2 = lstAvailableRights[c].ResourceID;
+                                    for (var x = 0; x < lstAvailableRights.length; x++) {
+                                        if (lstAvailableRights[x].ResourceID.length == 14) {
+                                            if (CurrentView2.toUpperCase() == lstAvailableRights[x].ResourceID.substring(0, 10).toUpperCase()) {
+                                                MIRCSAvailableRightsChildrensChildren.push({
+                                                    key: lstAvailableRights[x].ResourceID,
+                                                    title: lstAvailableRights[x].ResourceValue,
+                                                    icon: false,
+                                                    checkbox: false
+                                                });
+                                            }
+                                        }
+                                    }
+                                    MIRCSAvailableRightsChildren.push({
+                                        key: lstAvailableRights[c].ResourceID,
+                                        title: lstAvailableRights[c].ResoUserIDuUserIDserIDrceValue,
+                                        icon: false,
+                                        expanded: true,
+                                        children: MIRCSAvailableRightsChildrensChildren
+                                    });
+                                }
+                            }
+                        }
+                        MIRCSAvailableRights.push({
+                            key: lstAvailableRights[v].ResourceID,
+                            title: lstAvailableRights[v].ResourceValue,
+                            icon: false,
+                            expanded: true,
+                            children: MIRCSAvailableRightsChildren
+                        });
+                    }
+                }
+            }
+            lstAvailableRights = null;
+        }
+        PDXAvailableRightsAll = MIRCSAvailableRights;
+        //Initialize the FancyTree plugin with available JSON data
+        //Available Rrigts for Selected Role
+        $("#treeAvailableRoles").fancytree(
+            {
+                checkbox: true,
+                selectMode: 2,
+                source: MIRCSAvailableRights,
+                expanded: true,
+                select: function (event, data) {
+                    var selNodes = data.tree.getSelectedNodes();
+                    lstSelectedNodes = selNodes;
+                    var selKeys = $.map(selNodes, function (node) {
+                        return "[" + node.key + "]: '" + node.title + "'";
+                    });
+                },
+                loadChildren: function (event, data) {
+                    data.node.visit(function (subNode) {
+                        if (subNode.isUndefined() && subNode.isExpanded()) {
+                            subNode.load();
+                        }
+                    });
+                },
+                cookieId: "fancytree-Cb2",
+                idPrefix: "fancytree-Cb2-"
+            });
+    }
+</script>
+<script type="text/javascript">
+    //variables to hold Available and Allocated Roles
+    var lstAvailableRoles;
+    var lstAllocatedRoles;
+    var lstSelectedNodes;
+</script>
+<script type="text/javascript">
+    //This Script is Used to Load Role Info from Controller into Role Registration View
+    //when User is redirected from Role Inquiry to Role Registration View.
+    function SetRoleInfo(RoleInfo) {
+        //Role Name
+        $('#tbxRoleName')[0].value = RoleInfo[0].RoleName;
+        $('#tbxRoleName').attr('readonly', 'true');
+        //Role Description
+        $('#tbxRoleDescription')[0].value = RoleInfo[0].RoleDescription;
+        //Default Role
+        $("#ddlDefaultRole").val(RoleInfo[0].DefaultRole);
+        //Role Status
+        $('.checkbox').each(function (i, obj) {
+            if (RoleInfo[0].Status.toUpperCase() == "TRUE") {
+                this.checked = true;
+            }
+            else {
+                this.checked = false;
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    //This Script is used to add available rigths to Available Rights Div.
+    function SetAllocatedRights(lstAllocatedRights) {
+        var PDXAllocatedRights = [];
+        //Get the data from ViewBag and convert into FancyTree supported JSON Format
+        //with required properties and Initialize the FancyTree with Data.
+        if (lstAllocatedRights != null) {
+            if (lstAllocatedRights.length > 0) {
+                for (var v = 0; v < lstAllocatedRights.length; v++) {
+                    if (lstAllocatedRights[v].ResourceID.length == 3) {
+                        var CurrentView = lstAllocatedRights[v].ResourceID;
+                        var PDXAllocatedRightsChildren = [];
+                        //get childrens of current view
+                        for (var c = 0; c < lstAllocatedRights.length; c++) {
+                            if (lstAllocatedRights[c].ResourceID.length == 10) {
+                                if (CurrentView.toUpperCase() == lstAllocatedRights[c].ResourceID.substring(0, 3).toUpperCase()) {
+                                    var PDXAllocatedRightsChildrensChildren = []
+                                    var CurrentView2 = lstAllocatedRights[c].ResourceID;
+                                    for (var x = 0; x < lstAllocatedRights.length; x++) {
+                                        if (lstAllocatedRights[x].ResourceID.length == 14) {
+                                            if (CurrentView2.toUpperCase() == lstAllocatedRights[x].ResourceID.substring(0, 10).toUpperCase()) {
+                                                PDXAllocatedRightsChildrensChildren.push({
+                                                    key: lstAllocatedRights[x].ResourceID,
+                                                    title: lstAllocatedRights[x].ResourceValue,
+                                                    icon: false,
+                                                    checkbox: false
+                                                });
+                                            }
+                                        }
+                                    }
+                                    PDXAllocatedRightsChildren.push({
+                                        key: lstAllocatedRights[c].ResourceID,
+                                        title: lstAllocatedRights[c].ResourceValue,
+                                        icon: false,
+                                        expanded: true,
+                                        children: PDXAllocatedRightsChildrensChildren
+                                    });
+                                }
+                            }
+                        }
+                        PDXAllocatedRights.push({
+                            key: lstAllocatedRights[v].ResourceID,
+                            title: lstAllocatedRights[v].ResourceValue,
+                            icon: false,
+                            expanded: true,
+                            children: PDXAllocatedRightsChildren
+                        });
+                    }
+                }
+            }
+            lstAllocatedRights = null;
+        }
+        $("#treeAllocatedRoles").fancytree("destroy");
+        //Initialize the FancyTree plugin with available JSON data
+        //Available Rrigts for Selected Role
+        var allTree = $("#treeAllocatedRoles").fancytree("getTree");
+        //  re-initiazation causing error so we reload it
+        // clear the data of Allocated Rights Tree before Re-Intialization with Newly Loaded Data
+        if (allTree[0] != null && allTree[0].children.length > 0) {
+            allTree.reload([]);
+        }
+        $("#treeAllocatedRoles").fancytree(
+            {
+                checkbox: true,
+                selectMode: 2,
+                source: PDXAllocatedRights,
+                expanded: true,
+                select: function (event, data) {
+                    var selNodes = data.tree.getSelectedNodes();
+                    lstSelectedNodes = selNodes;
+                    lstAllocatedRoles = selNodes;
+                    var selKeys = $.map(selNodes, function (node) {
+                        return "[" + node.key + "]: '" + node.title + "'";
+                    });
+                },
+                loadChildren: function (event, data) {
+                    data.node.visit(function (subNode) {
+                        if (subNode.isUndefined() && subNode.isExpanded()) {
+                            subNode.load();
+                        }
+                    });
+                },
+                cookieId: "fancytree-Cb2",
+                idPrefix: "fancytree-Cb2-"
+            });
+    }
+</script>
+<script type="text/javascript">
+	//initialize the Available Roles div with data
+	$(document).ready(function ()
+	{
+		//Add Role Info if it is opened from Role Inquiry
+		var RoleInfo = @Html.Raw(Json.Encode(@ViewBag.RoleInfo));
+		//cond: if RoleInfo is not null then user is comming from RoleInquiry
+		//      else RoleRegistration is directly opened.
+		if(RoleInfo != null)
+		{
+			if(RoleInfo.length>0)
+			{
+				SetRoleInfo(RoleInfo);
+			}
+			//Set Available Rights
+			var lstAvailableRights = @Html.Raw(Json.Encode(@ViewBag.AvailableRights));
+
+			SetAvailableRights(lstAvailableRights);
+			//Set Allocated Rights
+			var lstAllocatedRights = @Html.Raw(Json.Encode(@ViewBag.AllocatedRights));
+			SetAllocatedRights(lstAllocatedRights);
+		}
+		else
+		{
+			var MIRCSAvailableRights=[];
+			var lstAvailableRights = @Html.Raw(Json.Encode(@ViewBag.AvailableRights));
+			 var lstAllocatedRights = @Html.Raw(Json.Encode(@ViewBag.AllocatedRights));
+			SetAllocatedRights(lstAllocatedRights);
+			SetAvailableRights(lstAvailableRights);
+		}
+		//On Save Click
+		$("#btnSaveRoleRegistration").click(function (evt)
+        {
+
+
+			if (!ValidateInput())
+			{
+			    return;
+            }
+            //hst001 : Commented as this contorl will not be checked for Rights
+			//var iniallocTree = $("#treeAllocatedRoles").fancytree("getTree");
+			//if (iniallocTree.$container[0].children.length == 0)
+			//{
+            //    //txtError = "No Rights Allocated to User";
+            //    txtError = "@Resources.Resource.MsgInfo40";
+            //    txtErrorType = "0";
+            //    DisplayModal(txtErrorType, txtError);
+	        //    return;
+			//}
+			SaveRole();
+		});
+		//on Default Role Dropdown Change
+		$("#ddlDefaultRole").change(function()
+		{
+			UpdateAvailableRights();
+		});
+		$('#loadingDiv').hide();
+		  $("#btnCopyRights").click(function () {
+
+			 var strUserToCopy = $("#UsersToCopy").val();
+			  $.post("@Url.Action("ddlUsersToCopy_Changed", "User", null)", { "strUserId": strUserToCopy }, function (data2) {
+
+					 lstAllocatedRights =null;
+				   // var copiedRights=JSON.stringify(data2);
+				   SetAllocatedRights(data2);
+				  });
+		 });
+	});///Document Ready End
+	$(window).load(function ()
+	{
+		$('#loadingDiv').hide();
+	});
+</script>
+<script type="text/javascript">
+	//This Script is used to Save Role and associated Rights list in Allocated Rights div
+	//against specified Role.
+	function SaveRole() {
+        try {
+            $("#lblErrorMessage").hide();
+			//client side validation for mandatory fields
+			if (1==2) {
+				$('#lblRoleNameErrorMsg').show();
+				return;
+			}
+            else
+            {
+
+				//  hide the required mark
+				$('#lblRoleNameErrorMsg').hide();
+				//show loading div
+				$('.loading').show();
+				//get Parameters
+				var Params = [];
+				//get role name and value
+
+				//get setting name and value
+
+				//Checkbox Options
+				var Options = [];
+				$('.checkbox').each(function (i, obj) {
+					//cond: if current checkbox is checked then get the id and value
+					if (this.checked) {
+						var ID = this.id;
+						var Value = true;
+						Options.push({
+							ControlID: ID,
+							ControlValue: Value
+						});
+					}
+                });
+
+                // hst001 : Getting Selected Rights
+                var Roles = [];
+                $(".clsAllocatedRight").each(function () {
+                    Roles.push({ ResourceID: $(this).val(), ResourceValue: $(this).val() });
+                })
+				////  clear the selected nodes
+				//var iniallocTree = $("#treeAllocatedRoles").fancytree("getTree");
+				//var allTree = $("#treeAllocatedRoles").fancytree("getTree").visit(function (node) {
+				//	node.setSelected(true);
+				//});
+                if (Roles.length > 0)
+				{
+					//if (lstAllocatedRoles != null) {
+					//	for (var n = 0; n < lstAllocatedRoles.length; n++) {
+					//		var ID = lstAllocatedRoles[n].key;
+					//		var Value = lstAllocatedRoles[n].title;
+					//		Roles.push({
+					//			ResourceID: ID,
+					//			ResourceValue: Value
+					//		});
+					//		//loop: through the children of current node and add them if any available
+					//		if (lstAllocatedRoles[n].children != null) {
+					//			if (lstAllocatedRoles[n].children.length > 0) {
+					//				for (var c = 0; c < lstAllocatedRoles[n].children.length; c++) {
+					//					var ID = lstAllocatedRoles[n].children[c].key;
+					//					var Value = lstAllocatedRoles[n].children[c].title;
+					//					Roles.push({
+					//						ResourceID: ID,
+					//						ResourceValue: Value
+					//					});
+					//				}
+					//			}
+					//		}
+					//		if (lstAllocatedRoles[n].parent != null && lstAllocatedRoles[n].parent.title.toUpperCase()!="ROOT") {
+					//			var ID = lstAllocatedRoles[n].parent.key;
+					//			var Value = lstAllocatedRoles[n].parent.title;
+					//			Roles.push({
+					//				ResourceID: ID,
+					//				ResourceValue: Value
+					//			});
+					//		}
+					//	}
+					//}
+					//else {
+					//	//notify user to allocate some role before saving it
+					//	ShowMandatoryFieldsMessage();
+					//	return;
+					//}
+					//convert JSON array into string
+                    var listValO = new Array();
+                    $("#ddlCustToAsssign option:selected").each(function()
+                    {
+                        var idOption = $(this).val();
+                        listValO.push(idOption);
+                    });
+                    var lstDbCode = listValO.join();
+					var Parameters = JSON.stringify(Params);
+					var OptionsList = JSON.stringify(Options);
+                    var objNewUserData =
+                    {
+					    UserId:$("#UserID").val(),
+					    UserName:$("#UserName").val(),
+					    Password:$("#Password").val(),
+					    UserRole:$("#UserRole").val(),
+					    CustomerCode:$("#CustomerCode").val(),
+					    Email:$("#Email").val(),
+					    UserStatus:$("#UserStatus").val(),
+                        ExpiryDate: $("#ExpiryDate").val(),
+                        PasswordExpiryDate: $("#PasswordExpiryDate").val()
+					};
+					if (Roles.length > 0) {
+                        var SelectedRoles = JSON.stringify(Roles);
+						//send AJAX request
+						$.post("@Url.Action("SaveUserRights", "User", null)", {"isUpdate":(userIdFromForm!=null&&userIdFromForm!=""?true:false), "objNewUserData":JSON.stringify(objNewUserData), "strRolesList": SelectedRoles,"AssignedDistributors":lstDbCode},
+						function (data)
+						{
+							var tempData = JSON.stringify(data);
+							if (tempData.indexOf("Login") > -1) {
+								window.location.href = "@Url.Action("Login", "Login", null)";
+							}
+							else if (data != null)
+							{
+								if (data.ErrorOccured==0)
+								{
+                                    txtError = data.MessageToDisplay;
+                                    txtErrorType = "1";
+                                    DisplayModal(txtErrorType, txtError);
+								    userIdFromForm=$("#UserID").val();
+								}
+								else
+								{
+							       txtError = data.MessageToDisplay;
+                                   txtErrorType = "0";
+                                   DisplayModal(txtErrorType, txtError);
+								}
+							}
+							//unchecking all save roles explicitly
+							//$("#treeAllocatedRoles").fancytree("getTree").visit(function (node) {
+							//	node.setSelected(false);
+							//});
+						});
+					}
+					else {
+						ShowAvailableRoleMessage();
+					}
+				}
+                else {
+                    $("#lblErrorMessage").show();
+					ShowMandatoryFieldsMessage();
+				}
+			}
+		}
+		catch (Error) {
+			$(".loading").show();
+			ShowMandatoryFieldsMessage();
+			if (typeof console != "undefined") {
+				//console.log('Role Registration Error: ' + Error);
+                console.log('@Resources.Resource.MsgInfo41: ' + Error);
+			}
+		}
+	}
+</script>
+<script type="text/javascript">
+    //This script is used to update the Available Rights div based on selection in StockPoint
+    //for System Admin.
+    function UpdateAvailableRights() {
+        try {
+            $('#loadingDiv').show();
+            var strUserType = $('#ddlDefaultRole :selected').text();
+            //update available rights in Available Roles Div
+            //send AJAX request
+            $.post("../Z01S030/GetRolesByUserType", { "strUserType": strUserType }, function (data) {
+                var tempData = JSON.stringify(data);
+                if (tempData.indexOf("Login") > -1 && tempData.indexOf("DOCTYPE html") > -1) {
+                    window.location.href = "../Login/Login";
+                }
+                //cond: if data is received then show results in table
+                //      else show respective message.
+                else if (data != null) {
+                    //$(":ui-fancytree").fancytree("destroy");
+                    //get user specific data in json array.
+                    var MIRCSViews = [];
+                    var ViewsList = data;
+                    if (ViewsList != null) {
+                        if (ViewsList.length > 0) {
+                            for (var v = 0; v < ViewsList.length; v++) {
+                                if (ViewsList[v][0].length == 7) {
+                                    var CurrentView = ViewsList[v][0];
+                                    var MIRCSChildViews = [];
+                                    //get childrens of current view
+                                    for (var c = 0; c < ViewsList.length; c++) {
+                                        if (ViewsList[c][0].length == 11) {
+                                            if (CurrentView.substring(4).toUpperCase() == ViewsList[c][0].substring(4, 7).toUpperCase()) {
+                                                MIRCSChildViews.push({
+                                                    key: ViewsList[c][0],
+                                                    title: ViewsList[c][1],
+                                                    icon: false
+                                                });
+                                            }
+                                        }
+                                    }
+                                    MIRCSViews.push({
+                                        key: ViewsList[v][0],
+                                        title: ViewsList[v][1],
+                                        icon: false,
+                                        expanded: true,
+                                        children: MIRCSChildViews
+                                    });
+                                }
+                            }
+                        }
+                        ViewsList = null;
+                    }
+                    //re-initialize the roles in Available Roles Div
+                    var avaTree = $("#treeAvailableRoles").fancytree("getTree");
+                    var allTree = $("#treeAllocatedRoles").fancytree("getTree");
+                    //  re-initiazation causing error so we reload it
+                    // clear the data of Available Rights Tree before Re-Intialization with Newly Loaded Data
+                    if (avaTree[0] != null && avaTree[0].children.length > 0) {
+                        avaTree.reload([]);
+                    }
+                    avaTree.reload(MIRCSViews);
+                    // clear the data of Allocated Rights Tree before Re-Intialization with Newly Loaded Data
+                    if (allTree[0] != null && allTree[0].children.length > 0) {
+                        allTree.reload([]);
+                    }
+                }
+                $('#loadingDiv').hide();
+            });
+        }
+        catch (Error) {
+            if (typeof console != "undefined") {
+                //console.log('Role Registration Error: ' + Error);
+                console.log('@Resources.Resource.MsgInfo41: ' + Error);
+            }
+        }
+    }
+</script>
+<script type="text/javascript">
+    //This script is used to manage the view names list in Available and Allocated Roles
+    //To Allocate Roles
+    function AllocateRoles() {
+        try {
+            if (lstSelectedNodes != null) {
+                AddRoles();
+                // HideCheckboxes();
+            }
+        }
+        catch (Error) {
+            if (typeof console != "undefined") {
+                //console.log('Role Registration Error: ' + Error);
+                console.log('@Resources.Resource.MsgInfo41: ' + Error);
+            }
+        }
+    }
+    var global = false;
+    function AddRoles() {
+        try {
+            //local variables
+            var divAllocatedRoles = $("#treeAllocatedRoles").text();
+            //condition: if AllocatedRoles div has not any role added then add the selected role(s)
+            //           else append the remaining roles.
+            if (global == false) {
+                global = true;
+                //create first node data
+                var firstChild = null;
+                if (lstSelectedNodes[0].parent != null) {
+                    if (lstSelectedNodes[0].parent.parent != null) {
+                        firstChild = [
+									{ title: lstSelectedNodes[0].parent.parent.title, key: lstSelectedNodes[0].parent.parent.key, folder: false, icon: false, expanded: true,
+									    children: [
+										{ title: lstSelectedNodes[0].parent.title, key: lstSelectedNodes[0].parent.key, folder: false, icon: false, expanded: true
+												, children: [
+												{ title: lstSelectedNodes[0].title, key: lstSelectedNodes[0].key, folder: false, icon: false, expanded: true }
+												]
+										}
+										]
+									}
+									];
+                    }
+                    else {
+                        firstChild = [
+									{ title: lstSelectedNodes[0].parent.title, key: lstSelectedNodes[0].parent.key, folder: false, icon: false, expanded: true,
+									    children: [
+										{ title: lstSelectedNodes[0].title, key: lstSelectedNodes[0].key, folder: false, icon: false, expanded: true }
+										]
+									}
+									];
+                    }
+                }
+                else {
+                    firstChild = [
+					{ title: lstSelectedNodes[0].title, key: lstSelectedNodes[0].key, folder: false, icon: false, expanded: true
+					}
+					];
+                }
+                var prerootAllocatedRoles = $("#treeAllocatedRoles").fancytree("getRootNode");
+                if (prerootAllocatedRoles.tree != null) {
+                    if (prerootAllocatedRoles.tree.lastSelectedNode != null) {
+                        prerootAllocatedRoles.tree.lastSelectedNode = null;
+                    }
+                }
+                //initialize the Allocated Roles
+                $("#treeAllocatedRoles").fancytree({
+                    checkbox: true,
+                    selectMode: 2,
+                    source: firstChild,
+                    select: function (event, data) {
+                        var selNodes = data.tree.getSelectedNodes();
+                        lstAllocatedRoles = selNodes;
+                    },
+                    cookieId: "fancytree-Cb2",
+                    idPrefix: "fancytree-Cb2-"
+                });
+                var rootAllocatedRoles = $("#treeAllocatedRoles").fancytree("getRootNode");
+                //cond: if allocated tree contains previous childern then remove them first and proceed next.
+                if (rootAllocatedRoles.children.length > 0 && $.trim(divAllocatedRoles) == "") {
+                    rootAllocatedRoles.removeChildren();
+                }
+                //condition: if first node has childrent then add children of first node
+                if (lstSelectedNodes[0].children != null) {
+                    var currentParent = rootAllocatedRoles.findFirst(lstSelectedNodes[0].title/*.toString()*/);
+                    if (currentParent != null) {
+                        for (var c = 0; c < lstSelectedNodes[0].children.length; c++) {
+                            var tempNode = { title: lstSelectedNodes[0].children[c].title, folder: false, icon: false, key: $.trim(lstSelectedNodes[0].children[c].key)/*.trim()*/, expanded: true };
+                            currentParent.addChildren(tempNode);
+                        }
+                    }
+                }
+                AddChildren(lstSelectedNodes, rootAllocatedRoles);
+            }
+            else {
+                var rootAllocatedRoles = $("#treeAllocatedRoles").fancytree("getRootNode");
+                AddChildren(lstSelectedNodes, rootAllocatedRoles);
+            }
+        }
+        catch (Error) {
+            if (typeof console != "undefined") {
+                console.log('Role Registration Error: ' + Error);
+            }
+        }
+    }
+    function AddChildren(lstSelectedNodes, rootAllocatedRoles) {
+        try {
+            for (var a = 0; a < lstSelectedNodes.length; a++) {
+                if (lstSelectedNodes[a].parent != null && lstSelectedNodes[a].parent.title.toUpperCase() != "ROOT") {
+                    var currentChild = '';
+                    if (rootAllocatedRoles != null) {
+                        currentChild = rootAllocatedRoles.findAll(lstSelectedNodes[a].title);
+                    }
+                    if (currentChild.length == 0) {
+                        var currentChildParent = rootAllocatedRoles.findFirst(lstSelectedNodes[a].parent.title);
+                        if (currentChildParent == null) {
+                            if (lstSelectedNodes[a].parent.parent != null && lstSelectedNodes[a].parent.parent.title.toUpperCase() != "ROOT") {
+                                currentChildParent = rootAllocatedRoles.findFirst(lstSelectedNodes[a].parent.parent.title);
+                                if (currentChildParent == null) {
+                                    //add current child with parent
+                                    currentChild = { title: lstSelectedNodes[a].parent.parent.title, key: lstSelectedNodes[a].parent.parent.key, folder: false, icon: false, expanded: true,
+                                        children: [
+										{ title: lstSelectedNodes[a].parent.title, key: lstSelectedNodes[a].parent.key, folder: false, icon: false,
+										    children: [
+										{ title: lstSelectedNodes[a].title, key: lstSelectedNodes[a].key, folder: false, icon: false }
+										]
+										}
+										]
+                                    };
+                                    rootAllocatedRoles.addChildren(currentChild);
+                                }
+                                else {
+                                    currentChild = { title: lstSelectedNodes[a].parent.title, key: lstSelectedNodes[a].parent.key, folder: false, icon: false, expanded: true,
+                                        children: [
+										{ title: lstSelectedNodes[a].title, key: lstSelectedNodes[a].key, folder: false, icon: false }
+										]
+                                    };
+                                    currentChildParent.addChildren(currentChild);
+                                }
+                            } else if (lstSelectedNodes[a].parent.parent != null && lstSelectedNodes[a].parent.parent.title.toUpperCase() == "ROOT") {
+                                //add current child with parent
+                                currentChild = { title: lstSelectedNodes[a].parent.title, key: lstSelectedNodes[a].parent.key, folder: false, icon: false, expanded: true,
+                                    children: [
+										{ title: lstSelectedNodes[a].title, key: lstSelectedNodes[a].key, folder: false, icon: false }
+										]
+                                };
+                                rootAllocatedRoles.addChildren(currentChild);
+                            }
+                        }
+                        else {
+                            //add current child without parent
+                            currentChild = { title: lstSelectedNodes[a].title, key: lstSelectedNodes[a].key, folder: false, icon: false, expanded: true };
+                            currentChildParent = rootAllocatedRoles.findFirst(lstSelectedNodes[a].parent.title);
+                            currentChildParent.addChildren(currentChild);
+                        }
+                        //add children
+                        if (lstSelectedNodes[a].children != null) {
+                            for (var c = 0; c < lstSelectedNodes[a].children.length; c++) {
+                                var tempNode = { title: lstSelectedNodes[a].children[c].title, folder: false, icon: false, key: $.trim(lstSelectedNodes[a].children[c].key), expanded: true };
+                                currentChild = rootAllocatedRoles.findFirst(lstSelectedNodes[a].title);
+                                currentChild.addChildren(tempNode);
+                            }
+                        }
+                    }
+                    else {
+                        var currentChildParent = rootAllocatedRoles.findAll(lstSelectedNodes[a].parent.title);
+                        if (currentChildParent.length == 0) {
+                            //add current child with parent
+                            currentChild = { title: lstSelectedNodes[a].parent.title, key: lstSelectedNodes[a].parent.key, folder: false, icon: false, expanded: true,
+                                children: [
+										{ title: lstSelectedNodes[a].title, key: lstSelectedNodes[a].key, folder: false, icon: false }
+										]
+                            };
+                            rootAllocatedRoles.addChildren(currentChild);
+                        }
+                        else {
+                            var nodeFound = rootAllocatedRoles.findAll(lstSelectedNodes[a].title)
+                            if (nodeFound.length > 0) {
+                                for (var t = 0; t < nodeFound.length; t++) {
+                                    var nodeParent = nodeFound[t].getParent();
+                                    nodeFound[t].remove();
+                                }
+                            }
+                            //add current child without parent
+                            var getParent = rootAllocatedRoles.findAll(lstSelectedNodes[a].title)
+                            currentChild = { title: lstSelectedNodes[a].title, key: lstSelectedNodes[a].key, folder: false, icon: false, expanded: true };
+                            currentChildParent = rootAllocatedRoles.findFirst(lstSelectedNodes[a].parent.title);
+                            currentChildParent.addChildren(currentChild);
+                            //add children
+                            if (lstSelectedNodes[a].children != null) {
+                                for (var c = 0; c < lstSelectedNodes[a].children.length; c++) {
+                                    var tempNode = { title: lstSelectedNodes[a].children[c].title, folder: false, icon: false, key: $.trim(lstSelectedNodes[a].children[c].key), expanded: true };
+                                    currentChild = rootAllocatedRoles.findFirst(lstSelectedNodes[a].title);
+                                    currentChild.addChildren(tempNode);
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (lstSelectedNodes[a].parent != null && lstSelectedNodes[a].parent.title.toUpperCase() == "ROOT" && rootAllocatedRoles.children != null) {
+                        var nodesToRemove = [];
+                        for (var l = 0; l < rootAllocatedRoles.children.length; l++) {
+                            if (rootAllocatedRoles.children[l].key == lstSelectedNodes[a].key) {
+                                var nodeFound = rootAllocatedRoles.findAll(lstSelectedNodes[a].title)
+                                if (nodeFound.length > 0) {
+                                    for (var t = 0; t < nodeFound.length; t++) {
+                                        if (rootAllocatedRoles.children == null) {
+                                            break;
+                                        }
+                                        if (nodeFound[t].key.toUpperCase() == rootAllocatedRoles.children[l].key.toUpperCase()) {
+                                            var nodeParent = nodeFound[t].getParent();
+                                            nodesToRemove.push(nodeFound[t]);
+                                            nodeFound[t].remove();
+                                        }
+                                    }
+                                }
+                                var toast = "";
+                                if (rootAllocatedRoles.children == null) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    var currentChild = rootAllocatedRoles.findFirst(lstSelectedNodes[a].title);
+                    if (currentChild == null) {
+                        //add current child
+                        currentChild = { title: lstSelectedNodes[a].title, folder: false, icon: false, key: $.trim(lstSelectedNodes[a].key), expanded: true };
+                        rootAllocatedRoles.addChildren(currentChild);
+                        //add children
+                        if (lstSelectedNodes[a].children != null) {
+                            //   currentChild = { title: lstSelectedNodes[a].title, key: lstSelectedNodes[a].key, folder: false, icon: false, expanded: true };
+                            var mainchilds = [];
+                            var childrens = [];
+                            var childrens2 = [];
+                            for (var c = 0; c < lstSelectedNodes[a].children.length; c++) {
+                                if (lstSelectedNodes[a].children[c].children != null) {
+                                    for (var k = 0; k < lstSelectedNodes[a].children[c].children.length; k++) {
+                                        childrens.push({ title: lstSelectedNodes[a].children[c].children[k].title, key: lstSelectedNodes[a].children[c].children[k].key, folder: false, icon: false, expanded: true });
+                                    }
+                                    childrens2.push({ title: lstSelectedNodes[a].children[c].title, key: lstSelectedNodes[a].children[c].key, folder: false, icon: false,
+                                        children: childrens
+                                    });
+                                    childrens = [];
+                                }
+                                else {
+                                    childrens2.push({ title: lstSelectedNodes[a].children[c].title, key: lstSelectedNodes[a].children[c].key, folder: false, icon: false, expanded: true });
+                                    childrens = [];
+                                    //                                        var tempNode = { title: lstSelectedNodes[a].children[c].title, folder: false, icon: false, key: $.trim(lstSelectedNodes[a].children[c].key) };
+                                    //                                        currentChild = rootAllocatedRoles.findFirst(lstSelectedNodes[a].title);
+                                    //                                        currentChild.addChildren(tempNode);
+                                }
+                            } ///Loop End
+                            mainchilds.push({
+                                children: childrens2
+                            });
+                            currentChild = rootAllocatedRoles.findFirst(lstSelectedNodes[a].title);
+                            currentChild.addChildren(childrens2);
+                        }
+                    }
+                }
+            }
+        }
+        catch (Error) {
+            if (typeof console != "undefined") {
+                //console.log('Role Registration Error: ' + Error);
+                console.log('@Resources.Resource.MsgInfo40: ' + Error);
+            }
+        }
+    }
+    //To Hide checkboxes from Available Roles on allocating them to Allocated Roles
+    function HideCheckboxes() {
+        try {
+            var ParentNode = $("#treeAvailableRoles").fancytree("getRootNode");
+            for (var n = 0; n < lstSelectedNodes.length; n++) {
+                var nodeFound = ParentNode.findAll(lstSelectedNodes[n].title/*.toString()*/);
+                if (nodeFound.length > 0) {
+                    for (var i = 0; i < nodeFound.length; i++) {
+                        if (nodeFound[i].key.toUpperCase() == lstSelectedNodes[n].key.toUpperCase()) {
+                            if (nodeFound[i].children != null) {
+                                for (var c = 0; c < nodeFound[i].children.length; c++) {
+                                    if (nodeFound[i].children[c].children != null) {
+                                        for (var v = 0; v < nodeFound[i].children[c].children.length; v++) {
+                                            var $span = $(nodeFound[i].children[c].children[v].span);
+                                            $span.find("span.fancytree-checkbox").hide();
+                                        }
+                                    }
+                                    var $span = $(nodeFound[i].children[c].span);
+                                    $span.find("span.fancytree-checkbox").hide();
+                                }
+                                var $span = $(nodeFound[i].span);
+                                $span.find("span.fancytree-checkbox").hide();
+                            }
+                            else {
+                                var $span = $(nodeFound[i].span);
+                                $span.find("span.fancytree-checkbox").hide();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Error) {
+            if (typeof console != "undefined") {
+                console.log('Role Registration Error: ' + Error);
+            }
+        }
+    }
+    //To remove role from Allocated Roles
+    function RemoveRoles() {
+        try {
+            if (lstAllocatedRoles != null) {
+                var rootAllocatedRoles = $("#treeAllocatedRoles").fancytree("getRootNode");
+                for (var r = 0; r < lstAllocatedRoles.length; r++) {
+                    var nodeFound = rootAllocatedRoles.findAll(lstAllocatedRoles[r].title);
+                    if (nodeFound.length > 0) {
+                        for (var i = 0; i < nodeFound.length; i++) {
+                            if (nodeFound[i].key.toUpperCase() == lstAllocatedRoles[r].key.toUpperCase()) {
+                                var nodeParent = nodeFound[i].getParent();
+                                ShowCheckboxes(nodeFound[i].title, nodeFound[i].key);
+                                nodeFound[i].remove();
+                                //Shabbir Start 22-12-2016
+                                //Commented below Code
+                                //remove parent node if there is no child left
+//                                if (nodeParent.children == null && nodeParent != null) {
+//                                    ShowCheckboxes(nodeParent.title, nodeParent.key);
+//                                    if (nodeParent != null && nodeParent.key.toUpperCase() != 'ROOT_2') {
+//                                        nodeParent.remove();
+//                                    }
+//                                    else if (nodeParent.key.toUpperCase() == 'ROOT_2') {
+//                                        if (rootAllocatedRoles.children == null && rootAllocatedRoles != null) {
+//                                            $("#treeAllocatedRoles").fancytree("getTree").lastSelectedNode = null;
+//                                            $("#treeAllocatedRoles").fancytree("getTree").reload([]);
+//                                        }
+//                                    }
+//                                    else {
+//                                        nodeParent.remove();
+                                //         }
+//                                   }
+                                //
+                                //End Comment Added below block
+                                if (nodeParent.children == null && nodeParent.key.length == 3) {
+                                    nodeParent.remove();
+                                }
+                                //Shabbir End
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+            }
+        }
+        catch (Error) {
+            if (typeof console != "undefined") {
+                console.log('Role Registration Error: ' + Error);
+            }
+        }
+    }
+    //This is a supportive method for showing checkboxes in Available Roles
+    //afer clearing /removing roles from Allocated Roles
+    function ShowCheckboxes(targetNodeTitle, targetNodeKey) {
+    }
+</script>
+<script type="text/javascript">
+    //This method is used to clear the Allocated Roles
+    function ClearAllocatedRoles() {
+        try {
+            //Clear the Role Name and Role Description textbox values
+            var rootAllocatedRoles = $("#treeAllocatedRoles").fancytree("getRootNode");
+            if (lstSelectedNodes != null) {
+                var intSelectedNodesCount = lstSelectedNodes.length;
+                for (var r = 0; r < intSelectedNodesCount; r++) {
+                    if (lstSelectedNodes.length > 0) {
+                        var nodeFound = rootAllocatedRoles.findAll(lstSelectedNodes[r].title);
+                        if (nodeFound.length > 0) {
+                            if (nodeFound.length > 1) {
+                                for (var c = 0; c < nodeFound.length; c++) {
+                                    ShowCheckboxes(nodeFound[c].title, nodeFound[c].key);
+                                }
+                            }
+                            else {
+                                ShowCheckboxes(nodeFound[0].title, nodeFound[0].key);
+                            }
+                            r--;
+                        }
+                    }
+                }
+            }
+            if (rootAllocatedRoles.children.length > 0) {
+                rootAllocatedRoles.removeChildren();
+            }
+        }
+        catch (Error) {
+            if (typeof console != "undefined") {
+                //console.log('Role Registration Error: ' + Error);
+                console.log('@Resources.Resource.MsgInfo40: ' + Error);
+            }
+        }
+    }
+</script>
+<script type="text/javascript">
+    //Mandatory Fields Checking
+    function ShowMandatoryFieldsMessage() {
+        $('#errorMandatoryFieldsCheck').show();
+    }
+    function HideMandatoryFieldsMessage() {
+        $('#errorMandatoryFieldsCheck').hide();
+        $(".loading").hide();
+    }
+    //Save Error Message
+    function ShowRoleSavingErrorMessage() {
+        $('#errorRolesPopup').show();
+    }
+    function HideRoleSavingErrorMessage() {
+        $(".loading").hide();
+        $('#errorRolesPopup').hide();
+    }
+    //Save Success Message
+    function ShowRoleSavingSuccessMessage() {
+        $('#errorRolesSuccessPopup').show();
+    }
+    function HideRoleSavingSuccessMessage() {
+        $(".loading").hide();
+        $('#errorRolesSuccessPopup').hide();
+    }
+    function ShowAvailableRoleMessage() {
+        $('#infoAvailablePopup').show();
+    }
+    function HideAvailableRoleMessage() {
+        $(".loading").hide();
+        $('#infoAvailablePopup').hide();
+    }
+</script>
+<script type="text/javascript">
+
+    $(document).ajaxStart(function (data) {
+        $("div#divLoading").addClass('show');
+    });
+    $(document).ajaxStop(function () {
+        $("div#divLoading").removeClass('show');
+    });
+    $(document).ajaxSuccess(function (event, xhr, settings) {
+        if (CheckForSessionExpiry(xhr.responseText)) {
+            SessionExpiredRedirect();
+        }
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        PopulateUserToCopy();
+        $("#CustomerCode").trigger("change");
+    });
+
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    });
+
+    $("#CustomerCode").on("change", function () {
+
+    var postData={strCustID:$.trim($(this).val()) }
+       $.post("@Url.Action("DistributorToAssign_Change", "User", null)",postData,function (UserData)
+		{
+
+            if (isRealValue(UserData))
+            {
+
+                          var dataArray=[];
+                      $.each(UserData,function(index,itemData) {
+                 dataArray.push({label: itemData.Text, value: itemData.Value});
+
+                    });//.each
+                        $("#ddlCustToAsssign").multiselect('dataprovider', dataArray);
+            }
+
+        });
+
+    })
+
+    //hst002 - Selection change event for 'Role' dropdown.
+    $("#UserRole").on("change", function () {
+
+    var userRole = $.trim($(this).val());
+    var CustomerID;
+
+    var postData={strCustID: CustomerID, strUserRole:userRole,strUserID: $.trim($("#UserID").val())}
+
+       $.post("@Url.Action("UserRole_Change", "User", null)",postData,function (UserData)
+		{
+            if (isRealValue(UserData))
+            {
+                var dataArray=[];
+                $.each(UserData,function(index,itemData) {
+                dataArray.push({label: itemData.Text, value: itemData.Value, isSelected: itemData.Selected});
+                });//.each
+
+                $("#ddlCustToAsssign").html('');
+                $(".multiselect-container").html('');
+
+                for(var i=0; i<dataArray.length;i++) {
+
+                    if($("#CustomerCode").val() != dataArray[i].value)
+                        $("#ddlCustToAsssign").append('<option value=' + dataArray[i].value + '> '+ dataArray[i].value + '</option>').attr('selected',dataArray[i].isSelected);
+
+                        if(dataArray[i].isSelected)
+                        {
+                            $("#ddlCustToAsssign").multiselect().find(":checkbox[value='"+dataArray[i].value+"']").prop('checked',true);
+                            $("#ddlCustToAsssign option[value='" + dataArray[i].value + "']").prop("selected", 1);
+                            $(".multiselect-container dropdown-menu > li").addClass("active");
+                        }
+                        else{
+                            $("#ddlCustToAsssign").multiselect().find(":checkbox[value='"+dataArray[i].value+"']").prop('checked',false);
+                            $("#ddlCustToAsssign option[value='" + dataArray[i].value + "']").prop("selected", 0);
+                        }
+                    }
+
+                    $("#ddlCustToAsssign").multiselect('destroy');
+                    $("#ddlCustToAsssign").multiselect({
+                            onDropdownHide: function(event) {
+                                event.preventDefault();
+                             }, nonSelectedText: ''
+                        });
+                    $(".SizeOnXs .btn-group").addClass("open");
+                    $(".multiselect-container").attr("style","height:100px !important;  box-shadow: 0 0 0 rgba(0, 0, 0, 0);");
+                   }
+        });
+
+        PopulateUserToCopy();
+
+
+        if(userRole != "3")
+        {
+            if(!$("#CustomerCode").hasClass("Appended"))
+            {
+                $('#CustomerCode option:selected').removeAttr("selected");
+                $("#CustomerCode").prepend( '<option value="" class="EmptyOption" selected = "selected"></option>' ).addClass("Appended").val("");
+            }
+        }
+        else
+        {
+            $(".EmptyOption").remove();
+            $("#CustomerCode").removeClass("Appended");
+        }
+      });
+
+
+      function PopulateUserToCopy()
+      {
+
+        var postData={strCustID: $("#CustomerCode").val() , strUserRole:$("#UserRole").val() ,strUserID: $.trim($("#UserID").val())}
+
+        $.post("@Url.Action("UserRole_Change_ForCopyUsers", "User", null)",postData,function (UserData)
+        {
+            if (isRealValue(UserData))
+            {
+                var dataArray=[];
+                $.each(UserData,function(index,itemData) {
+                dataArray.push({label: itemData.Text, value: itemData.Value, isSelected: itemData.Selected});
+                });//.each
+
+                 $("#UsersToCopy").html('');
+
+                 for(var i=0; i<dataArray.length;i++)
+                 {
+                     $("#UsersToCopy").append('<option value=' + dataArray[i].value + '> '+ dataArray[i].label + '</option>').attr('selected',dataArray[i].isSelected);
+                 }
+
+            }
+
+
+        });
+
+      }
+
+</script>
+
+@*hst001 : Start*@
+@*==================  USER RIGHTS CONTROL SCRIPT ===========================================*@
+<script>
+    var app = angular.module('PDX', []);
+    app.controller('RightsAllocationCtrl', function ($scope, $http) {
+
+        //===========GLOBAL VARIABLES===========================
+        var SelectedBaseRights = [];
+        var SelectedMidRights = [];
+        var SelectedCompleteMidRights = [];
+
+        //============LOADING RIGHTS INITIALLY==================
+        var url = "@Url.Action("GetAvailableRights", "User", null, Request.Url.Scheme)"
+        var userID = "@Model.UserID";
+        url = url + "?strUserID=" + userID;
+        $http.get(url).then(function (response) {
+            $scope.AvailableRights = response.data.data;
+            $(document).ready(function () {
+                setSections();
+            });
+        });
+
+        //=============Tabs Selected==============
+        $scope.AvTabSelected = function (Right) {
+            $scope.AvailableRights.forEach(function (tab) {
+                $("#av_module_" + tab.RightName).css("background", "#000099");
+                $("#av_module_" + tab.RightName).css("color", "white");
+            });
+            $("#av_module_" + Right.RightName).css("background", "#fac902");
+            $("#av_module_" + Right.RightName).css("color", "black");
+
+            // Sync Feature: Triggering module nav of allocated rights
+            $("#all_module_" + Right.RightName).trigger("click");
+        }
+
+        $scope.AllTabSelected = function (Right) {
+            $scope.AvailableRights.forEach(function (tab) {
+                $("#all_module_" + tab.RightName).css("background", "#000099");
+                $("#all_module_" + tab.RightName).css("color", "white");
+
+            });
+            $("#all_module_" + Right.RightName).css("background", "#fac902");
+            $("#all_module_" + Right.RightName).css("color", "black");
+        }
+
+        //==================SEARCHING DISTRIBUTOR================
+        $scope.search = function () {
+            SelectedBaseRights = [];
+            SelectedCompleteMidRights = [];
+            $http.get("RightsScreen/Home/GetAvailableRights?DCOD=" + $scope.inpDCOD).then(function (response) {
+                $scope.AvailableRights = response.data.data;
+                $(document).ready(function () {
+                    setSections();
+                });
+            });
+
+        }
+
+        //=================SELECTING A BASE RIGHT AVAILABLE======
+        $scope.av_SelectBaseRight = function (Right, MidRight) {
+            var x = $("#av_base_" + Right.RightName).css('backgroundColor');
+            //unselecting
+            if (hexc(x) == "#2ecc71") {
+                $("#av_base_" + Right.RightName).css("background", "#f4f4f4");
+                //$("#av_base_" + Right.RightName).css("color", "black");
+                $("#av_base_" + Right.RightName).children("a").css("color", "black");
+                $("#av_check_base_" + Right.RightName).css("color", "#c8d6e5");
+                var removeIndexBaseRight = SelectedBaseRights.map(function (item) { return item.RightName; }).indexOf(Right.RightName);
+                SelectedBaseRights.splice(removeIndexBaseRight, 1);
+                var removeIndexMidRight = SelectedMidRights.map(function (item) { return item.RightName; }).indexOf(MidRight.RightName);
+                SelectedMidRights.splice(removeIndexMidRight, 1);
+
+            }
+            //selecting
+            else {
+                $("#av_base_" + Right.RightName).css("background", "#2ecc71");
+                //$("#av_base_" + Right.RightName).css("color", "white");
+                $("#av_base_" + Right.RightName).children("a").css("color", "white");
+                $("#av_check_base_" + Right.RightName).css("color", "white");
+                SelectedBaseRights.push(Right);
+                SelectedMidRights.push(MidRight);
+            }
+        }
+        //=============SELECTING A MID RIGHT AVAILABLE======================
+        $scope.av_SelectMidRight = function (Right, $event) {
+            $event.stopPropagation();
+            var x = $("#av_check_mid_" + Right.RightName).css('color');
+            //selecting
+            if (hexc(x) == "#c8d6e5") {
+                $("#av_check_mid_" + Right.RightName).css('color', '#27ae60');
+                SelectedCompleteMidRights.push(Right);
+            }
+            //unselecting
+            else {
+                var removeIndex = SelectedCompleteMidRights.map(function (item) { return item.RightName; }).indexOf(Right.RightName);
+                SelectedCompleteMidRights.splice(removeIndex, 1);
+                $("#av_check_mid_" + Right.RightName).css('color', '#c8d6e5');
+            }
+        }
+
+        // Sync Feature: Triggering Allocation rights line
+        $scope.av_SelectMidRightLine = function (Right) {
+            $("#all_mid_" + Right.RightName).trigger("click");
+        }
+
+
+        //==============ALLOCATE SELECTED RIGHTS=======================
+        $scope.AllocateSelectedRights = function () {
+            //        //console.log(SelectedBaseRights);
+            //        //console.log(SelectedMidRights);
+
+            SelectedBaseRights.forEach(function (item) {
+                item.Allocated = true;
+            });
+            SelectedMidRights.forEach(function (item) {
+                item.Allocated = true;
+            })
+            SelectedCompleteMidRights.forEach(function (mid_item) {
+                mid_item.Allocated = true;
+                mid_item.Rights.forEach(function (item) {
+                    item.Allocated = true;
+                });
+            });
+        }
+
+        //=================SELECTING RIGHTS TO REVOKE==================
+        var SelectedBaseRightsToRevoke = [];
+        var SelectedMidRightsToRevoke = [];
+        $scope.all_SelectBaseRight = function (Right) {
+
+            var x = $("#all_base_" + Right.RightName).css('backgroundColor');
+            //selecting
+            if (hexc(x) == "#f4f4f4") {
+                $("#all_base_" + Right.RightName).css('backgroundColor', '#c0392b');
+                $("#all_base_" + Right.RightName).children("a").css('color', 'white');
+                $("#all_check_base_" + Right.RightName).css('color', 'white');
+                SelectedBaseRightsToRevoke.push(Right);
+            }
+            else {
+                $("#all_base_" + Right.RightName).css('backgroundColor', '#f4f4f4');
+                $("#all_base_" + Right.RightName).children("a").css('color', 'black');
+                $("#all_check_base_" + Right.RightName).css('color', '#c8d6e5');
+                var removeIndex = SelectedBaseRightsToRevoke.map(function (item) { return item.RightName; }).indexOf(Right.RightName);
+                SelectedBaseRightsToRevoke.splice(removeIndex, 1);
+            }
+
+        }
+
+        $scope.all_SelectMidRight = function (Right, $event) {
+            $event.stopPropagation();
+            var x = $("#all_check_mid_" + Right.RightName).css('color');
+            //selecting
+            if (hexc(x) == "#c8d6e5") {
+                $("#all_check_mid_" + Right.RightName).css('color', '#c0392b');
+                SelectedMidRightsToRevoke.push(Right);
+            }
+            else {
+                $("#all_check_mid_" + Right.RightName).css('color', '#c8d6e5');
+                var removeIndex = SelectedMidRightsToRevoke.map(function (item) { return item.RightName; }).indexOf(Right.RightName);
+                SelectedMidRightsToRevoke.splice(removeIndex, 1);
+            }
+            //console.log(SelectedMidRightsToRevoke);
+        }
+
+        //==============REVOKING SELECTED RIGHTS=================
+        $scope.RevokeSelectedRights = function () {
+            SelectedBaseRightsToRevoke.forEach(function (item) {
+                item.Allocated = false;
+            });
+            //console.log(SelectedMidRightsToRevoke);
+            SelectedMidRightsToRevoke.forEach(function (mid_item) {
+                mid_item.Rights.forEach(function (item) {
+                    item.Allocated = false;
+                });
+                mid_item.Allocated = false;
+            });
+            //console.log(SelectedMidRightsToRevoke);
+            SelectedBaseRightsToRevoke = [];
+            SelectedMidRightsToRevoke = [];
+        }
+
+        //====================ALLOCATING ALL RIGHTS=======================
+        $scope.AllocatedAllRights = function () {
+            $scope.AvailableRights.forEach(function (top_right) {
+                top_right.Rights.forEach(function (mid_right) {
+                    mid_right.Allocated = true;
+                    mid_right.Rights.forEach(function (base_right) {
+                        base_right.Allocated = true;
+                    });
+                });
+            });
+        }
+        //===================REVOKING ALL RIGHTS=========================
+        $scope.RevokeAllRights = function () {
+            $scope.AvailableRights.forEach(function (top_right) {
+                top_right.Rights.forEach(function (mid_right) {
+                    mid_right.Allocated = false;
+                    mid_right.Rights.forEach(function (base_right) {
+                        base_right.Allocated = false;
+                    });
+                });
+            });
+        }
+
+        //=================COPYING RIGHTS OF THE SELECTED DISTRIBUTOR===========
+        $scope.CopyRights = function () {
+
+            var url = "@Url.Action("GetAvailableRights", "User", null, Request.Url.Scheme)"
+            var strUserToCopy = $("#ddDistributorCode").val();
+            url = url + "?strUserID=" + strUserToCopy;
+            $http.get(url).then(function (response) {
+                $scope.AvailableRights = response.data.data;
+                $(document).ready(function () { setSections(); });
+            });
+
+
+        }
+
+        //====================SAVING ALLOCATED RIGHS========================
+        $scope.Save = function () {
+
+            if ($scope.inpDCOD != "" && $scope.inpDCOD != null) {
+                //console.log($scope.AvailableRights);
+                var PostData = { DCOD: $scope.inpDCOD, AllocatedRights: $scope.AvailableRights };
+                $http({
+                    url: 'RightsScreen/Home/PostAllocatedRights',
+                    method: "POST",
+                    data: PostData
+                }).then(function (response) {
+                    swal("Saved", "Rights Saved!", "success");
+                });
+
+
+            }
+            else {
+                $scope.validation_error = true;
+                $scope.validation_message = "Please Enter Distributor Code!"
+            }
+
+        }
+        $scope.EnteringDB = function () {
+            $scope.validation_error = false;
+            $scope.validation_message = "";
+
+        }
+
+
+
+        // Function to set Sections
+        function setSections() {
+            var tabExists = setInterval(function () {
+                var availabletabID = "#av_module_" + $scope.AvailableRights[0].RightName;
+                var allocatedtabID = "#all_module_" + $scope.AvailableRights[0].RightName;
+                if ($(availabletabID).length && $(allocatedtabID).length) {
+                    $(availabletabID).trigger('click');
+                    $(allocatedtabID).trigger('click');
+                    clearInterval(tabExists);
+                }
+            }, 100);
+        }
+
+        // Function to get hexCode of color value
+        function hexc(colorval) {
+            var color;
+            var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+            delete (parts[0]);
+            for (var i = 1; i <= 3; ++i) {
+                parts[i] = parseInt(parts[i]).toString(16);
+                if (parts[i].length == 1) parts[i] = '0' + parts[i];
+            }
+            color = '#' + parts.join('');
+            return color;
+        }
+
+    });
+</script>
+@*hst001 : End*@

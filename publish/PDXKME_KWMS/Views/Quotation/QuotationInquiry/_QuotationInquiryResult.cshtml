@@ -1,0 +1,177 @@
+﻿@model IEnumerable<PDXWEB.Models.Quotation.QuotationInquiryModel>
+@{
+    Layout = null;
+}
+@{
+
+    ViewBag.Title = @Resources.Resource.QuotationInquiry;
+
+
+}
+@if (Model != null)
+{
+    if (Model.Count() > 0)
+    {
+        WebGrid grid = new WebGrid(rowsPerPage: ViewBag.PageSize, canPage: true,
+           ajaxUpdateContainerId: "main", canSort: true, ajaxUpdateCallback: "afterLoad"
+           );
+        
+        grid.Bind(source: Model,
+                   rowCount: ViewBag.TotalRows,
+                   autoSortAndPage: false); 
+
+    <div id="main" class=" ">
+
+        @if (ViewBag.TotalRows > 10)
+        {
+            //if (Session["pgNo"] != null && Session["pgNo"].ToString() != ""  )///hst004.
+            //{
+            //grid.PageIndex = Convert.ToInt32(Session["pgNo"]) - 1;
+            //}
+            if (ViewBag.PageNum != null)///hst004.
+            {
+                grid.PageIndex = ViewBag.PageNum;
+            }            
+            
+            <div class="NewPaging row   " id="HeadPaging" style="text-align: center">
+                <div class="span9">
+                    @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")</div>
+            </div>
+        }
+        else
+        {
+            grid.PageIndex = 0;
+        }
+        <div class="datagrid table-responsive" style="overflow: auto;">
+            @grid.Table(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+        //footerStyle: "gridFooter",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "UserInquiryId" },
+                           columns: grid.Columns(
+                       @*    grid.Column("Select", style: "col-control", format: @<text> @Html.CheckBox("Select", new { value = @item.QuotationNo + ","+item.QuotationaSubNo, @class = "QutnSelect", name = @item.QuotationNo })</text>),*@
+        //grid.Column("QuotationNo", @Resources.Resource.thQuotationNo, style: " "),
+        //grid.Column("QuotationaSubNo", @Resources.Resource.thQuotationSubNo, canSort: true, style: "col-numeric"),
+grid.Column("QuotationNo", @Resources.Resource.thQuotationNo, style: "col-numeric", format: @<text><label
+    id="l_QuotationNo" style="font-size: 10px ! important; margin-right: 8px !important;
+    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.QuotationNo</label></text>),
+
+grid.Column("QuotationaSubNo", @Resources.Resource.thQuotationSubNo, style: "col-numeric", format: @<text><label
+    id="l_QuotationaSubNo" style="font-size: 10px ! important; margin-right: 3px !important;
+    font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.QuotationaSubNo</label></text>),
+
+//grid.Column("SaleOrderNO", @Resources.Resource.thSaleOrderNo, canSort: true, style: "col-numeric"),
+  grid.Column("SaleOrderNO", @Resources.Resource.thSaleOrderNo, style: "col-numeric", format: @<text><label
+      id="l_thSaleOrderNo" style="font-size: 10px ! important; margin-right: 3px !important;
+      font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.SaleOrderNO</label></text>),
+
+//grid.Column("DistributerOrderNo", @Resources.Resource.thDistributorOrderNo, canSort: true, style: "col-alpha"),
+              grid.Column("DistributerOrderNo", @Resources.Resource.thDistributorOrderNo, style: "col-alpha", format: @<text><label
+                  id="l_thSaleOrderNo" style="font-size: 10px ! important; margin-left: 1px !important;
+                  font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.DistributerOrderNo</label></text>),
+
+   grid.Column("DistributerCodeN", @Resources.Resource.thDistributorCode, canSort: true, style: "col-alpha"),
+   grid.Column("CustCode", @Resources.Resource.thCustomerCode, canSort: true, style: "col-alpha"), //hstNoshair
+   grid.Column("DistributerNameN", @Resources.Resource.thDistributorName, canSort: true, style: "col-alpha"),
+   grid.Column("PersonInchargeN", @Resources.Resource.thPersonIncharge, canSort: true, style: "col-alpha"),
+   grid.Column("Status", @Resources.Resource.thStatus, canSort: true, style: "col-alpha"),
+      grid.Column("PriceAmount", @Resources.Resource.thPriceAmount, style: "col-numeric", format: @<text><label
+          id="l_PriceAmount" style="font-size: 10px ! important; margin-right: 4px !important;
+          font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;">@item.PriceAmount</label></text>),
+
+    //grid.Column("PriceAmount", @Resources.Resource.thPriceAmount, canSort: true, style: "col-numeric"), 
+    grid.Column("CurrencyN", @Resources.Resource.thCurrency, canSort: true, style:"col-alpha"),
+    grid.Column("CreationDate", @Resources.Resource.lblCreationDate, canSort: true, style: "col-alpha"),
+    grid.Column(@Resources.Resource.thStockAvailable, style: "col-control", format: @<text>
+            @if (@item.StockAvailable == "Y")
+            {<input type="checkbox"  style=" margin-left:-8px;"  disabled="disabled" checked="checked" class="StockAvailable"  value=" @item.QuotationNo"  /> 
+                <input type="text"  class="PrintLeadTime" id="TimeStamp" name="TimeStamp" style="display:none"  value=" @item.TimeStamp"  />
+            }
+            else
+            {<input type="checkbox"  style=" margin-left:-8px;" disabled="disabled" class="StockAvailable" value=" @item.QuotationNo"  />
+                <input type="text"  class="PrintLeadTime" id="TimeStamp" name="TimeStamp" style="display:none"  value=" @item.TimeStamp"  />
+            }
+            @* <input type="checkbox"  disabled="disabled" class="StockAvailable"   value=" @item.QuotationNo"  @item.StockAvailable />*@
+            </text>, canSort: true),
+   grid.Column(@Resources.Resource.thPrintLeadTime, style: "col-control", format: @<text>
+            <input type="checkbox"   style=" margin-left:-8px;"   class="PrintLeadTime" id="chkLeadTime" name="chkLeadTime"  value=" @item.QuotationNo"   />
+            <input type="hidden" value="@item.isCreator.ToString()" id="hfCreator" /><input type="hidden" value="@item.DistributerCodeN.ToString()" id="hfDBCode" />
+            </text>, canSort: true)@*,
+grid.Column(null, style: "col-control", format: @<text><input type="text"  class="PrintLeadTime" id="TimeStamp" name="TimeStamp" style="display:none"  value=" @item.TimeStamp"  /></text>)
+        
+        
+*@
+
+
+
+
+
+) //grid.columns
+
+                                                                                                                  )
+            @* grid.GetHtml *@ @* @Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)*@
+        </div>
+        @Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+        @if (Request.QueryString["page"] != null)
+        {
+            <script type="text/javascript">
+        currentPageNo = "@Request.QueryString["page"].ToString()";
+    
+            </script>
+        }
+    </div>
+    }
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        afterLoad();
+        var Message = "@ViewBag.Message";
+        var messageType = "@ViewBag.MessageType";
+        if (Message != "" && Message != null) {
+            txtError = Message;
+            txtErrorType = "0";
+            if (messageType != null && messageType != "") { txtErrorType = messageType }
+            DisplayModal(txtErrorType, txtError);
+
+
+        }
+        else {
+            $("#btnDownload").attr("disabled", false);
+            $("#ddlFileType").attr("disabled", false);
+        }
+    });      //
+  
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var Modelcount = "@ViewBag.TotalRows";
+        if (Modelcount <= 10) {
+            $("#HeadPaging").css("display", "none");
+        }
+        else {
+
+        }
+    });   //ready end
+    
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#TimeStamp").css("display", "none");
+
+    });  //doc.ready end
+ 
+</script>
+<script>
+    $("thead th").each(function (index) {
+        var columnClass = $('tbody tr:eq(0) td:eq(' + index + ')').attr('class');
+        $(this).removeAttr('class');
+        $(this).addClass(columnClass);
+    });
+</script>
+

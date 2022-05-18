@@ -1,0 +1,2 @@
+Quotation No	QT Line No	Requested Part No		Quantity		Unit Price		Character Code			Error Description
+173334		4		070800-B2120			2		0.00000000						Part No. not found

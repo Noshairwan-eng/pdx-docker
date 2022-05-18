@@ -1,0 +1,1504 @@
+﻿@model PDXWEB.Models.Consignment.OrderDetails.OrderDetailsModel
+@{
+    bool isInternetExplorer = false;
+    if (Request.Browser.Browsers.Contains("ie"))
+    {
+        isInternetExplorer = true; 
+        if (Request.Browser.MajorVersion < 8)
+        {
+        }
+    }   
+    
+ } 
+@Scripts.Render("~/bundles/InquiryJSBundle")
+@Styles.Render("~/Content/InquiryCSSBundle")
+<script src="@Url.Content("~/Scripts/FileUpload/bootstrap-filestyle.min.js")" type="text/javascript"></script>
+<style>  
+    #btnDownload{ width:98px !important}
+    .controlsMargin{margin: 0 -89px 0 0;}
+      .table
+{
+    margin: 40px 2px 2px 0px ! important;
+    
+ }
+   .ui-accordion-content
+     {
+          height:75px !important;
+         
+      }
+   .modal-sm {
+    width: 369px;
+}
+  #ConfirmModalBody
+    {
+       padding: 7px 3px 9px 4px !important;    
+    } 
+ 
+    
+
+    #txtCustomerName{ width:88% !important;}
+     label.btn-default{  color: White !important;}
+    .bootstrap-filestyle input[type=text]{ height:30px}
+    
+     @@media screen and (min-width:1200px)
+     {
+         .MultiDownloadDiv{ margin-right:9px !important}
+         .fileContainer{   margin-right: -24px;}
+         .PagingStyle {
+   position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+   margin:-38px 0 0 446px; 
+    
+    }
+     }
+    
+  @@media screen and (min-width:992px) and (max-width: 1199px) 
+{  
+     .MultiDownloadDiv { margin-right:5px  }
+    .controlsMargin{margin: 0 -58px 0 0 !important;}
+       .PagingStyle {      margin: -38px 0 0 363px }
+  .fileContainer{   margin-left: 5px;}
+    
+     #txtDistributerName
+     {
+      width:75% !important;    
+     }
+     #txtCustomerName
+     {
+      width:186% ;    
+     }
+#btnImport 
+{
+   margin-left: -66px;
+}
+ 
+ 
+ #btnDownload 
+{
+  margin-left: -130px;
+}
+ 
+ #ddlFileType 
+{
+margin-left: -193px;
+}
+ #btnCalculate 
+{
+ margin-left: -180px;
+}
+  #btnAddParts 
+{
+ margin-left: -195px;
+}
+ #btnUpdate 
+{
+  margin-left: -165px;
+} 
+ 
+ #btnDelete
+{
+margin-left: -150px;
+} 
+ 
+}
+
+  @@media screen and (min-width:768px) and (max-width: 991px) 
+{
+     .MultiDownloadDiv { margin-right:32px  }
+      .controlsMargin{margin: 0 -23px 0 0 !important;}
+    
+           .PagingStyle {      margin: -38px 0 0 260px; }
+            .customButtonsWidth button
+            {
+                 padding: 0 !important;
+                 width: 77px !important; 
+            }
+         #chkSelectAll{ margin: 0 5px -25px -35px !important;}
+           .fileContainer{   }
+           .InputElements
+           {
+             width:100% !important;        
+           }
+          #txtCustomerName
+          {        
+            width:100% !important;
+          }
+          #txtDistributerName
+          {
+              width:75% !important;    
+          }
+         #btnImport 
+         {
+            margin-left: -27px;
+         }
+          
+       
+          #btnDownload 
+         {
+          margin-left: -71px;
+         }
+       
+           #ddlFileType 
+          {
+           margin-left: -114px
+          }
+           #btnCalculate 
+          {
+           margin-left: -170px
+          }
+            #btnAddParts 
+          {
+           margin-left: -126px;
+          }
+           #btnUpdate 
+          {
+           margin-left: -152px
+          } 
+           
+           #btnDelete
+          {
+           margin-left: -134px
+          } 
+ 
+}
+
+
+
+
+  @@media screen and   (max-width: 767px) 
+{
+    .bootstrap-filestyle { width:97.5% !important}
+    .DropDownButtonContainer{width:100%;   }
+.bootstrap-filestyle{  margin: 0;    }
+#btnDownload{ width:97% !important; } 
+         #txtCustomerName
+     {
+             
+     width:97% !important;
+     }
+     #chkSelectAll{ margin: 0 5px -25px -35px !important;}
+     .PagingStyle
+    {
+      margin: -39px 0 0 130px !important;
+    }
+    .btn
+    {    
+      margin-bottom:2px !important; 
+      width:97%    !important;   
+        
+    }
+     
+     .StockTransferDetailsMain input 
+     {
+        
+     }
+      #ddlFileType
+     {
+       width:97%    !important;   
+         
+     }
+    .InputElements
+     {         
+          width:97% !important;
+      }
+}
+ 
+#ConsignmentDetailsGrid tr th,#ConsignmentDetailsGrid tr td
+{
+    white-space:nowrap;
+}
+.controlsGroup
+{
+  margin-top:5px;    
+}
+</style>
+
+
+
+<div class="container  StockTransferDetailsMain  childcontent ">
+    <div class="panel panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left" style="font-weight: bold; margin-right: 30px !important">
+               @Resources.Resource.ConsignmentOrderDetails</h3>
+        </div>
+        <div class="panel-body" style="margin-top: -11px ! important;">
+            <div class="row" style="height: 34px;">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 controlsMargin">
+                    <button class=" btn  " id="btnSearch">
+                        @Resources.Resource.btnSearch</button>                   
+                </div> 
+
+
+     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 controlsMargin">
+                    <button class=" btn" id="btnCondition">
+                        @Resources.Resource.btnCondition</button>
+                </div> 
+
+
+                <span id="lblMsg" style="color: Red; padding-left: 14px;"></span>
+            </div>@* Search Button *@
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        <label>@Resources.Resource.lblOrderNo</label>
+                    </div>
+                    <div>
+                          @Html.TextBoxFor(model=>model.txtOrderNo, new {   @class = "form-control InputElements" ,style="display:inline"})
+                        <span id="spnQuotation"></span>
+                    </div>
+                </div>@* Order No *@
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        <label>@Resources.Resource.lblStatus</label>
+                    </div>
+                    <div>
+                         @Html.TextBoxFor(model => model.txtStatus, new { disabled = "disabled", @class = "form-control InputElements", style = "display:inline" })
+                    </div>
+                </div>@* Status *@
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        <label> @Resources.Resource.lblCurrency</label>
+                    </div>
+                    <div>
+                          @Html.TextBoxFor(model => model.txtCurrency, new { disabled = "disabled", @class = "form-control InputElements", style = "display:inline" })
+                    </div>
+                </div>@* Currency*@
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                       
+                        <label>@Resources.Resource.lblDistributorCode</label>
+                    </div>
+                    <div>
+                      @Html.TextBoxFor(model => model.txtCustomerID, new { disabled = "disabled", @class = "form-control InputElements", style = "display:inline" })
+                   
+                    </div>
+                </div>@* Customer ID *@
+
+            </div>
+            <div class="row">
+             
+                <div class="col-lg-6    col-md-6 col-sm-6 col-xs-12">
+                    <div>
+                        <label>@Resources.Resource.lblDistributorName</label>
+                    </div>
+                    <div>  
+                    @Html.TextBoxFor(model => model.txtCustomerName, new { disabled = "disabled", @class = "form-control InputElements", style = "display:inline" })
+                        
+                        </div>
+                </div>@* Customer Name *@
+               
+              <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 divErrorCheckBox" style="padding-left: 29px; padding-top: 22px;">
+                          
+        <label  >
+                                <input type="checkbox"  style="margin: 0px 5px -25px -16px  ; width: inherit;" name="chkSelectAll" id="chkSelectAll" class="form-control InputElements"  ><input type="hidden" value="false" name="cbxUnprocess">
+                                @Resources.Resource.lblSelectAll</label>
+                 </div>
+           
+
+                 
+            </div>
+              <div class="row ">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                     <div>
+                       
+                        <label>@Resources.Resource.lblPreferedOrigins</label>
+                    </div>
+                    <div   class="divOrigins"style="border: 1px solid; overflow: scroll; height: 80px; width: 191px; border-radius: 6px;">
+                      
+                        
+                    
+                      @* @foreach (var item in Model.PrefferedOriginsList)
+                       {
+                          <input type="checkbox" id="@item.Text" name="@item.Text" checked="checked" />
+                       }*@
+                        
+                    </div>
+                    
+                    </div>
+
+                    <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                     <div>
+                       
+                        <label>@Resources.Resource.lblWareHouses</label>
+                     </div>
+                     <div class="divWareHouses" style="border: 1px solid; overflow: scroll; height: 80px; width: 191px; border-radius: 6px;">
+                      
+                        
+                     
+                      @* @foreach (var item in Model.WareHouseList)
+                       {
+                          <input type="checkbox" id="@item.Text" name="@item.Text" checked="checked" />
+                       }*@
+                        
+                    </div>
+                    
+                    </div>
+                    
+                    
+                    </div>
+
+              </div>
+               
+            
+        </div>
+    </div>
+ 
+ 
+<div class="container childcontent " style="padding-top: 0px ! important;">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div class="row controlsGroup customButtonsWidth">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 fileContainer" style="padding-top: 0px; ">
+                
+           
+            @if (isInternetExplorer)
+                {
+                    <form id="frmIEUpload"  enctype="multipart/form-data"  method="post" >
+                    <input type="file" id="fuUploadCSV" class="filestyle" name="fuUploadCSV" data-buttontext="Browse"   style=" display:none"/>
+                    </form>
+                }
+                else
+                {
+                    <input type="file" id="fuUploadCSV" class="filestyle" data-buttontext="Browse"   style=" display:none"/>
+                }
+             </div>
+                <div class="col-lg-1 col-md-2 col-sm-2 customMargin col-xs-12">
+                    <button class="btn btn-sm btn-primary custom btnMargin" id="btnImport">
+                        @Resources.Resource.btnImport</button>
+                </div>
+ 
+            
+                <div class="col-lg-1 col-md-2 col-sm-2 customMargin MultiDownloadDiv col-xs-12">
+                    <div class="btn-group DropDownButtonContainer">
+  <button type="button" class="btn btn-secondary dropdown-toggle" id="btnDownload" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    @Resources.Resource.btnDownload<span class="caret"></span>
+  </button>
+  <div class="dropdown-menu DownLoadDropDown">
+    <a class="dropdown-item" href="#" onclick="DownloadFile('0')">CSV</a>
+    <a class="dropdown-item" href="#"  onclick="DownloadFile('1')">XLS</a>
+ 
+  </div>
+</div>
+                </div>
+                 
+    
+            <div class="col-lg-1 col-md-1 customMargin col-sm-2 col-xs-12">
+                <button class="btn btn-sm btn-primary custom btnMargin" id="btnAddParts">
+                    @Resources.Resource.btnAdd</button>
+            </div>
+            
+                <div class="col-lg-1 col-md-1 customMargin col-sm-1 col-xs-12">
+                    <button class="btn btn-sm btn-primary custom btnMargin" id="btnCalculate">
+                       @Resources.Resource.btnCalculate</button>
+                </div>
+                  
+            
+            <div class="col-lg-1 col-md-1 customMargin col-sm-1 col-xs-12">
+                    <button class="btn btn-sm btn-primary custom btnMargin" id="btnUpdate">
+                        @Resources.Resource.btnUpdate</button>
+                </div>
+
+            
+            <div class="col-lg-1 col-md-1 customMargin col-sm-1 col-xs-12">
+                <button class="btn btn-sm btn-primary custom btnMargin" id="btnDelete" disabled="disabled">
+                    @Resources.Resource.btnDelete</button>
+            </div>
+        </div>
+         <div id="divParts" style="height: 410px; overflow: scroll">
+        </div>
+
+         
+        <div id="outer" style="margin-left: 10px; margin-top: 9px; margin-bottom: 5px;">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+
+                    <div>
+                     <label>@Resources.Resource.lblTotalSellingPrice</label> 
+                    </div>
+                    <div>
+
+                        @Html.TextBoxFor(model => model.txtTotalSellingPrice, new { disabled = "disabled", @class = "form-control InputElements", style = "display:inline;text-align:right;" })
+
+               </div>
+                </div> @*Selling Price*@
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                       <label>@Resources.Resource.lblTotalTax</label> 
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model => model.txtTotalTax, new { disabled = "disabled", @class = "form-control InputElements", style = "display:inline;text-align:right;" })
+               
+                        
+                        
+                        </div>
+               
+               
+                </div>  @*Total Tax *@      
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                       <label>@Resources.Resource.lblTotalNetAmount</label> 
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model => model.txtTotalNetAmount, new { disabled = "disabled", @class = "form-control InputElements", style = "display:inline;text-align:right;" })
+                        
+                        </div>
+               
+               
+                </div>  @*Total Net Amount *@      
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                       <label>@Resources.Resource.lblTotalWeight</label> 
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model => model.txtTotalWeight, new { disabled = "disabled", @class = "form-control InputElements", style = "display:inline;text-align:right;" })
+               
+                        
+                        
+                        </div>
+               
+               
+                </div>  @*Total Weight *@                        
+           
+           
+            </div>                               
+             
+
+
+        </div>
+         <div class="lagends accordion hideonLoad "  style="display:none">
+            <a href="#">@Resources.Resource.Legends <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e">
+            </span></a> 
+                 <div class="accordianRows" style="height:130px !important" >   
+                  <div class=" row">
+ 
+                <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                   <label>@Resources.Resource.thLineNo:
+                    </label>
+                </div>
+                <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                   <label>@Resources.Resource.LineNoDesc
+                          </label>
+                </div>
+                <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                    <label>@Resources.Resource.thSubLineNo:
+                       </label>
+                </div>
+                <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                    <label>@Resources.Resource.SubLineNoDesc
+                        </label>
+                </div>
+                                <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                    <label> @Resources.Resource.thRequestedQuantity:
+                    </label>
+                </div>
+                <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                    <label>  @Resources.Resource.RequestedQuantityDesc
+                    </label>
+                </div>
+            </div>
+
+            <div class=" row">
+ 
+                <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                   <label>@Resources.Resource.thDiscountPerItem:
+                    </label>
+                </div>
+                <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                   <label>@Resources.Resource.DiscountPerItemDesc
+                          </label>
+                </div>
+                <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                    <label>@Resources.Resource.thTaxAmount:
+                       </label>
+                </div>
+                <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                    <label>@Resources.Resource.TaxAmountDesc
+                        </label>
+                </div>
+                                <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                    <label>@Resources.Resource.thCountryOfOrigin:
+                    </label>
+                </div>
+                <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                    <label>@Resources.Resource.CountryOfOriginDesc
+                    </label>
+                </div>
+            </div>
+
+            <div class=" row">
+ 
+                <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                   <label>@Resources.Resource.thAcceptedQuantity:
+                    </label>
+                </div>
+                <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                   <label> @Resources.Resource.AcceptedQuantityDesc
+                          </label>
+                </div>
+                <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                    <label> 
+                       </label>
+                </div>
+                <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                    <label>
+                        </label>
+                </div>
+                                <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                    <label> 
+                    </label>
+                </div>
+                <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                    <label>   
+                    </label> 
+                </div>
+            </div>
+
+
+            
+             
+
+             
+
+</div>
+
+</div>
+    </div>
+</div> 
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="ErrorModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.ConsignmentOrderDetails</h4>
+                </div>
+                <div class="modal-body" id="divModalBody">
+                    <span id="lblMessage"></span>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div> @* Model Dialoge *@
+ <div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="ConfirmModal" role="dialog" style="padding-top: 169px;">
+         <div class="modal-dialog modal-sm" style=" margin: 10px auto;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.Delete</h4>
+                </div>
+                <div class="modal-body" id="ConfirmModalBody">
+                <img  src="@Url.Content("~/images/question.png")" />
+                    @*<label style="color: Red !important">
+                        Are you sure you want to delete selected part?</label>*@
+                        <label style="color: Red !important">
+                       @Resources.Resource.MsgInfo20</label>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnOkDelete" class="btn btn-default pull-left" data-dismiss="modal">
+                        @Resources.Resource.btnOK</button>
+                    <button id="btnCancleDelete" class="btn btn-default pull-right" data-dismiss="modal">
+                        @Resources.Resource.btnCancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> @* Confirm Dialoge *@
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                 @Resources.Resource.ConsignmentOrderDetails</h4>
+                </div>
+                <div class="modal-body" id="modalBody">
+                <img  class="imgError"/>
+                <label id="lblMessageText"  class="lblError"></label>
+                </div>
+                <div class="modal-footer">
+                 <button style=" text-align:center;float: none !important;" id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                  </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hiddenCTO" style="display: none">
+    <select class="ddlCTO">
+         
+    </select>
+</div> @*This Div is Hidden and used to Populate the CTO Dropdown in background *@
+<div class="hiddenForm" style="display: none !important;">
+    <form method="post" action="@Url.Action("DownloadFile", "QuotationDetails", null)" >
+    </form>
+
+</div>  @* Hidden Form.Purpose is to Triggger a Full PostBack in case it is Necessary  *@
+
+<style>
+
+
+#ConsignmentDetailsGrid thead tr th{ text-align:left;}
+ .header_Discount{ text-align:right !important;}
+ .header_TaxAmount{ text-align:right !important;}
+ .header_Weight{ text-align:right !important;}
+</style>
+<script type="text/javascript">
+$(document).ready(function ()
+    {
+        var txtErrorType;
+        var txtError;
+        $(".lagends").removeAttr("style");
+         $(".accordion").accordion({autoHeight:true,
+            collapsible: true,
+            active: false
+        });
+       
+     $(".bootstrap-filestyle input[type=text]").addClass("hidden-sm hidden-md ");
+       AppendClass();
+        $("#txtOrderNo").focus();
+        $("#btnDelete").attr("disabled", true);    
+        var fileUploadViaIE="@ViewBag.ieFileUpload"
+          var consignmentOrderNo = GetParameterValues('ConONo');
+          consignmentOrderNo = consignmentOrderNo.replace(/#/g, '');//Shabbir replaced '#' symbol from query string
+
+        if(fileUploadViaIE=="True")
+        {  
+          $("#txtOrderNo").val(consignmentOrderNo);
+        }
+        else
+        {
+          
+            if (consignmentOrderNo != null && consignmentOrderNo != "") 
+            {
+                $("#txtOrderNo").val(consignmentOrderNo);
+                Search(consignmentOrderNo);
+            }  
+        }
+         DisableControls();
+
+   // $(document).on('keydown', '#txtOrderNo', function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+   $(document).on('keydown', '#txtOrderNo', function (e) {if(this.value.length>= 10 && e.keyCode!=8 ) {   e.preventDefault();return false; } -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+  $( "#txtOrderNo" ).on("paste", function(event) {setTimeout( function() {   if( !$.isNumeric(  $( "#txtOrderNo" ).val().trim() ) ){ $( "#txtOrderNo" ).val(""); false;}         }, 1); });
+  
+  $(document).on('keydown', '.addUnitPrice', function (e) {if(this.value.length>= 6 && e.keyCode!=8 ) {   e.preventDefault();return false; } -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+  $( ".addUnitPrice" ).on("paste", function(event) {setTimeout( function() {   if( !$.isNumeric(  $( ".addUnitPrice" ).val().trim() ) ){ $( ".addUnitPrice" ).val(""); false;}         }, 1); });
+
+   $(document).on('keydown', '.addDiscountPerItem', function (e) {
+   -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() 
+       if(this.value.length>= 9 && e.keyCode!=8 ) ///Ignore BackSpace Key
+          {
+
+         // $(this).next("span").html("Maximum allowed limit is 9").attr("style","color:red !important ").show().fadeToggle("slow") ;
+         //$(this).next("span").html("@Resources.Resource.MsgInfo21").attr("style","color:red !important ").show().fadeToggle("slow") ;
+          e.preventDefault()
+          return false;
+          }
+   
+   });
+     $(document).on('keydown', '.addQuantityinGrid', function (e) {
+   -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() 
+       if(this.value.length>= 6 && e.keyCode!=8 ) ///Ignore BackSpace Key
+          {
+
+         // $(this).next("span").html("Maximum allowed limit is 6").attr("style","color:red !important ").show().fadeToggle("slow") ;
+         $(this).next("span").html("@Resources.Resource.MsgInfo22").attr("style","color:red !important ").show().fadeToggle("slow") ;
+          e.preventDefault()
+          return false;
+          }
+   
+   });
+
+
+ $(document).on('keydown', '.addPartsinGrid', function (e) {
+ 
+    if(this.value.length>= 20 && e.keyCode!=8 ) ///Ignore Backspace
+          {
+          //$(this).next("span").html("Maximum allowed limit is 20").attr("style","color:red !important ").show().fadeToggle("slow") ;
+          //$(this).next("span").html("@Resources.Resource.MsgInfo23").attr("style","color:red !important ").show().fadeToggle("slow") ;
+          e.preventDefault()
+          return false;
+          }
+    
+});
+
+    
+}); 
+
+
+$(document).on("click", "#btnSearch", function () {
+  if( !PostGetPreCheck()){return;}//This Check makes sure that there is not any exsiting Ajax Request ,in other case the call is returned void and doesnt proceeds to next code
+    if ($("#txtOrderNo").val() == "") {
+    $("#txtOrderNo").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;display: inline");
+      /*  $("#spnQuotation").html("*").attr("style", "color:red");*/
+        
+
+               //txtError="Please enter Order No";
+               txtError="@Resources.Resource.MsgInfo64";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ; 
+        return;
+    }
+     $("#txtOrderNo").attr("style","");
+    Search($("#txtOrderNo").val());
+
+    //Shabbir Start
+    if(status == "1")
+    {
+        RemoveItemsForSelectAll();
+        $("#btnDelete").attr("disabled",true);
+        $("#chkSelectAll").prop("checked",false);
+    }
+    //Shabbir End
+
+});
+var gselectedList = [];//Shabbir
+///this Event Makes Clicked Row Higlighted untill another row is clicked
+$(document).on("click", '#ConsignmentDetailsGrid> tbody>tr', function () {
+     if(!$(this).hasClass("trBtnAddNewParts") && !$(this).hasClass("NewPartsRow"))//make sure not to perform highlighting on New Parts Add row
+      {
+      //Shabbir Start Commented below Code
+//        var countHighlightedRows=0;
+//		
+//			var state = $(this).hasClass('highlight')  ;
+//			if (!state)
+//			 {
+//				$(this).addClass('highlight');				 
+//			 
+//			  } else{$(this).removeClass('highlight');}
+//              $('.highlight').each(function () {
+//			countHighlightedRows+=1;
+//		     });             
+//            
+//              if(countHighlightedRows>0  &&status == "1" )
+//              {
+//              $("#btnDelete").removeAttr("disabled" )
+//              }else{  $("#btnDelete").attr("disabled",true)}
+//            }
+        //Shabbir End Commented
+        //Shabbir New Code 
+
+        if(status =="1")
+        {
+        var state = $(this).hasClass('highlight');
+
+                if (!state)
+			    {
+				    $(this).addClass('highlight');	
+                     
+                    if (!isItemInArray(gselectedList, [$.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text())])) 
+                    {
+                        gselectedList.push([$.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text())]);
+                    }
+			    } 
+                else
+                {
+                    $(this).removeClass('highlight');
+                    
+                    if (isItemInArray(gselectedList, [$.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text())])) 
+                    {
+                        RemoveUnSelected($.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text()));
+                    }
+                }
+
+                //To Check/UnCheck Check-All checkbox
+                if(gselectedList.length == parseInt(totalPartsCount))
+                {
+                    $("#chkSelectAll").prop("checked",true);
+                }
+                else
+                {
+                    $("#chkSelectAll").prop("checked",false);
+                }
+
+                //To enable or disable Delete button
+                if(gselectedList.length > 0)
+                {
+                     $("#btnDelete").attr("disabled",false);
+                }
+                else
+                {
+                     $("#btnDelete").attr("disabled",true);
+                }
+        }
+     }
+});
+ //Shabbir Start
+function isItemInArray(gselectedList, item) 
+{
+    for (var i = 0; i < gselectedList.length; i++) {
+        if (gselectedList[i][0] == item[0] && gselectedList[i][1] == item[1]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function RemoveUnSelected(lineno,sublineno) {
+    for (i=0; i<gselectedList.length; i++){
+            if (gselectedList[i][0] === lineno && gselectedList[i][1] === sublineno)
+            {
+                gselectedList.splice(i--,1);
+            }
+        }
+ }
+ //Shabbir End
+
+///this Event Shows and Hides Delete Button based on the Status of the Quotation 
+ 
+
+
+///this Event Appends A new row with Input elements when TAB key is pressed while the Transfer Quantity Texbox is highlighted
+// $(document).on("keypress", ".addDiscountPerItem", function (e) {
+//        if (e.which == 13 || e.keyCode == 9) {
+//            e.stopPropagation();
+//            var val = $(this).closest('tr');
+//            val.after("<tr class='NewPartsRow'>  <td> </td><td> </td>  <td  class='Origin'></td>  <td><input type='text' class='addPartsinGrid'/><span></span></td><td> </td><td></td>   <td><input type='text' class='addQuantityinGrid' value='0'/> <span></span></td> <td>   </td>   <td>   </td>     <td> </td><td> <input type='text' class='addUnitPrice' value='0'/><span></span> </td>   <td> <input type='text' class='addDiscountPerItem' value='0'/><span></span></td><td> </td> <td> </td><td> </td><td> </td><td> </td><td> </td><td> </td><td> </td><td> </td></tr>");
+//            var select = $(".ddlCTO");
+//            select.clone().appendTo(val.next("tr").children("td.Origin")).addClass("CTO");
+//            val.next("tr").find("td.Origin select").removeClass("ddlCTO");
+//            if (e.keyCode == 9) { val.next("tr").find(".addPartsinGrid").focus(); e.preventDefault(); } else { val.next("tr").find(".addPartsinGrid").focus(); }
+//            
+//        }
+//        
+//    });
+ $("#btnAddParts").click(function () {
+                var newPartsFromUser = [];
+                $(".NewPartsRow").each(function () {                
+                var currRow=$(this);
+                var ctoFromRow=currRow.find(".CTO").val();
+                var reqPartNo= currRow.find(".addPartsinGrid").val();
+                var reqQuantity= currRow.find(".addQuantityinGrid").val();
+                var unitPrice=$.trim(currRow.find(".addUnitPrice").val())!=""?$.trim(currRow.find(".addUnitPrice").val()):"0";
+                var discountPerItem=$.trim(currRow.find(".addDiscountPerItem").val())!=""?$.trim(currRow.find(".addDiscountPerItem").val()):"0"; 
+                if(reqPartNo!="" && reqQuantity!="" &&reqQuantity!="0" )
+                {
+                     
+                       newPartsFromUser.push({ReqPart:reqPartNo,ReqQty:reqQuantity,Discount:discountPerItem,CTO:ctoFromRow,UnitPrice:unitPrice  });                               
+                    
+               
+                    
+
+               }
+        });
+
+
+        if(newPartsFromUser.length==0){return;}
+        $.post("@Url.Action("AddNewParts", "CSDetails", null)", {strNewParts:JSON.stringify(newPartsFromUser)},
+        function (PartsDetails) 
+        {
+                 if(CheckForServerSideError(PartsDetails))
+                 { 
+                 
+               DisplayModal(txtErrorType,txtError) ; 
+                    $(".hiddenForm").html(PartsDetails);                         
+                     
+                 } 
+             
+                 else
+                 { 
+                    var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                    var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                    $('#divParts').html(PartsDetails);    
+                  }               
+
+        });      ///End Post
+        //ReloadInformation();
+    
+    });
+
+
+
+$('#btnDelete').click(function () 
+{   
+      
+       $("#ConfirmModal").modal();       
+});///End btnDelete Click  
+
+ $(document).on("click", "#btnCalculate", function () {
+  Calculate();
+   });
+        
+ $(document).on("click", "#btnUpdate", function () {
+  UpdateDetails();
+   });
+        
+
+</script>@*Document Ready Specific Events *@
+
+<script type="text/javascript">
+    $(document).on('keydown', '#txtTransferRequestNo', function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+ 
+</script>@*Events*@
+
+<script type="text/javascript">
+function AppendClass()
+{
+
+///this Event Appends A new row with Input elements when a speciefied blank row is clicked in grid
+$(document).on("click touchstart", ".trBtnAddNewParts", function () {
+    $(this).before("<tr class='NewPartsRow'>  <td> </td><td> </td>  <td  class='Origin'></td>  <td><input type='text' class='addPartsinGrid'/><span></span></td><td> </td><td></td>   <td><input type='text' class='addQuantityinGrid' value='0'/> <span></span></td> <td>   </td>   <td>   </td>     <td> </td><td> <input type='text' class='addUnitPrice' value='0'/><span></span> </td>   <td> <input type='text' class='addDiscountPerItem' value='0'/><span></span></td><td> </td> <td> </td><td> </td><td> </td><td> </td><td> </td><td> </td><td> </td> </tr>");
+ 
+    var select = $(".ddlCTO");
+             select.clone().appendTo($(this).prev("tr").children("td.Origin")).addClass("CTO");
+             $(this).prev("tr").find("td.Origin select").removeClass("ddlCTO");
+    $(this).prev("tr").find(".addPartsinGrid").focus();
+    if (CurrentRole != "1") {
+      if(fixPrice=="1")
+                   $(".addUnitPrice").show();
+                     else 
+                       $(".addUnitPrice").hide();
+             
+
+    } 
+    else
+     {
+        $(".addUnitPrice").show();
+        $(".addDiscountPerItem").show();
+
+    }
+});
+
+}
+
+var status;
+var CurrentRole;
+function Search(quotationNo) 
+{
+    $("#divLoading").remove();///Remove Spinner Div,Prior to Search,as it would add the same div twice 
+    $("#divParts").parent("div").prepend("<div id='divLoading'></div>");
+    var formData = { txtOrderNo:quotationNo };  
+    $.post("@Url.Action("Search", "CSDetails", null)",formData,function (searchResult) 
+    {
+
+    if(CheckForSessionExpiry(searchResult))
+    {
+    SessionExpiredRedirect();
+    return;
+    }
+    else
+    {
+    var searchResult=searchResult.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+    var searchResult=searchResult.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+  
+     $("#divParts").html(searchResult);    
+     $(".hideonLoad").show();
+     }       
+    
+      });
+    
+    
+    }
+
+    function Calculate()
+    {
+      
+    $.post("@Url.Action("Calculate", "CSDetails", null)",null,function (searchResult) 
+    {
+
+    if(CheckForSessionExpiry(searchResult))
+    {
+    SessionExpiredRedirect();
+    return;
+    }
+    else
+    {
+        if(CheckForServerSideError(searchResult))
+             {
+                $(".hiddenForm").html(searchResult);                         
+ 
+               DisplayModal(txtErrorType,txtError) ; 
+             } 
+             
+             else
+             {   
+                var searchResult=searchResult.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                var searchResult=searchResult.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                  $("#divParts").html(searchResult);   
+             }
+    
+     }       
+    
+      });    
+    
+    }
+
+function GetParameterValues(param)
+{
+    var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < url.length; i++) {
+        var urlparam = url[i].split('=');
+        if (urlparam[0] == param) {
+            return urlparam[1];
+        }
+    }
+}
+ 
+
+function AfterLoad()
+{
+ 
+ $(".gridHead th a").each(function () {
+               $(this).addClass("a_" + $(this).attr("href").split("sort=")[1].split("&")[0]);
+
+               $(this).parent("th").addClass("header_" + $(this).attr("href").split("sort=")[1].split("&")[0]);
+           });
+  setArrowImages();
+  // AppendClass();
+    if (status=="1") 
+    {
+    
+    $("#ConsignmentDetailsGrid>tbody").append("<tr class='trBtnAddNewParts'><td>&nbsp</td><td> </td><td> </td>   <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td> </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+    
+    //Shabbir Start
+        if(parseInt(totalPartsCount) == 0)
+          {
+            $("#btnDelete").attr("disabled",true);
+            $("#chkSelectAll").attr("disabled",true);
+          }
+
+      if(gselectedList.length != "0" && gselectedList.length == parseInt(totalPartsCount))
+       {
+         $("#chkSelectAll").prop("checked",true);
+         $("#ConsignmentDetailsGrid>tbody>tr").each(function(){
+           if($.trim($(this).children("td").eq(0).text()) != "")
+                {$(this).addClass('highlight');}
+         });
+       }
+       else
+       {
+         $("#chkSelectAll").prop("checked",false);
+
+         $("#ConsignmentDetailsGrid>tbody>tr").each(function(){
+            $(this).removeClass('highlight');
+            if(isItemInArray(gselectedList, [$.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text())]))
+            {
+                $(this).addClass('highlight');
+            }
+         });
+       }
+       //Shabbir End
+
+    }
+
+
+    $('.NewPaging ul').addClass("pagination");
+    $('a[data-swhglnk="true"]').attr('href', function () 
+    {
+
+    ///Change to index 5 when running on Localhost IIIS
+    //Or Change to Index 4 on default Development Server
+    var correctURL = this.href.split('/')[5].split('?')[0];         
+    return this.href.replace(correctURL, 'Search');
+           
+       
+    });
+
+
+}
+
+function UpdateDetails()
+{
+var postData={txtTransferQuoteNo:$("#txtTransferQuoteNo").val()};
+ $.post("@Url.Action("Save", "CSDetails", null)",null,function (searchResult) 
+    {
+
+   if(CheckForSessionExpiry(searchResult))
+    {
+    SessionExpiredRedirect();
+    return;
+    }
+    else
+    {
+          if(CheckForServerSideError(searchResult))
+             {
+                $(".hiddenForm").html(searchResult);                         
+  
+               DisplayModal(txtErrorType,txtError) ; 
+             } 
+             
+             else
+             {   
+                var searchResult=searchResult.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                var searchResult=searchResult.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+               $("#divParts").html(searchResult);    
+              }
+   
+     }       
+    
+      });    
+      //Shabbir Start
+      RemoveItemsForSelectAll();
+        $("#btnDelete").attr("disabled",true);
+        $("#chkSelectAll").prop("checked",false);
+        //Shabbir End
+}
+
+ 
+
+function PerformDeletion()
+{
+     var selectedRow=$(".highlight ");                   
+//        var LineNo=selectedRow.children("td").eq(0).text();
+//        var LineSubNo=selectedRow.children("td").eq(1).text();     
+                    var partsToDelete = []; 
+
+          //Shabbir Start Commented below block     
+            //$('.highlight').each(function (){ //hst006
+            //var selectedRow=$(this); 
+            //var LineNo=selectedRow.children("td").eq(0).text();
+            //var LineSubNo=selectedRow.children("td").eq(1).text();
+            //partsToDelete.push({Line_No:LineNo,Sub_LineNo:LineSubNo});
+            //});    
+          //Shabbir End Commented
+           //Shabbir Start Update Now we will not take rows Line No and 
+           //Sub Line No from highlighted rows but from array
+           for(var i = 0 ; i < gselectedList.length;i++)
+           {
+                partsToDelete.push({Line_No:gselectedList[i][0],Sub_LineNo:gselectedList[i][1]});
+           }
+           //Shabbir End
+                                     
+        if ( partsToDelete.length!=0) 
+        {                           
+        var formData = { strPartsToDelete:JSON.stringify(partsToDelete)}; 
+        $.ajax({
+        type: "POST",
+        data: formData,
+        url:"@Url.Action("Delete", "CSDetails", null, Request.Url.Scheme)",
+        success: function (PartsDetails) 
+        {
+   if(CheckForSessionExpiry(PartsDetails))
+    {
+    SessionExpiredRedirect();
+    return;
+    }
+             if(CheckForServerSideError(PartsDetails))
+             {
+                $(".hiddenForm").html(PartsDetails);                         
+                DisplayModal(txtErrorType,txtError) ; 
+             } 
+             
+             else
+             {          
+                var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                $('#divParts').html(PartsDetails);      
+               
+             }              
+                              
+        },
+        error: function (data) 
+        {                    
+           
+                // txtError="An error occured while deleting part";
+                txtError="@Resources.Resource.MsgInfo25";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ; 
+        }
+        });
+        }
+        
+        //Shabbir Start
+        RemoveItemsForSelectAll();
+        $("#btnDelete").attr("disabled",true);
+        $("#chkSelectAll").prop("checked",false);
+        //Shabbir End
+}
+
+function CheckForServerSideError(data)
+{
+    var tempData = JSON.stringify(data);
+    if (tempData.indexOf("Sorry,") > -1)
+    {
+    return true;        
+    }   
+}
+
+function DisableControls()
+{
+
+$("#fuUploadCSV").attr("disabled",true);
+$("#btnImport").attr("disabled",true);
+$("#btnAddParts").attr("disabled",true);
+$("#btnCalculate").attr("disabled",true);
+$("#btnSave").attr("disabled",true);
+$("#btnDelete").attr("disabled",true);
+ $("#btnUpdate").attr("disabled",true);
+$("#btnDownload").attr("disabled",true);
+  $("#chkSelectAll").attr("disabled", true);
+  $(".group-span-filestyle").attr("disabled",true);
+}
+
+ 
+function DownloadFile(fileType)
+{ 
+
+var postData={txtFileFormate:fileType}; 
+$.post("@Url.Action("ExportToExcel", "CSDetails")",postData,function (response) {
+
+                if(CheckForSessionExpiry(response))
+                    {
+                    SessionExpiredRedirect();
+                    return;
+                    }
+            if(  CheckForServerSideError(response))
+                {
+                $(".hiddenForm").html(response);
+                       
+            DisplayModal(txtErrorType,txtError) ; 
+                }
+                else
+                {
+                $(".hiddenForm").html(response);
+                                 
+                }
+            });
+       
+
+}
+ var fixPrice=false;
+
+</script>@*Functions*@
+<script type="text/javascript">
+ 
+    $('#btnOkDelete').click(function () {
+        $("#ConfirmModal").modal('hide');
+        PerformDeletion();
+    }); 
+</script>@*Ajax Global Events*@
+
+@if (isInternetExplorer)///Render Different File upload method to hande in-compatability of Async file upload issue with IE
+{
+    <script>
+        $("#btnImport").removeAttr("disabled");
+        $('#btnImport').click(function () {
+         if ($('.bootstrap-filestyle input[type=text]').val().trim() == "") { 
+                //txtError="Please select csv  file";
+                txtError="@Resources.Resource.MsgInfo52";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ; 
+        
+                return;
+            }
+            var form = $('#frmIEUpload');
+            form.append("<input type='hidden' name='hftxtTransferQuotationNo' id='hftxtTransferQuotationNo'  value="+ $('#txtTransferQuoteNo').val() +" >");
+            form.attr("action","@Url.Action("ImportCSV", "CSDetails", null, Request.Url.Scheme)");
+            form.submit();
+        });
+    </script>  
+}
+else
+{    
+    <script>
+        $("#btnImport").attr("disabled",true); 
+        $('#fuUploadCSV').on("change",function (){
+        var totalFiles = document.getElementById("fuUploadCSV").files.length;
+         if (totalFiles.toString() == "0") 
+         {
+          $("#btnImport").attr("disabled","disabled");          
+         }
+         else
+         {                             
+            var ext = $(this).val().split('.').pop().toLowerCase();
+            if($.inArray(ext, ['CSV','csv']) == -1) 
+            {
+                $("#btnImport").attr("disabled","disabled");
+                
+                
+
+                //txtError="invalid file Formate ";
+                txtError="@Resources.Resource.MsgInfo53 ";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ; 
+             
+                   
+            }
+            else 
+            {                    
+            $("#btnImport").removeAttr("disabled");                    
+            }
+         }
+
+});
+       $('#btnImport').click(function () {
+         var formData = new FormData();
+         var totalFiles = document.getElementById("fuUploadCSV").files.length;
+         if (totalFiles.toString() == "0") { 
+               //txtError="Please select CSV File to upload";
+               txtError="@Resources.Resource.MsgInfo52";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ; 
+            // $("#ErrorModal").modal();           
+             return false;
+         }
+         for (var i = 0; i < totalFiles; i++) {
+             var file = document.getElementById("fuUploadCSV").files[i];
+             formData.append("FileUpload", file);
+         }
+         $.ajax({
+             type: "POST",
+              url:"@Url.Action("ImportCSV", "CSDetails", null, Request.Url.Scheme)",      
+             data: formData,
+             contentType: false,
+             processData: false,
+             beforeSend: function (xhr) {              
+             },
+             success: function (PartsDetails) 
+             {
+                if(CheckForSessionExpiry(PartsDetails))
+                    {
+                    SessionExpiredRedirect();
+                    return;
+                    }
+               if(CheckForServerSideError(PartsDetails))
+                 {
+                    $(".hiddenForm").html(PartsDetails);        
+                    DisplayModal(txtErrorType,txtError) ; 
+                 } 
+             
+                 else
+                 {                  
+                var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if(  !($(this).parent('li').hasClass('disabled')) && !($(this).parent('li').hasClass('active')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                $('#divParts').html(PartsDetails);                  
+                $("#fuUploadCSV").val(""); //hstA02
+                $(".bootstrap-filestyle input[type=text]").val("");//hstA02
+                  }  
+             },
+             error: function (data) {   
+
+              // txtError="An error occured while uploading file";
+              txtError="@Resources.Resource.MsgInfo55";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ;       
+            
+             }
+         })
+     });
+    
+
+    </script>
+
+}
+@if (Session["ieFileUpload"] != null)//hst001
+{
+    <script>
+  
+       $.post("@Url.Action("Search", "CSDetails", null)",null,function (PartsDetails) { 
+                  if(CheckForServerSideError(PartsDetails))
+                    {   
+                        $(".hiddenForm").html(PartsDetails);      
+                    
+                    DisplayModal(txtErrorType,txtError) ;                      
+                    }
+                    else {
+                    var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                    var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                    $('#divParts').html(PartsDetails);  
+                    
+                    }      
+       
+         });
+         AfterLoad();
+    </script>
+}
+<script>
+
+    $(document).on("change", "#chkSelectAll", function () {///hst006
+        if (this.checked) {
+            $('#ConsignmentDetailsGrid> tbody>tr').each(function () {
+                if (!$(this).hasClass("NewPartsRow") && !$(this).hasClass("trBtnAddNewParts")) {
+                    $(this).addClass('highlight');
+                }
+            });
+            $("#btnDelete").removeAttr("disabled");
+        }
+        else {
+            $('#ConsignmentDetailsGrid> tbody>tr').each(function () {
+                if (!$(this).hasClass("NewPartsRow") && !$(this).hasClass("trBtnAddNewParts")) {
+                    $(this).removeClass('highlight');
+                }
+            });
+            $("#btnDelete").attr("disabled", true);
+                }
+
+            if (this.checked) {
+                AddItemsForSelectAll(data);
+            }
+            else {
+                RemoveItemsForSelectAll();
+            }
+    });
+
+    //Shabbir Start
+    function AddItemsForSelectAll(data) {
+        for (var i = 0; i < data.length; i++) {
+            if (!isItemInArray(gselectedList, [$.trim(data[i].Line_No), $.trim(data[i].Sub_LineNo)])) {
+                gselectedList.push([$.trim(data[i].Line_No), $.trim(data[i].Sub_LineNo)]);
+            }
+        }
+    }
+
+    function RemoveItemsForSelectAll() {
+        gselectedList = [];
+    }
+    //Shabbir End
+
+    function setArrowImages() {
+
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+        var header = $('th a[href*=' + col + ']');
+
+        if (dir == 'Ascending') {
+            header.text(header.text() + ' ▲');
+        }
+        if (dir == 'Descending') {
+            header.text(header.text() + ' ▼');
+        }
+    } 
+</script>
+
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    }); 
+     $("#btnCondition").click(function () {
+
+	  if ($.trim($("#txtOrderNo").val()) == "")
+	   { 
+		 //txtError = "Please Enter Quotation No";
+	     txtError="@Resources.Resource.MsgInfo64";
+		 txtErrorType = "0";
+		 DisplayModal(txtErrorType, txtError);  
+		 
+		/* $("#spnQuotation").html("*").attr("style", "color: red;  ");*/
+	   	$("#txtOrderNo").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080; ");
+	    return;
+		}
+
+		 url= "@Url.Action( "CSConditionsView","CSCondition")";
+		 var curl=url+"?OrderNo="+$("#txtOrderNo").val();
+		  window.location.href=curl;
+			
+		})//click end
+</script>
+ 

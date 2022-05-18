@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "QuotationReportView";
+}
+
+
+@*<div id="main" class=" " style="width: 100% ! important; margin: 0px 0px 4px 97px ! important;">
+
+<iframe id="IFrame1" src="@Url.Content("~/AspNetForms/QuotationInquiryReport/QuotationReport.aspx")" width="1148" height="1240px">
+         
+ </iframe>
+</div>
+
+*@
+
+
+<div class="container childcontent ">
+<style>
+.ReportContainer{margin: 0px 0px 4px -6px  ; width: 100% ! important;}
+</style>
+<!--[if IE]>
+<style>
+.ReportContainer{margin: 0px 0px 0px -6px !important}
+</style>
+<![endif]-->
+<div class="ReportContainer" id="main"  >
+<object data="@Url.Content("~/AspNetForms/QuotationInquiryReport/QuotationReport.aspx")" style="height: 1250px; width: 100%;">     </object>
+</div>
+</div>
+
+<script>
+
+    window.addEventListener('beforeunload', function (e) {
+        e.preventDefault();
+        DisposeReport();
+        //window.onbeforeunload = null;
+    });
+
+    function DisposeReport() {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("demo").innerHTML = this.responseText;
+            }
+        };
+
+       var url = '@Url.Action("DisposeCrystalReport", "OrderConfirmation")' ;
+
+        xhttp.open("POST", url, true);
+        xhttp.send();
+    }
+</script>

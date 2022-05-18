@@ -1,0 +1,85 @@
+﻿
+@model IEnumerable<PDXWEB.Models.User.UserInquiryModel>
+
+<style type="text/css">  
+  .Regdate { width:30px !important;}
+  </style>
+
+@{ 
+
+    ViewBag.Title = @Resources.Resource.UserInquiry;
+
+        WebGrid grid = new WebGrid(source: Model,
+
+        canSort: true, 
+        
+        rowsPerPage:10, 
+         ajaxUpdateCallback: "afterLoad",
+        ajaxUpdateContainerId: "main",
+
+        canPage: true);       
+        
+
+}
+@if (Model != null)
+{
+ if (Model.Count() > 0)
+    {
+
+ <div id="main"  >      
+ @if (Model.Count() > 10)
+        {
+         <div class="NewPaging row   " id="HeadPaging" style=" text-align:center ">
+  
+<div class="span9">   @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")</div>
+ 
+
+            </div>
+        }
+       <div class="datagrid table-responsive" style="overflow: auto;">
+       
+  
+        @grid.GetHtml(
+            displayHeader: true,           
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+            //footerStyle: "gridFooter",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "UserInquiryId" },
+
+
+                  columns: grid.Columns(
+                     grid.Column("UserID", @Resources.Resource.thUserId),
+                     grid.Column("UserName", @Resources.Resource.thUserName),
+                     grid.Column("UserStatusDescription",@Resources.Resource.thStatus),
+                     grid.Column("UserRoleDescription",@Resources.Resource.thAccessLevel),
+                     grid.Column("CreatedDateInShortFormat",@Resources.Resource.thRegistrationDate, null),
+                     grid.Column("ExpiryDateInShortFormat", @Resources.Resource.thExpiryDate)  
+                     
+
+                                     ) //grid.columns
+
+                                  ) @* grid.GetHtml *@
+                                    @Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+                                    </div>
+        
+</div>
+}
+}
+
+ <script type="text/javascript">
+   $(document).ready(function () {
+       var Message = "@ViewBag.Message";
+       if (Message != "" && Message != null) {
+
+           txtError = "@ViewBag.Message";
+           txtErrorType = "0";
+           DisplayModal(txtErrorType, txtError);  
+
+           
+       }
+   });   //
+  
+  </script>
+

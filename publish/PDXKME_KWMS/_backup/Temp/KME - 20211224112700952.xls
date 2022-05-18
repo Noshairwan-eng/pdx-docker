@@ -1,0 +1,2 @@
+OrderType	Distributor Code	Customer Code	Sales Order No	LineNo	SubLineNo	Distributor Ref No	OrderDate	PartNo	Part Description	CTO	Order QTY	Accepted QTY	OnHold	UnProcessed	BackOrder	Stock Alloc	Picking Instructed	Packed	Shipping Instructed	Invoiced	Cancelled	Remarks	Warehouse	Sold	
+SO	522K	REG	167481	1	1	11	23/12/2021	01010-61440	BOLT	ZZ	5	5	0	5	0	0	0	0	0	0	0			0	

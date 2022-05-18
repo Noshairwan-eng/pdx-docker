@@ -1,0 +1,342 @@
+﻿@{
+    ViewBag.Title = @Resources.Resource.QuotationCopy;
+}
+
+<style type="text/css">   
+ .panel-body  { padding-top:4px !important;   }  
+ 
+textbox#txtQuotationSubNo { width:12% !important; }
+
+ legend { display: block; width: 100%; padding: 0; margin-bottom: 22px !important; font-size: 12px !important;
+    font-weight:bold !important; line-height: inherit; color: #333;  border: 0; border-bottom: 1px solid #e5e5e5*/
+}
+        
+@@media screen and (min-width:1200px)
+{
+  .PanelHeight  { height:350px;  } 
+      
+}   
+@@media screen and (max-width:767px)
+{ 
+     .txtQutn{  width:78% !important;  }
+     .txtQuto {  width:20% !important; }
+      
+}     
+     /*@@media screen and (max-width:470px)
+     { 
+          .txtQutn{  width:79% !important;  }
+          .txtQuto {  width:20% !important; }
+           
+     }  */
+       
+</style>
+
+<div class="container childcontent ">
+  <div class="panel panelInquiryControls panel-primary panelWidth PanelHeight">
+       <div class="panel-heading PanelTitle"  >
+          <h3 class="panel-title pull-left " >@Resources.Resource.QuotationCopy </h3>
+       </div>
+    <div class="panel-body" style=" margin-left:10px;">
+    <div class="row" style="margin: 2px 0px 10px -14px ! important; "> 
+    <button class="btn btn-sm btn-primary custom " id="btnCopy" style=" margin-top:2px; 
+        padding-left:15px !important; padding-right:15px !important; margin-left:15px !important;">@Resources.Resource.btnCopy</button>     
+    </div>
+         @using (Ajax.BeginForm("SearchResult", "Inquiry", FormMethod.Post, 
+         new AjaxOptions { OnSuccess = "checkSessionState" }, new { @class = "form-inline", role = "form" }))
+          {
+              if (Session["role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+              {
+              }
+              else
+              { 
+               <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">                  
+                <label>@Html.CheckBox("chkResv", new { @id = "chkResv" })&nbsp @Resources.Resource.lblReserve</label>                   
+              </div>
+             </div>
+              }
+             <div class="row">
+             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="editor-field SizeOnXs">
+                 @Html.Label(@Resources.Resource.lblQuotationNo)
+                </div>
+                <div class="editor-label SizeOnXs">   
+                   @Html.TextBox("txtQuotationNumber", ViewBag.strQutn as string, new { @class = "form-control InputElements txtQutn", id = "txtQuotationNumber", style = "display: inline; width: 44%;" })
+                   @Html.TextBox("txtQuotationSubNo", ViewBag.strQuto as string, new { @class = "form-control InputElements txtQuto", id = "txtQuotationSubNo", style = "display: inline; width: 20% ! important;" })  
+                </div>
+             </div>
+
+              <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="editor-field SizeOnXs">
+                    @Html.Label(@Resources.Resource.lblOriginalQuotationNo)
+                </div>
+                <div class="editor-label SizeOnXs">   
+                   @Html.TextBox("txtOrgQuotationNumber", null, new { @class = "form-control InputElements txtQutn", id = "txtOrgQuotationNumber", style = "display: inline; width: 44%;" })
+                    @Html.TextBox("txtOrgQuotationSubNo", null, new { @class = "form-control InputElements txtQuto", id = "txtOrgQuotationSubNo", style = "display: inline; width: 20% ! important;" })  
+                </div>
+             </div>
+             </div>
+             
+            <div style=" margin-left:0px; margin-top:10px;">
+             <div class="row">
+             <div class="col-lg-4 col-md-6 col-sm-6">
+             <div class="row">
+             <div class="col-lg-12 col-md-10 col-sm-12">
+              <div id="DescConversion" style=" width:100%; border:1px solid gray;border-radius:7px; display: inline; margin-bottom:5px; float:left">
+                <fieldset>
+                <legend><label>@Resources.Resource.lblDescriptionOfConversion</label> </legend>
+                <div class="editor-label SizeOnXs"  style=" margin-bottom:5px;">
+                    <label>@Html.RadioButton("Description", "all", new { @id = "rbtnAll" })&nbsp @Resources.Resource.lblAll</label>  
+                    <label>@Html.RadioButton("Description", "only", new { @id = "rbtnConditiononly", style = "margin-left:30px;" })&nbsp @Resources.Resource.lblConditionsOnly </label>
+                  </div>
+                </fieldset>
+                </div> 
+             </div>
+             </div>
+             
+              </div> 
+               <div class="col-lg-4 col-md-6 col-sm-6">
+               <div class="row">
+               <div class="col-lg-10 col-md-10 col-sm-12">
+                 <div id="CopyMethod" style=" width:100%; border:1px solid gray;border-radius:7px; margin-bottom:5px; float:left">
+                  <fieldset>
+                  <legend><label>@Resources.Resource.lblCopyMethod</label> </legend>
+                  <div class="editor-label SizeOnXs" style=" margin-bottom:5px;">
+                 <label> @Html.RadioButton("CopyMethod1", "copy", new { @id = "rbtnCopy" })&nbsp @Resources.Resource.lblCopy</label> 
+                 <label>@Html.RadioButton("CopyMethod1", "Gmgmt", new { @id = "rbtnGMgmt", style = "margin-left:30px;" })&nbsp @Resources.Resource.lblGenerationMangement</label>
+                   </div>
+                  </fieldset>
+               </div> 
+             </div>
+           </div>              
+          </div>
+      </div>
+          <div class="row">
+          </div>
+         <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-6">
+          <div class="row">
+          <div class="col-lg-12 col-md-10 col-sm-12">
+            <div id="UnitPrice" style=" width:100%; border:1px solid gray;border-radius:7px; margin-bottom:5px; display: inline; float:left">
+                <fieldset>
+                <legend><label>@Resources.Resource.lblUnitPrice</label></legend>
+                <div class="editor-label SizeOnXs" style=" margin-bottom:5px;">
+              <label> @Html.RadioButton("UnitPrice", "CurrentPrice", new { @id = "rbtnUsePrice", @class = "disableEnable" })&nbsp @Resources.Resource.lblUseCurrentPrice</label>   
+           <label>@Html.RadioButton("UnitPrice", "ReCal", new { @id = "rbtnReCalculate", style = "margin-left:30px;", @class = "disableEnable" })&nbsp @Resources.Resource.lblReCalculate</label>                   
+                </div>
+                </fieldset>
+             </div>
+          </div>
+          </div>
+             
+           </div>
+           <div class="col-lg-4 col-md-6 col-sm-6">
+           <div class="row">
+             <div class="col-lg-10 col-md-10 col-sm-12">
+             <div id="WayOfgvnLNo" style=" width:100%; border:1px solid gray;border-radius:7px; margin-bottom:5px; display: inline !important; float:left">
+                  <fieldset>
+                  <legend><label>@Resources.Resource.lblWayOfGivingLineNo</label> </legend>
+                  <div class="editor-label SizeOnXs" style=" margin-bottom:5px;">
+                  <label> @Html.RadioButton("wogln", "CurrentNo", new { @id = "rbtnCurrentNo", @class = "disableEnable" })&nbsp @Resources.Resource.lblUseCurrentNo</label>
+      <label>@Html.RadioButton("wogln", "ReNumber", new { @id = "rbtnReNo", style = "margin-left:30px;", @class = "disableEnable" })&nbsp @Resources.Resource.lblReNumbering</label>
+                 </div>
+                  </fieldset>
+                </div>   
+             </div>
+           </div>            
+           </div>
+          </div>
+        <div class="row">            
+        </div>
+       </div>       
+          
+          }
+          <div style=" clear:both"></div>
+        
+           <div id="divToUpdate" style="margin-top: 20px;">
+           </div>           
+           
+        </div>
+     </div>
+  </div> 
+    
+  <div class="modals">
+    <!-- Modal -->
+     <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					&times;</button>
+				<h4 class="modal-title">
+					<h4 class="modal-title">@Resources.Resource.QuotationCopy</h4>
+			</div>
+			<div class="modal-body" id="modalBody">
+				<img class="imgError" />
+				<label id="lblMessageText" class="lblError">
+				</label>
+			</div>
+			<div class="modal-footer">
+				<button style="text-align: center; margin-left: auto !important; float: none !important;"
+					id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+					@Resources.Resource.btnOK
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+  <script type="text/javascript">
+      $(document).ready(function () {
+          $("#rbtnAll").attr("checked", true);
+          $("#rbtnCopy").attr("checked", true);
+          $("#rbtnUsePrice").attr("checked", true);
+          $("#rbtnCurrentNo").attr("checked", true);
+          $("#txtQuotationNumber").attr("readonly", "radonly");
+          $("#txtQuotationSubNo").attr("readonly", "radonly");
+          $("#txtOrgQuotationNumber").attr("readonly", "radonly");
+          $("#txtOrgQuotationSubNo").attr("readonly", "radonly");
+
+          // click function to disable radio group
+          $("#rbtnConditiononly").click(function () {
+              $("input:radio.disableEnable").each(function (i) {
+                  $(this).attr("disabled", "disabled");
+              });
+              $("#rbtnUsePrice").attr("checked", false);
+              $("#rbtnCurrentNo").attr("checked", false);
+              $("#WayOfgvnLNo").hide();
+              $("#UnitPrice").hide();
+          }); //rbtnConditiononly.clcik end
+
+          $("#rbtnAll").click(function () {
+              $("input:radio.disableEnable").each(function (i) {
+                  $(this).attr("disabled", false);
+              });
+
+              $("#WayOfgvnLNo").fadeIn(1000);
+              $("#UnitPrice").fadeIn(1000);
+              $("#rbtnUsePrice").prop('checked', 'checked');
+              $("#rbtnCurrentNo").prop('checked', 'checked');
+          }); //rbtnAll.click end
+
+
+      });          // doc.reedy end
+  
+  </script>
+
+  <script type="text/javascript"> 
+      $(document).ready(function () {
+          $("#btnCopy").click(function () {
+
+           $("#divToUpdate").prepend("<div id='divLoading'></div>");
+              var Parameters = {
+                  QuotationNo:   $("#txtQuotationNumber").val(),
+                  QuotationSubNo: $("#txtQuotationSubNo").val(),
+                  chkReserve: $('#chkResv').is(":checked"),
+                  ChkAll: $('#rbtnAll').is(":checked"),
+                  ChkConditionOnly: $('#rbtnConditiononly').is(":checked"),
+                  ChkUseCurrentPrice: $('#rbtnUsePrice').is(":checked"),
+                  ChkRecalculatePrice: $('#rbtnReCalculate').is(":checked"),
+                  ChkCopyMethodCopy: $('#rbtnCopy').is(":checked"),
+                  ChkCopyMethodGmgt: $('#rbtnGMgmt').is(":checked"),
+                  ChkWGLNCurrentNo: $('#rbtnCurrentNo').is(":checked"),
+                  ChkWGLNRenumber: $('#rbtnReNo').is(":checked")
+              };
+
+              $.ajax({
+                cache: false,
+                type: "POST",
+                    url:"@Url.Action("BtnCopyClick", "CopyQuotation", null)",
+                    data: Parameters,
+                    success: function (responseFromServer) { 
+                     if (isRealValue(responseFromServer))  
+                     {
+                       if(CheckForSessionExpiry(responseFromServer))
+                         {                              
+                          SessionExpiredRedirect();
+                           return;
+                          }
+                         if (responseFromServer.RecordInserted==1 && !(responseFromServer.ErrorOccured==1)) 
+                           {
+                           $("#txtOrgQuotationNumber").val(responseFromServer.GeneratedQuotationNo);
+                           $("#txtOrgQuotationSubNo").val(responseFromServer.GeneratedQuotationSubNo); 
+                          // $("#divModalBody").html("");
+                          // $("#divModalBody").prepend("<span>Quotation successfully Copied </span>").attr("style","color:red");           
+                           //$("#MessageModal").modal(); 
+                            url= "@Url.Action("Index", "QuotationCondition")";
+                            var curl=url+"?quotationNo="+responseFromServer.GeneratedQuotationNo+"&subquotationNo="+responseFromServer.GeneratedQuotationSubNo+"&OrgQutn="+ $("#txtQuotationNumber").val()+"&OrgQuto="+$("#txtQuotationSubNo").val();
+                            window.location.href=curl;
+                           }
+                       else if (responseFromServer.ErrorOccured==1)
+                            {
+                              // $("#divModalBody").html("");
+                              // $("#divModalBody").prepend(responseFromServer.ErrorMessage).attr("style","color:red");           
+                              // $("#MessageModal").modal(); 
+                                txtError = responseFromServer.ErrorMessage;
+                                txtErrorType = "0";
+                                DisplayModal(txtErrorType, txtError);
+                             }
+                       
+                     
+                     }//if is realval end
+                   
+                    },
+                     error: function (xhr, ajaxOptions, thrownError) {
+                     
+                      // $("#divModalBody").html("");
+                     // $("#divModalBody").prepend("").attr("style","color:red");           
+                      //$("#MessageModal").modal();
+                        txtError = "@Resources.Resource.MsgInfo3";
+                        txtErrorType = "0";
+                        DisplayModal(txtErrorType, txtError);
+                    }
+
+              
+              
+              })//ajax end
+
+
+
+          }); //click end
+
+      });  //doc.ready end
+  
+  </script>
+
+  <script type="text/javascript">
+     
+          function isRealValue(obj)
+           {
+              return obj && obj !== "null" && obj !== "undefined";
+          }
+
+
+    
+  
+  </script>
+
+  <script type="text/javascript">
+      $(document).ready(function () {
+
+
+          $(document).ajaxStart(function () {
+
+              $("div#divLoading").addClass('show');
+          });
+          $(document).ajaxStop(function () {
+              $("div#divLoading").removeClass('show');
+          });
+
+
+      }); //doc.ready end
+
+</script>
+
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    }); 
+</script>

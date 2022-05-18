@@ -1,0 +1,2 @@
+Quotation No	QT Line No	Requested Part No		Processed Part No	Description		Quanity		Unit Price		Error Description
+168170		1		198-78-21340WF			198-78-21340WF		POINT			1		0.00000000		Unit Price does not exist

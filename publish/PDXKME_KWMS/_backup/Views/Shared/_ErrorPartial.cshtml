@@ -1,0 +1,14 @@
+﻿@if ( Session["dtErrorRows"]!=null)
+{
+    <script>
+        convertToOrderError = true;
+        $("#lblLogModal").html("Some lines were not converted to order,would you like to view log ?");
+    </script>
+}
+
+<script>
+var error="@Session["Error"].ToString()";
+$("#lblMessage").html("@Session["Error"].ToString()").attr("style","color:red !important");
+ 
+
+</script>

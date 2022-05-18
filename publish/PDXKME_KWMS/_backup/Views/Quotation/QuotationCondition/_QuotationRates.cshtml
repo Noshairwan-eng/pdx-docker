@@ -1,0 +1,28 @@
+﻿@model IEnumerable<PDXWEB.Models.QuotationRatesModel>
+@{Layout = null;}
+<link href="@Url.Content("~/Content/WebGridStyle/webgrid.css")" rel="stylesheet" type="text/css" />
+@{ WebGrid grid = new WebGrid(source: Model, canSort: false); }
+
+<div id="main" class="datagrid">
+    @try
+    {
+        @grid.Table(
+        tableStyle: "table table-hover",
+        headerStyle: "gridHead",
+        footerStyle: "gridFooter",
+        rowStyle: "gridRow",
+        alternatingRowStyle: "gridAltRow",
+        htmlAttributes: new { id = "QuotationRates" },
+        columns: grid.Columns(
+            grid.Column("CommodityGroupCode", "CG Code", style: "col-alpha col-rate"),
+            grid.Column("RateValue", "Rate Value", style: "col-numeric col-rate")
+            )
+        )
+
+    }
+    catch (Exception ex)
+    {
+        <label>Error Occured: @ex.Message</label>
+    }
+
+</div>

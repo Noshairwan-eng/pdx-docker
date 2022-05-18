@@ -1,0 +1,89 @@
+﻿@model IEnumerable<PDXWEB.Models.PartsDetailsModel>
+
+@{
+    Layout = null;
+}
+ 
+@*<script src="@Url.Content("~/Scripts/jquery-1.8.3.js")" type="text/javascript"></script>*@
+ 
+<link href="@Url.Content("~/Content/WebGridStyle/webgrid.css")" rel="stylesheet" type="text/css" />
+
+@{    
+
+        WebGrid grid = new WebGrid(source: Model,
+        canSort: false,
+        ajaxUpdateCallback:"AfterLoad",        
+        rowsPerPage:10, //page size can be define 
+        ajaxUpdateContainerId: "main",
+        canPage: true);       
+        
+}
+
+<style>
+.table
+{
+    margin: 18px 2px 2px 0px ! important;
+    
+    }
+
+
+</style>
+@if (Model.Count()>0)
+{
+    
+<div class="NewPaging PagingStyle" style="text-align: center;  ">
+        @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")       
+     </div>
+@*  Multiple CallBacks are due to Pager*@
+<div id="main"  class="datagrid " style="width: 150%;">      
+      
+       
+        @grid.Table(
+            
+            tableStyle: "table table-hover",
+            headerStyle: "gridHead",
+            footerStyle: "gridFooter",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "PartsInquiry" },
+
+
+                          columns: grid.Columns(
+                                              grid.Column("LineNo", @Resources.Resource.thLineNo),
+                                              grid.Column("LineSubNo", @Resources.Resource.thSubLineNo),
+                                              grid.Column("CountryOfOrigin", @Resources.Resource.thCountryOfOrigin),
+                                              grid.Column("PartNoRequested", @Resources.Resource.thRequestedPartNo),
+                                              grid.Column("PartNoSupplied", @Resources.Resource.thProcessedPartNo),
+                                              grid.Column("PartName", @Resources.Resource.thPartDescription),
+                                              grid.Column("RequestedQuantity", @Resources.Resource.thRequestedQuantity),                                            
+                                              grid.Column("AcceptedQuantity", @Resources.Resource.thAcceptedQuantity),                                              
+                                              grid.Column("UnitPrice", @Resources.Resource.thUnitPrice),   
+                                              grid.Column("DiscountPerItem", @Resources.Resource.thDiscountPerItem), 
+                                              grid.Column("PriceAmount", @Resources.Resource.thPriceAmount),
+                                              grid.Column("TaxRate", @Resources.Resource.thTaxRate),
+                                              grid.Column("TaxAmount", @Resources.Resource.thTaxAmount),
+                                              grid.Column("SellingPrice", @Resources.Resource.thSellingPrice),
+                                              grid.Column("Weight", @Resources.Resource.thWeight),
+                                              grid.Column("Error", @Resources.Resource.thError),
+                                              grid.Column("ErrorDetails",  @Resources.Resource.thErrorDescription)
+
+                                     ) //grid.columns
+
+                                  ) @* grid.GetHtml *@
+
+</div>    
+}
+    <script type="text/javascript">
+        $(document).on('keydown', '.addQuantityinGrid', function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+        $(document).on("click", '#PartsInquiry> tbody>tr', function () {
+        $('.highlight').each(function () {
+             $(this).removeClass('highlight');
+            });
+            var state = $(this).hasClass('highlight');
+            if (!state) { $(this).addClass('highlight'); }
+        });
+        $(document).ready(function () {
+            AfterLoad();
+        });  //doc.ready 
+    
+    </script>

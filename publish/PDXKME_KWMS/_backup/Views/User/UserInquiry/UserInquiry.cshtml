@@ -1,0 +1,305 @@
+﻿
+@* <history>
+    /// hst001: Imran Shahzad @27-Oct-2016
+                - Allowed to show new line with Detail button only for admin (Role=1)
+ </history> *@
+
+@{
+    ViewBag.Title = "UserInquiry";
+}
+<link href="@Url.Content("~/Content/JqueryUI/jquery-ui.css")" rel="stylesheet" type="text/css" /> 
+<script src="@Url.Content("~/Scripts/JQueryUi/jquery-ui.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/WebGridStyle/webgrid.css")" rel="stylesheet" type="text/css" /> 
+<script src="@Url.Content("~/Scripts/ModalHelper/ModalHelper.js")" type="text/javascript"></script> 
+  <style type="text/css">   
+       
+ .clsWidth{ width:90% !important;} 
+  .table{ margin:0 !important;}
+ .panel-body{ padding-top:4px !important;}  
+ .pagination > li > a, .pagination > li > span {font-size: 12px !important; }  
+  .gridActionButtons { margin: -1px -6px 0 0 !important;}  
+   #UserInquiryId tr td { white-space:nowrap;  text-align:left !important;}   
+  #UserInquiryId tbody tr td,#UserInquiryId thead tr th{ text-align:left !important;}
+  #UserInquiryId tbody tr td:first-child, #UserInquiryId tbody tr td:last-child, #UserInquiryId tbody tr td:nth-last-child(1)
+ {  
+    
+  }
+ .clsActions>td { text-align:left !important;}
+ .table tr td { padding:5px !important; }
+  textbox#txtQuotationSubNo { width:12% !important;}
+.form-inline .form-group label { font-size:14px;padding:0px; margin-bottom:0px;} 
+.form-inline .form-group { padding:0px; margin-bottom:0px; }
+.Inlinebtn{ width:80px !important;}                                    
+</style>
+ 
+ <style type="text/css">
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+    background-color: white;
+    color: #fff;
+    outline: 0 none;
+    text-decoration: none;
+}
+.btn .caret { margin-left: 0px;}
+/*@@media screen and (min-width:508px) and (max-width: 768px) 
+  {
+    div#xyz{ margin-left:0px !important;}      
+    input,select { width:auto;}
+    br { display:  none; }
+} 
+@@media screen and (max-width:508px)
+{
+     br { display:  none; }
+     div#removeMargin{ margin-left:0px !important; }
+     button#btnSearch{ margin-left:0px !important; }        
+    .InlineElements {width: 20%;}
+}*/
+ @@media screen and (max-width: 767px) 
+  {
+    .clsWidth 
+    {
+    width: 100% !important;
+   }
+     .TopMarginAtXs
+     {
+      margin-top:5px; 
+      width:100% !important;  
+     }
+} /* media 767 end*/
+ </style>
+  
+  <div class="container childcontent ">
+     <div class="panel panelInquiryControls panel-primary panelWidth">
+       <div class="panel-heading PanelTitle"  >               
+         <h3 class="panel-title pull-left " > @Resources.Resource.UserInquiry </h3>
+        </div>
+   <div class="panel-body " > 
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">                
+           
+            <button class="btn btn-sm btn-primary TopMarginAtXs" id="btnSearch">@Resources.Resource.btnSearch</button>
+            @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("U01S050_04"))
+            {
+             <button class="btn btn-sm btn-primary TopMarginAtXs" id="btnNew">@Resources.Resource.btnNew</button>
+            }
+              </div>
+           </div>   
+               
+       <div  class="FormElements">
+           @using (Html.BeginForm("cpwd", "Login", FormMethod.Post, new { @class = "form-inline", role = "form" }))
+           {
+                                      
+           <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                   <div class="editor-label " >
+                                @Html.Label(@Resources.Resource.lblUserId)
+                   </div>
+                    <div class="editor-field ">
+                        @Html.TextBox("txtUserId", null, new { @class = "form-control InputElements clsWidth" })
+                     </div>
+                
+                 </div>
+                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                       <div class="editor-label " >
+                           @Html.Label(@Resources.Resource.lblAccessLevel)
+                       </div>
+                       <div class="editor-field ">
+                           @Html.DropDownList("ddlRole", ViewBag.Role as List<SelectListItem>, new { @class = "form-control InputElements clsWidth" })
+                       </div>
+                </div>
+                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                     <div class="editor-label " >
+                           @Html.Label(@Resources.Resource.UserName)
+                       </div>
+                       <div class="editor-field ">
+                           @Html.TextBox("txtUserName", null, new { @class = "form-control InputElements clsWidth", maxlength = "20"})
+                       </div>
+                </div>
+           </div>
+        }
+
+       </div>
+       </div>
+        </div>          
+</div>
+ 
+    <div class="container childcontent " style="padding-top: 0px ! important;">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+       <div id="LoadingImage" style="display: none; text-align:center">           
+      </div>             
+   <div id="divToUpdate" style="  height: 380px;  ">
+   </div>      
+     </div>
+    </div>
+
+    <div class="modals">
+    <!-- Modal -->
+<div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                   @Resources.Resource.UserInquiry</h4>
+                </div>
+                <div class="modal-body" id="modalBody">
+                <img  class="imgError"/>
+                <label id="lblMessageText"  class="lblError"></label>
+                </div>
+                <div class="modal-footer">
+                <button style=" text-align:center;float: none !important;" id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                  </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+ $("#txtUserId").on("paste", function (event) {  var element = this;setTimeout(function () { var text = $(element).val(); if (text.length >= 10) {$(element).val(text.substr(0, 10));} }, 100); });  
+ $("#txtUserName").on("paste", function (event) {  var element = this;setTimeout(function () { var text = $(element).val(); if (text.length >= 20) {$(element).val(text.substr(0, 20));} }, 100); });  
+ $('#txtUserId').keypress(function (event) {var key = event.which;if (this.value.length >= 10 && key != 8 && key != 13) { return false; } });
+
+    var txtErrorType;
+    var txtError;
+    $(document).ready(function () {
+        $("#btnSearch").click(function () {
+            $("#divLoading").remove();
+            $("#divToUpdate").parent("div").prepend("<div id='divLoading'></div>");
+            var Parameters = { txtUserId: $("#txtUserId").val(), ddlRole: $("#ddlRole").val(),
+                txtUserName: $("#txtUserName").val()
+            }; // value end 
+            $.ajax(
+                {
+                    cache: false,
+                    type: "POST",
+                    url: "UserInquiryResult",
+                    data: Parameters,
+                    success: function (data) {
+                        if (CheckForSessionExpiry(data)) {
+                            SessionExpiredRedirect();
+                            return;
+                        }
+                        var data = data.replace("$(containerId).parent().delegate", "$(containerId).parent().undelegate();$(containerId).parent().delegate ");
+                        var data = data.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);", " if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                        $("#divToUpdate").html(data);
+                        $('.NewPaging ul').addClass("pagination");
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                                       // txtError = "Failed to retrieve data";
+                                        txtError = "@Resources.Resource.MsgInfo3";
+                                        txtErrorType = "0";
+                                        DisplayModal(txtErrorType, txtError);  
+
+                        
+                    }
+                }); // ajax end 
+
+
+        }); // btnSearch.click end 
+
+            $("#btnNew").click(function () {            
+            window.location.href= "@Url.Action("CreateNewUser", "User")";
+            });
+    }); //doc.ready 
+
+</script>
+
+ <script type="text/javascript">
+
+     function afterLoad() {
+         setArrowImages();
+         $('.NewPaging ul').addClass("pagination");
+     }
+
+</script>
+
+<script type="text/javascript">
+    function setArrowImages() {
+
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+        var header = $('th a[href*=' + col + ']');
+
+        if (dir == 'Ascending') {
+            header.text(header.text() + ' ▲');
+        }
+        if (dir == 'Descending') {
+            header.text(header.text() + ' ▼');
+        }
+    } 
+    $(document).ready(function () {
+
+        $('#txtUserName').keypress(function (event) {
+            var key = event.which;
+
+            if (this.value.length >= 20 && key != 8 && key != 13) {
+                return false;
+            }
+        })
+
+        $(document).ajaxStart(function () {
+
+            $("div#divLoading").addClass('show');
+        });
+        $(document).ajaxStop(function () {
+            $("div#divLoading").removeClass('show');
+        });
+
+
+    }); //doc.ready end
+
+</script>
+ 
+
+<script type="text/javascript">
+    //Code To Add Button in a row ..Add new row after current row on current row click event
+    //Register event on document
+    $(document).on("click", "#UserInquiryId tr", function (event) {
+        var $curRow = $(this).closest('tr');
+        var strUserRole = @Session["Role"].ToString();//hst001
+        $('.clsActions').remove(); // Remove the newly added row with class "clsActions" if already exist 
+        //Check to avoid row addition if table header(gridheader) is click" 
+        if (!$(this).hasClass("gridHead")) {
+            /* code to highlight selected row*/
+            var selected = $(this).hasClass("highlight");
+            $("#UserInquiryId tr").removeClass("highlight");
+            if (!selected)
+                $(this).addClass("highlight");
+            /*code to highlight selected row end */
+            //if(strUserRole == "1")//hst001
+            var hasRight=  "@PDXWEB.BusinessModels.Common.UserRights.hasRight("U01S050_04")";
+            if(hasRight === "True")
+            {
+                $newRow = $('<tr class="clsActions"><td colspan="14" style=" padding-left:30px !important; text-align:left !important "><input type="Button" class="gridActionButtons Inlinebtn" value="Detail" id="btnDetail"> </td> </tr>');
+                $curRow.after($newRow);
+            }            
+
+        } 
+
+    });
+
+    $(document).on("click", ".clsActions input", function (event) {
+        var UserId = $(this).closest('tr').prev('tr').find('td').eq(0).text();        
+          if ( $(this).attr("id")=="btnDetail") 
+                {  
+                 url= "@Url.Action("CreateNewUser", "User")";
+                  var curl=url+"?strUserId="+UserId;                               
+                   window.location.href=curl;
+                }
+
+    });
+
+
+
+</script>
+
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    }); 
+</script>

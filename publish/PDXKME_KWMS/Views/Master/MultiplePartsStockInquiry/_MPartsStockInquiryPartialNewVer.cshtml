@@ -1,0 +1,504 @@
+﻿@*hst001 : Noshairwan Farooq |Made change to have Option Part Grid|*@
+
+@model IEnumerable<PDXWEB.Models.Master.StockInquiry.DTZ01011A010>
+@{
+
+    ViewBag.Title = "Multiple Parts Stock Inquiry";
+    
+}
+@if (Model != null && Model.Count() > 0)
+{
+    
+    <div id="main" class="datagrid table-responsive" style="height: 185px">
+        <table class="table table-striped table-hover" id="tblMultiStockInq">
+            <thead>
+                <tr>
+                    @*<td rowspan="2"  class="customHeader">Select</td>*@
+                    <td class="customHeader col-alpha">
+                        Part No
+                    </td>
+                    <td class="customHeader col-numeric">
+                    </td>
+                    <td class="customHeader col-alpha">@Resources.Resource.thPartDescription
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thCharacterCode
+                    </td>
+                    <td class="customHeader col-numeric">
+                        IC
+                    </td>
+                    <td class="customHeader col-alpha">
+                        LPN
+                    </td>
+                    <td class="customHeader col-numeric">
+                        KME Stock
+                    </td>
+                    <td class="customHeader col-numeric">
+                        KME EOR
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thKMEOnOrder
+                    </td>
+                    <td class="KmeLocationsColumns col-alpha">@Resources.Resource.thKLTDTotal
+                    </td>
+                    @*Shabbir 22-12-2016 Added Below Check*@
+                    @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("Z01S370_13_001"))
+                    {      
+                        <td class="customHeader col-numeric col-dnet">@Resources.Resource.thKMEListPrice
+                        </td>
+                    }
+                    <td class="customHeader col-numeric">@Resources.Resource.thWeightgm
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thKLTDLeadProductionPerMonth
+                    </td>
+                    <td class="customHeader col-numeric">
+                        MOR
+                    </td>
+                    <td class="customHeader col-numeric">
+                        OR
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thQuantityByUnit
+                    </td>
+                    <td class="customHeader col-numeric">
+                        BQ
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thReturnableCode
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thCommodityGroupCodeNew
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thCommodityCodeNew
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thCommodityGroupCodeOld
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thCommodityCodeOld
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thSupplierBornDate
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thProductionLot
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thModelGroupCode
+                    </td>
+                    <td class="customHeader col-alpha">@Resources.Resource.thModelCode
+                    </td>
+                    <td class="customHeader col-numeric">@Resources.Resource.thHSCodeLocal
+                    </td>
+                    <td class="customHeader col-alpha">@Resources.Resource.thServiceNewsNumber
+                    </td>
+                    <td style="display: none;">
+                        ChainFlag
+                    </td>
+                    @if (HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+                    {
+                        if (HttpContext.Current.Session["INVR_FLAG"] != null && HttpContext.Current.Session["INVR_FLAG"].ToString().Equals("Y"))
+                        {
+                        <td class="customHeader col-alpha">
+                            @Resources.Resource.thInventoryResponsibilityFlag
+                        </td>                              
+                        }
+                      <td class="customHeader col-numeric">
+                            @Resources.Resource.thDBMortality
+                        </td>      
+                    }
+                    else
+                    {
+                        <td class="customHeader col-alpha">
+                            @Resources.Resource.thInventoryResponsibilityDCOD
+                        </td>       
+                        <td class="customHeader col-alpha">
+                            @Resources.Resource.thDBMortality
+                        </td>                   
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item != null)
+                    {
+                    <tr class="gridRow">
+                        @*<td class="col-numeric">*@ @*<input id="Select" class="ClsSelect" type="checkbox" value="@Html.Raw(@item.PartNumber + "," +@item.PartDescription)" name="Select"/></td>*@
+                        <td class="pnumColumn col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">@item.PartNumber</label>
+                        </td>
+                        <td style="color: Red" class="intExist col-alpha">
+                            <label style="color: rgb(255, 0, 0) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.IdentificationStatement</label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.PartDescription</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.CharacterCode</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.InterchageableCode</label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.LatestPartNumber</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.StockAvailable</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.EOReserveQuantity</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.OnOrderQuantity</label>
+                        </td>
+                        <td class="kltdLocationData" style="display: none;">@item.O430
+                        </td>
+                        <td class="kltdLocationData" style="display: none;">@item.O440
+                        </td>
+                        <td class="kltdLocationData" style="display: none;">@item.O450
+                        </td>
+                        <td class="kltdLocationData" style="display: none;">@item.O460
+                        </td>
+                        <td class="kltdLocationData" style="display: none;">@item.Others
+                        </td>
+                        <td class="kltdLocationData col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">@item.Total</label>
+                        </td>
+                        @*Shabbir 22-12-2016 Added Below Check*@
+                        @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("Z01S370_13_001"))
+                        {
+                            <td class="col-numeric ListPrice">
+                                <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                    font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                    @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.KMEListPrice.ToString())
+                                </label>
+                            </td>
+                        }
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.Weight.ToString())
+                            </label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.KLTDLeadTime</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.KMEMortality</label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 1px !important;">
+                                @item.KMEOrderRank</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.QuantityByUnit</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.BoxQuantity</label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.ReturnableCode</label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.CommodityGroupCodeNew</label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.CommodityCodeNew</label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.CommodityGroupCodeOld</label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                            </label>@item.CommodityCodeOld
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.BornDate</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">@item.ProductionLot
+                            </label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">@item.ModelGroupCode
+                            </label>
+                        </td>
+                        <td class="col-alpha">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.ModelCode</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.HSCode</label>
+                        </td>
+                        <td class="col-numeric">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.ServiceNewsNo</label>
+                        </td>
+                        <td class="@(item.isChain > 0 ? "ChainedPart" : "")" style="display:none;">
+                            <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                @item.isChain</label>
+                        </td>
+                        @if (HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+                        {
+                            if (HttpContext.Current.Session["INVR_FLAG"] != null && HttpContext.Current.Session["INVR_FLAG"].ToString().Equals("Y"))
+                            {
+                                if (item.InventoryResponsibility)
+                                {
+                            <td class="col-alpha">
+                                <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                    font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                    Y</label>
+                            </td>               
+                                }
+                                else
+                                {
+                            <td class="col-alpha">
+                                <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                    font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                    N</label>
+                            </td>               
+               
+                                }
+                            }
+                            <td class="col-numeric">
+                                <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                    font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                    @if(item.DistributorMortality!=null)
+                                    {
+                                        @item.DistributorMortality
+                                    }
+                                    else
+                                    {
+                                        <b>0</b>
+                                    }
+                                    </label>
+                            </td>  
+                        }
+                        else
+                        {
+                            <td class="col-numeric">@item.InventoryResponsibilityDCOD
+                            </td> 
+                            <td class="col-alpha">
+                                <label style="color: rgb(51, 51, 51) !important; font-family: verdana !important;
+                                    font-size: 10px !important; font-weight: normal; margin-right: 0 !important;">
+                                    @item.DistributorMortalityAdmin</label>
+                            </td>  
+                        }
+                    </tr>
+                    }
+
+
+                }
+            </tbody>
+        </table>
+    </div>
+  
+    //hst001 Start
+    if (!ViewBag.OptionPart)
+    {
+           <script>
+               $(".ChainedPart").each(function () { //loop over each row
+
+                   $(this).closest('tr').addClass("chainParent");
+               });
+                      
+            </script>  
+    }
+    else
+    {
+        <script>
+        $("#divToUpdateOptionPart")
+        .children("#main").children("table")
+        .children("tbody").children()
+        .find(".ChainedPart")
+        .each(function(){$(this).closest('tr').addClass("chainParent");})
+        </script>
+
+    }
+
+
+    <script>
+        EnableControls();
+    </script>
+    //hst001 End
+
+
+
+
+
+}
+else
+{
+    if (!ViewBag.OptionPart) //hst001
+    {
+        <div id="main" class="datagrid table-responsive" style="height: 300px">
+            <table class="table table-striped table-hover">
+                <tr>
+                    @*<td rowspan="2"  class="customHeader">Select</td>*@
+                    <td class="customHeader" style="padding-right: 45px ! important;">@Resources.Resource.thPartNo
+                    </td>
+                    <td class="customHeader">
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thPartDescription
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thCharacterCode
+                    </td>
+                    <td class="customHeader">
+                        IC
+                    </td>
+                    <td class="customHeader">
+                        LPN
+                    </td>
+                    <td class="customHeader">
+                        KME Stock
+                    </td>
+                    <td class="customHeader">
+                        KME EOR
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thKMEOnOrder
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thKLTDLocation
+                    </td>
+                    @*Shabbir 22-12-2016 Added Below Check*@
+                    @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("Z01S370_13_001"))
+                    {      
+                        <td class="customHeader">@Resources.Resource.thKMEListPrice
+                        </td>
+                    }
+                    <td class="customHeader">@Resources.Resource.thWeightgm
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thKLTDLeadProductionPerMonth
+                    </td>
+                    <td class="customHeader">
+                        MOR
+                    </td>
+                    <td class="customHeader">
+                        OR
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thQuantityByUnit
+                    </td>
+                    <td class="customHeader">
+                        BQ
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thReturnableCode
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thCommodityGroupCodeNew
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thCommodityCodeNew
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thCommodityGroupCodeOld
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thCommodityCodeOld
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thSupplierBornDate
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thProductionLot
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thModelGroupCode
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thModelCode
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thHSCodeLocal
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thServiceNewsNumber
+                    </td>
+                </tr>
+                <tr>
+                    <td class="customHeader" style="display: none;">
+                        O430
+                    </td>
+                    <td class="customHeader" style="display: none;">
+                        O440
+                    </td>
+                    <td class="customHeader" style="display: none;">
+                        O450
+                    </td>
+                    <td class="customHeader" style="display: none;">
+                        O460
+                    </td>
+                    <td class="customHeader" style="display: none;">@Resources.Resource.thOthers
+                    </td>
+                    <td class="customHeader">@Resources.Resource.thKLTDTotal
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <script>
+            DisableControlsOnLoad();    
+        </script>
+    }
+
+
+}
+@if (!ViewBag.OptionPart) //hst001
+{
+    <script type="text/javascript">
+     $(".pnumColumn:first").html($(".pnumColumn:first").html() + " &nbsp &nbsp &nbsp ");
+      $(".icColumn:first").html($(".icColumn:first").html() + " &nbsp &nbsp &nbsp &nbsp ");
+      $(document).ready(function () { 
+      
+          
+          lblMessage = "@Session["lblMsg"].ToString()";
+          AfterLoad();
+
+      }); 
+
+    </script>
+    
+    if (Session["ImportData"] != null)
+    {
+    <script>
+        $("#btnExportPartsMasterData").removeAttr("disabled");
+      
+    </script>
+        // Session["ImportData"] = null;
+    }
+    else
+    {
+    <script>
+        $("#btnExportPartsMasterData").attr("disabled", true);
+      
+    </script>
+    }
+     
+}
+
+
+

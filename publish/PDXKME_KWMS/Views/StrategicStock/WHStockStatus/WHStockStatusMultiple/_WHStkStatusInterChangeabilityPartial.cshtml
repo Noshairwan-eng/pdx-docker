@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PDXWEB.Models.Master.DTStockInquiryModel>
+
+<link href="@Url.Content("~/Content/WebGridStyle/webgrid.css")" rel="stylesheet" type="text/css" />
+
+  @{
+
+    WebGrid grid = new WebGrid(source: Model,
+    canSort: false,             
+    ajaxUpdateContainerId: "divInterch",
+    ajaxUpdateCallback: "afterLoad",
+    canPage: false); 
+  } 
+   
+@if(Model.Count()>0)
+{
+    <div id="divInterch" class="datagrid table-responsive" >
+   
+        @grid.GetHtml(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+            //footerStyle: "gridFooter",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "tblSoStatus" },
+            columns: grid.Columns(
+                                   grid.Column("PartNo", @Resources.Resource.lblPartNo),
+                                   grid.Column("PartRank", " " ),
+                                   grid.Column("PartDesc",  @Resources.Resource.lblPartDescription),
+                                   grid.Column("CharCode",  @Resources.Resource.lblCharacterCode) 
+                                 ) //grid.columns
+                     ) @* grid.GetHtml *@
+
+  </div>
+}
+
+  <script type="text/javascript">
+
+      $(document).ready(function () {
+          lblMessage = "@Session["lblMsg"].ToString()";
+
+
+      }); 
+
+  </script>
+
+
+
+
+
+

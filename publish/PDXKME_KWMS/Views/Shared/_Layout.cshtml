@@ -1,0 +1,172 @@
+﻿@{  
+    string strUserInfoDisplay = "";
+    if (Session["UserID"] != null)
+    {
+        if (Session["SelectedLang"] != null)
+        {
+            if (Session["SelectedLang"].ToString() != "ar-AE")
+            {
+                strUserInfoDisplay = /*Resources.Resource.Welcome + " ," +*/ Session["UserName"].ToString() + " , " + Resources.Resource.Master_lblDataBase + ": " + Session["DataBase"].ToString();
+            }
+            else
+            {
+                strUserInfoDisplay =   Session["DataBase"].ToString() + "  " + Resources.Resource.Master_lblDataBase + ":" + Session["UserName"].ToString();
+            }
+        }
+        else
+        {
+            strUserInfoDisplay =   Session["UserName"].ToString()   + Resources.Resource.Master_lblDataBase + " :" + Session["DataBase"].ToString();
+
+        }
+    }
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/css/BootStrapCss")
+    @Scripts.Render("~/bundles/BootStrapJs")
+    @Styles.Render("~/css/MainStyle")
+
+    <!--[if IE]><!-->
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <style>
+         .cls1{
+             
+             
+             background: rgba(0, 0, 0, 0) linear-gradient(to right, #cecdcf 0px, #fcfcfd 100%) repeat scroll 0 0;
+    border-top: 1px solid #fff;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
+             
+             
+             }
+       
+        
+    </style>
+    <!--<![endif]-->
+    @{
+        if (false)
+        {
+        <script src="../../Scripts/jquery-1.9.1-vsdoc.js" type="text/javascript"></script>
+        }
+    }
+ 
+</head>
+<body>
+
+
+<div id="bodyWrapper">
+
+
+
+<div class="BodyMain">
+    <header>
+        @Html.Partial("_MenuPartial")
+
+
+
+        <div class="navbar-right" id="sidebar" style="margin: -20px 1px 0 0 !important;">
+            <label style="font-size:12px">
+                 
+                @strUserInfoDisplay
+            </label>
+        </div>
+    </header>
+    <div id="body" style="">
+
+
+
+        @RenderBody()
+    </div>
+    <div id="footerSection">
+<div class="navbar  navbar-inverse navbar-fixed-bottom cls1">
+<p style="color:black; text-align:center; padding-top:10px;"><strong>&copy; @DateTime.Now.Year - PDX KPSOFT </strong></p>
+</div>
+</div>
+
+</div>
+</div>
+
+
+    @RenderSection("scripts", required: false)
+    <script>
+            $("#logOut").click(function () {
+            $.post("@Url.Action("LogOff", "User", null)","",function (url) 
+                {
+                    window.location.href=url;
+                   // window.location.href="@Url.Action("Index","Home",null)";
+                 });
+                 });
+     </script>
+    <script>
+     $(document).ready(function () {
+     $("#ulLang li").click(function () {
+        $.ajax({
+              type: "POST",
+              data: {culture:$(this).attr('value')},
+              url:"@Url.Action("ChangeCurrentCulture", "Language", null, Request.Url.Scheme)",
+              success: function (redUrl) 
+                   {
+                      window.location.href=    redUrl;
+
+                   }
+              
+                         });
+         });
+
+
+
+
+
+
+
+
+     if(typeof String.prototype.trim !== 'function') 
+     {
+  String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g, ''); 
+  }
+}
+
+
+
+         $("#ddlLanguage").change(function () {
+
+        
+
+               $.ajax({
+                             type: "POST",
+                             data: {culture:$("#ddlLanguage").val()},
+                             url:"@Url.Action("ChangeCurrentCulture", "Language", null, Request.Url.Scheme)",
+                             success: function (redUrl) 
+                             {
+
+                             
+                                 //window.location.href="@Url.Action("Index", "Home", null)";
+                                        window.location.href=    redUrl;
+
+                             }
+              
+                         });
+
+
+         });
+
+
+
+
+
+     });
+ 
+
+
+ 
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+﻿@model KME_SSO.Models.clsApplication
+<div id="app_nav_content_@Model.ApplicationID" class="tab-pane">
+    <div class="col-md-12 col-lg-12 col-sm-12" style="margin-bottom: 5px;">
+        <label>
+            Status:
+        </label>
+        <i id="divApplicationStatus" style="font-size: 12px;"></i>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                Global Scheduler Fire Time</div>
+            <div class="panel-body">
+                <h4 id="global_fire_time_pdx_@Model.ApplicationID">
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                Client Scheduler Fire Time</div>
+            <div class="panel-body">
+                <h4 id="client_fire_time_pdx_@Model.ApplicationID">
+                </h4>
+                <label id="pdx_client_start_time_@Model.ApplicationID">
+                </label>
+                <br />
+                <label id="pdx_client_stop_time_@Model.ApplicationID">
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                Application Information
+                <input type="hidden" id="inptAPPID" value="@Model.ApplicationID" />
+            </div>
+            <div class="panel-body">
+                <!--===============================APPLICATION INFORMATION================== -->
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs clsEdtLabel" style="margin-bottom: 7px;">
+                        @Html.Label("Application Name")
+                    </div>
+                    <div class="editor-label SizeOnXs">
+                        @Html.TextBox("txtApplicationName", Model.ApplicationName, new { @id = "inptAPNM", @readonly = "true", @class = "form-control InputElements", style = "display: inline; " })
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs clsEdtLabel" style="margin-bottom: 7px;">
+                        @Html.Label("Application Title")
+                    </div>
+                    <div class="editor-label SizeOnXs">
+                        @Html.TextBox("txtApplicationTitle", Model.ApplicationTitle, new { @id = "inptAPTL", @readonly = "true", @class = "form-control InputElements", style = "display: inline; " })
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        @Html.Label("Application Offline Date Time")
+                    </div>
+                    <div class="editor-field SizeOnXs">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="padding: 1px;">
+                            <input type="text" id="inptOFDT" value="@Model.ApplicationOfflinedt.ToString("yyyy/MM/dd")" class="datePicker form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="padding: 1px;">
+                            <input type="time" id="inptOFDT_TIME" value="@Model.ApplicationOfflinedt.TimeOfDay" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        @Html.Label("Application Online Date Time")
+                    </div>
+                    <div class="editor-field SizeOnXs">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="padding: 1px;">
+                            <input type="text" id="inptONDT" class="datePicker form-control" value="@Model.ApplicationOnlinedt.ToString("yyyy/MM/dd")">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="padding: 1px;">
+                            <input type="time" id="inptONDT_TIME" value="@Model.ApplicationOnlinedt.TimeOfDay" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="margin-top: 15px;">
+                    <div class="editor-label SizeOnXs clsEdtLabel">
+                        @Html.Label("Time for Showing Offline Message (Minutes)")
+                    </div>
+                    <div class="editor-label SizeOnXs">
+                        @Html.TextBox("txtAMST", Model.ApplicationMessageTime, new { @id = "inptAMST", @class = "form-control InputElements NumericOnly QuotationNo", @type = "number", @min = "00", style = "display: inline; " })
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="margin-top: 15px;">
+                    <div class="editor-label SizeOnXs clsEdtLabel">
+                        @Html.Label("Global Scheduler Interval")
+                    </div>
+                    <br />
+                    <div class="editor-label SizeOnXs">
+                        @Html.TextBox("txtAppGBIN", Model.GlobalInterval, new { @id = "inptAppGBIN", @class = "form-control InputElements NumericOnly QuotationNo", @type = "number", @min = "00", @readonly="true", style = "display: inline; " })
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 15px;">
+                    <div class="editor-label SizeOnXs clsEdtLabel">
+                        @Html.Label("Offline Message Appear in Application")
+                    </div>
+                    <div class="editor-label SizeOnXs">
+                        @Html.TextBox("txtAMSG", Model.ApplicationOfflineMessage, new { @id = "inptAMSG", @class = "form-control InputElements NumericOnly QuotationNo", style = "display: inline; " })
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 15px;">
+                    <div class="editor-label SizeOnXs clsEdtLabel">
+                        @Html.Label("Offline Message Appear in SSO")
+                    </div>
+                    <div class="editor-label SizeOnXs">
+                        @Html.TextBox("txtSMSG", Model.SSOOfflineMessage, new { @id = "inptSMSG", @class = "form-control InputElements NumericOnly QuotationNo", style = "display: inline; " })
+                    </div>
+                </div>
+                <!--===============================END APPLICATION INFORMATION================== -->
+                <div class="col-lg-offset-9 col-md-offset-9 col-lg-3 col-md-3 col-sm-12 col-xs-12"
+                    style="margin-top: 10px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var dateToday = new Date();
+    $('.datePicker').datepicker({
+        beforeShow: function (input) {
+            setTimeout(function () {
+                var buttonPane = $(input)
+     .datepicker("widget")
+     .find(".ui-datepicker-buttonpane");
+                var btn = $('<button class="ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all" type="button">Clear</button>');
+                btn.unbind("click").bind("click", function () {
+                    $.datepicker._clearDate(input);
+                });
+
+                btn.appendTo(buttonPane);
+
+            }, 1);
+        },
+        numberOfMonths: 1,
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+        minDate: dateToday
+    });
+</script>
+<script type="text/javascript">
+    $("#inptGBIN").val("@Model.GlobalInterval")
+    $("#ApplicationsFormTitle").text("@Model.ApplicationName");
+</script>

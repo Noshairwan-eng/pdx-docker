@@ -1,0 +1,262 @@
+﻿@Scripts.Render("~/bundles/InquiryJSBundle")
+@Styles.Render("~/Content/InquiryCSSBundle")
+<style type="text/css">   
+    .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { text-align: center; float: none !important;}  
+    .accordianRows{height: 80px !important;    min-height: 80px;}
+    .legColumn label{color: #0066ff !important;font-size: 11px;font-weight: bold;} 
+    .modal-sm { width: 369px;} 
+    #ConfirmModalBody{ padding: 7px 3px 9px 4px !important;  }   
+    .QuotationNo{width:44% !important}
+    .QuotationSubNo{width:30% !important}  
+    .panel-body  { padding-top:4px !important;}    
+    .pagination > li > a, .pagination > li > span {   font-size: 12px !important;  }  
+    .gridActionButtons  {margin: -1px -6px 0 0 !important; } 
+    .downlodMargin{margin-left:202px;}
+
+    .clsActions>td{ text-align:left !important; } 
+    .table tr td {padding:5px !important;   }  
+    .Inlinebtn{width:80px !important;  } 
+    .ui-datepicker{z-index: 99 !important;} 
+    .btn-group, .btn-group-vertical {    position: relative;    display: inline-block;    vertical-align: middle;    width: 75% !important;}  
+    .dropdown-menu>.active>a,.dropdown-menu>.active>a:focus,.dropdown-menu>.active>a:hover{background-color:white;color:#fff;outline:0none;text-decoration:none;} 
+    .btn.caret{margin-left:0px;} 
+    .highlight { background-color: red; }  
+    /*row hover effect on other than selected row */
+    #UserInquiryId tr:not(.highlight):hover { background-color:#F0F0F0  !important;} 
+    .calendarPicker{background-position: right center; background-repeat: no-repeat;  background-image:url('../Images/calendar.png');  } 
+    #UserInquiryId tr>td:hover(:empty) {cursor: pointer;} 
+    #UserInquiryId  tr td:moz-only-whitespace{  cursor:pointer; } 
+    .selected {  background-color:#fac902 !important;  }     
+    .table{ margin:0 !important;} 
+    .centerAlign{ text-align:center !important}
+
+    #btnDownload{ width:100px  !important}
+    .ddlFile
+    { 
+        height: 30px ! important; 
+        width: 90px;
+        margin-top:5px;
+      }
+
+     @@media screen and (max-width: 767px) 
+      {
+          .marginAtXs{margin-top:10px;}
+          .downlodMargin{margin-left:15px}
+         button.multiselect 
+            {
+               background-color: White !important; border-radius: 1px; color: White; font-family: sans-serif,open sans;
+               font-size: 13px !important; font-weight: 600 !important; height: 26px !important; padding: 4px 12px; text-decoration: none;  
+               border-radius: 6px; width:97% !important;            
+            }
+        
+     #btnDownload { width: 100%  !important;}
+     .DropDownButtonContainer{width:100%;  margin-top:5px;}
+    .bootstrap-filestyle{  margin: 0;    }
+    .DropDownButtonContainer button { width:94% !important; }
+
+    .QuotationNo{width:66% !important}
+    .QuotationSubNo{width:30% !important}
+    .btn-group, .btn-group-vertical{position: relative; display: inline-block; vertical-align: middle;width: 100% !important;}  
+    .InputElements{ background-color: White !important; border: 1px solid grey !important; height: 25px !important; width: 97%;}  
+    div#xyz{ margin-left:0px !important;  }  
+    input,select { width:auto;  }    
+    br { display:  none; }
+    .TopMarginAtXs     {      margin-top:5px;       width:100% !important;   }  
+   
+    } /* media 767 end*/
+    @@media screen and (max-width: 459px) 
+    {
+         .QuotationSubNo{width:30% !important}
+    }
+     #UserInquiryId thead tr th{ text-align:left }
+     .table-striped thead tr th a {
+        margin-left: -2px !important;
+    }
+ </style>
+<style>
+    .header_QuotationNo
+    {
+        text-align: right !important;
+    }
+    .header_QuotationaSubNo
+    {
+        text-align: right !important;
+    }
+    .header_SaleOrderNO
+    {
+        text-align: right !important;
+    }
+    .header_PriceAmount
+    {
+        text-align: right !important;
+    }
+    .a_QuotationNo
+    {
+        margin-right: 4px;
+    }
+</style>
+<div class="container childcontent ">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left ">
+                @Resources.Resource.QuotationInquiry</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row" style="margin: 2px 0px 10px -14px ! important;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button class=" btn  TopMarginAtXs" id="btnSearch">@Resources.Resource.btnSearch</button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle marginAtXs" id="btnDownload"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @Resources.Resource.btnDownload<span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu DownLoadDropDown downlodMargin">
+                        <a class="dropdown-item" href="#" onclick="DownloadFile('0')">CSV</a> <a class="dropdown-item"
+                            href="#" onclick="DownloadFile('1')">XLS</a>
+                    </div>
+                </div>
+            </div>
+            <div class="FormElements">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-field SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblQuotationNo)
+                        </div>
+                        <div class="editor-label SizeOnXs">
+                            @Html.TextBox("txtQuotationNumber", null, new { @class = "form-control InputElements QuotationNo", style = "display: inline; " })
+                            @Html.TextBox("txtQuotationSubNo", null, new { @class = "form-control InputElements  QuotationSubNo", style = "display: inline; " })
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblDistributorCode)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("ddlDistributerCode", ViewData["DCodes"] as List<SelectListItem>, new { @class = " form-control InputElements chosenddl", multiple = "multiple", id = "ddlDistributerCode" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-field SizeOnXs ">
+                            @Html.Label(@Resources.Resource.lblDistributerOrderNo)
+                        </div>
+                        <div class="editor-field SizeOnXs ">
+                            @Html.TextBox("txtDBOrder", null, new { @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblPartNo)
+                        </div>
+                        <div class="editor-field SizeOnXs ">
+                            @Html.TextBox("txtPartNumber", null, new { @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                </div>
+                @*row end*@
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblStatus)
+                        </div>
+                        <div class="editor-field SizeOnXs ">
+                            @Html.DropDownList("ddlStatus", ViewData["StatusCodes"] as List<SelectListItem>, new { @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblPersonIncharge)
+                        </div>
+                        <div class="editor-field SizeOnXs ">
+                            @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S010_01_008"))
+                            {
+                                @Html.TextBox("txtPersonIncharge", null, new { @class = "form-control InputElements", id = "txtPersonIncharge" })
+                            }
+                            else
+                            {
+                                @Html.TextBox("txtPersonIncharge", Session["UserID"], new { @class = "form-control InputElements", id = "txtPersonIncharge", disabled = "disabled" })
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblCreationDateFrom)
+                        </div>
+                        <div class="editor-field SizeOnXs ">
+                            @Html.TextBox("txtCDateF", null, new { @class = " calendarPicker form-control InputElements", @style = " background-color:White !important;" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblCreationDateTo)
+                        </div>
+                        <div class="editor-field SizeOnXs ">
+                            @Html.TextBox("txtCDateT", null, new { @class = " calendarPicker form-control InputElements", @style = " background-color:White !important;" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+//_____________________________Global Screen Handling Scripts__________________________________________________
+
+    //=====General Script for handling Loading Animation==============================
+    $(document).ajaxStart(function(){
+            $("#divLoading").remove();
+            $("#divToUpdate").parent("div").prepend("<div id='divLoading'></div>");
+            $("div#divLoading").addClass('show');
+        }).ajaxStop(function(){
+        $("#divLoading").remove();
+    });
+    //================================================================================
+
+    //=====General Script for handling Pagination=====================================
+    $(document).ready (function () { 
+        var txtErrorType;
+        var txtError;
+        $('.NewPaging ul').addClass("pagination");   
+        var dateFormat="@Session["DateCulture"].ToString()";  
+        if(dateFormat==null || dateFormat==""){dateFormat="mm/dd/yy"}
+        InitializeCalander(dateFormat);//from refrencing JavaScript File
+        $(".lagends").removeAttr("style");
+        $(".accordion").accordion({ collapsible: true, active: false }); 
+        function toValidDate(datestring)
+        {
+            return datestring.replace(/(\d{2})(\/)(\d{2})/, "$3$2$1");   
+        }               
+    });
+    //================================================================================
+
+    //=====General Script for handling DB Code Multiselect and From To Dates===========
+    $('#ddlDistributerCode').multiselect();
+    var dateTimeFrom = new Date($("#txtCDateF").datepicker("getDate"));
+    var dateTimeTo   = new Date($("#txtCDateT").datepicker("getDate"));
+    //=================================================================================
+
+//_____________________________________________________________________________________________________________
+</script>
+
+<script type="text/javascript">
+var fromHistory = false;
+//__________________________________________EVENTS_______________________________________
+
+    $("#btnSearch").on("click", function (event) {
+        fromHistory = false;
+        SearchRecords();
+    });
+
+//_______________________________________________________________________________________
+
+//________________________________________FUNCTIONS______________________________________
+
+    function SearchRecords()
+    {
+
+    }
+
+//______________________________________________________________________________________
+</script>
+
+

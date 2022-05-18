@@ -1,0 +1,141 @@
+﻿ @{
+     Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
+     
+     }
+
+          @Scripts.Render("~/bundles/RespnsvTableJs")
+            @Styles.Render("~/Content/RespnsvTableCss")
+<style type="text/css">
+    .center1
+    {
+        position: absolute;
+        left: auto;
+        top: 40%;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        z-index: 1000;
+    }
+    
+    .loader1
+    {
+    }
+    ​</style>
+ 
+<div id="divLoading" class="loader1">
+</div>
+@using (Ajax.BeginForm("Search",
+                            new AjaxOptions { UpdateTargetId = "divInterestDetails", InsertionMode = InsertionMode.Replace }))
+{
+      
+      
+    <fieldset>
+     <label for="QUTN">
+                        Quotation No</label>
+         
+<fieldset class="ui-grid-a" >
+	<div class="ui-block-a" style="width: 70%;"> <input type="text" name="QUTN"  id="QuotationNo" /> </div>
+	<div class="ui-block-b" style="width: 30%;">  <input type="text" name="QUTO" id="QuotationON" maxlength="2" /></div>	   
+</fieldset>
+                  
+                    
+                          
+                   
+                           
+      
+             
+                 <label for="DCOD">
+                    Distributer Code</label>
+            @Html.DropDownList("DCOD", ViewData["DCodes"] as List<SelectListItem>)
+              <label for="CQUN"></label>
+                    Distributer Order No
+                    <input type="text" name="CQUN" />
+                
+        
+               <label for="DDON">
+                    Sales Order No
+                    <input type="text" name="DDON" />
+                </label>
+           
+                   <label for="STAT">   Status</label>
+                  
+                    @Html.DropDownList("STAT", ViewData["StatusCodes"] as List<SelectListItem>)
+               
+           
+               <label for="PICH"> </label>
+                    Person Incharge
+                    <input type="text" name="PICH" />
+                
+            
+            <label for="QCDAFROM"> 
+                Creation Date From
+            </label>
+            
+                   
+                    <input type="text" name="QCDAFROM" class="datepicker"  />
+                  <label for="QCDATO"> 
+                Creation Date To
+            </label>
+                        <input type="text"  name="QCDATO" class="datepicker"  /> 
+                 
+    </fieldset>
+   
+    <button id="btnSearch">
+        Search
+    </button>
+      
+}
+<script type="text/javascript">
+    $(function () {
+
+
+        $('input.datepicker').Zebra_DatePicker({
+            format: 'm/d/y'
+        });
+
+        
+    });
+</script>
+
+
+
+
+<div id="divInterestDetails"     >
+</div>
+
+
+
+<script>
+
+
+    $("button#btnSearch").click(function () {
+
+       
+        var r = isNaN($("#QuotationNo").val());
+        var s = isNaN($("#QuotationON").val());
+        if (r) {
+            alert("Invalid Quotaiton No");
+            return false;
+        }
+        else if (r && s) {
+            alert("Invalid Quotaiton No /Sub- Quotation No");
+            return false;
+        }
+    });
+    $(document).ajaxStart(function () {
+        $("body").css("overflow", "hidden");
+        $("#divLoading").html('  <div class="center1"><img src="@Url.Content("~/Content/482.gif")"  alt="Loading, please wait" /> <div>    ');
+
+    });
+
+
+    $(document).ajaxStop(function () {
+        $("body").css("overflow", "auto");
+        $("#divLoading").html("");
+    });
+
+    $(document).ajaxError(function () {
+        $("body").css("overflow", "auto");
+        $("#divLoading").html("");
+    }); 
+</script>

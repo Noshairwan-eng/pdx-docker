@@ -1,0 +1,1125 @@
+﻿@*hst001 : Noshairwan Farooq [09-04-2020] : Made Distributor Code multiselect disabled. *@
+@Scripts.Render("~/bundles/InquiryJSBundle")
+@Styles.Render("~/Content/InquiryCSSBundle")
+  <style type="text/css">       
+        .accordianRows {height: 80px !important;min-height: 83px;} 
+.legColumn label{color: #0066ff !important;font-size: 11px;font-weight: bold;}
+   .highlight { background-color: red; }     
+  /*To remove row hover effect from the selected row */
+  #UserInquiryId tr:not(.highlight):hover {
+   background-color:#F0F0F0  !important; 
+}
+ #btnDownload{ width:100px  !important}
+.ddlFile
+{ 
+    height: 30px ! important; 
+    width: 90px;
+  }
+
+ #txtCDateT, #txtCDateF
+ { 
+      background-position: right center;
+      background-repeat: no-repeat;
+      background-image:url('../Images/calendar.png');   
+}
+   .ui-datepicker{z-index: 99 !important;}
+  .multiselect-container 
+  {
+       height: 120px !important;
+      overflow-y: auto;
+     }    
+  .panel-body   { padding-top:4px !important;  }   
+  
+   .pagination > li > a, .pagination > li > span
+   { 
+     font-size: 12px !important;
+   }
+  
+  .gridActionButtons {
+    margin: -1px -6px 0 0 !important;
+}
+    #UserInquiryId tr td
+    {
+      white-space:nowrap;
+     }
+  #UserInquiryId tbody tr td,#UserInquiryId thead tr th
+   {
+     text-align:left  ;
+  }
+  
+ #UserInquiryId tbody tr td:first-child, #UserInquiryId tbody tr td:last-child, #UserInquiryId tbody tr td:nth-last-child(1)
+  {
+     
+    
+  }
+  .clsActions>td
+  {
+       text-align:left !important;
+  }
+ .table tr td
+      {
+        padding:5px !important;
+       /* margin:10px  !important;*/
+      }
+
+textbox#txtQuotationSubNo
+{
+    width:12% !important;
+ }
+    
+.form-inline .form-group label {  font-size:14px; padding:0px; margin-bottom:0px;} 
+.form-inline .form-group { padding:0px margin-bottom:0px; }
+.Inlinebtn {  width:80px !important;}         
+ </style>
+ 
+ <style type="text/css">
+
+   
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+    background-color: white;
+    color: #fff;
+    outline: 0 none;
+    text-decoration: none;
+}
+ @@media screen and (max-width: 767px) 
+  {
+      .modal-confirm{ width:auto }
+      #btnDownload { width: 100%  !important;}
+     .multiDB .btn-group {width: 100%  !important;} 
+
+      .DropDownButtonContainer{width:100%;  margin-top:5px;}
+.bootstrap-filestyle{  margin: 0;    }
+.DropDownButtonContainer button { width:94% !important; } 
+      .InputElements 
+      {
+        background-color: White !important; border: 1px solid grey !important; height: 25px !important; width: 100%;
+      } 
+    .ddlFile
+     {
+        height: 30px ! important; 
+        width:100%  !important;
+        margin-top:5px;
+     }
+    .TopMarginAtXs
+     {
+      margin-top:5px; 
+      width:100% !important;  
+     }
+        
+} /* media 767 end*/
+
+
+ @@media screen and (min-width: 767px) 
+ {
+     .modal-confirm{ width:450px }
+     
+     
+     
+     }
+     
+     
+    .btn.disabled.multiselect {opacity: 1.0 !important; border: 1px solid gray;} /*hst001*/
+    .btn-group {cursor:no-drop;} /*hst001*/
+
+
+
+  .table{ margin:0 !important;}  
+     .multiDB .btn-group {position: relative; display: inline-block; vertical-align: middle;width: 75% ;}  
+ </style>
+
+    <div class="container childcontent ">
+     <div class="panel panelInquiryControls panel-primary panelWidth">
+    
+        <div class="panel-heading PanelTitle"  >
+         
+         <h3 class="panel-title pull-left " >@Resources.Resource.ConsignmentInquiry</h3>           
+             
+        </div>
+        <div class="panel-body">  
+     
+    
+       <div class="row controlsGroup">
+       
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button class="btn btn-sm btn-primary custom btnMargin TopMarginAtXs" id="btnSearch">@Resources.Resource.btnSearch</button>
+                
+            
+                
+                 
+            @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S010_01_001"))
+               {
+                  <button class=" btn  TopMarginAtXs" id="btnNew"  >@Resources.Resource.btnNew</button> 
+                  }
+                      
+               <div class="btn-group DropDownButtonContainer">
+  <button type="button" class="btn btn-secondary dropdown-toggle" id="btnDownload" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    @Resources.Resource.btnDownload<span class="caret"></span>
+  </button>
+  <div class="dropdown-menu DownLoadDropDown">
+    <a class="dropdown-item" href="#" onclick="DownloadFile('CSV')">CSV</a>
+    <a class="dropdown-item" href="#"  onclick="DownloadFile('XLS')">XLS</a>
+ 
+  </div>
+</div>
+                
+                      
+              
+
+              
+                    <span id="lblMsg2"></span>
+                </div>
+            </div>
+      <div class="FormElements" >   
+       <div class="row">
+             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                   <div class="editor-label SizeOnXs" >
+                        @Html.Label(@Resources.Resource.lblSaleOrderNo)
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                    @Html.TextBox("txtSalesOrderNo", null, new { id = "txtSalesOrderNo", @class = "form-control InputElements NumericOnly" })
+                    </div>
+             </div>
+
+           <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="editor-label SizeOnXs">
+                    @Html.Label(@Resources.Resource.lblDistributorCode)
+                </div>
+                    <div class="editor-field SizeOnXs multiDB">
+                     @Html.DropDownList("ddlDistributerCode", ViewData["DCodes"] as List<SelectListItem>, new { @class = "form-control InputElements chosenddl ", id = "ddlDistributerCode", multiple = "multiple" })
+                   
+                    </div>
+             </div>
+              
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+              <div class="editor-label SizeOnXs" >
+                 @Html.Label(@Resources.Resource.lblPersonIncharge)
+             </div>
+             <div class="editor-field SizeOnXs ">
+              @Html.TextBox("txtPersonIncharge", null, new { @class = "form-control InputElements", id="txtPersonIncharge" })
+             </div>
+         </div>
+ <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                  <div class="editor-field SizeOnXs ">
+                  @Html.Label("DB Order No") </div>
+                 <div class="editor-field SizeOnXs ">
+                  @Html.TextBox("txtDBOrder", null, new { @class = "form-control InputElements" })
+                 </div>
+          </div> 
+         
+
+             
+                     
+    </div> @*row end*@
+     <div class="row">                   
+         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                     
+                      <div class="editor-label SizeOnXs"  >
+                        @Html.Label(@Resources.Resource.lblStatus)
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                   @Html.DropDownList("ddlStatus", ViewData["StatusCodes"] as List<SelectListItem>, new { @class = "form-control InputElements" })
+                    </div>
+            </div>
+
+     
+     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                   <div class="editor-label SizeOnXs" >
+                        @Html.Label(@Resources.Resource.lblInvoiceNo)
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                    @Html.TextBox("txtInvoiceNo", null, new { @class = "form-control InputElements NumericOnly" })
+                    </div>
+             </div>
+           <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                   <div class="editor-label SizeOnXs" >
+                        @Html.Label(@Resources.Resource.lblCreationDateFrom)
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                      @Html.TextBox("txtCDateF", null, new { @class = " calendarPicker form-control InputElements", @style = " background-color:White !important;" })
+                    </div>
+           </div>
+             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">                  
+                    <div class="editor-label SizeOnXs" >
+                        @Html.Label(@Resources.Resource.lblCreationDateTo)
+                    </div>
+                    <div class="editor-field SizeOnXs ">
+                     @Html.TextBox("txtCDateT", null, new { @class = " calendarPicker form-control InputElements", @style = " background-color:White !important;" })
+                    </div>
+                 </div>
+                    
+                    
+     </div>    
+   </div>
+  </div>
+  </div>
+  </div>
+
+    <div class="container childcontent " style="padding-top: 0px ! important;">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+       <div id="LoadingImage" style="display: none; text-align:center">
+           
+      </div>             
+   <div id="divToUpdate" style="  height: 388px; ">
+   </div>  
+             <div class="lagends accordion hideonLoad " style="display:none">
+            <a href="#">@Resources.Resource.Legends <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e">
+            </span></a> 
+                 <div class="accordianRows"   >   
+                  <div class=" row">
+ 
+                <div class="legColumn col-lg-1 col-md-3  col-sm-3  col-xs-6 ">
+                    <label>@Resources.Resource.thCurrency:
+                         </label>
+                </div>
+                <div class="legDescColumn col-lg-2 col-md-3  col-sm-3  col-xs-6 ">
+                    <label>
+                        @Resources.Resource.CurrencyDesc</label>
+                </div>
+
+            
+
+                   <div class="legColumn col-lg-1 col-md-3  col-sm-3  col-xs-6 ">
+                    <label>
+                        @Resources.Resource.thDistributorCode:</label>
+                </div>
+                <div class="legDescColumn col-lg-2 col-md-3  col-sm-3  col-xs-6 ">
+                    <label>
+                       @Resources.Resource.DistributorCodeDesc</label>
+                </div>
+                    <div class="legColumn col-lg-1 col-md-3  col-sm-3  col-xs-6 ">
+                    <label>
+                       @Resources.Resource.thDistributorName:</label>
+                </div>
+                <div class=" legDescColumn col-lg-2 col-md-3  col-sm-3  col-xs-6 ">
+                    <label>
+                       @Resources.Resource.DistributorNameDesc</label>
+                </div>
+            </div> 
+            <div class=" row">
+ 
+                <div class="legColumn col-lg-1 col-md-3  col-sm-3  col-xs-6 ">
+                    <label>@Resources.Resource.thPersonIncharge:
+                         </label>
+                </div>
+                <div class="legDescColumn col-lg-2 col-md-3  col-sm-3  col-xs-6 ">
+                    <label>
+                        @Resources.Resource.PersonInchargeDesc</label>
+                </div>
+       
+            
+            </div>
+        </div>
+         
+    </div>
+     </div>
+     </div>
+
+     
+ 
+
+    @* <div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 220px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header"  >
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        Consignment Inquiry</h4>
+                </div>
+                <div class="modal-body" id="divModalBody">
+                   <label id="lblmsg"></label>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">Consignment Inquiry</h4>
+                </div>
+                <div class="modal-body" id="modalBody">
+                <img  class="imgError"/>
+                <label id="lblMessageText"  class="lblError"></label>
+                </div>
+                <div class="modal-footer">
+                    <button style=" text-align:center;float: none !important;" id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                  </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ConfirmModal" role="dialog" style="padding-top: 169px;">
+		<div class="modal-dialog modal-confirm" style="margin: 10px auto;">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						&times;</button>
+					<h4 class="modal-title">Confirmation</h4>
+						
+				</div>
+				<div class="modal-body" id="ConfirmModalBody">
+					<img  src="@Url.Content("~/images/question.png")" />
+					 <label id="InvoiceMsg" style="color: Red !important"></label>
+						 
+					 
+				</div>
+				<div class="modal-footer">
+					<button id="btnConfirm" class="btn btn-default pull-left" data-dismiss="modal">
+						@Resources.Resource.btnOK</button>
+					<button id="btnCancleConfirm" class="btn btn-default pull-right" data-dismiss="modal">
+						@Resources.Resource.btnCancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+ <style>
+ 
+  .header_SaleOrderno{ text-align:right !important}
+ .header_InvoiceNo{ text-align:right !important}
+ .header_TotalNetAmount{text-align:right !important}
+ .a_Currency{   margin-left: -3px;}
+ </style>
+   <script type="text/javascript">
+  $("#divToUpdate").parent("div").prepend("<div id='divLoading'></div>");
+   $(document).on("mouseover","#UserInquiryId tr",function () {
+      
+       if($(this).attr("class")=="clsActions")
+       {
+       $(this).removeClass(".gridTable tr:hover")
+       
+       }
+});
+
+
+     $("#btnNew").on("click",function () {
+     window.location.href="@Url.Action("CSConditionsView", "CSCondition", null)";
+       
+});
+
+//hst001 Start
+var CurrentUserRole = @Session["Role"].ToString(); 
+if(CurrentUserRole=="3")
+{
+    $("#ddlDistributerCode").attr("disabled", true);          
+}
+//hst001 End
+
+
+//Code To Add Button in a row ..Add new row after current row on current row click event
+ //Register event on document
+ $(document).on("click", "#UserInquiryId tr", function (event) {                                                                   
+   var $curRow = $(this).closest('tr');  
+   $(this).ha               
+   $('.clsActions').remove(); // Remove the newly added row with class "clsActions" if already exist 
+   //Code to add row with css class  "clsActions" 
+   if(!$(this).hasClass( "gridHead" ))
+     {
+        /* code to highlight selected row*/
+     var selected = $(this).hasClass("highlight");
+    $("#UserInquiryId tr").removeClass("highlight");
+    if(!selected)
+        $(this).addClass("highlight");
+      /*code to highlight selected row end */
+    $newRow = $('<tr class="clsActions"><td colspan="14" style=" padding-left:30px !important; text-align:left !important "><input type="Button" class="gridActionButtons Inlinebtn" value="Condition"  id="btnCondition" style="margin-right:20px;">&nbsp; <input type="Button" class="gridActionButtons Inlinebtn" value=" Detail"  id="btnDetail" style="margin-right:20px;">&nbsp; <input type="Button" class="gridActionButtons" value="Generate Invoice"  id="GenerateInvoice" style="margin-right:20px;">&nbsp; <input type="Button" class="gridActionButtons Inlinebtn" value="Print" id="btnPrint">  </tr>');
+               
+                $curRow.after($newRow);
+             
+                
+                 }
+             CheckRights();
+                                    
+            });
+
+
+            
+         $(document).on("click",".clsActions input",function (event) 
+          {         
+          var OrderNo= $(this).closest('tr').prev('tr').find('td').eq(0).text();  
+          var Status= $(this).closest('tr').prev('tr').find('td').eq(3).text();  
+         //ar check=$(this).closest('tr').prev('tr').find('td').eq(12).find('input:checkbox').is(':checked');   
+        //var StockAvailable=$(this).closest('tr').prev('tr').find('td').eq(11).find('input:checkbox').is(':checked');  
+
+          if ( $(this).attr("id")=="btnCondition") 
+                {  
+                 url= "@Url.Action("CSConditionsView", "CSCondition")";
+                  var curl=url+"?OrderNo="+OrderNo;
+                  window.location.href=curl;
+                   
+                }
+              
+          if ( $(this).attr("id")=="btnDetail") 
+                {  
+                 url= "@Url.Action("index", "CSDetails")";
+                  var curl=url+"?ConONo="+OrderNo;                  
+                //  window.open(curl,null)
+                   window.location.href=curl;
+                }
+
+          //Generate Invoice            
+          if ( $(this).attr("id")=="GenerateInvoice") 
+                {  
+               if(Status!="Confirmed")
+                {  
+               // txtError = "Only confirmed order can be processed..!";
+               txtError = "@Resources.Resource.MsgInfo65";
+                txtErrorType = "0";
+                DisplayModal(txtErrorType, txtError);  
+                          
+                // $("#divModalBody").html("");
+                // $("#divModalBody").prepend("<span>Only confirmed order can be processed..!</span>").attr("style","color:red");           
+                // $("#MessageModal").modal(); 
+                return false;
+                }  
+                $("#InvoiceMsg").text("");
+                $("#InvoiceMsg").text("Are you sure you want to Generate Invoice for "+OrderNo +" ?");
+               $("#ConfirmModal").modal();
+             }
+
+          // Generate Invoice end
+
+          //Print new code
+               if ( $(this).attr("id")=="btnPrint") 
+                {
+               
+                if(Status=="Invoiced")
+                 {
+                                 
+                   url= "@Url.Action("ReportView", "CSInquiry")";
+                   $("#divLoading").remove();
+                   $("#divToUpdate").prepend("<div id='divLoading'></div>");                 
+                   var valuee = {strOrderNo:OrderNo } 
+                    $.ajax(
+                        {
+                          cache: false,
+                           type: "POST",
+                           url: "@Url.Action("PrintCSReport", "CSInquiry", null)",
+                           data: valuee,
+                          success: function (responseFromServer) { 
+                        if (isRealValue(responseFromServer))  
+                            {
+                                  if (CheckForSessionExpiry(responseFromServer)) 
+                                  {
+                                      SessionExpiredRedirect();
+                                      return;
+                                   }
+                         if(responseFromServer.ErrorOccured==1)
+                             {
+                               //txtError ="Error occured during processing";
+                               txtError ="@Resources.Resource.MsgInfo66";
+                               txtErrorType = "0";
+                               DisplayModal(txtErrorType, txtError);
+                               
+                               // $("#divModalBody").html("");
+                               // $("#divModalBody").prepend("<span>Error occured during processing</span>").attr("style","color:red");
+                              //$("#MessageModal").modal(); 
+                             }
+                         else{
+                               window.location.href=url;
+                            }
+                     
+                          }//if is real value end
+                        
+                       },
+                       error: function (xhr, ajaxOptions, thrownError) {
+                       // txtError ="An error Occured";
+                       txtError ="@Resources.Resource.MsgInfo3";
+                        txtErrorType = "0";
+                        DisplayModal(txtErrorType, txtError);
+                         //  $("#divModalBody").html("");
+                          //  $("#divModalBody").prepend("<span>An error Occured</span>").attr("style","color:red");
+                           // $("#MessageModal").modal(); 
+                       }
+                   }); // ajax end 
+                    
+               }
+          else{
+                   // txtError ="Please generate invoice first !";
+                   txtError ="@Resources.Resource.MsgInfo67";
+                    txtErrorType = "0";
+                    DisplayModal(txtErrorType, txtError);
+                    // $("#divModalBody").html("");
+                    //  $("#divModalBody").prepend("<span>Please genrate invoice first !</span>").attr("style","color:red");
+                     // $("#MessageModal").modal(); 
+                     return false;
+                 }
+
+                  
+              }
+
+         //print new code end
+           
+           event.stopPropagation();
+          
+          
+          });  
+
+    $(document).ready(function () { 
+      $("#divToUpdate").parent("div").prepend("<div id='divLoading'></div>");
+      $('#ddlDistributerCode').multiselect();
+      $(".lagends").removeAttr("style");
+       $(".accordion").accordion({
+                          collapsible: true,
+                          active: false
+                        });
+         
+
+    
+ 
+    function toValidDate(datestring){
+    return datestring.replace(/(\d{2})(\/)(\d{2})/, "$3$2$1");   
+}
+         
+ $("#btnSearch").click(function () {  
+ PerformSearch();
+        }); // btnSearch.click end
+
+
+ 
+   $('#btnQuotationCopy').on("click", function (e) {
+            if (CheckIfCheckboxIsChecked()) 
+            {
+        var arr=$('input:checkbox[class=QutnSelect]:checked').val().split(",");              
+       var url="@Url.Action("QuotationCopyScreen", "Inquiry", null)"+"?quotationNo="+arr[0]+"&quto="+arr[1];
+                 window.open(url,"_blank")
+            }
+            else {
+                
+                 //txtError ="Select a Record";
+                 txtError ="Select a Record";
+                 txtErrorType = "0";
+                 DisplayModal(txtErrorType, txtError);
+                //$("#divModalBody").html("");
+                // $("#divModalBody").prepend("<span>Select a Record</span>").attr("style","color:red");
+               // $("#MessageModal").modal();
+            }
+
+        });       
+                             
+
+
+       function CheckIfCheckboxIsChecked() {
+            var temp = 0;
+            $('input:checkbox[class=QutnSelect]:checked').each(function () {
+                temp++;
+            });
+            if (temp == 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+$("button#btnD").click(function () {
+        
+    });                                                         
+
+    });// doc.ready end
+   
+   </script>
+   
+   <script type="text/javascript">
+       $("button#btnSearchh").click(function () {
+           var r = isNaN($("#QuotationNumber").val());
+           var s = isNaN($("#QuotationSequesceNo").val());
+           if (r) {
+               txtError = "Invalid Quotaiton No";
+               txtErrorType = "0";
+               DisplayModal(txtErrorType, txtError);
+                         
+              // $("#divModalBody").html("");
+              // $("#divModalBody").prepend("<span>Invalid Quotaiton No</span>").attr("style", "color:red");
+              // $("#MessageModal").modal();
+               return false;
+           }
+           else if (r && s) {
+               txtError = "Invalid Quotaiton No /Sub- Quotation No";
+               txtErrorType = "0";
+               DisplayModal(txtErrorType, txtError);
+               
+              // $("#divModalBody").html("");
+              // $("#divModalBody").prepend("<span>Invalid Quotaiton No /Sub- Quotation No</span>").attr("style", "color:red");
+             //  $("#MessageModal").modal();
+               return false;
+           }
+       });
+</script>
+   
+   <script type="text/javascript">
+
+       function afterLoad() {
+           $(".gridHead th a").each(function () {
+               $(this).addClass("a_" + $(this).attr("href").split("sort=")[1].split("&")[0]);
+
+               $(this).parent("th").addClass("header_" + $(this).attr("href").split("sort=")[1].split("&")[0]);
+           });
+           setArrowImages();
+           $('.NewPaging ul').addClass("pagination");
+       }
+       function showProgress() {
+           if (!spinnerVisible) {
+               $("#spinner").fadeIn("fast");
+               spinnerVisible = true;
+           }
+       };
+
+       function hideProgress() {
+           if (spinnerVisible) {
+               var spinner = $("#spinner");
+               spinner.stop();
+               spinner.fadeOut("fast");
+               spinnerVisible = false;
+           }
+       };
+
+</script>  
+
+   <script type="text/javascript">
+      var deleteCheck = 0;
+      function isRealValue(obj) {
+          return obj && obj !== "null" && obj !== "undefined";
+      }
+  </script>
+  <script>
+      function PerformSearch() 
+      {
+      
+ if($('#txtCDateT').val()!="" && $('#txtCDateF').val()=="")
+     {
+      //txtError="Please Specify Date From";
+      txtError="@Resources.Resource.MsgInfo5";
+      txtErrorType="0";
+       DisplayModal(txtErrorType,txtError) ; 
+       return false;
+     }
+
+  var dateTimeFrom = new Date($("#txtCDateF").datepicker("getDate"));
+   var dateTimeTo   = new Date($("#txtCDateT").datepicker("getDate"));
+    if($('#txtCDateT').val()!="")
+    {
+   if(dateTimeFrom>dateTimeTo)
+    {
+     //txtError="From date can not be greater than To date.";
+     txtError="@Resources.Resource.MsgInfo6";
+     txtErrorType="0";
+      DisplayModal(txtErrorType,txtError) ;    
+      return false;
+    }
+    }
+
+  
+   
+    var listValO = new Array();
+     $("#ddlDistributerCode option:selected").each(function()
+     {
+      var idOption = $(this).val();     
+      listValO.push(idOption);      
+   });
+   
+   var lstDbCode=listValO.join();
+
+      $("#btnDownload").attr("disabled","disabled");
+      $("#ddlFileType").attr("disabled", "disabled");
+    var valuee ={};
+            if (arguments!=null && arguments.length>0)
+            {
+            valuee= {       InvoiceNo:$.trim($("#txtInvoiceNo").val()),
+                            DistributorCode:$.trim($("#ddlDistributerCode").val()),
+                            txtDBOrder: $.trim($("#txtDBOrder").val()),
+                            SaleOrderno:$.trim($("#txtSalesOrderNo").val()),
+                            Status: $.trim($("#ddlStatus").val()),
+                            PersonIncharge:$.trim($("#txtPersonIncharge").val()),
+                            DateFrom:$.trim($("#txtCDateF").val()),
+                            DateTo:$.trim($("#txtCDateT").val()),
+                            DeleteCheck:deleteCheck,
+                            FromHistory:true
+                        }; // value end   
+                         $("div#divLoading").addClass('show');  
+            }
+            else 
+            {
+                valuee= {   InvoiceNo:$.trim( $("#txtInvoiceNo").val()),
+                            DistributorCode:$.trim($("#ddlDistributerCode").val()),
+                            txtDBOrder:$.trim($("#txtDBOrder").val()),
+                            SaleOrderno:$.trim($("#txtSalesOrderNo").val()),
+                            Status:$.trim($("#ddlStatus").val()),
+                            PersonIncharge:$.trim($("#txtPersonIncharge").val()),
+                            DateFrom:$.trim($("#txtCDateF").val()),
+                            DateTo:$.trim($("#txtCDateT").val()),
+                            DeleteCheck:deleteCheck,
+                        }; // value end 
+            }
+            $.ajax(
+                {
+                    cache: false,
+                    type: "POST",
+                    url: "@Url.Action("SearchResult", "CSInquiry", null)",
+                    data: valuee,
+                    success: function (data) {   
+                   if(CheckForSessionExpiry(data))
+                   {                              
+                     SessionExpiredRedirect();
+                     return;
+                   }                       
+                      deleteCheck=0;
+                      $(".hideonLoad").show();                     
+                       var data=data.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                       var data=data.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                        $("#divToUpdate").html(data);
+                       $('.NewPaging ul').addClass("pagination");
+                      // $("#btnDownload").show();
+                       //$("#ddlFileType").show();
+                      
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {                    
+                     deleteCheck=0;
+                    //txtError ="Failed to retrieve data.";
+                    txtError ="@Resources.Resource.MsgInfo3";
+                    txtErrorType = "0";
+                    DisplayModal(txtErrorType, txtError);
+
+                  // $("#divModalBody").html("");
+                  // $("#divModalBody").prepend("<span>Failed to retrieve data.</span>").attr("style","color:red");
+                  // $("#MessageModal").modal(); 
+                    }
+                }); // ajax end 
+      }
+  </script>
+   <script type="text/javascript">
+
+      var lblMessage = "";
+     
+
+      function CheckRights() {
+
+          if (HasRight("X01S020_05"))
+           {
+              $("#btnCondition").show();
+           }
+       else
+          {
+              $("#btnCondition").hide();
+          }
+          if (HasRight("X01S030_06"))
+           {
+              $("#btnDetail").show();
+            }
+         else
+            {
+              $("#btnDetail").hide();
+             }
+      if (HasRight("X01S010_04_002"))
+         {
+              $("#GenerateInvoice").show();
+          }
+     else 
+          {
+              $("#GenerateInvoice").hide();
+          }
+
+          if (HasRight("X01S010_04_003"))
+           {
+              $("#btnPrint").show();
+            }
+        else
+          {
+              $("#btnPrint").hide();
+          }
+
+      }
+  </script>
+
+  @* BtnExport Grid data*@
+
+  
+
+@*/*********************************************************/*@
+
+   <script type="text/javascript">
+       $(document).ready(function () {
+        //hstU001 start 
+         var dateFormat="@Session["DateCulture"].ToString()";  
+         if(dateFormat==null || dateFormat==""){dateFormat="mm/dd/yy"}
+         InitializeCalander(dateFormat);//from refrencing JavaScript File
+          //hstU001 end 
+         $("#btnDownload").attr("disabled","disabled");
+         $("#ddlFileType").attr("disabled","disabled");
+         $("#txtPersonIncharge").attr("readonly", false);
+     });  //doc.ready end
+   </script>
+
+ 
+
+
+   <script type="text/javascript">
+   
+function DownloadFile(fileType) 
+{
+       
+          $("#lblMsg").html("");
+           var postData={txtFileFormate:$("#ddlFileType").val()};
+
+         $.post("@Url.Action("DownloadFile", "CSInquiry", null)",postData,function (data) {
+            
+             if (CheckForSessionExpiry(data)) 
+                {
+                    SessionExpiredRedirect();
+                    return;
+                 }
+             if(isRealValue(data.ErrorOccured))
+             {
+              $("#lblMsg2").html(data.ErrorMessage).attr("style","color:red;position:relative");
+             }
+             else
+             {
+              //$("#lblMsg2").html(data.ErrorMessage).attr("style","color:red;position:relative");
+               txtError = data.ErrorMessage;
+               txtErrorType = "1";
+               DisplayModal(txtErrorType, txtError);
+               //$("#divModalBody").html("");
+              // $("#divModalBody").prepend(data.ErrorMessage).attr("style", "color:red");
+              // $("#MessageModal").modal();
+              window.location.href=data.RedirectToUrl;
+             }
+            
+
+            });///End of Post
+         
+         
+       
+         
+         
+}
+   
+     function setArrowImages() {
+
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+         var header = $('th a[href*=' + col + ']') ;
+        
+        if (dir == 'Ascending') 
+        {
+            header.text(header.text() + ' ▲');
+        }
+        if (dir == 'Descending') 
+        {
+           header.text(header.text() + ' ▼');
+        }
+    } 
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".NumericOnly").keypress(function (event) {
+            var key = event.which;
+            if (!(key >= 48 && key <= 57)) {
+                if (key != 8) {
+                    event.preventDefault();
+                }
+            }
+        })
+        $('#txtPersonIncharge').keypress(function (event) {
+            var key = event.which;
+            if (this.value.length >= 10 && key != 8 && key != 13) {
+                return false;
+            }
+        });
+        $('#txtSalesOrderNo').keypress(function (event) {
+            var key = event.which;
+            if (this.value.length >= 10 && key != 8 && key != 13) {
+                return false;
+            }
+        });
+        $("#txtPersonIncharge").on("paste", function (event) {
+            var element = this;
+            setTimeout(function () {
+              
+                    var text = $(element).val();
+                    if (text.length > 10) {
+                        $(element).val(text.substr(0, 10));
+                    
+                }
+            }, 100);
+        });
+
+            $('#txtDBOrder').keypress(function (event) {
+            var key = event.which;
+            if (this.value.length >= 10 && key != 8 && key != 13) {
+                return false;
+            }
+        })
+
+        $('#txtDBOrder').keyup(function () {
+            if (this.value.length >= 10) {
+                $(this).val($(this).val().substr(0, 10));
+                return false;
+            }
+        });
+
+        $("#txtSalesOrderNo").on("paste", function (event) {
+            var element = this;
+            setTimeout(function () {
+
+                var text = $(element).val();
+                if (text.length >= 10) {
+                    $(element).val(text.substr(0, 10));
+
+                }
+            }, 100);
+        }); //numeric only end
+
+
+        $('#txtInvoiceNo').keypress(function (event) {
+            var key = event.which;
+            if (this.value.length >= 10 && key != 8 && key != 13) {
+                return false;
+            }
+        })
+
+        $('#txtInvoiceNo').keyup(function () {
+            if (this.value.length >= 10) {
+                $(this).val($(this).val().substr(0, 10));
+                return false;
+            }
+        });
+
+
+
+
+
+
+    });  //doc.ready end
+
+</script>
+
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    }); 
+</script>
+
+ @if (Session["CSInquiryHistory"]!=null)
+ {
+       var paramsFromHistory=Session["CSInquiryHistory"] as PDXWEB.Models.Consignment.ConsignmentInquiryModel.CSInquiryModel;
+     if (paramsFromHistory.ResultCount!=0)
+	{
+		<script>
+		    $("#txtSalesOrderNo").val("@paramsFromHistory.SaleOrderno");
+		    var customerCode = "@paramsFromHistory.DistributorCode";
+		    var DbValues = customerCode.split(",");
+		    i = 0, size = DbValues.length;
+		    for (i; i < size; i++) {
+		        $("#ddlDistributerCode").multiselect().find(":checkbox[value='" + DbValues[i] + "']").attr("checked", "checked");
+		        $("#ddlDistributerCode option[value='" + DbValues[i] + "']").attr("selected", 1);
+		        $("#ddlDistributerCode").multiselect("refresh");
+		    }
+         //  $("#ddlDistributerCode").val("@paramsFromHistory.DistributorCode");
+           $("#ddlStatus").val("@paramsFromHistory.Status");
+           $("#txtInvoiceNo").val("@paramsFromHistory.InvoiceNo");
+           $("#txtPersonIncharge").val("@paramsFromHistory.PersonIncharge");
+           $("#txtCDateF").val("@paramsFromHistory.DateFrom");
+           $("#txtCDateT").val("@paramsFromHistory.DateTo");
+           PerformSearch(true);
+       </script> 
+	}
+       
+ }
+       @if (Session["CustId"] != null && Session["CSInquiryHistory"] == null && !string.IsNullOrEmpty(Session["CustId"].ToString()))//This Code Checks For Current User and sets his Distributor Code Checked
+ {
+     <script>
+         var currentDB  = "@Session["CustId"].ToString()"; 
+             $("#ddlDistributerCode").multiselect().find(":checkbox[value='" + currentDB + "']").attr("checked", "checked");
+             $("#ddlDistributerCode option[value='" + currentDB + "']").attr("selected", 1);
+             $("#ddlDistributerCode").multiselect("refresh");
+       
+     
+     </script>
+ }
+ <script>
+
+     function StartInvoiceProcess( ) 
+     {
+
+                 var OrderNo=$(".highlight").find("td").eq(0).text();
+                 if(OrderNo!=null && OrderNo!=""){
+                 $("#divLoading").remove();
+                 $("#divToUpdate").prepend("<div id='divLoading'></div>");        
+                var params={strsaleOredrno:OrderNo}
+                $.ajax(
+                       {
+                           cache: false,
+                           type: "POST",
+                           url: "@Url.Action("GenerateInvoice", "CSInquiry", null)",
+                           data: params,
+                           success: function (result) { 
+                            if (CheckForSessionExpiry(result)) 
+                            {
+                                SessionExpiredRedirect();
+                                return;
+                             }
+                           if(result.ErrorOccured==1)
+                           {
+                            txtError = result.ErrorMessage;
+                            txtErrorType = "0";
+                            DisplayModal(txtErrorType, txtError);
+                             
+                             // $("#divModalBody").html("");
+                             // $("#divModalBody").prepend(result.ErrorMessage).attr("style","color:red");
+                             // $("#MessageModal").modal(); 
+                           }
+                       else{ 
+                             $("#txtSalesOrderNo").val(result.OrderNo);
+                             $("#btnSearch").trigger("click"); 
+                            txtError =result.MessageToDisplay;
+                            txtErrorType = "1";
+                            DisplayModal(txtErrorType, txtError); 
+                                                 
+                            // $("#divModalBody").html("");
+                            // $("#divModalBody").prepend(result.MessageToDisplay).attr("style","color:red");
+                            // $("#MessageModal").modal(); 
+                           }
+
+                            },
+                           error: function (xhr, ajaxOptions, thrownError)
+                            {
+                           // txtError ="An error Occured..";
+                           txtError ="@Resources.Resource.MsgInfo3";
+                            txtErrorType = "0";
+                            DisplayModal(txtErrorType, txtError); 
+                             // $("#divModalBody").html("");
+                             // $("#divModalBody").prepend("<span>An error Occured</span>").attr("style","color:red");
+                             // $("#MessageModal").modal(); 
+                       }
+                            
+                
+                
+                });           
+                }
+
+     }
+  $("#btnConfirm").click(function () {
+         $("#ConfirmModal").modal("hide")
+       
+      StartInvoiceProcess();
+
+     });
+ </script>

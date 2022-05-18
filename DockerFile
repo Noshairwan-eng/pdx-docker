@@ -1,0 +1,14 @@
+
+# Base Images with ASP.NET and Crystal Report Intalled
+#FROM mcr.microsoft.com/dotnet/framework/aspnet/crystal12
+FROM noshair/aspnet-crystal12
+
+# Adding website to wwwroot
+COPY ./publish/ /inetpub/wwwroot
+
+# Copying Powershell script
+WORKDIR C:/temp
+COPY ./powershell/cta.ps1 .
+
+# Running Copied Powershell script
+RUN powershell C:/temp/cta.ps1

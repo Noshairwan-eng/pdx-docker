@@ -1,0 +1,9 @@
+﻿@if (ViewBag.Error !=null && !String.IsNullOrEmpty(ViewBag.Error ))
+{
+<script>
+txtError="@Session["Error"].ToString()";
+txtErrorType="0";
+DisplayModal(txtErrorType,txtError) ; 
+
+</script>
+}

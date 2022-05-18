@@ -1,0 +1,153 @@
+﻿@model PDXWEB.Models.StratagicStock.StockTransferReqInquiry.ConvertToOrderViewModel
+@using PDXWEB.BusinessModels.Common;
+<div class="mainContainer">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <div class="editor-label SizeOnXs clsEdtLabel">
+                @Html.Label(@Resources.Resource.lblTransferRequestNo)
+            </div>
+            <div class="editor-label SizeOnXs">
+                @Html.TextBoxFor(model => model.txtTransferRequestNo, new { @id = "txtTransferRequestNo", @class = "form-control InputElements" })
+                <span></span>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <div class="editor-label SizeOnXs clsEdtLabel">
+                @Html.Label(@Resources.Resource.lblOrderType)
+            </div>
+            <div class="editor-label SizeOnXs">
+                @Html.DropDownList("ddlOTYP", Model.OrderTypes, new { @class = "form-control InputElements" })
+                <span></span>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <div class="editor-label SizeOnXs clsEdtLabel">
+                @Html.Label(@Resources.Resource.lblWareHouseFrom)
+            </div>
+            <div class="editor-label SizeOnXs">
+                @Html.TextBoxFor(model => model.txtWareHouseFrom, new { @id = "txtWareHouseFrom", @class = "form-control InputElements" })
+                <span></span>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <div class="editor-label SizeOnXs clsEdtLabel">
+                @Html.Label(@Resources.Resource.lblWareHouseTo)
+            </div>
+            <div class="editor-label SizeOnXs">
+                @Html.TextBoxFor(model => model.txtWareHouseTo, new { @id = "txtWareHouseTo", @class = "form-control InputElements" })
+                <span></span>
+            </div>
+        </div>
+    </div>
+    @if (UserRights.hasRight("X01S040_01_006") || UserRights.hasRight("X01S040_01_007") || UserRights.hasRight("X01S040_01_008") || UserRights.hasRight("X01S040_01_009") || UserRights.hasRight("X01S040_01_010"))
+    {    
+        <fieldset>
+            <legend>@Resources.Resource.lblAllocation</legend>
+            <div class="row">
+                @if (UserRights.hasRight("X01S040_01_006"))
+                {
+                    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            <label>@Html.CheckBoxFor(model => model.cbxKME, new { @id = "cbxKME", @class = "form-control InputElements", style = "width:inherit;  margin: 0 5px -25px -16px !important;" })
+                                @Resources.Resource.lblFromKMEWarehouse
+                            </label>
+                        </div>
+                    </div> 
+                }
+                @if (UserRights.hasRight("X01S040_01_007"))
+                {
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            <label>
+                                @Html.CheckBoxFor(model => model.cbxUnprocess, new { @id = "cbxUnprocess", @class = "form-control InputElements", style = "width:inherit;  margin: 0 5px -25px -16px !important;" })
+                                @Resources.Resource.lblUnProcess</label>
+                        </div>
+                    </div>
+                }
+                @if (UserRights.hasRight("X01S040_01_008"))
+                {
+                    <div class="col-lg-5 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            <label>
+                                @Html.CheckBoxFor(model => model.cbxDontConsiderEOYN, new { @id = "cbxDontConsiderEOYN", style = "width:inherit;  margin: 0 5px -25px -16px !important;", @class = "form-control InputElements" })
+                               @Resources.Resource.lblDoNotConsiderEo</label>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                @if (UserRights.hasRight("X01S040_01_009"))
+                {
+                    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            <label>
+                                @Html.CheckBoxFor(model => model.cbxBBOrder, new { @id = "cbxBBOrder", @class = "form-control InputElements", style = "width:inherit;  margin: 0 5px -25px -16px !important;" })
+                                @Resources.Resource.lblFromBuyBackOrder</label>
+                        </div>
+                    </div> 
+                }
+                @if (UserRights.hasRight("X01S040_01_010"))
+                {
+                    <div class="col-lg-6 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            <label>
+                                @Html.CheckBoxFor(model => model.cbxOnOrder, new { @id = "cbxOnOrder", @class = "form-control InputElements", style = "width:inherit;  margin: 0 5px -25px -16px !important;" })
+                                @Resources.Resource.lblAllocationOnOrderAvailableQty</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </fieldset>
+    }
+       @if (UserRights.hasRight("X01S040_01_011") || UserRights.hasRight("X01S040_01_012") || UserRights.hasRight("X01S040_01_013") )
+       {      
+     
+    <fieldset>
+        <legend></legend>
+        <div class="row">
+            @if (UserRights.hasRight("X01S040_01_011"))
+            {
+                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs clsEdtLabel">
+                        <label>
+                            @Html.CheckBoxFor(model => model.cbxMPA, new { @id = "cbxMPA", @class = "form-control InputElements", style = "width:inherit;  margin: 0 5px -25px -16px !important;" }) 
+                            @Resources.Resource.lblMixPackingAllowed
+                        </label>
+                    </div>
+                    <div class="editor-label SizeOnXs">
+                        <span></span>
+                    </div>
+                </div> 
+            }
+            @if (UserRights.hasRight("X01S040_01_012"))
+            {
+                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs clsEdtLabel">
+                        <label>
+                            @Html.CheckBoxFor(model => model.cbxPSA, new { @id = "cbxPSA", @class = "form-control InputElements", style = "width:inherit;  margin: 0 5px -25px -16px !important;" }) 
+                             @Resources.Resource.lblPartialShipmentAllowed
+                        </label>
+                    </div>
+                </div>
+            }
+            @if (UserRights.hasRight("X01S040_01_013"))
+            {
+                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs clsEdtLabel">
+                        <label>
+                            @Html.CheckBoxFor(model => model.cbxAPIC, new { @id = "cbxAPIC", @class = "form-control InputElements", style = "width:inherit;  margin: 0 5px -25px -16px !important;" }) 
+                            @Resources.Resource.lblPickingAllowed
+                        </label>
+                    </div>
+                </div>
+            }
+        </div>
+    </fieldset>
+       }
+       
+</div>
+
+<script>
+  
+    $("#CtOrderModal").modal();
+</script>

@@ -1,0 +1,95 @@
+﻿@model string
+
+@{
+   
+    ViewBag.Title = "TestTree";
+}
+
+<h2>TestTree</h2>
+        
+
+
+
+            @Scripts.Render("~/bundles/JsTreeJS")
+            @Styles.Render("~/css/JsTreeCSS")
+
+
+
+            @{
+    ViewBag.Title = "Home Page";
+}
+ 
+...
+ 
+<script type="text/javascript">
+   var treeModel = "@Html.Raw(Model)";
+</script>
+
+
+
+            <script>
+
+
+                $(function () {
+                    $('#jstree_demo_div').jstree({
+                        "plugins": ["wholerow", "checkbox"]
+                    });
+                
+                
+                
+                
+                
+                
+                
+                });
+            
+            
+            </script>
+
+            <div id="jstree_demo_div">
+  <ul>
+    <li>Quotation 
+     <ul>
+    
+     <li>Inquiry
+     
+     <ul>
+       <li>New  </li>
+       <li>Quotation Copy  </li>
+       <li>  Copy to SO </li>
+     </ul>
+     
+     
+     </li>
+     <li>Condition</li>
+    <li>Details</li>
+    
+    </ul>
+    </li>
+    <li>Root node 2</li>
+  </ul>
+</div>
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

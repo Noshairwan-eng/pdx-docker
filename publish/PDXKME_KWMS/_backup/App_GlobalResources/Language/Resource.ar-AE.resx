@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Quotation_Currency" xml:space="preserve">
+    <value>عملة</value>
+  </data>
+  <data name="Quotation_CustomerQuotationNo" xml:space="preserve">
+    <value>عدد الاقتباس الزبون</value>
+  </data>
+  <data name="Quotation_DistributerCode" xml:space="preserve">
+    <value>كود الموزع</value>
+  </data>
+  <data name="Quotation_DistributerName" xml:space="preserve">
+    <value>اسم الموزع</value>
+  </data>
+  <data name="Quotation_PersonIncharge" xml:space="preserve">
+    <value>الشخص المسؤول</value>
+  </data>
+  <data name="Quotation_CreationDateFrom" xml:space="preserve">
+    <value>من</value>
+  </data>
+  <data name="Quotation_CreationDateTo" xml:space="preserve">
+    <value>إلى</value>
+  </data>
+  <data name="Quotation_QuotationNumber" xml:space="preserve">
+    <value>عدد الاقتباس</value>
+  </data>
+  <data name="Quotation_QuotationSequesceNo" xml:space="preserve">
+    <value>رقم التسلسل الاقتباس</value>
+  </data>
+  <data name="Quotation_ValidityDate" xml:space="preserve">
+    <value>اقتباس تاريخ الصلاحية</value>
+  </data>
+  <data name="Quotation_SalesOrderNo" xml:space="preserve">
+    <value>المبيعات رقم الطلب</value>
+  </data>
+  <data name="Quotation_STAT" xml:space="preserve">
+    <value>حالة</value>
+  </data>
+  <data name="Quotation_TotaldetailAmount" xml:space="preserve">
+    <value>المبلغ الإجمالي مفصل</value>
+  </data>
+  <data name="Quotation_CreationDate" xml:space="preserve">
+    <value>تاريخ الإنشاء</value>
+  </data>
+  <data name="Quotation_Inquiry" xml:space="preserve">
+    <value>التحقيق الاقتباس</value>
+  </data>
+  <data name="AccountSettings" xml:space="preserve">
+    <value>إعدادات الحساب</value>
+  </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>غير اللغة</value>
+  </data>
+  <data name="CopyRightInfo" xml:space="preserve">
+    <value>برنامج كوماتسو باكستان</value>
+  </data>
+  <data name="DataBase" xml:space="preserve">
+    <value>قاعدة بيانات مختارة</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>أدخل كلمة السر</value>
+  </data>
+  <data name="EnterUserName" xml:space="preserve">
+    <value>أدخل اسم المستخدم</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>هل نسيت كلمة المرور؟</value>
+  </data>
+  <data name="GreetingText" xml:space="preserve">
+    <value>مرحبا بكم في</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>اسم المستخدم غير صالح / كلمة المرور</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>اللغة العربية</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="LoginDisplay" xml:space="preserve">
+    <value>تسجيل الدخول مع حسابك الشخصي</value>
+  </data>
+  <data name="LoginWithYourAccount" xml:space="preserve">
+    <value>تسجيل الدخول مع حسابك الشخصي</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>خروج</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة السر</value>
+  </data>
+  <data name="Quotation" xml:space="preserve">
+    <value>اقتباس</value>
+  </data>
+  <data name="QuotationCondition" xml:space="preserve">
+    <value>تفاصيل الاقتباس</value>
+  </data>
+  <data name="QuotationDetails" xml:space="preserve">
+    <value>حالة الاقتباس</value>
+  </data>
+  <data name="QuotationInquiry" xml:space="preserve">
+    <value>التحقيق الاقتباس</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>تذكرني</value>
+  </data>
+  <data name="SelectedLanguage" xml:space="preserve">
+    <value>اللغة المختارة</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>المستخدم</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>مرحبا</value>
+  </data>
+  <data name="WelcomeKME" xml:space="preserve">
+    <value> مرحبا بكم   </value>
+  </data>
+  <data name="WelcomeKMEName" xml:space="preserve">
+    <value>Komatsu</value>
+  </data>
+  <data name="WelcomeKMERegion" xml:space="preserve">
+    <value>الشرق الأوسط</value>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>أنت متصل حاليا إلى</value>
+  </data>
+  <data name="User_ChangePassword" xml:space="preserve">
+    <value>تغيير كلمة المرور</value>
+  </data>
+  <data name="Master_lblDataBase" xml:space="preserve">
+    <value />
+  </data>
+  <data name="QuotationDetails_btnCalculate" xml:space="preserve">
+    <value>حساب</value>
+  </data>
+  <data name="QuotationDetails_btnDownload" xml:space="preserve">
+    <value>تحميل</value>
+  </data>
+  <data name="QuotationDetails_btnImport" xml:space="preserve">
+    <value>استيراد</value>
+  </data>
+  <data name="QuotationDetails_btnSearch" xml:space="preserve">
+    <value>بحث</value>
+  </data>
+  <data name="QuotationDetails_btnStockSearch" xml:space="preserve">
+    <value>الأسهم بحث</value>
+  </data>
+  <data name="QuotationDetails_btnUpdate" xml:space="preserve">
+    <value>التحديث</value>
+  </data>
+  <data name="QuotationDetails_lblAdjustedPrice" xml:space="preserve">
+    <value>السعر المعدل</value>
+  </data>
+  <data name="QuotationDetails_lblCurrency" xml:space="preserve">
+    <value>عملة</value>
+  </data>
+  <data name="QuotationDetails_lblDistributerCodes" xml:space="preserve">
+    <value>الموزع مدونة</value>
+  </data>
+  <data name="QuotationDetails_lblDistributerName" xml:space="preserve">
+    <value>اسم الموزع</value>
+  </data>
+  <data name="QuotationDetails_lblErrorMark" xml:space="preserve">
+    <value>خطأ الأقسام</value>
+  </data>
+  <data name="QuotationDetails_lblGrandTotal" xml:space="preserve">
+    <value>المجموع الإجمالي</value>
+  </data>
+  <data name="QuotationDetails_lblGrossMarginRate" xml:space="preserve">
+    <value>الإجمالي نسبة الهامش</value>
+  </data>
+  <data name="QuotationDetails_lblNameOfOtherCharge1" xml:space="preserve">
+    <value>اسم من التهم الأخرى 1</value>
+  </data>
+  <data name="QuotationDetails_lblNameOfOtherCharge2" xml:space="preserve">
+    <value>اسم من التهم الأخرى 2</value>
+  </data>
+  <data name="QuotationDetails_lblOtherCharge1" xml:space="preserve">
+    <value>رسوم أخرى 1</value>
+  </data>
+  <data name="QuotationDetails_lblOtherCharge2" xml:space="preserve">
+    <value>رسوم أخرى 2</value>
+  </data>
+  <data name="QuotationDetails_lblPrefferedOrigins" xml:space="preserve">
+    <value>أعطيت الأولوية المنشأ</value>
+  </data>
+  <data name="QuotationDetails_lblQuotationNo" xml:space="preserve">
+    <value>عدد الاقتباس</value>
+  </data>
+  <data name="QuotationDetails_lblShippingCharges" xml:space="preserve">
+    <value>تكلفة الشحن</value>
+  </data>
+  <data name="QuotationDetails_lblStatus" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="QuotationDetails_lblTax" xml:space="preserve">
+    <value>ضريبة</value>
+  </data>
+  <data name="QuotationDetails_lblTotalDiscount" xml:space="preserve">
+    <value>إجمالي الخصم</value>
+  </data>
+  <data name="QuotationDetails_lblTotalPriceAmount" xml:space="preserve">
+    <value>المبلغ الكلي الأسعار</value>
+  </data>
+  <data name="QuotationDetails_lblTotalPriceCost" xml:space="preserve">
+    <value>التكلفة الإجمالية الأسعار</value>
+  </data>
+  <data name="QuotationDetails_lblTotalSellingPrice" xml:space="preserve">
+    <value>إجمالي سعر البيع</value>
+  </data>
+  <data name="QuotationDetails_lblTotalWeight" xml:space="preserve">
+    <value>الوزن الكلي</value>
+  </data>
+  <data name="QuotationDetails_thAcceptedQuantity" xml:space="preserve">
+    <value>المقبولة الكمية</value>
+  </data>
+  <data name="QuotationDetails_thDiscountPerItem" xml:space="preserve">
+    <value>خصم لكل بند</value>
+  </data>
+  <data name="QuotationDetails_thError" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
+  <data name="QuotationDetails_thLineNo" xml:space="preserve">
+    <value>رقم السطر</value>
+  </data>
+  <data name="QuotationDetails_thPartDescription" xml:space="preserve">
+    <value>جزء الوصف</value>
+  </data>
+  <data name="QuotationDetails_thPriceCost" xml:space="preserve">
+    <value>سعر الكلفة</value>
+  </data>
+  <data name="QuotationDetails_thProcessedPartNo" xml:space="preserve">
+    <value>معالجة رقم الجزء</value>
+  </data>
+  <data name="QuotationDetails_thRequestedPartNo" xml:space="preserve">
+    <value>طلب رقم الجزء</value>
+  </data>
+  <data name="QuotationDetails_thRequestedQuantity" xml:space="preserve">
+    <value>طلب الكمية</value>
+  </data>
+  <data name="QuotationDetails_thSellingPrice" xml:space="preserve">
+    <value>سعر البيع</value>
+  </data>
+  <data name="QuotationDetails_thSubLineNo" xml:space="preserve">
+    <value>الفرعي رقم السطر</value>
+  </data>
+  <data name="QuotationDetails_thTaxAmount" xml:space="preserve">
+    <value>مبلغ الضريبة</value>
+  </data>
+  <data name="QuotationDetails_thUnitPrice" xml:space="preserve">
+    <value>سعر الوحدة</value>
+  </data>
+  <data name="QuotationDetails_thWeight" xml:space="preserve">
+    <value>الوزن</value>
+  </data>
+  <data name="QuotationDetails_thCountryOfOrigin" xml:space="preserve">
+    <value>بلد المنشأ</value>
+  </data>
+  <data name="QuotationDetails_thPriceAmount" xml:space="preserve">
+    <value>سعر الكمية</value>
+  </data>
+  <data name="QuotationDetails_thErrorDescription" xml:space="preserve">
+    <value>وصف الخطأ</value>
+  </data>
+  <data name="QuotationDetails_lblWareHouse" xml:space="preserve">
+    <value>WareHouse</value>
+  </data>
+  <data name="btnClear" xml:space="preserve">
+    <value>محو</value>
+  </data>
+  <data name="btnRegister" xml:space="preserve">
+    <value>تسجيل</value>
+  </data>
+  <data name="lblConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="lblDistributorCode" xml:space="preserve">
+    <value>كود الموزع</value>
+  </data>
+  <data name="lblEmailId" xml:space="preserve">
+    <value>معرف البريد الإلكتروني</value>
+  </data>
+  <data name="lblPassword" xml:space="preserve">
+    <value>كلمه السر</value>
+  </data>
+  <data name="lblUserId" xml:space="preserve">
+    <value>معرف المستخدم</value>
+  </data>
+  <data name="lblUserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="KMEEORQDesc" xml:space="preserve">
+    <value>KME Emergency Reserve Qty</value>
+    <comment>20160311</comment>
+  </data>
+  <data name="thKMEEORQ" xml:space="preserve">
+    <value>KME EOR</value>
+    <comment>20160311</comment>
+  </data>
+</root>

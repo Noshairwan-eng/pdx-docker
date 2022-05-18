@@ -1,0 +1,112 @@
+﻿@model IEnumerable<PDXWEB.Models.Master.StockInquiry.DTZ01011A010> 
+
+@{
+WebGrid grid = new WebGrid(source: Model, 
+canSort: false,        
+rowsPerPage:12,   
+ajaxUpdateContainerId: "main" ,
+ajaxUpdateCallback: "AfterLoad",
+canPage: true); 
+}  
+@if(Model.Count()>0)
+{
+    <div id="main" class="datagrid table-responsive" style=" height:388px" >
+@*    @if (Model.Count()>10)
+    {
+     <div class="NewPaging PagingStyle" >
+          @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")
+         </div>    
+    }
+      *@
+
+
+        @grid.Table(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+        //footerStyle: "gridFooter",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "tblSoStatus" },
+                           columns: grid.Columns(
+                           @*grid.Column("Select", style: "col1", format: @<text> @Html.CheckBox( @Resources.Resource.thSelect,
+                           new { value = @item.PartNumber + "," + item.PartDescription, @class = "ClsSelect" })</text>),*@
+                           grid.Column("PartNumber",  @Resources.Resource.thPartNo),
+                           grid.Column("ChainExist", " ", style: "redText"),
+                           grid.Column("PartDescription", @Resources.Resource.thPartDescription),
+                           grid.Column("InterchageableCode", @Resources.Resource.thInterChangeableCode),
+                           grid.Column("LatestPartNumber", @Resources.Resource.thLatestPartNumber),
+                           grid.Column("StockAvailable", @Resources.Resource.thStockAvailable),
+                           grid.Column("EOReserveQuantity", @Resources.Resource.thEOReserveQuantity),
+                           grid.Column("OnOrderQuantity", @Resources.Resource.thOrderQuantity),
+                           grid.Column("KMEListPrice", @Resources.Resource.thKMEListPrice),
+                           grid.Column("Weight", @Resources.Resource.thWeightgm),
+                           grid.Column("KLTDLeadTime", @Resources.Resource.thKLTDLeadProductionPerMonth),
+                           grid.Column("KMEMortality", @Resources.Resource.thMortality),
+                           grid.Column("KMEOrderRank", @Resources.Resource.thOrderRank),
+                           grid.Column("QuantityByUnit", @Resources.Resource.thQuantityByUnit),
+                           grid.Column("BoxQuantity", @Resources.Resource.thBoxQuantity),
+                           grid.Column("ReturnableCode", @Resources.Resource.thReturnableCode),
+                           grid.Column("CommodityGroupCodeNew",@Resources.Resource.thCommodityGroupCodeNew),
+                           grid.Column("CommodityCodeNew", @Resources.Resource.thCommodityCodeNew),
+                           grid.Column("CommodityGroupCodeOld", @Resources.Resource.thCommodityGroupCodeOld),
+                           grid.Column("CommodityCodeOld", @Resources.Resource.thCommodityCodeOld),
+                           grid.Column("BornDate", @Resources.Resource.thSupplierBornDate),
+                           grid.Column("ProductionLot",@Resources.Resource.thProductionLot),
+                           grid.Column("ModelGroupCode",@Resources.Resource.thModelGroupCode),
+                           grid.Column("ModelCode", @Resources.Resource.thModelCode),
+                           grid.Column("HSCode", @Resources.Resource.thHSCodeLocal),
+                           grid.Column("ServiceNewsNo", @Resources.Resource.thServiceNewsNumber)
+
+                     ) //grid.columns
+
+                   ) @* grid.GetHtml *@
+
+  </div>
+    
+    <script>
+
+        EnableControls();
+    
+    </script>
+}
+else
+{
+   <script>
+
+       DisableControlsOnLoad();
+    
+    </script>
+}
+ 
+  <script type="text/javascript">
+
+      $(document).ready(function () { 
+      
+          
+          lblMessage = "@Session["lblMsg"].ToString()";
+          AfterLoad();
+
+      }); 
+
+  </script>
+
+
+
+  @if ( Session["ImportData"]!=null)
+  {
+      <script>
+          $("#btnExportPartsMasterData").removeAttr("disabled");
+      
+      </script>
+     // Session["ImportData"] = null;
+  }
+  else
+  {
+      <script>
+          $("#btnExportPartsMasterData").attr("disabled",true);
+      
+      </script>
+  }
+
+

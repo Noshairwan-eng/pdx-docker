@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="A01" xml:space="preserve">
+    <value>Quotation</value>
+  </data>
+  <data name="A01S010_01" xml:space="preserve">
+    <value>Quotation Inquiry</value>
+  </data>
+  <data name="A01S010_01_001" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="A01S010_01_002" xml:space="preserve">
+    <value>Quotation Copy</value>
+  </data>
+  <data name="A01S010_01_003" xml:space="preserve">
+    <value>CopyToSO</value>
+  </data>
+  <data name="A01S010_01_004" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="A01S010_01_005" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="A01S020_02" xml:space="preserve">
+    <value>Quotation Condition</value>
+  </data>
+  <data name="A01S020_02_001" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="A01S020_02_002" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="A01S020_02_003" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="A01S030_03" xml:space="preserve">
+    <value>Quotation Detail</value>
+  </data>
+  <data name="A01S030_03_001" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="A01S030_03_002" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="A01S030_03_003" xml:space="preserve">
+    <value>Download Excel</value>
+  </data>
+  <data name="A01S030_03_004" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="A01S030_03_005" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
+  <data name="S01" xml:space="preserve">
+    <value>Sales Order</value>
+  </data>
+  <data name="S01S080_04" xml:space="preserve">
+    <value>Status Inquiry(Order No)</value>
+  </data>
+  <data name="S01S080_04_001" xml:space="preserve">
+    <value>Excel Download</value>
+  </data>
+  <data name="U01" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="U01S030_00" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="U01S040_03" xml:space="preserve">
+    <value>Inquiry</value>
+  </data>
+  <data name="U01S050_04" xml:space="preserve">
+    <value>Creation</value>
+  </data>
+  <data name="Z01" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="Z01S110_11" xml:space="preserve">
+    <value>Stock Inquiry</value>
+  </data>
+  <data name="A01S070_05" xml:space="preserve">
+    <value>Quotation Conversion</value>
+  </data>
+  <data name="A01S010_01_006" xml:space="preserve">
+    <value>OrderConfirmation</value>
+  </data>
+  <data name="A01S010_01_007" xml:space="preserve">
+    <value>SOCondition</value>
+  </data>
+  <data name="Z01S100_12" xml:space="preserve">
+    <value>Parts Master Inquiry</value>
+  </data>
+  <data name="A01S030_03_006" xml:space="preserve">
+    <value>Stock Search</value>
+  </data>
+  <data name="U01S040_03_001" xml:space="preserve">
+    <value>New User</value>
+  </data>
+  <data name="Z01S370_13" xml:space="preserve">
+    <value>Multiple Parts Stock Inquiry</value>
+  </data>
+  <data name="S01S090_05" xml:space="preserve">
+    <value>Status Inquiry(Part No.)</value>
+  </data>
+  <data name="S01S090_05_001" xml:space="preserve">
+    <value>Excel Download</value>
+  </data>
+  <data name="A01S080_04" xml:space="preserve">
+    <value>Copy to Sales Order</value>
+  </data>
+  <data name="A01S080_04_001" xml:space="preserve">
+    <value>PickingAllowed</value>
+  </data>
+  <data name="A01S080_04_002" xml:space="preserve">
+    <value>MixPacking</value>
+  </data>
+  <data name="A01S080_04_003" xml:space="preserve">
+    <value>PartialShipment</value>
+  </data>
+  <data name="Z01S410_14" xml:space="preserve">
+    <value>Stock Status</value>
+  </data>
+  <data name="X01" xml:space="preserve">
+    <value>Consignment Sales</value>
+  </data>
+  <data name="Z01S500_15" xml:space="preserve">
+    <value>Upload File</value>
+  </data>
+  <data name="X01S010_04" xml:space="preserve">
+    <value>Order Inquiry</value>
+  </data>
+  <data name="X01S020_05" xml:space="preserve">
+    <value>Order Condition</value>
+  </data>
+  <data name="X01S020_05_001" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="X01S030_06" xml:space="preserve">
+    <value>Order Detail</value>
+  </data>
+  <data name="X01S020_05_002" xml:space="preserve">
+    <value>Fix Price</value>
+  </data>
+  <data name="S01S080_04_002" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="S01S090_05_002" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="A01S010_01_008" xml:space="preserve">
+    <value>Person Incharge</value>
+  </data>
+  <data name="X01S010_04_001" xml:space="preserve">
+    <value>Person Incharge</value>
+  </data>
+  <data name="X01S010_04_002" xml:space="preserve">
+    <value>Generate Invoice</value>
+  </data>
+  <data name="X01S010_04_003" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="Z01S100_12_001" xml:space="preserve">
+    <value>KME List Price</value>
+  </data>
+  <data name="Z01S110_11_001" xml:space="preserve">
+    <value>KME List Price</value>
+  </data>
+  <data name="Z01S370_13_001" xml:space="preserve">
+    <value>KME List Price</value>
+  </data>
+  <data name="X01S020_05_003" xml:space="preserve">
+    <value>Price Setup Code</value>
+  </data>
+  <data name="X01S020_05_004" xml:space="preserve">
+    <value>Substitution</value>
+  </data>
+  <data name="X01S020_05_005" xml:space="preserve">
+    <value>Manufacturer</value>
+  </data>
+  <data name="U01S050_05" xml:space="preserve">
+    <value>New User Registration</value>
+  </data>
+  <data name="M01" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="M01S010_01" xml:space="preserve">
+    <value>Price List Download</value>
+  </data>
+  <data name="X01S040_01" xml:space="preserve">
+    <value>Stock Transfer Request Inquiry</value>
+  </data>
+  <data name="X01S040_01_001" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="X01S040_01_002" xml:space="preserve">
+    <value>Convert To Stock Transfer Order</value>
+  </data>
+  <data name="X01S040_01_003" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="X01S040_01_004" xml:space="preserve">
+    <value>Stock Transfer Condition Detail</value>
+  </data>
+  <data name="X01S040_01_005" xml:space="preserve">
+    <value>Export Data</value>
+  </data>
+  <data name="X01S040_01_006" xml:space="preserve">
+    <value>From KME Warehouse</value>
+  </data>
+  <data name="X01S040_01_007" xml:space="preserve">
+    <value>Unprocess</value>
+  </data>
+  <data name="X01S040_01_008" xml:space="preserve">
+    <value>Don't Consider EO Reserve</value>
+  </data>
+  <data name="X01S040_01_009" xml:space="preserve">
+    <value>From Buy Back Order</value>
+  </data>
+  <data name="X01S040_01_010" xml:space="preserve">
+    <value>Allocation On Order</value>
+  </data>
+  <data name="X01S040_01_011" xml:space="preserve">
+    <value>Mix Packing Allowed</value>
+  </data>
+  <data name="X01S040_01_012" xml:space="preserve">
+    <value>Partial Shipment Allowed</value>
+  </data>
+  <data name="X01S040_01_013" xml:space="preserve">
+    <value>Picking Allowed</value>
+  </data>
+  <data name="X01S040_01_014" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="X01S050_02" xml:space="preserve">
+    <value>Stock Transfer Request Condition</value>
+  </data>
+  <data name="X01S060_03" xml:space="preserve">
+    <value>Stock Transfer Request Detail</value>
+  </data>
+  <data name="Z01X010_10" xml:space="preserve">
+    <value>Warehouse Stock Status Single Part</value>
+  </data>
+  <data name="Z01X020_10" xml:space="preserve">
+    <value>Warehouse Stock Status Multiple Parts</value>
+  </data>
+  <data name="A01S020_02_004" xml:space="preserve">
+    <value>Tax Rate Selection</value>
+  </data>
+  <data name="S04" xml:space="preserve">
+    <value>Sales Invoice</value>
+  </data>
+  <data name="S04S010_01" xml:space="preserve">
+    <value>Invoice Inquiry</value>
+  </data>
+  <data name="S04S010_01_001" xml:space="preserve">
+    <value>Direct Shipment</value>
+  </data>
+  <data name="A01S030_04" xml:space="preserve">
+    <value>Reserve Parts</value>
+  </data>
+</root>

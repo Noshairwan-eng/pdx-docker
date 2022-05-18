@@ -1,0 +1,422 @@
+﻿@*
+    hst001: Imran Shahzad @ 07-June-2017
+            - Added js and css files for DateTimePicker.
+*@
+
+@{
+    ViewBag.Title = "User Registration";
+}
+<link href="~/Content/WebGrid/GridPagingStyle.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/WebGrid/webgrid.css" rel="stylesheet" type="text/css" />
+@*hst001- Added js and css files for DateTimePicker*@
+<script src="@Url.Content("~/Scripts/DatePicker/CustomDatePicker.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/JqueryUI/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/JqueryUI/jquery-ui.min.js")" type="text/javascript"></script>
+
+<style type="text/css">
+    .RowBottomMargin
+    {
+        margin-bottom: 5px;
+    }
+    .MarginRightCheckbox
+    {
+        margin-right: 5px !important;
+    }
+    .labelWidth
+    {
+        padding-top: 6px;
+        height: 26px;
+        font-weight: normal;
+    }
+    td, th
+    {
+        text-align: left !important;
+    }
+    .clsRadion
+    {
+        margin-left: 10px !important;
+    }
+    #divToUpdate1
+    {
+        overflow:scroll !important;
+    }
+    .invalid {
+        border:1px solid red;
+    }
+
+    @* hst001 *@
+    button.ui-datepicker-close {display: none;}
+
+</style>
+<div id="divUserPopup">
+</div>
+<div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content MessageContent">
+            <div class="modal-header MessageHeader panel-heading PanelTitle panelTitleHeight">
+                <button type="button" class="close" data-dismiss="modal">
+                </button>
+                <h4 class="modal-title panel-title" id="PopupMessageTitle">
+                </h4>
+            </div>
+            <div class="modal-body MessageBody" id="modalBody">
+                <div class="col-xs-3">
+                    <img style="display: inline !important" class="imgError" />
+                </div>
+                <div class="col-xs-9" style="padding-top: 6px">
+                    <label style="display: inline !important; font-weight: normal !important; vertical-align: sub !important;"
+                           id="lblMessageText" class="lblError">
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer MessageFooter">
+                <button style="width: 80px; height: 25px; text-align: center; float: none !important;
+                    padding: 0px; padding-left: 12px;" id="btnOk" class="btn btnOk center-block"
+                        data-dismiss="modal">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="modal fade" id="PasswordStrengthModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">-->
+<!-- Modal content-->
+<!--<div class="modal-content MessageContent">
+            <div class="modal-header MessageHeader panel-heading PanelTitle panelTitleHeight">
+                <button type="button" class="close" data-dismiss="modal">
+                </button>
+                <h4 class="modal-title panel-title" id="PasswordStrengthPopupMessageTitle">
+                </h4>
+            </div>
+            <div class="modal-body" id="PasswordStrengthmodalBody" style="height:110px;">
+                <div class="row">
+                    <div class="col-md-3" style="line-height:115px;">
+                        <img style="display: inline !important" class="imgError" />
+                    </div>
+                    <div class="col-md-9" style="padding-top: 10px;padding-left:0px;">
+                        <p>
+                            <label style="display: inline !important; font-weight: normal !important; vertical-align: sub !important;"
+                                   id="lblMessageText" class="lblError">
+                                Please choose a password that contains:
+                            </label>
+                            <ul style="padding-left:16px;">
+                                <li>Both Numbers and Alphabets.</li>
+                                <li>Both Uppercase and Lowercase characters.</li>
+                                <li>Atleast one special character.</li>
+                            </ul>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer MessageFooter">
+                <button style="width: 80px; height: 25px; text-align: center; float: none !important;
+                    padding: 0px; padding-left: 12px;" id="btnOk" class="btn btnOk center-block"
+                        data-dismiss="modal">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>-->
+<!-- The Modal -->
+<div class="modal fade" id="PasswordStrengthModal">
+    <div class="modal-dialog" style="padding-top:150px;">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header MessageHeader">
+                <h4 class="modal-title">Change Password</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:10px !important">
+                <div class="row" style="padding:0px;margin:0px;">
+                    <div class="col-md-3" style="text-align:center;margin-bottom:5px;">
+                        <img class="imgError" src="./images/error.png" />
+                    </div>
+                    <div class="col-md-9" style="margin-bottom:5px;">
+                        <p>
+                            <label>
+                                Please choose a password that contains:
+                            </label>
+                            <ul style="padding-left:15px;">
+                                <li>Both Numbers and Alphabets.</li>
+                                <li>Both Uppercase and Lowercase characters.</li>
+                                <li>At least one special character.</li>
+                            </ul>
+
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button style="width: 80px; height: 25px; text-align: center; float: none !important;
+                    padding: 0px; padding-left: 12px;" id="btnOk" class="btn btnOk center-block"
+                        data-dismiss="modal">
+                    OK
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="panel  panel-primary PanelTopMargin" style="min-height: 400px !important;">
+    <div class="panel-heading PanelTitle panelTitleHeight YellowBackgroundItem">
+        <h3 class="panel-title pull-left " id="FormTitle">
+            @ViewBag.Title
+        </h3>
+    </div>
+    <div class="panel-body panel-bodyp ">
+        <div class="innerbar" id="ButtonBar">
+            <button onclick="PerformSearch()" id="Searchbtn" class="btnStyle Searchbtn">
+                Search
+            </button>
+            @*<button id="btnSave" class="btnStyle Savebtn" onclick="@("location.href='" + Url.Action("AddNewUser", "UserRegistration", new { @class = "modal-link" }) + "'")"">
+                New</button>*@
+            @Html.ActionLink("New", "AddNewUser", "UserRegistration", null, new { @class = "modal-link btnStyle Newbtn" })
+            @Html.ActionLink("Edit", "UpdateAction", "UserRegistration", new { uID = "xxx" }, new { @class = "modal-link btnStyle UpdateBtnMaster", @id = "buttonUpdate", @disabled = "disabled" })
+            @*<button class="Savebtn btnStyle" onclick="ModifyUser();" id="btnUpdate">
+                Update</button>*@ @*<input type="button" style="width: 141px" class=" btnStyle ExportCSVbtn" id="btnExportCSV"
+                    onclick="ExportToCSV();" value="Export to CSV" />
+                <input type="button" style="width: 141px" class=" btnStyle ExportXLSbtn" id="btnExportXLS"
+                    onclick="ExportToExcel();" value="Export to XLSX" />*@
+            </div>
+            <div class="row " style="padding-left: 15px !important; margin-top: 20px !important;">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="row RowBottomMargin">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 AnalysisLbl ">
+                            @Html.Label("User ID", "User ID", new { @id = "lblUserID", @class = "labelWidth" })
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 AnalysisLbl ">
+                            @Html.TextBox("txtUserID", null, new { @id = "txtUserID", @class = "DisplayInLine form-control InputElements" })
+                        </div>
+                    </div>
+                    <div class="row RowBottomMargin">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 AnalysisLbl ">
+                            <label class="DisplayInLine labelWidth" style="vertical-align: sub !important;">
+                                <input type="checkbox" id="chkIsActive" name="checkbox" class="MarginRightCheckbox"
+                                       value="value" checked="checked" />Active
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="row RowBottomMargin">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 AnalysisLbl ">
+                            @Html.Label("User Name", "User Name", new { @id = "lblUserName", @class = "labelWidth" })
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 AnalysisLbl ">
+                            @Html.TextBox("txtUserName", null, new { @id = "txtUserName", @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                    <div class="row RowBottomMargin">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 AnalysisLbl ">
+                            @Html.Label("Distributor", new { @id = "lblDistributor", @class = "labelWidth" })
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 AnalysisLbl ">
+                            @Html.DropDownList("ddlDistributor", ViewBag.lstDistributor as List<SelectListItem>, new { @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                    <div class="row RowBottomMargin">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 AnalysisLbl ">
+                            @Html.Label("User Role", new { @id = "lblUserRole", @class = "labelWidth" })
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 AnalysisLbl ">
+                            @Html.DropDownList("ddlUserRole", ViewBag.lstUserRoles as List<SelectListItem>, new { @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                    <div class="row RowBottomMargin">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 AnalysisLbl ">
+                            @Html.Label("Customer Name", new { @id = "lblCustomerName", @class = "labelWidth" })
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 AnalysisLbl ">
+                            @Html.DropDownList("ddlCustomerName", ViewBag.lstCustomerNames as List<SelectListItem>, new { @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divToUpdate1">
+                <table id="tblEmpty" class="table table-striped table-hover">
+                    <thead>
+                        <tr class="gridHead">
+                            <th scope="col">
+                                Select
+                            </th>
+                            <th scope="col">
+                                User ID
+                            </th>
+                            <th scope="col">
+                                User Name
+                            </th>
+                            <th scope="col">
+                                User Role
+                            </th>
+                            <th scope="col">
+                                User Email
+                            </th>
+                            <th scope="col">
+                                Distributor
+                            </th>
+                            <th scope="col">
+                                Active
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div id="divToUpdate" style="height: 430px;">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var spinner;
+    $(document).ajaxStart(function () {
+        spinner = spin();
+    }).ajaxStop(function () {
+        unspin(spinner);
+    });
+
+
+    function setSelected(id) {
+
+        $("#buttonUpdate").prop("disabled", false);
+    }
+
+    $("#buttonUpdate").click(function () {
+
+        //Get the id of the selected item in dropdown
+        var id = $('input[name="rd1"]:checked');
+        var selectedRow = $(id).closest('tr');
+        var td = $(selectedRow).find('td:eq(1)');
+        var userID = $(td).html();
+
+        if (userID != null && userID != undefined) {
+            //Replace the predifined QueryString param "xxx" with the "id"
+            var split = this.href.split("uID")[0];
+            this.href = split + "uID=" + userID;
+        }
+        else return false;
+        //        this.href = this.href.replace("xxx", userID);
+    });
+
+    function PerformSearch() {
+
+        var intPageSize = 10;
+        var intPageNo = null;
+
+        var Params = {};
+        var userID = "";
+        userID = $("#txtUserID").val();
+        var userName = "";
+        userName = $("#txtUserName").val();
+        var isActive = 0
+        if ($('#chkIsActive').is(":checked")) {
+            isActive = 1;
+        }
+
+        var distributor = "";
+        distributor = $("#ddlDistributor").val();
+        var userRole = "";
+        userRole = $("#ddlUserRole").val();
+        var customerID = "";
+        customerID = $("#ddlCustomerName").val();
+
+        Params = { sUserID: userID, sUserName: userName, sIsActive: isActive, sRole: userRole,
+            sDistributorCode: distributor, sCustomerID: customerID, pageNo: intPageNo, pageSize: intPageSize
+        };
+
+        var urlz = '@Url.Action("searchUsers", "UserRegistration", null)';
+        var spinner = spin(spinner);
+        $.post(urlz, Params, function (data) {
+
+            if (data.DisplayMessage != "1") {
+                var data = data.replace("$(containerId).parent().delegate", "$(containerId).parent().undelegate();$(containerId).parent().delegate ");
+                var data = data.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);", " if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                $("#divToUpdate").html(data);
+                $("#divToUpdate1").hide();
+                $('.NewPaging ul').addClass("pagination");
+
+            }
+            else {
+                $("#divToUpdate").html('');
+                $("#divToUpdate1").show();
+                DisplayModal("0", "No records found.", "User Registration");
+            }
+            unspin(spinner);
+        });
+    }
+
+    function afterLoad() {
+
+        //Unbind(); ///hst107
+        setArrowImages();
+        $('.NewPaging ul').addClass("pagination");
+    }
+
+    function setArrowImages() {
+
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+
+        var header = $('th a[href*=' + col + ']');
+
+        if (header.length > 1) {
+            var matchedIndex = 0;
+            for (var i = 0; i < header.length; i++) {
+                //(this).attr('href');
+
+                var url = $(header[i]).attr('href');
+                if (url.indexOf(col + '&') !== -1) {
+                    matchedIndex = i;
+                }
+            }
+
+            //header = header[matchedIndex]; //.splice(matchedIndex + 1);
+
+            var i = header.length;
+            while (i--) {
+                if (i != matchedIndex) {
+                    header.splice(i, 1);
+                }
+            }
+        }
+
+        if (dir == 'Ascending') {
+            header.text(header.text() + ' ▲');
+        }
+        if (dir == 'Descending') {
+            header.text(header.text() + ' ▼');
+        }
+    }
+
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#registerUser").prop("disabled", true);
+            $("#registerUser").removeAttr('href');
+        });
+
+                    //    var spinner;
+                    //    $(document).ajaxStart(function () {
+                    //        //Show your progressbar here
+                    //        spin(spinner);
+                    //    }).ajaxStop(function () {
+                    //        //Hide your progressbar here
+                    //        unspin(spinner);
+                    //        $(".mySpinner").hide();
+                    //    });
+    </script>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<KME_SSO.Models.clsCustomer>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    if (Model.Count() > 0)
+    {
+        WebGrid grid = new WebGrid(rowsPerPage: ViewBag.PageSize, canPage: true,
+           ajaxUpdateContainerId: "main", canSort: true, ajaxUpdateCallback: "afterLoad"
+           );
+
+        grid.Bind(source: Model,
+                   rowCount: ViewBag.TotalRows,
+                   autoSortAndPage: false); 
+
+    <div id="main" class=" ">
+        @if (ViewBag.TotalRows > 10)
+        {
+            grid.PageIndex = Convert.ToInt32(Session["pgNo"]) - 1;
+            <div class="NewPaging row   " id="HeadPaging" style="text-align: center; !important;
+                border: 1px solid white;">
+                <div class="span9">
+                    @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")</div>
+            </div>
+        }
+        <div class="datagrid table-responsive" style="overflow: auto;">
+            @grid.Table(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "UserInquiryId" },
+                           columns: grid.Columns(
+                    grid.Column("IsSelected", "Select", style: "col1",
+                                              format: @<text>
+                                              <input  type="radio" name="rd2"  class="clsRadion" />
+                                              </text>,canSort: false),
+                    grid.Column(format: @<input type="hidden" style=" display:none" name="CustomerID" value="@item.CustID" />),
+                    grid.Column("CustName", "Customer Name"),
+                    grid.Column("Distributor", "Distributor"),
+                    grid.Column("countryName", "Country"),
+                    grid.Column("Telephone", "Telephone"),
+                   grid.Column("Email", "Email")
+                  
+
+                                                             ) //grid.columns
+
+                                                    ) @* grid.GetHtml *@
+        </div>
+        @Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+    </div>
+    }
+}

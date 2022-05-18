@@ -1,0 +1,40 @@
+﻿ 
+@{
+    
+     if (Session["userID"]!=null) {
+
+
+          
+       
+      
+  
+           
+        
+         <li  >  <a href=""  id="logOut">@Resources.Resource.Logout</a> </li>
+      
+                  
+       
+                        
+                  }        
+                           
+                          
+                    
+       
+         
+         
+  
+    
+     else
+     {
+ 
+        
+        <li> @Html.ActionLink(Resources.Resource.Login, "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+ 
+ 
+
+    
+    
+    }
+
+
+    }

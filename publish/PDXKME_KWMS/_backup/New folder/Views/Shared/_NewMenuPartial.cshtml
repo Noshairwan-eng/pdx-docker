@@ -1,0 +1,327 @@
+﻿@*
+    hst001:rMehmood @Nov 25, 2020
+           Added New Menu
+*@
+@using PDXWEB.BusinessModels.Common
+@{
+     
+    
+    string strChecForEng = "";
+    string strChecForAr = "";
+    string strSetActiveEng = "";
+    string strSetActiveAr = "";
+
+    if (Session["SelectedLang"] != null)
+    {
+        if (Session["SelectedLang"].ToString() == "ar-AE")
+        {
+            strSetActiveAr = "class=active";
+            strChecForAr = "selected=selected";
+        }
+        else if (Session["SelectedLang"].ToString() == "en-GB")
+        {
+            strChecForEng = "selected=selected";
+            strSetActiveEng = "class=active";
+        }
+    }
+    
+    
+    
+}
+<nav class="navbar navbar-default">
+  <div class="container-fluid"> 
+
+      <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    @if (Session["userID"] != null)
+    {
+    <ul class="nav navbar-nav">     
+  @*     <li  >
+       <a href="@Url.Action("index","home",null)" style=" padding:0! important" > <img src="@Url.Content("~/Images/home.png")" style="height: 30px; padding-right: 15px;  padding-left: 13px;" /></a>       
+       </li>
+        <li class="divider-vertical"></li>*@
+        @{if (UserRights.hasRight("Z01") && (UserRights.hasRight("Z01S110_11") || UserRights.hasRight("Z01S100_12")
+              || UserRights.hasRight("Z01S370_13") || UserRights.hasRight("Z01S410_14") || UserRights.hasRight("Z01X010_10")
+              || UserRights.hasRight("Z01X020_10") || UserRights.hasRight("Z01S500_15")))
+          {
+           <li class="dropdown">
+
+           <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.Master  </a>
+            <ul class="dropdown-menu" role="menu">
+           @if (UserRights.hasRight("Z01S110_11"))
+           {
+           <li><a href="@Url.Action("StockInquiry", "StockInquiry", null)">@Resources.Resource.StockInquiry </a></li>
+           }
+           @if (UserRights.hasRight("Z01S100_12"))
+           {
+           <li><a href="@Url.Action("PartsMasterInquiry", "StockInquiry", null)">@Resources.Resource.PartMasterInquiry</a></li>  
+           }
+            @if (UserRights.hasRight("Z01S370_13"))
+            {
+            <li><a href="@Url.Action("MultiplePartsStockInquiry", "StockInquiry", null)">@Resources.Resource.MultiplePartsStockInquiry</a></li> 
+            }
+             @if (UserRights.hasRight("Z01S410_14"))
+             {
+             <li><a href="@Url.Action("StockStatus", "StockInquiry", null)">@Resources.Resource.StockStatus</a></li> 
+             }
+               @if (UserRights.hasRight("Z01X010_10"))
+               {
+             <li><a href="@Url.Action("StockStatus", "WHStockStatus", null)">@Resources.Resource.WareHouseStockStatus</a></li> 
+               }
+          
+            @if (UserRights.hasRight("Z01X020_10"))
+            {
+            <li><a href="@Url.Action("StockStatusMultipleParts", "WHStockStatus", null)">@Resources.Resource.WareHouseStockStatusMultipleParts</a></li> 
+            }
+           
+
+              @if (UserRights.hasRight("Z01S500_15"))
+              {
+            <li><a href="@Url.Action("Index", "FileUpload", null)">@Resources.Resource.UploadFile</a></li> 
+              }
+
+
+
+
+
+          </ul> 
+           
+            </li>}
+}
+       
+         @*<li class="divider-vertical"></li>*@
+        @{if (UserRights.hasRight("A01") && (UserRights.hasRight("A01S010_01") || UserRights.hasRight("A01S020_02") || UserRights.hasRight("A01S030_03")))
+          {
+            
+           <li class="divider-vertical"></li>       
+           <li class="dropdown">
+
+           <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.Quotation  </a>
+           <ul class="dropdown-menu" role="menu">
+           @if (UserRights.hasRight("A01S010_01"))
+           {
+           <li><a href="@Url.Action("QuotationInquiry", "Inquiry", null)">@Resources.Resource.QuotationInquiry </a></li>
+           }
+           @if (UserRights.hasRight("A01S020_02"))
+           {
+           <li><a href="@Url.Action("Index", "QuotationCondition", null)">@Resources.Resource.QuotationCondition </a></li> 
+           }
+          @if (UserRights.hasRight("A01S030_03"))
+          {
+                <li><a href="@Url.Action("Index", "QuotationDetails", null)">@Resources.Resource.QuotationDetail </a></li>
+          }
+           @*hst001 start*@
+          @if (UserRights.hasRight("A01S030_04"))
+         {
+            <li><a href="@Url.Action("ReservePartsInquiry", "ReservePartsInquiry", null)">@Resources.Resource.ReserveParts </a></li>
+         }
+           @*hst001 end*@
+          </ul> 
+
+          </li>
+          }
+    }
+          @*<li class="divider-vertical"></li>*@
+
+
+
+            @{if (UserRights.hasRight("S01") && (UserRights.hasRight("S01S080_04") || UserRights.hasRight("S01S090_05")))
+              {
+           <li class="divider-vertical"></li>
+           <li class="dropdown">
+
+           <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.SalesOrder  </a>
+            <ul class="dropdown-menu" role="menu">
+             @if (UserRights.hasRight("S01S080_04"))
+             {
+           <li><a href="@Url.Action("SOStatusInquiryByOrderNo", "SOStatusInquiry", null)">@Resources.Resource.OrderStatusInquiryByOrderNo </a></li>
+             }
+
+           @if (UserRights.hasRight("S01S090_05"))
+           {
+           <li><a href="@Url.Action("SOStatusInquiryByPartNo", "SOStatusInquiryByPartNo", null)">@Resources.Resource.OrderStatusInquiryByPartNo </a></li>  
+           }
+           </ul>           
+           </li>
+              }
+    }
+            <li class="divider-vertical"></li>
+        @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("S04S010_01"))
+        { 
+            <li class="dropdown"> 
+               <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.SalesInvoice  </a>            
+                 <ul class="dropdown-menu" role="menu">                
+                     <li><a href="@Url.Action("SalesInvoiceInquiry", "SalesInvoiceInquiry", null)">@Resources.Resource.SalesInvoiceInquiry </a></li>                 
+              </ul>
+            </li>
+        }
+            
+            
+            @*<li class="divider-vertical"></li> *@
+              @{if (UserRights.hasRight("X01") && (UserRights.hasRight("X01S010_04") || UserRights.hasRight("X01S020_05") || UserRights.hasRight("X01S030_06")
+                    || UserRights.hasRight("X01S040_01") || UserRights.hasRight("X01S050_02") || UserRights.hasRight("X01S060_03")))
+                {
+           <li class="divider-vertical"></li>
+           <li class="dropdown"> 
+           <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.Consignment  </a>
+            
+             <ul class="dropdown-menu" role="menu">
+                 @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("X01S010_04"))
+                 {
+                 <li><a href="@Url.Action("CSInquiryView", "CSInquiry", null)">@Resources.Resource.ConsignmentOrderInquiry</a></li> 
+                 }
+                 @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("X01S020_05"))
+                 {
+                  <li><a href="@Url.Action("CSConditionsView", "CSCondition", null)">@Resources.Resource.ConsignmentOrderConditions</a></li> 
+                 }
+                 @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("X01S030_06"))
+                 {
+                 <li><a href="@Url.Action("Index", "CSDetails", null)">@Resources.Resource.ConsignmentOrderDetail</a></li> 
+                 }
+           
+           
+            @if (UserRights.hasRight("X01S040_01"))
+            {
+           <li><a href="@Url.Action("Index", "STInquiry", null)">@Resources.Resource.StockTransferRequestInquiry </a></li>
+            }
+
+            @if (UserRights.hasRight("X01S050_02"))
+            {
+           <li><a href="@Url.Action("StockReqConditionView", "STCondition", null)">@Resources.Resource.StockTransferRequestCondition</a></li>  
+            }
+
+           @if (UserRights.hasRight("X01S060_03"))
+           {
+            <li><a href="@Url.Action("Index", "STDetails", null)">@Resources.Resource.StockTransferRequestDetail</a></li> 
+           }
+            
+
+          </ul>
+            </li>
+                }
+    }
+       
+        @*<li class="divider-vertical"></li>*@
+
+           @{if (UserRights.hasRight("U01") && (UserRights.hasRight("U01S030_00") || UserRights.hasRight("U01S040_03") || UserRights.hasRight("U01S050_04"))
+                 || UserRights.hasRight("U01S050_05"))
+             {
+           <li class="divider-vertical"></li>
+           <li class="dropdown">
+
+           <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.User  </a>
+           <ul class="dropdown-menu" role="menu">
+
+           @if (UserRights.hasRight("U01S030_00"))
+           {
+           <li><a href="@Url.Action("ChangePassword", "User", null)">@Resources.Resource.ChangePassword </a></li>
+           }
+             @if (UserRights.hasRight("U01S040_03"))
+             {
+           <li><a href="@Url.Action("UserInquiryForm", "UserInquiry", null)">@Resources.Resource.UserInquiry</a></li> 
+             }
+           @if (UserRights.hasRight("U01S050_04"))
+           {
+           <li><a href="@Url.Action("CreateNewUser", "User", null)">@Resources.Resource.UserCreation </a></li>
+           }
+            
+         @if (UserRights.hasRight("U01S050_05"))
+         {
+           <li><a href="@Url.Action("NewSiteUser", "User", null)">@Resources.Resource.UserRegisteration </a></li>
+         }
+
+          </ul>
+          </li>
+
+             }
+    }
+
+
+          
+ 
+    
+       
+       
+        <li class="divider-vertical"></li>
+        <li class="dropdown"> 
+           <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.Help  </a>
+            
+             <ul class="dropdown-menu" role="menu">
+                
+                 <li><a href="~/Help/UserGuide/default.htm" target="_blank">@Resources.Resource.Help_UserGuide </a></li> 
+                 @if (Session["UserID"] != null && (string)Session["UserID"] == "admin")
+                 {
+                 <li><a id="btnAbout" href="#">@Resources.Resource.Help_About</a></li>
+                 }
+                
+          </ul>
+         </li>
+        <li class="divider-vertical"></li>
+
+       
+      </ul> 
+
+        
+        
+        
+          
+        
+        
+        
+        
+        
+    }
+    else
+    {   
+        <ul class="nav navbar-nav">        
+        <li class="dropdown">
+          <a href="@Url.Action("Default", "Home", null)"  style="padding: 0px 19px 2px;" >@Resources.Resource.Home </a>
+           
+        </li>
+        <li class="divider-vertical"></li>
+      </ul> 
+        <ul class="nav navbar-nav"> 
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.PartsOperation  </a>
+           
+        </li>
+        <li class="divider-vertical"></li>
+      </ul>
+        <ul class="nav navbar-nav">
+        <li class="dropdown">
+         <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.SystemSupport</a>
+        </li>
+          <li class="divider-vertical"></li>
+      </ul>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.FindADistributor</a>
+         </li>
+          <li class="divider-vertical"></li>
+      </ul>
+        
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+         <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" role="button" aria-expanded="false">@Resources.Resource.NewsAndPress </a>
+        </li>
+          <li class="divider-vertical"></li>
+      </ul>
+    }  
+  
+    </div>
+
+    
+
+
+
+  </div>
+ 
+</nav>

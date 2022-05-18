@@ -1,0 +1,312 @@
+﻿@model List<KME_SSO.Models.clsApplication>
+@{
+    ViewBag.Title = "Schedular Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="@Url.Content("~/Scripts/DatePicker/CustomDatePicker.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/JqueryUI/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/JqueryUI/jquery-ui.min.js")" type="text/javascript"></script>
+<style>
+    .panel-body {
+        text-align: left;
+        padding-top: 5px !important;
+        min-height: 119px;
+    }
+
+    .panel-success {
+        margin-bottom: 10px !important;
+    }
+
+    button.ui-datepicker-close {
+        display: none;
+    }
+
+    .app-list {
+        list-style-type: none;
+        float: right;
+        font-size: 10px;
+    }
+
+    .app-list-item {
+        display: inline-block;
+        background: rgba(0, 0, 153, 1);
+        color: White;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+        .app-list-item:hover {
+            background: rgb(250,201,2);
+        }
+</style>
+<div id="divLoading">
+</div>
+<div class="panel  panel-primary PanelTopMargin" style="overflow-y: auto;">
+    <div class="panel-heading PanelTitle panelTitleHeight YellowBackgroundItem">
+        <h3 class="panel-title pull-left " id="FormTitle">
+            SSO
+        </h3>
+    </div>
+    <div class="panel-body panel-body">
+        <div class="row" style="text-align: center;">
+            @*==========Scheduler Times==========*@
+            <div class="col-md-4 col-lg-4 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Current Time
+                    </div>
+                    <div class="panel-body">
+                        <h3 id="current_time">
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Global Scheduler Fire Time
+                    </div>
+                    <div class="panel-body">
+                        <h3 id="global_fire_time">
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Client Scheduler Fire Time
+                    </div>
+                    <div class="panel-body">
+                        <h3 id="client_fire_time">
+                        </h3>
+                        <label id="sso_client_start_time">
+                        </label>
+                        <br />
+                        <label id="sso_client_stop_time">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-offset-4 col-lg-offset-4 col-md-4 col-lg-4 col-sm-12">
+                <label>
+                    Global Scheduler Interval:
+                </label>
+                <input type="number" min="0" class="form-control" id="inptGBIN" value="" />
+            </div>
+        </div>
+        @*<div class="col-md-12 col-lg-12 col-sm-12" style="padding: 1px;">
+            <button class="btn" id="btnSaveSSOSettings">
+                Save
+            </button>
+        </div>*@
+        <div style="padding: 1px;float:right;margin-right:12px;">
+            <button style="background-color: rgb(0,0,153) !important; color: white; border-radius: 0px;" class="btn" id="btnSaveSSOSettings">Save</button>
+        </div>
+    </div>
+</div>
+
+@*Application List Drop Down*@
+<div class="row" style="margin-bottom:5px;">
+    <div class="col-lg-6">
+    </div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+        <select class="form-control" onchange="LoadApplicationViewWithID()" id="ddlApplicationList">
+            @foreach (var item in Model)
+            {
+                <option value="@item.ApplicationID" @((item.ApplicationName=="Parts Distribution Express")?"selected":"")>@item.ApplicationName</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="panel  panel-primary PanelTopMargin" style="overflow-y: auto;">
+    <div class="panel-heading PanelTitle panelTitleHeight YellowBackgroundItem">
+        <h3 class="panel-title pull-left " id="ApplicationsFormTitle"></h3>
+    </div>
+    <div class="panel-body">
+        <div id="application-container">
+        </div>
+        <div style="padding: 1px;float:right;margin-right:12px;">
+            <button style="background-color: rgb(0,0,153) !important;color:white;border-radius:0px;" class="btn" id="btnSaveApplicationSettings">Save</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content MessageContent">
+            <div class="modal-header MessageHeader panel-heading PanelTitle panelTitleHeight">
+                <button type="button" class="close" data-dismiss="modal">
+                </button>
+                <h4 class="modal-title panel-title" id="PopupMessageTitle">
+                </h4>
+            </div>
+            <div class="modal-body MessageBody" id="modalBody">
+                <div class="col-xs-3">
+                    <img style="display: inline !important" class="imgError" />
+                </div>
+                <div class="col-xs-9" style="padding-top: 6px">
+                    <label style="display: inline !important; font-weight: normal !important; vertical-align: sub !important;"
+                           id="lblMessageText" class="lblError">
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer MessageFooter">
+                <button style="width: 80px; height: 25px; text-align: center; float: none !important;
+                    padding: 0px; padding-left: 12px;" id="btnOk" class="btn btnOk center-block"
+                        data-dismiss="modal">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#divLoading").addClass("show");
+    var G_App_ID;
+    getSSOschedularDetails();
+    LoadApplicationView();
+
+
+    setInterval(function () {
+        getSSOschedularDetails();
+    }, 5000);
+
+
+    //======functions======================
+    function LoadApplicationView() {
+        $.get('@Url.Action("ApplicationInfo", "Dashboard")?intAppID=2', function (data, status) {
+            $("#application-container").html(data);
+            $("#divLoading").removeClass("show");
+            G_App_ID = "2";
+        });
+    }
+    function LoadApplicationViewWithID() {
+        var spinner = spin(spinner);
+        var AppID = $("#ddlApplicationList").val();
+        $.get('@Url.Action("ApplicationInfo", "Dashboard")?intAppID=' + AppID, function (data, status) {
+            $("#application-container").html(data);
+            $("#divLoading").removeClass("show");
+            G_App_ID = AppID;
+            unspin(spinner);
+        });
+    }
+    function getSSOschedularDetails() {
+        
+        $.get('@Url.Action("GetSchedularInfo", "Dashboard")', function (data, status) {
+            var current_time = data.CurrentTime;
+            var client_job_time = data.ClientNextFireTime;
+            var global_job_time = data.GlobalNextFireTime;
+            var sso_client_start_time = data.ClientStartTime;
+            var sso_client_stop_time = data.ClientStopTime;
+            $("#current_time").text(current_time);
+            $("#global_fire_time").text(global_job_time);
+            $("#client_fire_time").text(client_job_time);
+            $("#sso_client_start_time").text(sso_client_start_time);
+            $("#sso_client_stop_time").text(sso_client_stop_time);
+        });
+        $.ajax({
+            url: 'http://localhost/PDXKMEWEBONESLOGI/SchedulerInfo/GetSchedularInfo',
+            type: 'GET',
+            success: function (data) {
+                var client_job_time_pdx = data.ClientNextFireTime;
+                var global_job_time_pdx = data.GlobalNextFireTime;
+                var pdx_client_start_time = "Start Time: " + data.ClientStartTime;
+                var pdx_client_stop_time = "Stop Time: " + data.ClientStopTime;
+                var pdx_application_status = data.Offline == "N" ? "<span class='label label-success'>ONLINE</span>" : "<span class='label label-danger'>OFFLINE</span>"
+                $("#global_fire_time_pdx_" + G_App_ID).text(global_job_time_pdx);
+                $("#client_fire_time_pdx_" + G_App_ID).text(client_job_time_pdx);
+                $("#pdx_client_start_time_" + G_App_ID).text(pdx_client_start_time);
+                $("#pdx_client_stop_time_" + G_App_ID).text(pdx_client_stop_time);
+                $("#divApplicationStatus").html(pdx_application_status);
+
+            },
+            error: function () { console.log('Failed!'); }
+        });
+
+    }
+
+    //================================
+
+</script>
+<script type="text/javascript">
+    $("#btnSaveApplicationSettings").on("click", function () {
+        var spinner = spin(spinner);
+        $("#divLoading").addClass("show");
+        var application_id = $("#inptAPPID").val();
+        var application_offline_date = $("#inptOFDT").val();
+        var application_offline_time = $("#inptOFDT_TIME").val();
+        var application_online_date = $("#inptONDT").val();
+        var application_online_time = $("#inptONDT_TIME").val();
+        var application_message_time = $("#inptAMST").val();
+        var application_offline_message = $("#inptAMSG").val();
+        var sso_offline_message = $("#inptSMSG").val();
+        var dataString = "?";
+        dataString += "intAppID=" + application_id + "&";
+        dataString += "strOfflineDate=" + application_offline_date + "&";
+        dataString += "strOfflineTime=" + application_offline_time + "&";
+        dataString += "strOnlineDate=" + application_online_date + "&";
+        dataString += "strOnlineTime=" + application_online_time + "&";
+        dataString += "intMessageTime=" + application_message_time + "&";
+        dataString += "strAppOfflineMessage=" + application_offline_message + "&";
+        dataString += "strSSOOfflineMessage=" + sso_offline_message;
+        $.ajax({
+            url: '@Url.Action("SaveApplicationSettings", "Dashboard")' + dataString,
+            type: 'GET',
+            success: function (data) {
+                if (data) {
+                    LoadApplicationView();
+
+                }
+                $("#divLoading").removeClass("show");
+                unspin(spinner);
+
+                DisplayModal("1", "Application Settings Updated successfully.", "Settings Updated");
+                var src = "../Images/Success.png"
+                $("#modalBody img").attr("src", src);
+
+
+
+            },
+            error: function () {
+                console.log('Failed!');
+                unspin(spinner);
+                DisplayModal("0", "Error occured while saving Application Settings.", "Process Failed");
+                var src = "../Images/error.png"
+                $("#modalBody img").attr("src", src);
+            }
+        });
+    });
+
+
+    $("#btnSaveSSOSettings").click(function () {
+        var spinner = spin(spinner);
+        var GlobalInterval = $("#inptGBIN").val();
+        $.ajax({
+            url: '@Url.Action("SaveGlobalIntervalTime", "Dashboard")?intGlobalInvterval=' + GlobalInterval,
+            type: 'GET',
+            success: function (data) {
+                if (data) {
+                    LoadApplicationView();
+                }
+                DisplayModal("1", "Application Settings Updated successfully.", "Settings Updated");
+                var src = "../Images/Success.png"
+                $("#modalBody img").attr("src", src);
+                unspin(spinner);
+            },
+            error: function () {
+                console.log('Failed!');
+                DisplayModal("0", "Error occured while saving Application Settings.", "Process Failed");
+                var src = "../Images/error.png"
+                $("#modalBody img").attr("src", src);
+
+            }
+        });
+    })
+</script>

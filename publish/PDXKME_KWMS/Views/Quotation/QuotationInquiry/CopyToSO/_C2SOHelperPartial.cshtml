@@ -1,0 +1,71 @@
+﻿
+@if (ViewBag.RecordInserted)
+{
+    
+        if (ViewBag.CopiedWithSomeLineErrors)
+        {
+            
+      <script>
+     $("#btnCPYTSO").attr("disabled",true)
+    // txtError = "@Resources.Resource.MsgInfo34";
+    // txtErrorType = "1";
+     //DisplayModal(txtErrorType, txtError);
+     $("#lblSomeLinesError").text("Copy to SO Successfull !.Some Of Line have errors.Do you want to see error log?");
+     $("#ConfirmModal").modal(); 
+    </script>
+        }
+        //hst001 Shabbir Hussain @ 18-Jan-2018 Added check for Spike Order Control mechanism task.
+        // Show message in case non-mortality mapped order is created against quoataion.
+        else if(!string.IsNullOrEmpty(ViewBag.CopyToSOAutoNonMortalityOrderCreation))
+        {
+            <script>
+                txtError = "Quotation successfully transfered to Sales Order No(s): " + "@ViewBag.CopyToSOAutoNonMortalityOrderCreation";
+                txtErrorType = "1";
+                DisplayModal(txtErrorType, txtError); 
+         </script>
+        }
+        else
+        {
+            <script>
+//            $("#lblAlternate").text("Quotation successfully transfered to Sales Order");
+//            $("#ConfirmModal").modal();
+                txtError = "Quotation successfully transfered to Sales Order";
+                txtErrorType = "1";
+          DisplayModal(txtErrorType, txtError); 
+         </script>           
+        }
+}
+
+else if ( !String.IsNullOrEmpty(ViewBag.MasterDataNotSetError)  && ViewBag.MasterDataNotSetError.Equals("1"))
+{
+         <script>        
+         txtError = "@ViewBag.MasterDataNotSetErrorMessage" ;
+         txtErrorType = "0";
+         DisplayModal(txtErrorType, txtError); 
+         </script>
+}
+else if (ViewBag.NoMappingOrderType != null && ViewBag.NoMappingOrderType)
+{
+    <script>
+        //        txtError = "Order Limit has been consumed for part(s), please create Quotation of different Order Type!";
+        //        txtErrorType = "0";
+        //        $("#lblMessageText").addClass('clsWidth');
+        //        DisplayModal(txtErrorType, txtError);
+
+        $("#lblSomeLinesError").text("Order Limit has been consumed for part(s), please create Quotation of different Order Type!");
+        $("#lblSomeLinesError").addClass('clsWidth');
+        $("#ConfirmModal").modal();
+    </script>
+}
+else
+{
+        <script>
+         //   $("#lblAlternate").text("Copy to Sales Order failed.");
+            $("#lblSomeLinesError").text( "Copy to SO Failed !.Some Of Line have errors.Do you want to see error log?");
+             //   txtErrorType = "0";
+            //    DisplayModal(txtErrorType, txtError); 
+          $("#ConfirmModal").modal(); 
+     
+    </script>
+}
+ 

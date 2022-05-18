@@ -1,0 +1,426 @@
+﻿@model PDXWEB.Models.Quotation.QuotationInquiry.CopyToSO.CopyToSOPostModel
+
+@{
+    ViewBag.Title = @Resources.Resource.CopyToSalesOrder;
+    string strRole = Session["Role"].ToString(); ;
+}
+<style>
+  @@media screen and (min-width: 767px) 
+ {
+     .modal-confirm{ width:450px }
+     
+     
+     
+     }
+     @*hst001 Added following class for Spike Order Control mechanism task
+         
+       hst002:  Shabbir Hussain @ 25-Oct-2021
+                - Changes made to restrict copy to SO process if per day line limit exceed against a quotation.
+         
+         *@
+     .clsWidth
+     {
+         width: 87%;
+     }
+</style>
+  <div class="container childcontent ">
+  <div class="panel panelInquiryControls panel-primary panelWidth"> 
+       <div class="panel-heading PanelTitle"  >
+          <h3 class="panel-title pull-left " >@Resources.Resource.CopyToSalesOrder  </h3>
+       </div>
+    <div class="panel-body">
+                
+      @if (ViewData["Error"] != null)
+          {
+            <div class="red" id="ErrorMsg">
+              <p><strong>Error:</strong> @ViewData["Error"].ToString()</p>
+              </div>
+          }
+     @if (TempData["Success"] != null)
+     {
+      <div class="green" id="SuccessMsg">
+          <p><strong>Success:</strong> @TempData["Success"].ToString()</p>
+      </div>
+     }
+             <div class="row">
+               <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">  
+       <button class="btn btn-sm btn-primary " id="btnCPYTSO">@Resources.Resource.btnCopy</button>
+             </div>
+                </div>
+        <div  class="FormElements">
+            @using (Html.BeginForm("CopyTOSOConversion", "CopyToSO", FormMethod.Post, new { @id = "OrderConfirm", role = "form" }))
+            {
+              @*<input type="submit" class="btn btn-sm btn-primary "  value="Copy To SO" />*@
+
+               <div class="row">
+               <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                   
+                    
+                   </div>
+                </div>
+          <div class="row">
+
+                  
+                  <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+                  <div class="editor-field SizeOnXs">
+                   @Html.Label(@Resources.Resource.lblQuotationNo)
+                  </div>
+                   <div class="editor-label SizeOnXs">                        
+                     @Html.TextBoxFor(model => model.QuotationNo, null, new { @class = "form-control InputElements", id = "txtQutn", @disabled = "disabled", style = "display: inline; width: 44%;" })
+                     @Html.TextBoxFor(model => model.QuotationSubNo, null, new { @class = "form-control InputElements", id = "txtQuto", @disabled = "disabled", style = "display: inline; width: 30% ! important;" })  
+                 </div>  
+                </div>
+
+              <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+                    <div class="editor-label">
+                      @Html.Label(@Resources.Resource.BackOrderDirectShipmentCodeDesc)
+                    </div>
+                 <div class="editor-field">
+                     @Html.DropDownListFor(model => model.lstBODSCodes, Model.lstBODSCodes, new { @class = "form-control InputElements", id = "ddlBODS" })
+                    
+                  </div>
+              </div>
+
+              
+                   
+         </div>
+                <div class="row">
+                  @if (!Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+                  {
+                  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        @Html.CheckBoxFor(model => model.chkPickingAllowed, new { @id = "PickingAllowed", @style = " margin-right:2px; margin-top: 27px" })
+                        @Html.Label(@Resources.Resource.lblPickingAllowed, new { @style = "margin-right:20px;" })
+                    </div>
+                                   
+                  }
+                @if (!Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+                {
+                  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        @Html.CheckBoxFor(model => model.chkMixPackingAllowed, new { @id = "MixPack", @style = " margin-right:2px; margin-top: 27px" })
+                        @Html.Label(@Resources.Resource.lblMixPackingAllowed, new { @style = "margin-right:20px;" })
+                    </div>
+                                   
+                }
+                   
+               
+                  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        @Html.CheckBoxFor(model => model.chkPartialShipmentAllowed, new { @id = "Pship", @style = " margin-right:2px; margin-top: 27px", selected = "true" })
+                        @Html.Label(@Resources.Resource.lblPartialShipmentAllowed, new { @style = "margin-right:20px;" })
+                    </div>
+                                   
+                   
+              
+                
+                </div>
+                
+               <div style=" margin:20px !important"></div>
+               <div class="row">
+                  
+                  
+              </div>
+                
+               
+            
+            }
+        </div >
+         <div style="height:210px;">
+         
+                
+          </div>
+
+    </div> 
+  </div>   
+
+</div>
+<div class="modals">
+    <!-- Modal -->
+<div class="modal fade" id="ConfirmModal" role="dialog" style="padding-top: 169px;">
+		<div class="modal-dialog modal-confirm" style="margin: 10px auto; width: 42%;">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						&times;</button>
+
+                    <h4 class="modal-title">Copy To So.</h4>
+                </div>
+                <div class="modal-body" id="ConfirmModalBody">
+                  <img  src="@Url.Content("~/images/warning.png")" />
+   <label id="lblSomeLinesError" style="color:Red !important"></label>
+  
+   
+       </div>                                  
+      <div class="modal-footer">  <button  id="btnOkDelete" class="btn btn-default pull-left" data-dismiss="modal">@Resources.Resource.btnOK</button>
+         <button  id="btnCancleDelete" class="btn btn-default pull-right" data-dismiss="modal">@Resources.Resource.btnCancel</button> 
+       </div>
+                  
+                
+            </div>
+        </div>
+    </div>
+ <!-- Modal content-->
+<div class="modal fade" id="DBLineLimitMessageModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    @Resources.Resource.QuotationDetail
+                </h4>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dialogueImage">
+                        <img class="imgError" />
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <label id="lblDBLineLimitWarning" class="lblError">
+                    </div>
+                </div>
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button style="text-align: center; margin-left: auto !important; float: none !important;"
+                        id="btnOkDBLineLimitModal" class="btn btn-default center-block" data-dismiss="modal">
+                    @Resources.Resource.btnOK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ 
+ 
+<div id="divToUpdate" style="  height: 250px; overflow:auto">
+ </div> 
+
+ <div class="modals">
+    <!-- Modal -->
+     
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					&times;</button>
+				<h4 class="modal-title">
+				 <h4 class="modal-title">@Resources.Resource.CopyToSalesOrder </h4>
+			</div>
+			<div class="modal-body" id="modalBody">
+				<img class="imgError" />
+				<label id="lblMessageText" class="lblError">
+				</label>
+			</div>
+			<div class="modal-footer">
+				<button style="text-align: center; margin-left: auto !important; float: none !important;"
+					id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+					@Resources.Resource.btnOK
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+ <script type="text/javascript">
+var currentRole=@strRole;
+    $(document).ready(function () {
+    //test
+    $("#Pship").attr("checked","checked");
+    if(currentRole=="1")
+    {
+      $("#PickingAllowed").attr("checked","checked");
+         $("#MixPack").attr("checked","checked");
+
+    }
+        $("#btnCPYTSO").click(function () {
+            //CopyToSO(); //hst002 Commented
+            CheckConsumedLines(); //hst002 CopyToSO function is called from within CheckConsumedLines function.
+        }); //btncpytso end
+
+
+    });   //doc.ready end
+
+    function CopyToSO()
+    {
+         var Params = {QuotationNo:$("#txtQutn").val(),QuotationSubNo:$("#txtQuto").val(),ddlBODSSelectedVal:$("#ddlBODS").val(),
+            chkPickingAllowed: $("#PickingAllowed").is(":checked"), chkMixPackingAllowed: $("#MixPack").is(":checked"),
+            chkPartialShipmentAllowed: $("#Pship").is(":checked") };
+             $.ajax({
+                        type: "POST",
+                        data: Params,
+                        url:"@Url.Action("CopyTOSOConversion", "CopyToSO", null, Request.Url.Scheme)",
+                        success: function (data)
+                         {
+                           if(CheckForSessionExpiry(data))
+				               {
+
+				               SessionExpiredRedirect();
+					            return;
+				               }
+                                 $("#divToUpdate").html(data) ;
+                          },
+                       error: function (data)
+                       {
+                          // $("#divModalBody").html("");
+                            //$("#divModalBody").prepend("").attr("style","color:red");
+                           // $("#MessageModal").modal();
+                           txtError = "@Resources.Resource.MsgInfo3";
+                           txtErrorType = "0";
+                           DisplayModal(txtErrorType, txtError);
+                       }
+                  });// jajax end
+
+    }
+     //hst002 This function is used to check line limit
+     function CheckConsumedLines()
+    {
+                var postData={
+	                strQuotationNumber:$("#txtQutn").val(),
+                    strQuotationSubNumber: $("#txtQuto").val()
+                    };
+ 		$.ajax({
+				type: "POST",
+				data: postData,
+				url:"@Url.Action("CheckConsumedLines", "CopyToSO", null, Request.Url.Scheme)",
+				success: function (receivedData)
+				{
+				 if(CheckForSessionExpiry(receivedData))
+				   {
+				    SessionExpiredRedirect();
+					return;
+				   }
+
+                    strError = receivedData.Error;
+                    if(strError.startsWith("@Resources.Resource.MsgInfo161")) //Daily allowed line
+                        {
+                                $("#modalBody img").attr("src", "../images/error.png");
+                                $("#modalBody label").html(strError).attr("style", "color:red !important");
+                                $("#DBLineLimitMessageModal").modal("toggle");
+                        }
+                    else
+                        {
+                                CopyToSO();
+                        }
+
+				},
+				error: function (data)
+				{
+					txtError = "@Resources.Resource.MsgInfo66"; //An error ocurred while processing
+					txtErrorType = "0";
+					DisplayModal(txtErrorType, txtError);
+				}
+			});
+    }
+
+ </script>
+<script type="text/javascript">
+
+ $(document).on('click','#btnOkDelete',function () {
+     $("body").css("padding-right", "0px");
+          $("#ConfirmModal").modal('hide');                
+              ShowErrorLog();
+         }); 
+</script>
+
+  <script type="text/javascript">
+      function ShowErrorLog() { 
+  
+                    $.ajax({
+                              type: "POST",                             
+                              url:"@Url.Action("ErrorLog", "CopyToSO", null, Request.Url.Scheme)",
+                              success: function (data) 
+                                {
+                                
+                                  if(CheckForSessionExpiry(data))
+				               {
+		   
+				               SessionExpiredRedirect();
+					            return;
+				               }
+                                  if(isRealValue(data.ErrorOccured))
+                                    {                
+                                    // $("#lblMsg").html(data.ErrorMessage).attr("style","color:red;position:relative");
+                                    // $("#MessageModal").modal(); 
+                                     txtError = data.ErrorMessage;
+                                      txtErrorType = "0";
+                                      DisplayModal(txtErrorType, txtError);
+                                     }
+                                else
+                                   { 
+                                    window.open(data,"_blank");
+                                  }
+                        
+                             
+                              },
+                              error: function (data) 
+                              {                                 
+                                 
+                                // $("#divModalBody").html("");
+                                // $("#divModalBody").prepend("").attr("style","color:red");           
+                                 //$("#MessageModal").modal(); 
+                                 txtError = "@Resources.Resource.MsgInfo3";
+                                 txtErrorType = "0";
+                                 DisplayModal(txtErrorType, txtError);
+                              }
+                          });// jajax end
+                       
+                   
+
+                 
+        
+      
+      }
+  
+  </script> 
+    <script type="text/javascript"> 
+     
+    function isRealValue(obj) 
+    {
+                  return obj && obj !== "null" && obj !== "undefined";
+    }
+   
+    
+</script>
+
+
+ <script type="text/javascript">
+     $(document).ready(function () {
+
+         $("#divToUpdate").prepend("<div id='divLoading'></div>");
+         $(document).ajaxStart(function () {
+
+             $("div#divLoading").addClass('show');
+         });
+         $(document).ajaxStop(function () {
+             $("div#divLoading").removeClass('show');
+         });
+
+         $("#ddlBODS").attr("disabled","disabled");
+     });  //doc.ready end
+
+</script>
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    }); 
+</script>
+<script>
+    //hst001 Added following class for Spike Order Control mechanism task
+    $('#ConfirmModal').on('hidden.bs.modal', function () {
+        $("#lblSomeLinesError").removeClass('clsWidth');
+    })
+</script>
+
+   
+
+
+
+

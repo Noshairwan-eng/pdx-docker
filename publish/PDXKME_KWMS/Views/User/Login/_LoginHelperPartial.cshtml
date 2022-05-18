@@ -1,0 +1,46 @@
+﻿
+@if (ViewBag.ExceptionOccured == null)//Check if Connectivity to database went well and there is no exception occured
+{
+    if (ViewBag.AuthError == null && ViewBag.AccountStatusError==null)
+    {
+    <script> 
+    //Redirect to Home page 
+    window.location.href = "@Url.Action("index", "Home", null)";
+    </script>
+    }
+    else if (ViewBag.AccountStatusError != null)
+    {   
+    <script>
+    txtError = "@Resources.Resource.MsgInfo159";
+    txtErrorType = "0";
+    DisplayModal(txtErrorType, txtError,"@Url.Content("~/images/error.png")");
+    </script>}
+    else
+    {
+    <script>
+    txtError = "@Resources.Resource.MsgAuthFailed";
+    txtErrorType = "0";
+    DisplayModal(txtErrorType, txtError,"@Url.Content("~/images/error.png")");
+    </script>
+    }
+}
+else //Handle the exception and display the appropriate message to User
+{
+    if (ViewBag.ExceptionType == "1")
+    {
+    <script>
+    txtError = "@Resources.Resource.MsgInfo71";//Invalid Database
+    txtErrorType = "0";
+    DisplayModal(txtErrorType, txtError,"@Url.Content("~/images/error.png")");
+    </script>
+    }
+    else
+    {
+     <script>
+    txtError = "@Resources.Resource.MsgDBUnavailable";//Database Connectivity Error
+    txtErrorType = "0";
+    DisplayModal(txtErrorType, txtError,"@Url.Content("~/images/error.png")");
+    </script>
+    }
+
+}

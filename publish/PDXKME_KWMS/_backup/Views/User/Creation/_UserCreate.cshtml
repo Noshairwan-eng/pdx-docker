@@ -1,0 +1,149 @@
+﻿ 
+@model PDXWEB.Models.User.UserCreationViewModel
+@{
+    ViewBag.Title = @Resources.Resource.UserCreation;
+     if (false)
+    {
+       <script src="../../../Scripts/jquery-1.9.1-vsdoc.js" type="text/javascript"></script>
+    }
+    
+    
+}
+ @Scripts.Render("~/bundles/ZebraDateTimePickerJS")
+@Styles.Render("~/Content/ZebraDateTimePickerCSS")
+<style type="text/css">
+
+.form-inline .form-group input,select,textarea  {
+    width:150px;
+    font-family:Verdana;
+    font-size:11px;
+    height:23px;
+    border:1px solid black;
+    padding:0px;
+    margin-bottom:0px;
+    margin-top:0px;
+   
+   /* width:auto !important;*/
+}
+
+
+.form-inline .form-group label {
+     font-size:14px;
+     padding:0px;
+     margin-bottom:0px;
+     
+}
+.form-inline .form-group {
+     
+     padding:0px;
+     margin-bottom:0px;
+     
+}
+
+@@media screen and (min-width:508px) and (max-width: 768px) 
+  {
+   div.SizeOnXs
+    {
+      /*margin-left:200px !important;  */ 
+       width:25% !important;
+       display:inline-block !important;
+       
+      }
+      
+      input,select
+      {
+       width:auto;   
+       }
+      br { display:  none; }
+} 
+@@media screen and (max-width:508px)
+{
+      br { display:  none; }
+}
+
+
+
+</style>
+<div class="container">
+
+<div class="row">
+
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+ <label>@Resources.Resource.lblUserId</label>
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+      @Html.TextBoxFor(model => model.UserID)
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+   <label>@Resources.Resource.lblUserName</label>
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+  @Html.EditorFor(model => model.UserName)
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+   <label>@Resources.Resource.lblPassword</label>
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+    @Html.EditorFor(model => model.Password)
+</div>
+
+</div>
+<div class="row">
+
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+   <label> Role</label>
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+      @Html.DropDownList("UserRole", Model.UserRole as List<SelectListItem>, new { @class = "form-control input-sm" })
+            
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+    <label>Distributer Code</label>
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+     @Html.DropDownList("CustomerCode", Model.CustomerCode as List<SelectListItem>, new { @class = "form-control input-sm" })
+            
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+  <label>Email ID</label>
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+     @Html.EditorFor(model => model.Email)
+</div>
+
+</div>
+<div class="row">
+
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+   <label> Status</label>
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+   @Html.DropDownList("UserStatus", Model.UserStatus as List<SelectListItem>, new { @class = "form-control input-sm" })
+            
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+ <label> Expiry Date</label>
+</div>
+<div class="col-lg-2 col-md-2 col-sm-6  col-xs-12" >
+    @Html.EditorFor(model => model.ExpiryDate)
+</div>
+ 
+</div>
+
+</div>
+ 
+
+
+ 
+    
+ <script type="text/javascript">
+
+     $(document).ready(function () {
+
+
+         $('#ExpiryDate').Zebra_DatePicker();
+
+
+     });
+ 
+ </script>

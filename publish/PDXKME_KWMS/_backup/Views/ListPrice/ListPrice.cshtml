@@ -1,0 +1,211 @@
+﻿@*
+hst001 - Noshairwan Farooq |28-07-2020|
+         - Made change to pick file names from shared location
+hst002 - Noshairwan Farooq |04-08-2020|
+         - Made change to download file of any format.
+hst003 - Shabbir Hussain | 01-Sep-2020|
+         - Added label on screen.
+hst004 - Noshairwan Farooq |04-Aug-2020|
+         - Modified label to add date.
+         *@
+
+@model IEnumerable<PDXWEB.Models.ListPrice.ListPriceModel>
+@Scripts.Render("~/bundles/InquiryJSBundle")
+@Styles.Render("~/Content/InquiryCSSBundle")
+<style>
+    .panelListPrices
+    {
+        min-height: 400px !important;
+    }
+</style>
+<link href="~/Content/Site/accordion-style.css" rel="stylesheet" type="text/css" />
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    rel="stylesheet" type="text/css" />
+<div class="container childcontent ">
+    <div class="panel panelListPrices panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left ">@Resources.Resource.ListPrice</h3>
+        </div>
+        <div class="panel-body" style="margin-left: 10px;min-height:400px;">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    @foreach (var MainList in Model)
+                    {
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title" >
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#@MainList.ListPriceName" class="collapsed" id="panel-@MainList.ListPriceName" onclick="ListPricePanelClicked('@MainList.ListPriceName')">
+                                            @if (MainList.SupplementaryListPrice.Count > 0)
+                                            { 
+                                                <span class="fa fa-chevron-right" id="chevron-@MainList.ListPriceName">&nbsp;&nbsp;
+                                                </span>
+                                            }
+                                            @MainList.ListPriceName
+                                        </a> 
+                                        <a class="main-line-icon" style="cursor:pointer;" onclick="DownloadListPrice('@MainList.ListPriceName','@MainList.Extension')" >
+                                            <span class="fa fa-download"></span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                @if (MainList.SupplementaryListPrice.Count > 0)
+                                {
+                                    <div id="@MainList.ListPriceName" class="panel-collapse collapse">
+                                        <div class="list-group">
+                                            <div class="list-group">
+                                                @foreach (var SupplementaryList in MainList.SupplementaryListPrice)
+                                                {
+                                                    <a style="cursor:pointer;" onclick="DownloadListPrice('@SupplementaryList.ListPriceName','@SupplementaryList.Extension')" class="list-group-item"><span
+                                                        class="fa fa-download text-primary"></span>&nbsp;&nbsp;@SupplementaryList.ListPriceName</a> 
+                                                }
+                                            </div>
+                                        </div>
+                                    </div> 
+                                }
+                            </div>
+                        </div>                    
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- hst003 -->
+    <div>
+        <label id="lblNote" style = "padding-top:50px;">KME List Price / Supplementary List Prices are as of </label>
+    </div>
+    </div>
+
+</div>
+
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        <h4 class="modal-title">List Price Download</h4>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <img class="imgError" />
+                    <label id="lblMessageText" class="lblError">
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button style="text-align: center; margin-left: auto !important; float: none !important;"
+                        id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    //hst004 : Updated label to add date;
+    $(document).ready(function(){
+        $(".list-group-item").each(function(){
+        var labelStatment = $("#lblNote").text();
+        var date = $(this).text().trim().substring($(this).text().trim().length-8,$(this).text().trim().length)
+        var year = date.substring(0, 4);
+        var month = date.substring(4, 6);
+        var day = date.substring(6, 8);
+        date = year +"-"+ month +"-"+  day;
+        labelStatment = labelStatment + "("+date+")";
+        $("#lblNote").text(labelStatment);
+            return false;
+        });
+    });
+
+    function DownloadListPrice(ListPriceName, Extension)
+    {
+        //hst001 
+        var ExportParams = {strFileName: ListPriceName, strExtension: Extension}; //hst002 Added Extension
+        $.ajax(
+                {
+                    cache: false,
+                    type: "POST",
+                    url: "@Url.Action("DownloadListPriceFile", "ListPrice", null)",
+                    data: ExportParams,
+                    success: function (data) {
+                        $("#divLoading").remove();                     
+                        if(CheckForSessionExpiry(data))
+                        {                              
+                            SessionExpiredRedirect();
+                            return;
+                        }                                                                                                        
+                        if(CheckForServerSideError(data))
+                        {
+                            txtError="@Resources.Resource.MsgInfo3";
+                            txtErrorType="0";
+                            $(".modal-header").removeClass("ModalDesign"); 
+                            $(".hiddenForm").html(data);
+                            DisplayModal(txtErrorType,txtError) ;              
+                        }
+                        else
+                        {
+                            $(".modal-header").removeClass("ModalDesign");
+                            txtError="@Resources.Resource.ListPriceDownloaded";
+                            txtErrorType="1";
+                            DisplayModal(txtErrorType,txtError) ;  
+                            window.location.href=data;   
+                            //var anchor = document.createElement('a');
+	                        //anchor.href = data;
+	                        //anchor.download = data;
+	                        //document.body.appendChild(anchor);
+	                        //anchor.click();                
+                        }
+
+                    }
+                    ,
+
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    txtError = "@Resources.Resource.MsgInfo3";
+                    txtErrorType = "0";
+                    DisplayModal(txtErrorType, txtError);                           
+                    }
+                }
+            );
+            //hst001
+
+        //hst001 Comment Start:
+        // $.ajax({
+        //     type: 'GET',
+        //     url: ListPriceLink,
+        //     error: function(jqXHR, textStatus, errorThrown) {
+        //         if (jqXHR.status == 404) {
+        //             txtError = "@Resources.Resource.ErrFileNotFound"
+        //             txtErrorType = "0";
+        //             DisplayModal(txtErrorType, txtError);
+        //         }
+        //     },
+        //     success: function(){
+        //         window.location.href=ListPriceLink;
+        //         txtError = "@Resources.Resource.ListPriceDownloaded"
+        //         txtErrorType = "1";
+        //         DisplayModal(txtErrorType, txtError);
+        //         }
+        // })
+        //hst001 Comment End;
+    }
+
+    function ListPricePanelClicked(ListPriceName) {
+
+        var classList = $("#panel-" + ListPriceName).attr('class');
+
+        if ($("#panel-" + ListPriceName).hasClass("collapsed")) {
+            $("#chevron-" + ListPriceName).removeClass("fa fa-chevron-right");
+            $("#chevron-" + ListPriceName).addClass("fa fa-chevron-down");
+
+        }
+        else {
+            $("#chevron-" + ListPriceName).removeClass("fa fa-chevron-down");
+            $("#chevron-" + ListPriceName).addClass("fa fa-chevron-right");
+        }
+
+    }
+   
+</script>

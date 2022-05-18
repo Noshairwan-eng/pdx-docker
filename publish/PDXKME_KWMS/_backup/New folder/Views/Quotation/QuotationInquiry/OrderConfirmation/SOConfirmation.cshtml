@@ -1,0 +1,392 @@
+﻿@model PDXWEB.Models.Quotation.QuotationInquiry.OrderConfirmation.OrderConfirmationModel
+@{
+    ViewBag.Title = "SOConfirmation";
+    
+}
+<link href="@Url.Content("~/Content/JqueryUI/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/JQueryUi/jquery-ui.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/DatePicker/CustomDatePicker.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/ModalHelper/ModalHelper.js")" type="text/javascript"></script> 
+@*hstU001*@
+<style type="text/css">
+    /* #DateTo,#DateFrom
+        {         
+            background-position: right center;
+            background-repeat: no-repeat;
+            background-image:url('../Images/calendar.png');   
+           
+          }  */
+    .ui-datepicker
+    {
+        z-index: 99 !important;
+    }
+    .calendarPicker
+    {
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-image: url('../Images/calendar.png');
+    }
+    #btnExport
+    {
+     
+      width: 110px !important;
+    }
+</style>
+<div class="container childcontent ">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left ">
+                @Resources.Resource.OrderConfirmation
+            </h3>
+        </div>
+        <div class="panel-body">
+            @if (ViewData["Error"] != null)
+            {
+                <div class="red" id="ErrorMsg">
+                    <p>
+                   @* Commented by Rifaqat Mehmood at 01,07,2016 *@
+                       @*  <strong>Error:</strong> @ViewData["Error"].ToString()*@
+                        @ViewData["Error"].ToString()
+                     </p>
+                </div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="green" id="SuccessMsg">
+                    <p>
+                      @* Commented by Rifaqat Mehmood at 01,07,2016 *@
+                        @*<strong>Success:</strong> @TempData["Success"].ToString()*@
+                         @TempData["Success"].ToString()
+                        
+                        </p>
+                </div>
+            }
+            <div class="row">
+                <div class="col-lg-1 col-md-2 col-sm-4 col-xs-12">
+                    <button class="btn btn-sm btn-primary " id="btnPrint">
+                       @Resources.Resource.btnPrint</button>
+                </div>
+
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 ExportDataDiv">
+                    <div class="btn-group DropDownButtonContainer">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" id="btnExport" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            @Resources.Resource.btnExportData<span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu DownLoadDropDown">
+                            <a class="dropdown-item" href="#" onclick="DownloadFile('0')">CSV</a> <a class="dropdown-item"
+                                href="#" onclick="DownloadFile('1')">XLS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="FormElements">
+                @using (Html.BeginForm("PrintReport", "OrderConfirmation", FormMethod.Post, new { @id = "OrderConfirm", role = "form" }))
+                {
+              
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                            <div class="editor-label">
+                                @Html.Label(@Resources.Resource.lblOrderNo)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.OrderNo, new { @class = "form-control InputElements", style = "backgroud-color:gray", id = "OrderNo" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                            <div class="editor-label">
+                                @Html.Label(@Resources.Resource.lblDateFrom)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.DateFrom, new { @class = "form-control InputElements calendarPicker", id = "DateFrom" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                            <div class="editor-label">
+                                @Html.Label(@Resources.Resource.lblDateTo)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.DateTo, new { @class = "form-control InputElements calendarPicker", id = "DateTo" })
+                            </div>
+                        </div>
+                        @if (!Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+                        {
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                                @Html.CheckBoxFor(model => model.ChkLeadTime, new { @id = "LeadTime", @style = " margin-right:2px; margin-top: 27px" })
+                                @Html.Label("Print Lead Time", new { @style = "margin-right:20px;" })
+                            </div>
+                                   
+                        }
+                    </div>
+                
+                    <div style="margin: 20px !important">
+                    </div>
+                    <div class="row">
+                    </div>
+                
+               
+            
+                }
+            </div>
+            <div style="height: 0px;">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container childcontent " style="padding-top: 0px ! important;">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div id="divToUpdate" style="height: 600px; overflow: auto">
+        </div>
+    </div>
+</div>
+@*<div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 220px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;</button>
+                <h4 class="modal-title">
+                    Order Confirmation</h4>
+            </div>
+            <div class="modal-body" id="divModalBody">
+                <label id="lblmsg">
+                </label>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                   @Resources.Resource.OrderConfirmation</h4>
+                </div>
+                <div class="modal-body" id="modalBody">
+                <img  class="imgError"/>
+                <label id="lblMessageText"  class="lblError"></label>
+                </div>
+                <div class="modal-footer">
+                 <button style=" text-align:center;float: none !important;" id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                  </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var OrdNo = "@ViewBag.OrderNo";
+
+        if (OrdNo != "") {
+            $("#OrderNo").val(OrdNo);
+            $("#OrderNo").attr("readonly", "readonly");
+            $("#DateTo").attr("readonly", "readonly");
+            $("#DateFrom").attr("readonly", "readonly");
+        }
+        else {
+            txtError = "@Resources.Resource.MsgInfo156"; //Please enter valid order no.
+            txtErrorType = "0";
+            DisplayModal(txtErrorType, txtError);
+        }
+    });         //doc.ready end
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnPrint").click(function () {
+
+     if($('#DateTo').val()!="" && $('#DateFrom').val()=="")
+     {
+      //txtError="Please Specify Date From";
+      txtError="@Resources.Resource.MsgInfo5";
+      txtErrorType="0";
+      DisplayModal(txtErrorType,txtError) ; 
+       return false;
+     }
+   var dateTimeFrom = new Date($("#DateFrom").datepicker("getDate"));
+   var dateTimeTo   = new Date($("#DateTo").datepicker("getDate"));
+
+    if($('#DateTo').val()!="")
+    {
+      if(dateTimeFrom>dateTimeTo)
+       {
+        //txtError="From date can not be greater than To date.";
+        txtError="@Resources.Resource.MsgInfo6";
+        txtErrorType="0";
+         DisplayModal(txtErrorType,txtError) ;    
+          return false;
+       }
+    } 
+
+           
+            $("#divToUpdate").prepend("<div id='divLoading'></div>");
+
+            var params = { DateTo: $("#DateTo").val(), DateFrom: $("#DateFrom").val(), ChkLeadTime: $("#LeadTime").is(":checked"), OrderNo: $("#OrderNo").val()
+            };
+            $.ajax(
+                {
+                    cache: false,
+                    type: "POST",
+                    url: "PrintReport",
+                    data: params,
+                    success: function (data) {
+                        if (CheckForSessionExpiry(data)) {
+                            SessionExpiredRedirect();
+                            return;
+                        }
+                        if (data.ErrorOccured == 1) {
+                           // $("#divModalBody").html("");
+                            //$("#divModalBody").prepend(data.ErrorMessage).attr("style", "color:red");
+                          //  $("#MessageModal").modal();
+                          txtError = data.ErrorMessage;
+                          txtErrorType = "0";
+                          DisplayModal(txtErrorType, txtError);
+                        }
+                      else {
+                          // $("#divToUpdate").html(data);
+                            url = "@Url.Action("OrderConfirmationReportViewer", "OrderConfirmation")" + "?OrderNo="+$("#OrderNo").val();    
+                            window.location.href=url;
+                        }
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                       // $("#divModalBody").html("");
+                        //$("#divModalBody").prepend("@Resources.Resource.MsgInfo3").attr("style", "color:red");
+                       // $("#MessageModal").modal();
+                        txtError = "@Resources.Resource.MsgInfo3";
+                        txtErrorType = "0";
+                        DisplayModal(txtErrorType, txtError);
+                    }
+                }); // ajax end 
+
+
+        }); //click end
+
+    });       //doc.redy end
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $(document).ajaxStart(function () {
+
+            $("div#divLoading").addClass('show');
+        });
+        $(document).ajaxStop(function () {
+            $("div#divLoading").removeClass('show');
+        });
+
+
+    }); //doc.ready end
+
+</script>
+ 
+<script type="text/javascript">
+    $(document).ready(function () {
+     var dateFormat="@Session["DateCulture"].ToString()";  
+     if(dateFormat==null || dateFormat==""){dateFormat="mm/dd/yy"}
+     InitializeCalander(dateFormat);//from refrencing JavaScript File
+
+    }); //doc.ready end
+</script>
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    }); 
+</script>
+
+<script>
+function DownloadFile(arguments) 
+{    
+    DownloadOrderConfirmationData(arguments);
+}
+
+
+function DownloadOrderConfirmationData(fileType) 
+{
+    
+    $("#lblMsg").html("");
+    var params = { DateTo: $("#DateTo").val(), DateFrom: $("#DateFrom").val(), ChkLeadTime: $("#LeadTime").is(":checked"), OrderNo: $("#OrderNo").val(), txtFileFormate:fileType};
+    $.post("@Url.Action("OrderConfirmation_ExportDataToExcel", "OrderConfirmation", null)",params,function (data)
+    {    
+       if(CheckForSessionExpiry(params))
+        {
+           
+        SessionExpiredRedirect();
+        return;
+        }
+        else
+        { 
+            if(isRealValue(data.ErrorOccured))
+            {   
+             $(".modal-header").removeClass("ModalDesign");
+               $("#divModalBody").html("");
+                       txtError=data.ErrorMessage;
+                       txtErrorType="0";
+                       DisplayModal(txtErrorType,txtError) ; 
+  
+            }
+            else
+            {
+              if(CheckForServerSideError(data))
+                {
+ 
+                $(".modal-header").removeClass("ModalDesign"); 
+                $(".hiddenForm").html(data);
+                  DisplayModal(txtErrorType,txtError) ; 
+      
+    
+    
+                }
+                else
+                {
+                    $(".modal-header").removeClass("ModalDesign");
+                       txtError=data.ErrorMessage;
+                       txtErrorType="1";
+                       DisplayModal(txtErrorType,txtError) ;  
+                    window.location.href=data.RedirectToUrl;                   
+                }
+
+            }      
+    
+    
+        }
+          
+
+    });///End of Post        
+         
+   
+}
+
+function isRealValue(obj) 
+{
+    return obj && obj !== "null" && obj !== "undefined";
+}
+
+function CheckForServerSideError(data)
+    {
+        var tempData = JSON.stringify(data);
+        if (tempData.indexOf("Sorry,") > -1)
+        {
+        return true;        
+        }   
+    }
+</script>

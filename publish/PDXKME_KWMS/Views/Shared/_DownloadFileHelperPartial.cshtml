@@ -1,0 +1,22 @@
+﻿@if (ViewBag.URl!=null)
+{
+    <script>        
+            txtError="@Resources.Resource.MsgInfo46";
+            txtErrorType="1";
+            DisplayModal(txtErrorType,txtError) ;
+            var urlToNav = "@ViewBag.URl";
+            window.open(urlToNav);
+            //window.location.href=urlToNav;
+    </script>
+}
+else if (ViewBag.LogURL!=null)//hst107-For Quotation Details Box Quantity Error
+{
+     <script>
+         $("#LogModal").modal('hide'); //For Convert to Order in Stock transfer Only
+         var urlToNav = "@ViewBag.LogURL";
+         var ConversionFailed = "@ViewBag.ConversionFailed";
+         if (ConversionFailed) {txtErrorType = "0";}
+         window.open(urlToNav);
+         //window.location.href=urlToNav;
+    </script>
+}

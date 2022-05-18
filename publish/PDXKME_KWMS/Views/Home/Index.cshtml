@@ -1,0 +1,402 @@
+﻿@{
+    ViewBag.Title = "Welcome to KME Parts";
+
+    Layout = Url.Content("~/Views/Shared/_NewLayOut.cshtml"); 
+}
+<script src="@Url.Content("~/Scripts/ModalHelper/ModalHelper.js")" type="text/javascript"></script>
+<style type="text/css">
+    
+     .Pstyle:hover
+     {
+       opacity: 0.5;  
+     
+        
+       }
+       .SoOrder
+       {
+           margin-bottom:10px;
+           /*width:25%;*/
+          /* margin-left:26px;*/
+           
+         }
+       .ImgStyle
+       {
+           width: 40%; margin-top:25px;
+       }
+       .Pstyle
+       {
+           /*color:#022279;*/font-size:13px;  margin-bottom:5px; color:White;padding: 2px 0px 12px 0px !important; font-weight:bold;
+                    text-align: center;
+       }
+       .DivStyle
+       {
+           height:150px; border:1px solid gray;background-color:#FCFCFC;text-align:center
+           
+        }
+        
+        .DivStyle_hover
+        {
+            
+           height:160px; border:1px solid gray;background-color:gray;text-align:center
+         }
+         .Pstyle_hover
+         {
+              background-color:#FAC902; border:1px solid black;
+                 cursor:pointer;
+          }
+          
+
+     .PanelHeight
+     {
+      height:auto;   
+         
+      }
+      .panel-body 
+      {
+          padding: 110px 62px 15px 62px;
+             
+       }
+         
+  .divp
+     {
+         border:1px solid black; background-color:#000099;
+         cursor:pointer;
+      }
+  
+          
+  @@media screen and (max-width: 499px) 
+  {
+       .PanelHeight
+     {
+      height:auto;  
+     }
+    .col-xs-6 {
+        width: 100%;
+        margin-bottom: 10px;
+     }
+     
+     .panel-body {
+          padding: 21px 30px 15px;
+        }
+        
+       .DivStyle {
+              height: 124px;
+              border: 1px solid #808080;
+              background-color: #FCFCFC;
+              text-align: center;
+          }
+          
+          
+      .ImgStyle {
+              width: 35%;
+              margin-top: 16px;
+          }
+          
+      .Pstyle{
+              color:white;
+              font-size: 16px;
+              margin-top: 2px;
+              margin-bottom: 0px;
+          }
+     
+   } 
+   
+  @@media screen and (max-width: 1200px) and (min-width:768px)
+  {
+      
+      .ImgStyle
+      {
+          margin-top:3px;
+          width:25%;
+      }
+  }
+  
+   @@media Screen and (min-width:500px) and (max-width:768px)
+   {
+     .PanelHeight
+     {
+      height:auto;  
+     }
+    .col-xs-6 {
+        width: 50%;
+        margin-bottom: 10px;
+     }
+  }
+  
+  @@media Screen and (min-width:600px) and (max-width:768px)
+  {
+     .ImgStyle
+     {
+         margin-top:10px;
+         width:30%;
+     }
+  }
+  
+  @@media Screen and (min-width:769px) and (max-width:1199px)
+  {
+     .PanelHeight
+     {
+      height:auto;  
+     }
+     .col-xs-6
+     {
+         margin-bottom:10px;
+     }
+      
+   }
+
+ 
+</style>
+<div class="container childcontent ">
+    <div class="panel panelInquiryControls panel-primary panelWidth PanelHeight">
+        <!--style=" background:url(../Images/BackTransparrent.png)no-repeat   center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;"> -->
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left ">
+            </h3>
+        </div>
+        <div class="panel-body" style="padding-top: 60px;">
+            <div class="row form-inline">
+                @*<div id="btnstockInq" class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                </div>*@
+                @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("Z01S110_11"))
+                {
+                    <div id="btnstockInq" class="col-lg-3 col-md-3 col-sm-6 col-xs-6 SoOrder">
+                        <div class="DivStyle">
+                            <div style="padding-bottom: 43px;">
+                                <img class="ImgStyle" src="../Images/Icons/StockInquiry.png" />
+                            </div>
+                        </div>
+                        <div class="divp">
+                            <p class="Pstyle">@Resources.Resource.StockInquiry</p>
+                        </div>
+                        @*#23527C;*@
+                    </div>
+             
+             
+                }
+                @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S020_02"))
+                {
+                    <div id="btnQutn" class="col-lg-3 col-md-3 col-sm-6 col-xs-6 SoOrder">
+                        <div id="btnQutn" class="DivStyle">
+                            <div style="padding-bottom: 43px;">
+                                <img class="ImgStyle" src="../Images/Icons/GenerateQuotation.png" />
+                            </div>
+                        </div>
+                        <div class="divp">
+                            <p class="Pstyle">@Resources.Resource.GenerateQuotation</p>
+                        </div>
+                    </div>
+                }
+                @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("Z01S100_12"))
+                {  
+                    <div id="OStat" class="col-lg-3 col-md-3 col-sm-6 col-xs-6 SoOrder">
+                        <div id="OStat" class="DivStyle">
+                            <div style="padding-bottom: 43px;">
+                                <img class="ImgStyle" src="../Images/Icons/ConverttoOrder.png" />
+                            </div>
+                        </div>
+                        <div class="divp">
+                            <p class="Pstyle">
+                                Parts Information
+                            </p>
+                        </div>
+                    </div>
+              
+                }
+                @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("S01S080_04"))
+                {
+
+                    <div id="btnCTO" class="col-lg-3 col-md-3 col-sm-6 col-xs-6 SoOrder">
+                        <div id="btnCTO" class="DivStyle">
+                            <div style="padding-bottom: 43px;">
+                                <img class="ImgStyle" src="../Images/Icons/OrderStatus.png" />
+                            </div>
+                        </div>
+                        <div class="divp">
+                            <p class="Pstyle">
+                                @Resources.Resource.OrderStatus
+                            </p>
+                        </div>
+                    </div>
+                }
+                @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("S04S010_01"))
+                {
+
+                    <div id="btnSalesInvoice" class="col-lg-3 col-md-3 col-sm-6 col-xs-6 SoOrder">
+                        <div id="btnCTO" class="DivStyle">
+                            <div style="padding-bottom: 43px;">
+                                <img class="ImgStyle" src="../Images/Icons/Invoice.png" />
+                            </div>
+                        </div>
+                        <div class="divp">
+                            <p class="Pstyle">
+                                @Resources.Resource.SalesInvoice
+                            </p>
+                        </div>
+                    </div>
+                }
+                @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("M01S010_01"))
+                {
+                    <div id="btnPriceLists" class="col-lg-3 col-md-3 col-sm-6 col-xs-6 SoOrder">
+                        <div id="btnPriceList" class="DivStyle">
+                            <div style="padding-bottom: 43px;">
+                                <img class="ImgStyle" src="../Images/Icons/ListPice.png" />
+                            </div>
+                        </div>
+                        <div class="divp">
+                            <p class="Pstyle">
+                                @Resources.Resource.ListPrice
+                            </p>
+                        </div>
+                    </div>
+                }
+@* <div id="btnstockInq" class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+                </div>*@
+            </div>
+           @* @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("M01S010_01"))//hst001 Check right before rendering sales price list
+            { 
+                <div style="margin-top: 70px;">
+                    <div>
+                        <img alt="Download"src="@Url.Content("~/images/File-Download.png")"   style="width: 19px; height: 19px ! important; padding: 0px 3px 3px 0px ! important; margin: -3px -6px 1px 1px ! important;" />
+                        <a id="lnkDownloadPriceList" href="#" style="font-weight: 600; color: red; font-size: 15px;
+                            padding: 11px 4px 4px 5px ! important;">@Resources.Resource.DownloadPriceList
+                        </a>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            }*@
+        </div>
+    </div>
+</div>
+<div class="hiddenForm" style="display: none !important;">
+    <form id="frmDownloadPriceList" method="post" action="@Url.Action("DownloadPriceList", "Home", null)" >
+    </form>
+</div>
+<div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;</button>
+                <h4 class="modal-title">
+                    @Resources.Resource.DownloadPriceList</h4>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <img class="imgError" />
+                <label id="lblMessageText" class="lblError">
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button style="text-align: center; margin-left: auto !important; float: none !important;"
+                    id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                    @Resources.Resource.btnOK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+       $(document).ready(function () {
+         $(".panelInquiryControls").parent("div").prepend("<div id='divLoading'></div>");    
+          
+           $("#lnkDownloadPriceList").on("click",function (e) {
+            $.post("@Url.Action("DownloadPriceList", "Home", null)",null,function(data){
+             if (CheckForSessionExpiry(data))
+            {
+            SessionExpiredRedirect();
+            }         
+            else
+             {
+            
+            $(".hiddenForm").html(data);
+            
+            }
+            
+            });
+             
+            e.preventDefault();
+           });
+
+
+           $("#btnstockInq").click(function () {
+             window.location.href="@Url.Action("StockInquiry", "StockInquiry", null)";
+           });
+
+           $("#btnCTO").click(function () {
+            window.location.href="@Url.Action("SOStatusInquiryByOrderNo", "SOStatusInquiry", null)";
+            });
+           $("#OStat").click(function () {
+             window.location.href="@Url.Action("PartsMasterInquiry", "StockInquiry", null)";
+           });
+           $("#btnQutn").click(function () {
+             window.location.href="@Url.Action("Index", "QuotationCondition", null)";
+           });
+            $("#btnSalesInvoice").click(function () {
+             window.location.href="@Url.Action("SalesInvoiceInquiry", "SalesInvoiceInquiry", null)";
+           });
+           $("#btnPriceLists").click(function(){
+               window.location.href = "@Url.Action("Index","ListPrice", null)"
+           });
+
+
+       });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".DivStyle").hover(function () {
+            // $(this).addClass("DivStyle_hover");
+            //               $(this).next("div").removeClass("divp");
+            $(this).addClass("Pstyle_hover");
+
+        },
+           function () {
+               // $(this).removeClass("DivStyle_hover");
+               // $("p.Pstyle").removeClass("Pstyle_hover");
+               $(this).removeClass("Pstyle_hover");
+               //  $(this).next("div").addClass("divp");
+
+           });
+        $(".divp").hover(function () {
+            // $(this).addClass("DivStyle_hover");
+            $(this).prev("div").addClass("Pstyle_hover");
+            //               $(this).removeClass("divp");
+            //               $(this).addClass("Pstyle_hover");
+
+        },
+           function () {
+               // $(this).removeClass("DivStyle_hover");
+               // $("p.Pstyle").removeClass("Pstyle_hover");
+               $(this).prev("div").removeClass("Pstyle_hover");
+               //               $(this).removeClass("Pstyle_hover");
+               //               $(this).addClass("divp");
+
+           });
+
+    });  //doc.ready end
+    $(document).ajaxStart(function () {
+
+        $("div#divLoading").addClass('show');
+
+    });
+    $(document).ajaxStop(function () {
+        $("div#divLoading").removeClass('show');
+    });
+
+    $(document).ajaxError(function () {
+        $("div#divLoading").removeClass('show');
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //$("#ddlLanguage").hide();
+
+    });  //doc.ready func
+   
+</script>

@@ -1,0 +1,202 @@
+﻿@{
+    ViewBag.Title = "Customer Registration";
+}
+<link href="~/Content/WebGrid/GridPagingStyle.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/WebGrid/webgrid.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .RowBottomMargin
+    {
+        margin-bottom: 5px;
+    }
+    .MarginRightCheckbox
+    {
+        margin-right: 3px;
+    }
+    .labelWidth
+    {
+        padding-top: 6px;
+        height: 26px;
+    }
+</style>
+<div id="divUserPopup">
+</div>
+<div class="panel  panel-primary PanelTopMargin" style="min-height: 400px !important;">
+    <div class="panel-heading PanelTitle panelTitleHeight YellowBackgroundItem">
+        <h3 class="panel-title pull-left " id="FormTitle">
+            @ViewBag.Title</h3>
+    </div>
+    <div class="panel-body panel-bodyp ">
+        <div class="innerbar" id="ButtonBar">
+            <button onclick="PerformSearch()" id="Searchbtn" class="btnStyle Searchbtn">
+                Search</button>
+            @*<button id="btnSave" class="btnStyle Savebtn" onclick="@("location.href='" + Url.Action("AddNewUser", "UserRegistration", new { @class = "modal-link" }) + "'")"">
+                New</button>*@
+            @Html.ActionLink("New", "AddNewCustomer", "CustomerRegistration", null, new { @class = "modal-link btnStyle Newbtn" })
+            @Html.ActionLink("Update", "UpdateAction", "CustomerRegistration", new { cID = "xxx" }, new { @class = "modal-link btnStyle Newbtn", @id = "buttonUpdate" })
+            @*<button class="Savebtn btnStyle" onclick="ModifyUser();" id="btnUpdate">
+                Update</button>*@
+            @*<input type="button" style="width: 141px" class=" btnStyle ExportCSVbtn" id="btnExportCSV"
+                onclick="ExportToCSV();" value="Export to CSV" />
+            <input type="button" style="width: 141px" class=" btnStyle ExportXLSbtn" id="btnExportXLS"
+                onclick="ExportToExcel();" value="Export to XLSX" />*@
+        </div>
+        <div class="row " style="padding-left: 15px !important; margin-top: 20px !important;">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="row RowBottomMargin">
+                    <div class="row RowBottomMargin">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 AnalysisLbl ">
+                            @Html.Label("Customer Name", new { @id = "lblCustomerName", @class = "labelWidth" })
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 AnalysisLbl ">
+                            @Html.TextBox("txtCustomerName", null, new { @id = "txtCustomerName", @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="row RowBottomMargin">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 AnalysisLbl ">
+                        @Html.Label("Distributor", new { @id = "lblDistributor", @class = "labelWidth" })
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8 AnalysisLbl ">
+                        @Html.DropDownList("ddlDistributor", ViewBag.lstDistributor as List<SelectListItem>, new { @class = "form-control InputElements" })
+                    </div>
+                </div>
+            </div>
+             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="row RowBottomMargin">
+                   
+                </div>
+            </div>
+        </div>
+        <div id="divToUpdate1">
+            <table id="tblEmpty" class="table table-striped table-hover">
+                <thead>
+                    <tr class="gridHead">
+                        <th scope="col">
+                            Select
+                        </th>
+                        <th scope="col">
+                            Customer Name
+                        </th>
+                        <th scope="col">
+                            Distributor
+                        </th>
+                        <th scope="col">
+                            Country
+                        </th>
+                        <th scope="col">
+                            Telephone
+                        </th>
+                        <th scope="col">
+                            Email
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div id="divToUpdate" style="height: 430px;">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    $("#buttonUpdate").click(function () {
+
+        //Get the id of the selected item in dropdown
+        var id = $('input[name="rd2"]:checked');
+        var selectedRow = $(id).closest('tr');
+        var td = $(selectedRow).find('td:eq(1)');
+        var hiddenField = $(td).find('input[type=hidden]');
+        var custID = $(hiddenField).val();
+
+        //Replace the predifined QueryString param "xxx" with the "id"
+        var split = this.href.split("cID")[0];
+        this.href = split + "cID=" + custID;
+        //        this.href = this.href.replace("xxx", userID);
+    });
+
+    function PerformSearch() {
+
+        var intPageSize = 10;
+        var intPageNo = null;
+
+        var Params = {};
+        var distributor = "";
+        distributor = $("#ddlDistributor").val();
+        var userRole = "";
+        userRole = $("#ddlUserRole").val();
+        var customerID = "";
+        customerID = $("#txtCustomerName").val();
+
+        Params = { sDistributorCode: distributor, sCustomerID: customerID, pageNo: intPageNo, pageSize: intPageSize
+        };
+
+        var urlz = '@Url.Action("PerformSearch", "CustomerRegistration", null)';
+        var spinner = spin(spinner);
+        $.post(urlz, Params, function (data) {
+
+            if (data.DisplayMessage != "1") {
+                var data = data.replace("$(containerId).parent().delegate", "$(containerId).parent().undelegate();$(containerId).parent().delegate ");
+                var data = data.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);", " if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                $("#divToUpdate").html(data);
+                $("#divToUpdate1").hide();
+                $('.NewPaging ul').addClass("pagination");
+
+            }
+            else {
+                $("#divToUpdate").html('');
+                $("#divToUpdate1").show();
+            }
+            unspin(spinner);
+        });
+    }
+
+    function afterLoad() {
+
+        //Unbind(); ///hst107
+        setArrowImages();
+        $('.NewPaging ul').addClass("pagination");
+    }
+
+    function setArrowImages() {
+
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+
+        var header = $('th a[href*=' + col + ']');
+
+        if (header.length > 1) {
+            var matchedIndex = 0;
+            for (var i = 0; i < header.length; i++) {
+                //(this).attr('href');
+
+                var url = $(header[i]).attr('href');
+                if (url.indexOf(col + '&') !== -1) {
+                    matchedIndex = i;
+                }
+            }
+
+            //header = header[matchedIndex]; //.splice(matchedIndex + 1);
+
+            var i = header.length;
+            while (i--) {
+                if (i != matchedIndex) {
+                    header.splice(i, 1);
+                }
+            }
+        }
+
+        if (dir == 'Ascending') {
+            header.text(header.text() + ' ▲');
+        }
+        if (dir == 'Descending') {
+            header.text(header.text() + ' ▼');
+        }
+    } 
+
+</script>

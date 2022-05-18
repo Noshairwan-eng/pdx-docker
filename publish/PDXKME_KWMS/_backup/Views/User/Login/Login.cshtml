@@ -1,0 +1,329 @@
+﻿@{
+   
+    ViewBag.Title = Resources.Resource.Login;
+    string strLoginGreet = "";
+    if (Session["SelectedLang"] != null)
+    {
+        if (Session["SelectedLang"].ToString() == "ar-AE")
+        {
+            strLoginGreet = Resources.Resource.WelcomeKMERegion + " " + Resources.Resource.WelcomeKMEName + " " + Resources.Resource.WelcomeKME;
+        }
+        else
+        {
+            strLoginGreet = Resources.Resource.WelcomeKME + " " + Resources.Resource.WelcomeKMEName + " " + Resources.Resource.WelcomeKMERegion;
+        }
+    }
+    Layout = "~/Views/Shared/_NewLayOut.cshtml"; 
+}
+<script src="@Url.Content("~/Scripts/EditableDropDown/jquery.editableSelect.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/content/site/style.css")" rel="stylesheet" type="text/css" />
+ 
+<style>
+    .validationcontrols{ width:90% !important;}
+    .modal-dialog
+    {
+        margin: 40px auto;
+        width: 470px;
+    }
+    .flex-active-slide
+    {
+        width: 85% !important;
+    }
+    .esContainer
+    {
+        height: 50px !important;
+    }
+    .flex-direction-nav
+    {
+        display: none !important;
+    }
+     .main-header{ padding:5px 0 !important}
+</style>
+<div class="container childcontent">
+    <div class="panel panelLogin panel-default">
+        <div class="panel-heading" style="background-color: #FAC902">
+            <h2 class="panel-title">
+                @Resources.Resource.SignIn</h2>
+        </div>
+        <div class="panel-body">
+            <div class="row ">
+                @* For Login To Display *@
+                <div class="col-lg-4 col-md-8 col-sm-11 col-xs-11 middleMargin " style="padding: 0px 0px 0px 61px ! important;">
+                    <div class="form-group">
+                        <label>@Resources.Resource.UserName:</label>
+                        <input type="text" id="txtUserName" class="form-control validationcontrols" value=""
+                             />
+                        <span></span>
+                        <label>@Resources.Resource.Password:</label>
+                        <input type="password" id="txtPassword" class="form-control validationcontrols" value=""
+                            />
+                        <span></span>
+                        <label>@Resources.Resource.DataBase:</label><br />
+                        <select class="form-control makeEditable" id="ddlDbs"  style=" display:none">
+                            @*<option>PDX</option>*@
+                            <option>Testing</option>
+                              
+                        </select>
+                        <span class="spanDropDown"></span>
+                        <div class="buttons" style="padding-top: 20px;">
+                            <button class="btn btn-small " id="btnLogin" role="AjaXCall">
+                                @Resources.Resource.btnLogin</button>
+                            <button class="btn btn-small " id="btnClear">@Resources.Resource.btnClear</button>
+                            <br>
+                            <br>
+                            <ul class="Register" style="display: inline-flex; display: -webkit-inline-flex; display: -ms-inline-flexbox;">
+                                @*<li style=" display:inline"><a href="#">Forgot Password? </a></li>*@
+                                <li style="display: inline"><a href="#">@Resources.Resource.HrefForgotPassword</a></li>
+                                @*<li style=" display:inline"><a id="aRegister" href="#">&nbsp;&nbsp; Create New Account</a></li>*@
+                             @*   <li style="display: inline"><a id="aRegister" href="#">&nbsp;&nbsp;@Resources.Resource.HrefCreateNewAccount</a></li>*@
+                            </ul>
+                        </div>
+                        <span id="spnMsg" style="display: inline-flex !important"></span>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 ">
+                </div>
+                <div class=" col-lg-1 headerDivider hidden-xs hidden-md hidden-sm" style="">
+                </div>
+                <div class="col-lg-6 col-md-7 col-sm-10 col-xs-10 marginMD zeroMarginOnSmall" style="padding: 18px 0px 0px 67px ! important;">
+                    <img src="@Url.Content("~/images/Slider.png")" style="width: 100%;" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;</button>
+                <h4 class="modal-title">
+                    @Resources.Resource.Login</h4>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <img class="imgError" />
+                <label id="lblMessageText" class="lblError">
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button style="text-align: center; float: none !important;" id="btnOk" class="btn btn-default center-block"
+                    data-dismiss="modal">
+                    @Resources.Resource.btnOK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@* Model Dialoge *@
+<div class="PartialDataContainer">
+</div>
+<br />
+<br />
+<br />
+<br />
+<script>
+    
+    if (typeof String.prototype.trim !== 'function') {
+        String.prototype.trim = function () {
+            return this.replace(/^\s+|\s+$/g, '');
+        }
+    }
+
+</script>
+<script>
+$(document).on("click",function () {
+$("#spnMsg").html("");
+});
+
+$(document).on("keyup",".esTextBox ,#txtPassword ,#txtUserName",function (e)
+{
+if (e.which == 13)
+{
+
+$("#btnLogin").trigger("click");
+}
+});
+
+
+$("#btnClear").on("click", function () {
+$(".validationcontrols").each(function () {
+$(this).val("");
+})
+$("#spnMsg").html("")
+
+});
+
+
+$("#btnLogin").on("click", function () {
+if (!LoginValidate())
+{
+return;
+}  
+//$("#btnLogin").attr("disabled",true);
+//var creds = { strUserName: $.trim($("#txtUserName").val()), strPassWord: $.trim($("#txtPassword").val()), ddlDb: $.trim($("#ddlDbs").val()) }
+var creds = { strUserName: $.trim($("#txtUserName").val()), strPassWord: $.trim($("#txtPassword").val()), ddlDb: $.trim($(".esTextBox ").val()),SelectedLanguage: $.trim($("#ddlLanguage").val()),LanguageText: $.trim($('#ddlLanguage option:selected').text()) }
+$.ajax(
+{
+cache: false,
+type: "POST",
+url: "@Url.Action("login", "User", null)", 
+data: creds, 
+success: function(serverResponse)
+{
+$(".PartialDataContainer").html(serverResponse)
+
+},
+error: function (xhr, ajaxOptions, thrownError) 
+{ 
+         var imageLink="@Url.Content("~/images/error.png")";
+         txtError = "@Resources.Resource.MsgInfo3";
+         txtErrorType = "0";
+         DisplayModal(txtErrorType, txtError,imageLink);
+ 
+}
+}); // ajax end
+}); ///btnClick End
+
+</script>
+<script>
+
+function LoginValidate()
+{
+var count=0;
+
+$(".validationcontrols").each(function ()
+{
+if ($.trim($(this).val())=="")
+{
+ 
+$(this).attr("style","width:90% !important;border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;display: inline");
+count+=1;
+}
+else
+{
+$(this).removeAttr("style");
+
+}
+});
+if (count>0)
+{
+return false;
+
+}
+else
+{
+return true;
+}
+ 
+}
+
+function onLoginFormSuccess(data) {
+if (data == "true") 
+{
+if(referToUrl!=null && referToUrl!="")
+{
+window.location.href=referToUrl;
+}
+else
+{
+window.location.href = "@Url.Action("index", "Home", null)";
+
+}
+
+}
+else if (data == "false")
+{ 
+
+        //txtError = "Invalid username/password";
+        txtError = "@Resources.Resource.MsgInfo44";
+        txtErrorType = "0";
+        DisplayModal(txtErrorType, txtError,"@Url.Content("~/images/error.png")");
+
+}
+else
+{ 
+        txtError = data;
+        txtErrorType = "0";
+        DisplayModal(txtErrorType, txtError,"@Url.Content("~/images/success.png")"); 
+}
+}
+
+</script>
+<script>
+
+    $(function () {
+        $('.makeEditable').editableSelect().change(function () {
+
+        });
+    });
+</script>
+<script>
+    
+
+    $('#ddlDbs').change(function () {
+
+    }) 
+</script>
+<script>
+var referToUrl = "@Session["RefferedFromUrl"]";
+referToUrl="";///Skipped for now @@ 11/16/2015 by Yasir Mehmood
+ 
+$(document).ready(function () {
+
+$(".panel-body").prepend("<div id='divLoading'></div>"); 
+$("#txtUserName").on("change", function () {
+if ($(this).length > 0) {
+$(this).next("span").html("");
+
+}
+
+}); 
+$("#txtPassword").on("change", function () {
+if ($(this).length > 0) {
+$(this).next("span").html("");
+
+}
+
+});
+
+$("#txtUserName").on("click", function () {
+$("#spnMsg").html("");
+});
+$("#txtPassword").on("keyup", function () {
+$("#spnMsg").html("");
+});
+});
+</script>
+<script>
+
+
+$(document).on("click", "#aRegister", function (e) {
+
+window.location.href = "@Url.Action("NewSiteUser", "home", null)";
+});
+
+</script>
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    }); 
+</script>
+<script type="text/javascript">
+    //ViewBag.LanChk is being set only in user controller in login action
+    var lancheck = "@ViewBag.LanChk";
+    if (lancheck == null || lancheck == "") {
+        //$("#languageSelector").html();
+
+        // $("#ddlLanguage").css("visibility", "hidden");
+    }
+    else {
+        if ("@ViewBag.Language" != null) {
+            $("#ddlLanguage").val("@Session["Language"]");
+            //  $("#ddlLanguage").trigger("change");
+        }
+    }
+    
+</script>

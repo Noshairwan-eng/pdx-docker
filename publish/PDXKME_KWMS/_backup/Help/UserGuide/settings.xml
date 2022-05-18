@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <theme>
+    <url>themes/Basic/settings.xml</url>
+    <configUrl>themes/Basic/settings.en-us.xml</configUrl>
+    <jqueryui>css/jquerymobile/default/jquery.mobile.css</jqueryui>
+  </theme>
+  <references>
+    <css>LinksExt/C1H_HTML.css</css>
+  </references>
+  <strings>
+    <pageHeaderText>PDX User Guide</pageHeaderText>
+    <emailAddress>support@mycompany.com</emailAddress>
+  </strings>
+</settings>

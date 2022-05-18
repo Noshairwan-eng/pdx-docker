@@ -1,0 +1,140 @@
+﻿@* hst001: Imran Shahzad @ 01-Dec-2016
+           - Chnaged column name O.Qty to A.Qty in Resource.resx and added column O.Qty to show Order Quantity.
+@* hst002: Imran Shahzad @ 02-Dec-2016
+           - Column mapping for Shipping Instructed Quantity (PAQU) was wrong
+@* hst003: rMehmood @ Oct-15-2020
+           -Added Part Description Column
+@* hst004: Shabbir Hussain @ 09-Sep-2021
+           - Number of records per page were incorrect (8) it should be 10
+*@
+
+@model IEnumerable<PDXWEB.Models.SalesOrder.SaleOrderInquiry.SaleOrderInquiryModel>
+
+@{
+
+    ViewBag.Title = @Resources.Resource.OrderStatusInquiryByPartNo;
+
+    WebGrid grid = new WebGrid(source: Model,
+
+    canSort: true,
+
+    //rowsPerPage: 8,//hst004 Commented
+    rowsPerPage: 10,//hst004
+
+    ajaxUpdateContainerId: "main",
+    ajaxUpdateCallback: "afterLoad", 
+
+
+    canPage: true);       
+        
+
+}  
+@if (Model != null)
+{
+    if (Model.Count() > 0)
+    {
+     <div id="main" class=" ">
+     @if (Model.Count() > 10)
+     {
+         <div class="NewPaging row   " id="HeadPaging" style=" text-align:center ">
+  
+<div class="span9">   @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")</div>
+ 
+
+            </div>
+     }
+       <div class="datagrid table-responsive" style="overflow: auto;">
+        @grid.GetHtml(
+            displayHeader: true,
+            mode: WebGridPagerModes.All,
+           firstText: "<<",
+            lastText: ">>",
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+            footerStyle: "gridFooter",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "tblSoStatusbyPart" },
+                           columns: grid.Columns(
+@*grid.Column(@Resources.Resource.thOrderType, format: @<text> @item.OTYP  @Html.Hidden("Select",new { value = @item.DDON + "," + item.REF1,  name = @item.DDON })</text>),
+//grid.Column("OTYP", @Resources.Resource.thOrderType),
+grid.Column("DDON", @Resources.Resource.thSaleOrderNo, style: "centerAlign"),
+grid.Column("LINN", @Resources.Resource.thLineNo),
+grid.Column("LINS", @Resources.Resource.thSubLineNo),
+grid.Column("REF1", @Resources.Resource.thDistributorOrderNo),
+grid.Column("DDAT", @Resources.Resource.thOrderDate),
+grid.Column("SPNU", @Resources.Resource.thPartNo),
+grid.Column("CNTR", @Resources.Resource.thCTO),
+grid.Column("DOQU", @Resources.Resource.thOrderQuantity),
+grid.Column("HQUA", @Resources.Resource.thOnHoldQuantity),
+grid.Column("UQUA", @Resources.Resource.thUnprocess),
+grid.Column("OOAQ", @Resources.Resource.thBackOrder),
+grid.Column("SAQU", @Resources.Resource.thStockAllocated),
+grid.Column("SOQU", @Resources.Resource.thPickingInstructed),
+grid.Column("PQUA", @Resources.Resource.thPackedQuantity),
+grid.Column("SLSQ", @Resources.Resource.thShippingInstructed),
+grid.Column("IQUA", @Resources.Resource.thInvoiced),
+grid.Column("CQUA", @Resources.Resource.thCancelled),
+grid.Column("REMR", @Resources.Resource.thRemarks)*@
+   //grid.Column(@Resources.Resource.thOrderType, format: @<text> @item.OTYP  @Html.Hidden("Select", new { value = @item.DDON + "," + item.REF1, name = @item.DDON })</text>),
+   grid.Column(@Resources.Resource.thOrderType, format: @<text> @item.OTYP  @Html.Hidden("Select", new { value = @item.DDON + "," + item.REF1, name = @item.DDON })</text>),
+   // grid.Column("OTYP", @Resources.Resource.thOrderType, style: "rightAlign", format: @<text><label id="l_OTYP"  style="font-size: 10px ! important;  margin-right: 8px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.OTYP</label></text>),
+       grid.Column("DCOD", @Resources.Resource.thDistributorCode, style: "leftAlign", format: @<text><label id="l_DCOD"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.DCOD</label></text>),
+       grid.Column("CSCD", @Resources.Resource.thCustomerCode, style: "leftAlign", format: @<text><label id="l_CSCD"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.CSCD</label></text>),
+       grid.Column("DDON", @Resources.Resource.thSaleOrderNo, style: "rightAlign", format: @<text><label id="l_DDON"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.DDON</label></text>),
+       grid.Column("LINN", @Resources.Resource.thLineNo, style: "rightAlign", format: @<text><label id="l_LINN"  style="font-size: 10px ! important;  margin-right: 0 !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.LINN</label></text>),
+       grid.Column("LINS", @Resources.Resource.thSubLineNo, style: "rightAlign", format: @<text><label id="l_LINS"  style="font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.LINS</label></text>),
+       grid.Column("REF1", @Resources.Resource.thDistributorOrderNo, style: "leftAlign", format: @<text><label id="l_REF1"  style="font-size: 10px ! important;  margin-right: 8px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.REF1</label></text>),
+       grid.Column("DDAT", @Resources.Resource.thOrderDate, style: "leftAlign", format: @<text><label id="l_DDAT"  style="font-size: 10px ! important;  margin-right: 8px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.DDAT</label></text>),
+       grid.Column("SPNU", @Resources.Resource.thPartNo, style: "leftAlign", format: @<text><label id="l_SPNU"  style="font-size: 10px ! important;  margin-right: 8px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.SPNU</label></text>),
+       //hst003 start
+        grid.Column("PDESC", @Resources.Resource.thPartDescription, style: "leftAlign", format: @<text><label id="l_PDESC"  style="font-size: 10px ! important;  margin-right: 8px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.PDESC</label></text>),
+        //hst003 end
+        grid.Column("CNTR", @Resources.Resource.thCTO, style: "leftAlign", format: @<text><label id="l_CNTR"  style="font-size: 10px ! important;  margin-right: 1px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.CNTR</label></text>),
+        //hst001
+ @*grid.Column("DOQU", @Resources.Resource.thOrderQuantity, style: "rightAlign", format: @<text><label id="l_DOQU"  style="font-size: 10px ! important;  margin-right: 4px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.DOQU</label></text>),*@
+                grid.Column("RQQT", @Resources.Resource.thOrderQuantity, style: "rightAlign", format: @<text><label id="l_RQQT"  style="font-size: 10px ! important;  margin-right: 4px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.RQQT</label></text>),
+               grid.Column("DOQU", @Resources.Resource.thAcceptdQuantity, style: "rightAlign", format: @<text><label id="l_DOQU"  style="font-size: 10px ! important;  margin-right: 4px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.DOQU</label></text>),
+        //hst001 - End
+               grid.Column("HQUA", @Resources.Resource.thOnHoldQuantity, style: "rightAlign", format: @<text><label id="l_QHQUA"  style="font-size: 10px ! important;  margin-right: 4px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.HQUA</label></text>),
+               grid.Column("UQUA", @Resources.Resource.thUnprocess, style: "rightAlign", format: @<text><label id="l_UQUA"  style="font-size: 10px ! important;  margin-right: 4px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.UQUA</label></text>),
+               grid.Column("OOAQ", @Resources.Resource.thBackOrder, style: "rightAlign", format: @<text><label id="l_OOAQ"  style="font-size: 10px ! important;  margin-right: 4px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.OOAQ</label></text>),
+               grid.Column("SAQU", @Resources.Resource.thStockAllocated, style: "rightAlign", format: @<text><label id="l_SAQU"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.SAQU</label></text>),
+               grid.Column("SOQU", @Resources.Resource.thPickingInstructed, style: "rightAlign", format: @<text><label id="l_SOQU"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.SOQU</label></text>),
+               grid.Column("PQUA", @Resources.Resource.thPackedQuantity, style: "rightAlign", format: @<text><label id="l_PQUA"  style="font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.PQUA</label></text>),
+        //hst002 - Sold Qty (SLSQ) was mapped in place of Shipping Instructed Qty (PAQU).
+ @*grid.Column("SLSQ", @Resources.Resource.thShippingInstructed, style: "rightAlign", format: @<text><label id="l_SLSQ"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.SLSQ</label></text>),*@
+               grid.Column("PAQU", @Resources.Resource.thShippingInstructed, style: "rightAlign", format: @<text><label id="l_PAQU"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.PAQU</label></text>),
+               grid.Column("IQUA", @Resources.Resource.thInvoiced, style: "rightAlign", format: @<text><label id="l_IQUA"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.IQUA</label></text>),
+               grid.Column("CQUA", @Resources.Resource.thCancelled, style: "rightAlign", format: @<text><label id="l_CQUA"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.CQUA</label></text>),
+               grid.Column("REMR", @Resources.Resource.thRemarks, style: "leftAlign", format: @<text><label id="l_REMR"  style="font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.REMR</label></text>)
+
+
+                                                                          ) //grid.columns
+
+                                                                         ) @* grid.GetHtml *@
+</div>@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+  </div>
+    }
+}
+
+
+
+
+  <script type="text/javascript">
+      afterLoad();
+      $(document).ready(function () {
+          var Message = "@ViewBag.Message";
+          if (Message != "" && Message != null) {
+              txtError = "@ViewBag.Message";
+              txtErrorType = "@ViewBag.MessageType";
+              DisplayModal(txtErrorType, txtError);
+              
+          }
+        else {
+              $("#btnDownload").attr("disabled", false);
+          }
+      });    //
+  
+  </script>
+

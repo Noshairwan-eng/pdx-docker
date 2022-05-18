@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = @Resources.Resource.WareHouseStockStatus;
+}
+@Scripts.Render("~/bundles/InquiryJSBundle")
+@Styles.Render("~/Content/InquiryCSSBundle")
+ 
+ <style type="text/css">
+ .table tr td,.table tr th {
+   padding-left: 90px !important;
+    text-align: left !important;
+    white-space: nowrap;
+} 
+.table{ margin:0 !important;} 
+ @@media screen and (max-width: 767px) 
+  {
+      .InputElements 
+      {
+        background-color: White !important; border: 1px solid grey !important; height: 25px !important; width: 97%;
+      } 
+         .TopMarginAtXs
+     {
+      margin-top:5px; 
+      width:100% !important;  
+     }  
+      
+} /* media 767 end*/
+ 
+ </style>
+ 
+  <div class="container childcontent ">
+     <div class="panel panelInquiryControls panel-primary panelWidth">
+    
+        <div class="panel-heading PanelTitle"  >         
+         <h3 class="panel-title pull-left " >@Resources.Resource.WareHouseStockStatus</h3>         
+              
+        </div>
+        <div class="panel-body">  
+        <span id="lblMsg"></span>
+      <div class="row" style="margin: -9px 0px -13px -14px ! important;">
+         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+           <button class=" btn TopMarginAtXs" id="btnSearch" >@Resources.Resource.btnSearch</button>  
+         </div>
+       </div>
+              <br />
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+               <div>  
+                @Html.Label(@Resources.Resource.lblPartNo)
+               </div>
+                <div> @Html.TextBox("txtPartNo", null, new { id = "txtPartNo", style = " display: inline;", @class = "form-control InputElements" })
+                  <span></span>
+                </div>
+             </div>
+       </div>
+
+ 
+    </div>
+    </div>
+    </div>
+     <div class="container childcontent " style="padding-top: 0px ! important;">
+     <div class="panel panelInquiryControls panel-primary panelWidth">  
+       <div id="divToUpdate2" style="  height:auto; overflow:auto">
+
+       </div>            
+       <div id="divToUpdate" style="  height: 300px; overflow:auto">
+
+       </div>
+       <div>
+       <label>
+       Note: KLTD Stock Information is as of end of the day.
+       </label>
+       </div>    
+       <div class="  hideonLoad" >
+    
+
+    <div class="lagends accordion hideonLoad " style="display:none">
+			<a href="#">@Resources.Resource.Legends <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e">
+			</span></a>
+			<div class="accordianRows" style="min-height:80px !important">
+				<div class=" row">
+@*					<div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+						<label>    @Resources.Resource.thEOReserveQuantity:
+						</label>
+					</div>
+					<div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+						<label>  @Resources.Resource.EOReserveQuantityDesc
+						</label>
+					</div>*@
+					<div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+						<label> FSQ:
+						</label>
+					</div>
+					<div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+						<label>Free Stock Quantity
+						</label>
+					</div>
+				 
+				</div>
+				 
+				 
+                 
+                 
+			</div>
+		</div>
+
+</div>
+     </div>
+   </div>
+
+   <div class="modals">
+    <!-- Modal -->
+     <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                   @Resources.Resource.WareHouseStockStatus</h4>
+                </div>
+                <div class="modal-body" id="modalBody">
+                <img  class="imgError"/>
+                <label id="lblMessageText"  class="lblError"></label>
+                </div>
+                <div class="modal-footer">
+                <button style=" text-align:center;float: none !important;" id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                 </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   <script type="text/javascript">
+    
+   $("#txtPartNo").on("paste", function (event) {  var element = this;setTimeout(function () { var text = $(element).val(); if (text.length >= 20) {$(element).val(text.substr(0, 20));} }, 100); });  
+ $('#txtPartNo').keypress(function (event) {var key = event.which;if (this.value.length >= 20 && key != 8 && key != 13) { return false; } });
+
+       $("#btnSearch").on("click", function () {
+       if( !PostGetPreCheck()){return;}//This Check makes sure that there is not any exsiting Ajax Request ,in other case the call is returned void and doesnt proceeds to next code
+           if ($("#txtPartNo").val() == "") { 
+
+               /*$("#txtPartNo").next("span").html("*").css("color", "red");*/
+               $("#txtPartNo").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;display: inline");
+               return;
+           }
+           /* $("#txtPartNo").next("span").html(" ") ;*/
+            $("#txtPartNo").attr("style","");           
+           var formData = { txtPartNo: $("#txtPartNo").val(),txtFileFormate:  $("#ddlFileType").val()};
+           $.post("@Url.Action("SearchByPart","WHStockStatus",null)",formData,function (data) {
+             if (CheckForSessionExpiry(data)) {
+                            SessionExpiredRedirect();
+                            return;
+                        }
+             
+            if(isRealValue(data))
+            {
+             $("#divToUpdate").html(data);
+            }
+           
+
+            });
+       });
+
+        
+
+
+
+   </script>
+
+   <script type="text/javascript">
+   
+   
+    function isRealValue(obj) 
+    {
+                  return obj && obj !== "null" && obj !== "undefined";
+    }
+   
+   </script>
+
+   <script type="text/javascript">
+       $(document).ready(function () {
+           $("#divToUpdate").parent("div").prepend("<div id='divLoading'></div>");           
+           $(".lagends").removeAttr("style");
+           $(".accordion").accordion({
+               collapsible: true,
+               active: false
+           }); 
+
+       }); //doc.ready end
+
+</script>
+
+  
+<script type="text/javascript">
+
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    }); 
+</script>

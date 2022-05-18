@@ -1,0 +1,262 @@
+﻿@model KME_SSO.Models.clsCustomer
+<div class="modal-body About-modal-body panel-primary">
+    <div class="col-xs-12 ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"
+        id="header" style="background: rgb(0,0,153) !important; color: rgb(255,255,255) !important;
+        padding-top: 5px; margin-bottom: 10px;">
+        @ViewBag.PopupTitle
+        <button type="button" style="color: rgb(255,255,255) !important; background: rgb(0,0,153) !important;
+            border: 0px; float: right; padding-top: 0px !important;" data-dismiss="modal">
+            <img width="20" height="20" src="~/Images/CloseIcon.png" /></button>
+    </div>
+</div>
+<div id="content-div">
+    <div class="innerbar" id="ButtonBar">
+        <button onclick="SaveUserDetails()" id="btnSaveUser" class="btnStyle Savebtn">
+            @ViewBag.SaveTitle</button>
+        <button onclick="ClearUserDetails()" id="btnClearDetails" class="btnStyle Savebtn">
+            @ViewBag.ClearTitle</button>
+    </div>
+    <div class="row " style="padding-left: 15px !important; margin-top: 20px !important;
+        padding-right: 15px !important;">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row RowBottomMargin">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                    @Html.Label("Customer Name", "Customer Name", new { @id = "lblCustomerName", @class = "labelWidth" })
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                    @* @Html.TextBox("txtUserID", null, new { @id = "txtUserID", @class = "DisplayInLine form-control InputElements" })*@
+                    @{
+                        @Html.HiddenFor(model => model.CustID, new { @id = "lblCustomerID"})
+                        @Html.TextBoxFor(model => model.CustName, new { @id = "txtCustomerNameEdit", @class = "DisplayInLine form-control InputElements", @maxlength = 10 })
+                        
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row RowBottomMargin">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                    @Html.Label("Country", "Country", new { @id = "lblCountry", @class = "labelWidth" })
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                    @Html.DropDownList("ddlCountryPopup", ViewBag.lstCountry as List<SelectListItem>, new { @class = "form-control InputElements" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row RowBottomMargin">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                    @Html.Label("Telephone No.", "Telephone No.", new { @id = "lblTelephone", @class = "labelWidth" })
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                    @*@Html.TextBox("txtUserName", null, new { @id = "txtUserName", @class = "DisplayInLine form-control InputElements" })*@
+                    @Html.TextBoxFor(model => model.Telephone, new { @id = "txtTelephone", @class = "DisplayInLine form-control InputElements", @maxlength = 20 })
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row RowBottomMargin">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                    @Html.Label("Post Code", "Post Code", new { @id = "lblPostCode", @class = "labelWidth" })
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                    @*@Html.TextBox("txtDesignation", null, new { @id = "txtDesignation", @class = "DisplayInLine form-control InputElements" })*@
+                    @Html.TextBoxFor(model => model.PostCode, new { @id = "txtPostCode", @class = "DisplayInLine form-control InputElements", @maxlength = 50 })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row RowBottomMargin">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                    @Html.Label("Email", "Email", new { @id = "lblEmail", @class = "labelWidth" })
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                    @* @Html.TextBox("txtEmail", null, new { @id = "txtEmail", @class = "DisplayInLine form-control InputElements" })
+*@
+                    @Html.TextBoxFor(model => model.Email, new { @id = "txtEmail", @class = "DisplayInLine form-control InputElements", @maxlength = 50 })
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row RowBottomMargin">
+                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 AnalysisLbl ">
+                    @Html.Label("Distributor", "Distributor", new { @id = "lblDistributor", @class = "labelWidth" })
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 AnalysisLbl ">
+                    @Html.DropDownList("ddlDistributorPopup", ViewBag.lstDistributor as List<SelectListItem>, new { @class = "form-control InputElements" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row RowBottomMargin">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 AnalysisLbl ">
+                    @Html.Label("Address", "Address", new { @id = "lblAddress", @class = "labelWidth" })
+                </div>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 AnalysisLbl ">
+                  @Html.TextBoxFor(model => model.Address, new { @id = "txtAddress", @class = "DisplayInLine form-control InputElements", @maxlength = 50 })
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+     <div class="row " style="padding-left: 15px !important; padding-right: 15px !important;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row RowBottomMargin">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 AnalysisLbl ">
+                    @Html.CheckBoxFor(model => model.sendEmail, new { @id = "chkSendEmail", @class = "DisplayInLine InputElements"})
+                    @Html.Label("The analysis report sends to the customer", new { @for = "chkSendEmail", @class = "DisplayInLine InputElements" })
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#approve-btn').click(function () {
+            $('#modal-container').modal('hide');
+        });
+    });
+
+    function SaveUserDetails() {
+
+        var customerName = $("#txtCustomerNameEdit").val();
+        var customerID = $("#lblCustomerID").val();
+        
+        var postCode = $("#txtPostCode").val();
+        var email = $("#txtEmail").val();
+        var telephone = $("#txtTelephone").val();
+        var address = $("#txtAddress").val();
+
+        var selectedCountry = $("#ddlCountryPopup").val();
+        var selectedDistributor = $("#ddlDistributorPopup").val();
+        var sendEmail = $("#chkSendEmail").is(":checked");
+
+        var mandatory = 0;
+
+        $("#txtCustomerNameEdit").removeClass("required");
+        $("#txtEmail").removeClass("required");
+        $("#txtAddress").removeClass("required");
+        $("#ddlCountryPopup").removeClass("required");
+        $("#txtTelephone").removeClass("required");
+        $("#txtPostCode").removeClass("required");
+        $("#ddlDistributorPopup").removeClass("required");
+
+        if (customerName == null || customerName == undefined || customerName.trim() == "") {
+            mandatory++;
+            $("#txtCustomerNameEdit").addClass("required");
+        }
+        if (email == null || email == undefined || email.trim() == "") {
+            mandatory++;
+            $("#txtEmail").addClass("required");
+        }
+        if (address == null || address == undefined || address.trim() == "") {
+            mandatory++;
+            $("#txtAddress").addClass("required");
+        }
+        if (telephone == null || telephone == undefined || telephone.trim() == "") {
+            mandatory++;
+            $("#txtTelephone").addClass("required");
+        }
+        if (postCode == null || postCode == undefined || postCode.trim() == "") {
+            mandatory++;
+            $("#txtPostCode").addClass("required");
+        }
+
+        if (selectedCountry == null || selectedCountry == undefined || selectedCountry.trim() == "") {
+            mandatory++;
+            $("#ddlCountryPopup").addClass("required");
+        }
+        if (selectedDistributor == null || selectedDistributor == undefined || selectedDistributor.trim() == "") {
+            mandatory++;
+            $("#ddlDistributorPopup").addClass("required");
+        }
+
+        var eval = true;
+        if (email.length > 0) {
+            eval = isValidEmailAddress(email);
+            if (!eval) {
+                mandatory++;
+                $("#txtEmail").addClass("required");
+            }
+        }
+        var tval = true;
+        if (telephone.length > 0) {
+            tval = validatePhone(telephone);
+            if (!tval) {
+                mandatory++;
+                $("#txtTelephone").addClass("required");
+            }
+        }
+
+
+        if (mandatory == 0) {
+           
+
+            var Params = {};
+            Params = { CustID: customerID, CustName: customerName, Email: email, Address: address,PostCode:postCode,
+                sendEmail: sendEmail, Telephone: telephone, distribCode: selectedDistributor, countryCode: selectedCountry
+            };
+
+
+            if (customerID == "" ||customerID == null ||customerID == undefined ) {
+                var urlsave = '@Url.Action("SaveNewCustomer", "CustomerRegistration", null)';
+                $.post(urlsave, Params, function (data) {
+                    if (data == "0") {
+                        DisplayModal("0","A customer with same name already exists for selected Distributor.");
+                    }
+                    else if (data == "1") {
+                        DisplayModal("0", "Failed to save Customer Information.");
+                    }
+                    else {
+                        DisplayModal("1","Customer saved successfully.");
+                    }
+                });
+            }
+            else {
+                var urlsave = '@Url.Action("ModifyCustomer", "CustomerRegistration", null)';
+                $.post(urlsave, Params, function (data) {
+                    if (data == "") {
+                        DisplayModal("1","Customer Information updated succesfully.");
+                    }
+                    else {
+                        DisplayModal("0","Failed to update Customer Information.");
+                    }
+                });
+            }
+        }
+
+        else {
+            if (!eval) {
+            }
+            else if (!tval) {
+            }
+            else {
+            }
+        }
+
+    }
+
+    function ClearUserDetails() {
+
+        $("#txtUserIDEdit").val('');
+        $("#txtPassword").val('');
+        $("#txtUserNameEdit").val('');
+        $("#txtDesignation").val('');
+        $("#txtEmail").val('');
+        $("#radActive").attr("checked", "checked");
+        $("#txtTelephone").val('');
+        $("#ddlRoles").prop('selectedIndex', 0);
+        $("#ddlDistributorPopup").prop('selectedIndex', 0);
+        $("#ddlSubRole").prop('selectedIndex', 0);
+        $("#ddlCustomerNamePopup").prop('selectedIndex', 0);
+    }
+</script>

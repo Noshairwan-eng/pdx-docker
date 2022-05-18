@@ -1,0 +1,2 @@
+Quotation No	QT Line No	Requested Part No		Quantity		Unit Price		Character Code			Error Description
+182716		45		6219-61-1102			2		0.00000000		000				Supply W/Cond

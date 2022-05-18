@@ -1,0 +1,979 @@
+﻿@*
+    hst001 : Noshairwan Farooq |Made change to add Option Parts Grid|
+    hst002 : Noshairwan Farooq |20-08-2020| |Made change to make option grid collapsable for interchangeability|
+    hst003 : Shabbir Hussain |01-09-2020| |Made change to load respective option parts while clicking on main grid line.|
+    hst004 : rMehmood @Jun 04, 2021. Add blinking effect to Dnet Price
+*@
+
+
+@{
+    ViewBag.Title = @Resources.Resource.StockInquiry;
+}
+@model PDXWEB.Models.Master.DTStockInquiryModel
+<link href="@Url.Content("~/Content/JqueryUI/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/JqueryUI/jquery-ui.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/WebGridStyle/webgrid.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/ModalHelper/ModalHelper.js")" type="text/javascript"></script>
+<style>
+    @@media screen and (min-width:1200px) {
+        #btnExportData {
+            width: 110px !important;
+        }
+    }
+
+    .accordianRows {
+        height: 130px !important;
+        min-height: 100px;
+    }
+
+    .modal-dialog {
+        margin: 40px auto;
+        width: 398px;
+    }
+
+    .table tr {
+        white-space: nowrap;
+    }
+
+    .table {
+        margin: 0 !important;
+    }
+
+    /* Force table to not be like tables anymore */
+    .tblSoStatus table,
+    .tblSoStatus thead,
+    .tblSoStatus tbody,
+    .tblSoStatus th,
+    .tblSoStatus td,
+    .tblSoStatus tr {
+        display: block;
+    }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        .tblSoStatus thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+    .tblSoStatus tr {
+        border: 1px solid #ccc;
+    }
+
+    .tblSoStatus td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        white-space: normal;
+        text-align: left;
+    }
+
+        .tblSoStatus td:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 6px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            text-align: left;
+            font-weight: bold;
+        }
+
+
+        .tblSoStatus td:before {
+            content: attr(data-title);
+        }
+
+    .customHeader {
+        background-color: #000099;
+        color: #fff;
+        font-weight: bold;
+        padding: 2px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        vertical-align: bottom;
+    }
+
+    .table tr td, .table tr th {
+        text-align: left;
+    }
+
+    @@media screen and (max-width:768px) {
+        .DropDownButtonContainer {
+            width: 100% !important
+        }
+
+        .panel-body input {
+            width: 97% !important;
+        }
+
+        .panel-body {
+            padding: 0 0 0 12px !important;
+        }
+
+            .panel-body button, .panel-body select {
+                margin-top: 8px !important;
+                width: 100% !important;
+            }
+    }
+
+    @@media screen and (min-width:768px) and (max-width: 991px) {
+        .MainButtonsRow {
+        }
+
+            .MainButtonsRow button, .MainButtonsRow select {
+            }
+
+        #btnExportData {
+            margin-left: -25px !important;
+        }
+
+        #ddlFileType {
+            margin-left: -48px !important;
+        }
+    }
+
+    @@media screen and (min-width:992px) and (max-width: 1199px) {
+        .MainButtonsRow {
+        }
+
+            .MainButtonsRow button, .MainButtonsRow select {
+            }
+
+        #btnExportData {
+            margin-left: -61px !important;
+        }
+
+        #ddlFileType {
+            margin-left: -122px !important;
+        }
+    }
+
+    .ChainedPart {
+        background-color: #C6C6E6 !important;
+    }
+
+        .ChainedPart:hover {
+        }
+
+    .chainParent {
+        display: none;
+    }
+
+    .blink {
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+        /*background-color: #fac902;
+        color: #000099;*/
+        background-color: black;
+        color: red;
+    }
+
+    .blink2 {
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+        /*background-color: #000099;
+        color: white;*/
+        background-color: red;
+        color: black;
+    }
+</style>
+<style>
+    .table thead tr th {
+    }
+</style>
+<div class="container childcontent ">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left ">
+                @Resources.Resource.StockInquiry
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row MainButtonsRow" style="margin: -9px 0px 1px -14px ! important;">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 ">
+                    <button class=" btn " id="btnSearch">
+                        @Resources.Resource.btnSearch
+                    </button>
+                </div>
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 ">
+                    <div class="btn-group DropDownButtonContainer">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" id="btnExportData"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @Resources.Resource.btnExportData<span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu DownLoadDropDown">
+                            <a class="dropdown-item" href="#" onclick="DownloadFile('0')">CSV</a> <a class="dropdown-item"
+                                                                                                     href="#" onclick="DownloadFile('1')">XLS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-lg-3 col-md-3 col-sm-4  col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblPartNo)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtPartNo", null, new { style = " display:inline;display:-webkit-inline-flex;", @class = "form-control InputElements" })
+                        <span></span>
+                    </div>
+                </div>
+                @* New Dropdown added for Stock Point by Zeeshan Ali 18 Sep 2018 *@
+                @if (HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Admin).ToString()))  //Stock Point Drop Down will only be shown to admin
+
+                {
+                    <div class="col-lg-3 col-md-3 col-sm-4  col-xs-12">
+                        <div>
+                            @Html.Label(@Resources.Resource.lblStockPoint)
+                        </div>
+                        <div>
+                            @Html.DropDownListFor(model => Model.ddlStockPoint, Model.ddlStockPoint as List<SelectListItem>, new { @id = "ddlStockPoint", style = " display:inline;display:-webkit-inline-flex;", @class = "form-control InputElements" })
+
+
+                            <span></span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container childcontent " style="padding-top: 0px ! important;">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div id="divToUpdate2" style="height: auto; overflow: auto">
+        </div>
+        <div id="divToUpdate" style="height: 185px; overflow: auto">
+        </div>
+        <div id="OptionPartContainer" style="display:none;">
+            <label style="padding-left:20px;"> Optional Parts: </label>
+            <div id="divToUpdateOptionParts" style="max-height: 185px; overflow: auto">
+            </div>
+        </div>
+        <div>
+            <label>
+                Note: KLTD Stock Information is as of end of the day.
+            </label>
+        </div>
+        <div class="lagends accordion hideonLoad " style="display: none">
+            <a href="#">
+                Legends <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e">
+                </span>
+            </a>
+            <div class="accordianRows">
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thCharacterCode:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.CharacterCodeDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thKMEEOReserve:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.KMEEOReserveDesc
+                        </label>
+                    </div>
+                    @* Shabbir 22-12-2016 Added Below Check *@
+                    @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("Z01S110_11_001"))
+                    {
+                        <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                            <label>
+                                @if (Model.PriceCalculationMethod.Equals("B"))
+                                {
+                                    @Resources.Resource.thKMEListPrice
+                                }
+                                else
+                                {
+                                    @Resources.Resource.thDNetPrice
+                                }
+                            </label>
+                        </div>
+                        <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                            <label>
+                                @if (Model.PriceCalculationMethod.Equals("B"))
+                                {
+                                    @Resources.Resource.KMEListPriceDesc
+                                }
+                                else
+                                {
+                                    @Resources.Resource.DNetPriceDesc
+                                }
+
+                            </label>
+                        </div>
+                    }
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thKLTDLeadProductionPerMonth
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.KLTDLeadProductionPerMonthDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thSupplierBornDate :
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.SupplierBornDateDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thQuantityByUnit:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.QuantityByUnitDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thProductionLot:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.ProductionLotDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thModelGroupCode:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.ModelGroupCodeDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thModelCode:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.ModelCodeDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thReturnableCode:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.ReturnableCodeDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thCommodityGroupCodeOld:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.CommodityGroupCodeOldDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thCommodityCodeOld:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.CommodityCodeOldDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thHSCodeLocal:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.HSCodeLocalDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thCommodityGroupCodeNew:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.CommodityGroupCodeNewDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thCommodityCodeNew:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.CommodityCodeNewDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thServiceNewsNumber:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.ServiceNewsNumberDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            IC:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-2  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.InterchangeableCodeDesc
+                        </label>
+                    </div>
+                    @if (HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+                    {
+                        if (HttpContext.Current.Session["INVR_FLAG"] != null && HttpContext.Current.Session["INVR_FLAG"].ToString().Equals("Y"))
+                        {
+                            <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                                <label>
+                                    Inv Resp:
+                                </label>
+                            </div>
+                            <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                                <label>
+                                    @Resources.Resource.InvResp
+                                </label>
+                            </div>
+                        }
+                        else
+                        {
+
+                            <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                                <label>
+                                    DB Mortality:
+                                </label>
+                            </div>
+                            <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                                <label>
+                                    @Resources.Resource.DBMortality
+                                </label>
+                            </div>
+
+                        }
+                    }
+                    else
+                    {
+                        <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                            <label>
+                                Inv Resp DBs:
+                            </label>
+                        </div>
+                        <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                            <label>
+                                @Resources.Resource.InvRespDBs
+                            </label>
+                        </div>
+                    }
+                </div>
+                @if (!HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()) ||
+                    HttpContext.Current.Session["INVR_FLAG"] != null && HttpContext.Current.Session["INVR_FLAG"].ToString().Equals("Y"))
+                {
+                    <div class="row">
+                        <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                            <label>
+                                DB Mortality:
+                            </label>
+                        </div>
+                        <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                            <label>
+                                @Resources.Resource.DBMortality
+                            </label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hiddenForm" style="display: none !important;">
+</div>
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="ErrorModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.StockInquiry
+                    </h4>
+                </div>
+                <div class="modal-body" id="divModalBody">
+                    <span id="lblMessage"></span>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.StockInquiry
+                    </h4>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <img class="imgError" />
+                    <label id="lblMessageText" class="lblError">
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button style="text-align: center; float: none !important;" id="btnOk" class="btn btn-default center-block"
+                            data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+   var lblMessage;
+    var txtErrorType;
+    var txtError;
+    //hst005 start
+    var PriceCalculationMethod;
+    function change_kmelistprice_text(type) {
+        if (type == "B") {
+            $(".col-dnet").text("@Resources.Resource.thKMEListPrice");
+        }
+        else {
+            $(".col-dnet").text("@Resources.Resource.thDNetPrice");
+        }
+    }
+    function blink_text() {
+            if ($(".col-dnet").hasClass("blink")) {
+                $(".col-dnet").switchClass("blink", "blink2", 1000, "easeInOutQuad");
+            }
+            else {
+                $(".col-dnet").switchClass("blink2", "blink", 1000, "easeInOutQuad");
+            }
+        }
+
+    //hst005 end
+       $(document).ready(function () {
+       $(".lagends").removeAttr("style");
+         $(".accordion").accordion({
+            collapsible: true,
+            active: false
+        });
+       $("#btnExportData").attr("disabled", true);
+        $("#ddlFileType").attr("disabled", true);
+        $("#txtPartNo").focus();
+         $("#divToUpdate").parent("div").prepend("<div id='divLoading'></div>");
+
+         var partNo = GetParameterValues('partno');
+
+         if(partNo!=null && partNo!="")
+         {
+          var partNumber=window.unescape(partNo);
+         $("#txtPartNo").val(partNumber);
+          $("#btnSearch").trigger("click");
+           }
+
+           var pcmt = "@Model.PriceCalculationMethod";
+           change_kmelistprice_text(pcmt);
+           if (pcmt == "D") {
+               setInterval(blink_text, 1000);
+           }
+
+
+       });
+
+    $("#btnSearch").on("click", function () {
+
+         if( !PostGetPreCheck()){return;}//This Check makes sure that there is not any exsiting Ajax Request ,in other case the call is returned void and doesnt proceeds to next code
+           if ($("#txtPartNo").val() == "") {
+              // txtError="Please enter Part No";
+               txtError="@Resources.Resource.MsgInfo59";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ;
+
+              /* $("#txtPartNo").next("span").html("*").attr("style", "color: red; display:inline ");*/
+               $("#txtPartNo").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;display: inline");
+               return;
+           }
+
+         $("#txtPartNo").next("span").html(" ") ;
+         $("#txtPartNo").attr("style","");
+           var formData = { txtPartNo: $("#txtPartNo").val(),ddlStockPoint: $("#ddlStockPoint").val(),txtFileFormate:  $("#ddlFileType").val()};
+           $.post("@Url.Action("StockInquirySearch", "StockInquiry", null)",formData,function (data) {
+            if(CheckForSessionExpiry(data))
+            {
+
+            SessionExpiredRedirect();
+            return;
+            }
+         else
+           {
+            $("#lblMsg").html(lblMessage);
+            if(isRealValue(data))
+            {
+
+             var data= data.replace(/<th/g,"<td");
+             var data= data.replace(/th>/g,"td>");
+
+             $("#divToUpdate").html(data);
+
+             $("tbody:first").append("<tr>        </tr>");
+
+             //==== hst001: Getting Option Parts Information =============================================
+
+            var formData = { txtPart1: $("#txtPartNo").val()}
+            GetOptionParts(formData);//hst003 Called method instead of following code
+            var pcmt = "@Model.PriceCalculationMethod";
+            change_kmelistprice_text(pcmt);
+            if (pcmt == "B") {
+                $(".col-dnet").removeClass("blink").removeClass("blink2");
+            }
+//            $.post("@Url.Action("StockInquiryOptionPart", "StockInquiry", null)",formData,function (data) {
+//                if(CheckForSessionExpiry(data))
+//                {
+//                    SessionExpiredRedirect();
+//                    return;
+//                }
+//                else
+//                {
+//                    $("#lblMsg").html(lblMessage);
+//                    if(isRealValue(data))
+//                    {
+//                        if(data.trim()!=null && data.trim()!="")
+//                        {
+//                            var data= data.replace(/<th/g,"<td");
+//                            var data= data.replace(/th>/g,"td>");
+//                            if(data.trim().search("<table")>-1) //Hide the option parts div if no data is available.
+//                            {
+//                                $("#OptionPartContainer").css("display","inline");
+//                                $("#divToUpdateOptionParts").html(data);
+//                                $("tbody:first").append("<tr>        </tr>");
+//                            }
+
+//                        }
+//                        else
+//                        {
+//                            $("#OptionPartContainer").css("display","none");
+//                            $("#divToUpdateOptionParts").html("data");
+//                        }
+//                    }
+//                }
+//            });
+            //==================================================================================================
+
+
+            }
+
+          }  });
+       });
+
+
+$(document).on("click",".gridRow,.gridAltRow", function (e) {
+        e.stopImmediatePropagation();//hst003
+    //Following loop will collapse all expanded rows
+
+    //Shabbir 22-12-2016 isChain flag Column change its position based on
+    //KME List Price right allocation, So added below check
+    var flgColumnIndex = 0;
+
+
+
+    if($.trim($(this).find('td').eq(flgColumnIndex).text()) != "True")
+    {
+        var expandedRows = $(".gridRow"); //hst001
+        var isIntExist=$.trim($(this).find('td').eq(2).text());
+
+        expandedRows.not(this).each(function(){
+
+        $(this).removeClass("expanded");
+        $(this).removeClass("highlight");
+
+        // Removing already displayed chains==================================================
+        $("tr.hideChild").each(function() {
+            var isChained = $.trim($(this).next('tr').find('td').eq(flgColumnIndex).text());
+            if(typeof isChained != 'undefined' && isChained == "0")
+            {
+                $(this).removeClass("hideChild").addClass("chainParent");
+                return false;
+            }
+            $(this).removeClass("hideChild").addClass("chainParent");
+            });
+        });
+        //====================================================================================
+
+
+
+        //Highlighting / Unhighlighting Row ======================================================
+        if($(this).hasClass("highlight"))
+        {
+            $(this).removeClass("highlight");
+            $(".tempRow").remove(); //hst002
+
+        }
+        else
+        {
+            $(this).addClass("highlight");
+            //hst002 Start
+            if(isIntExist=="Int Exists")
+            {
+                var tempRow = $(this).clone();
+                tempRow.find("td").eq(2).find("label").eq(0).html("");
+                tempRow.addClass("tempRow isChain hideChild ChainedPart");
+                tempRow.removeClass("highlight");
+                $(this).after(tempRow);
+            }
+            //hst002 End
+        }
+        //====================================================================================
+
+        //if(isIntExist!="True") // Return if there is no chain.
+        //return ;
+
+
+
+        if(!$(this).hasClass("expanded") && $.trim($(this).find('td').eq(flgColumnIndex).text())=="False")
+        {
+            $(this).addClass("expanded");
+            //$(this).addClass("highlight");
+
+            $(this).nextAll().each(function() {
+
+            if($(this).hasClass('chainParent'))
+            {
+                var isChained = $.trim($(this).next('tr').find('td').eq(flgColumnIndex).text());
+                if(typeof isChained != 'undefined' && isChained == "False")
+                {
+                //$(this).find('td').eq(1).html('');
+                $(this).removeClass("chainParent").addClass("hideChild").addClass("ChainedPart");
+                return false;
+                }
+                //$(this).find('td').eq(1).html('');
+                $(this).removeClass("chainParent").addClass("hideChild").addClass("ChainedPart");
+            }//end if
+            });//end each loop
+
+        }//end if
+        else if($(this).hasClass("expanded") && $.trim($(this).find('td').eq(flgColumnIndex).text())=="False")
+        {
+            $(this).removeClass("expanded");
+            //$(this).removeClass("highlight");
+
+            $("tr.hideChild").each(function() {
+
+                var isChained = $.trim($(this).next('tr').find('td').eq(flgColumnIndex).text());
+                if(typeof isChained != 'undefined' && isChained == "False")
+                {
+                $(this).removeClass("hideChild").addClass("chainParent");
+                return false;
+                }
+                $(this).removeClass("hideChild").addClass("chainParent");
+            });
+        }
+    }
+
+//=============================================================
+//hst003 While clicking on main grid row respective option parts should be loaded.
+
+   var tempPartNumber = $(this).find("td").eq(0).text().trim();
+   var fromDataForOptionParts = { txtPart1: tempPartNumber}
+   var mainDiv = $(this).parent().parent().parent().parent().attr("id");
+   if (mainDiv != "divToUpdateOptionParts") {
+           GetOptionParts(fromDataForOptionParts);
+   }
+//=============================================================
+
+});
+
+          $(document).on('keydown', '#txtPartNo', function (e) {if (this.value.length >= 20 && e.keyCode != 8){e.preventDefault()  ;return false; } });
+
+          $( "#txtPartNo" ).on("paste", function(event) {setTimeout( function() {   if(   $( "#txtPartNo" ).val().trim().length>21   ){   $( "#txtPartNo" ).val( jQuery.trim($( "#txtPartNo" ).val()).substring(0, 20))  }         }, 1); });
+
+</script>
+<script>
+
+function DownloadFile(fileType)
+{
+
+          var formData = { txtPartNo: $("#txtPartNo").val(),txtFileFormate:  fileType};
+         $.post("@Url.Action("StockInquiryExportData", "StockInquiry", null)",formData,function (data) {
+
+           if(CheckForSessionExpiry(data))
+           {
+           SessionExpiredRedirect();
+            return;
+           }
+          else
+          {   window.location.href=data;
+              // txtError="Data Exported Successfully";
+               txtError="@Resources.Resource.MsgInfo46";
+               txtErrorType="1";
+               DisplayModal(txtErrorType,txtError) ;
+          }
+
+            });
+
+
+}
+   function afterLoad()
+   {
+
+
+
+
+   }
+
+    function isRealValue(obj)
+    {
+                  return obj && obj !== "null" && obj !== "undefined";
+    }
+       function GetParameterValues(param) {
+        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < url.length; i++) {
+            var urlparam = url[i].split('=');
+            if (urlparam[0] == param) {
+                return urlparam[1];
+            }
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    });
+</script>
+<script type="text/javascript">
+//hst003 Added following method GetOptionParts 31-08-2020
+
+function GetOptionParts(formData)
+ {
+   $.post("@Url.Action("StockInqSearchOptionParts", "StockInquiry", null)",formData,function (data) {
+                if(CheckForSessionExpiry(data))
+                {
+                    SessionExpiredRedirect();
+                    return;
+                }
+                else
+                {
+                    $("#lblMsg").html(lblMessage);
+                    if(isRealValue(data))
+                    {
+                        if(data.trim()!=null && data.trim()!="")
+                        {
+                            var data= data.replace(/<th/g,"<td");
+                            var data= data.replace(/th>/g,"td>");
+                            if(data.trim().search("<table")>-1) //Hide the option parts div if no data is available.
+                            {
+                                $("#OptionPartContainer").css("display","inline");
+                                $("#divToUpdateOptionParts").html(data);
+                                $("tbody:first").append("<tr>        </tr>");
+                            }
+                            else
+                            {
+                                $("#OptionPartContainer").css("display","none");
+                                $("#divToUpdateOptionParts").html("data");
+                            }
+
+                        }
+                        else
+                        {
+                            $("#OptionPartContainer").css("display","none");
+                            $("#divToUpdateOptionParts").html("data");
+                        }
+                        var pcmt = "@Model.PriceCalculationMethod";
+                        change_kmelistprice_text(pcmt);
+                        if (pcmt == "B") {
+                            $(".col-dnet").removeClass("blink").removeClass("blink2");
+                        }
+                    }
+                }
+            });
+    //==========================================================================================
+ }
+</script>

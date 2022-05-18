@@ -1,0 +1,254 @@
+﻿@model IEnumerable<PDXWEB.Models.SalesOrder.SaleOrderInquiry.InvoiceModel>
+
+
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  opacity: 1 !important;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  top:0px;
+  left: -30px;
+  
+  width: 30px;
+  background-color: #009;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 2px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+</style>
+ 
+@{
+
+    ViewBag.Title = @Resources.Resource.InvoiceData;
+
+    WebGrid grid = new WebGrid(source: Model,
+
+    canSort: false,
+
+    rowsPerPage: 10,
+
+    ajaxUpdateContainerId: "main",
+     ajaxUpdateCallback: "afterLoad",
+
+    canPage: true);       
+        
+
+}  
+
+
+
+@if (Model != null)
+{
+    if (Model.Count() > 0)
+    {
+        
+  <div id="main2" class="datagrid table-responsive" >
+  @*  <div class="NewPaging" style="text-align: center;">
+        @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")
+     </div>*@
+
+      @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("S04S010_01"))
+      {
+                  @grid.Table(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+        //footerStyle: "gridFooter",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "tblInvoice" },
+                           columns: grid.Columns(
+                                                grid.Column("invoiceNumber", "Invoice No"),
+                                                grid.Column(null, null, format: @<input type="hidden" name="BODC" value="@item.BODirectShipment"/>),
+                                                grid.Column(null, null, format: @<input type="hidden" name="Warehouse" value="@item.Warehouse"/>),
+                                                grid.Column("InvoiceDate", "Invoice Date", format: (item) => string.Format("{0:dd-MM-yyyy}", item.InvoiceDate)),
+                                                grid.Column("ShippingDate", "Shipment Date", format: (item) => string.Format("{0:dd-MM-yyyy}", item.ShippingDate)),
+                                                grid.Column("Id", "Download", format: @<p><a class="click-link tooltip" id="btnDownloadPDF" ><span class="tooltiptext">PDF</span> <img src="~/Images/pdf.png" style="width:22px;" /></a> | <a class="click-link tooltip" id="btnDownloadCSV"> <span class="tooltiptext">CSV</span><img src="~/Images/csv.png" style="width:22px;" /></a> | <a class="click-link tooltip" id="btnDownloadXLS"> <span class="tooltiptext">XLS</span><img src="~/Images/xls.png" style="width:22px;" /></a></p>)
+                                                                                                ) //grid.columns
+
+                                                                                                )  @* grid.GetHtml *@
+          
+      }
+      else
+      {
+                  @grid.Table(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+                                                        //footerStyle: "gridFooter",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "tblInvoice" },
+                           columns: grid.Columns(
+                                                grid.Column("invoiceNumber", "Invoice No"),
+                                                grid.Column(null, null, format: @<input type="hidden" name="BODC" value="@item.BODirectShipment"/>),
+                                                grid.Column(null, null, format: @<input type="hidden" name="Warehouse" value="@item.Warehouse"/>),
+                                                grid.Column("InvoiceDate", "Invoice Date", format: (item) => string.Format("{0:dd-MM-yyyy}", item.InvoiceDate)),
+                                                grid.Column("ShippingDate", "Shipment Date", format: (item) => string.Format("{0:dd-MM-yyyy}", item.ShippingDate))
+                                                
+                                                                                                ) //grid.columns
+
+                                                                                                )  @* grid.GetHtml *@
+      }
+
+
+  </div>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var Message = "@ViewBag.Message";
+            var ModelCount = "@ViewBag.Count";
+
+            if (Message != "" && Message != null) {
+
+
+                if (ModelCount != "0") {
+
+                    txtError = Message;
+                    txtErrorType = "0";
+                    DisplayModal(txtErrorType, txtError);
+                }
+
+            }
+            else {
+            //    $("#InvoiceModal").modal();
+            }
+
+        });      //
+  
+  </script>
+    
+<script type="text/javascript">
+        $(document).on("click",".InvoiceRow a",function (event) 
+        {    
+            event.stopImmediatePropagation(); //To Prevent from click Hitting Multiple times.
+            var strInvoiceNumber= $(this).closest('tr').find('td').eq(0).text();
+            var tempBODC = $(this).closest('tr').find('td').eq(1).children("input").val(); 
+            var tempWarehouse = $(this).closest('tr').find('td').eq(2).children("input").val(); 
+            var flagDirectShipment = (tempBODC=="3")?true:false;
+                       
+            if ($(this).attr("id")=="btnDownloadPDF") 
+            {  
+
+            var params = { InvoiceNumber: strInvoiceNumber, BODC: tempBODC, Warehouse: tempWarehouse };
+               $.ajax(
+                {
+                    cache: false,
+                    type: "POST",
+                    url: "@Url.Action("PrintReport", "SalesInvoiceInquiry")",
+                    data: params,
+                    success: function (data) {
+                        if (CheckForSessionExpiry(data)) {
+                            SessionExpiredRedirect();
+                            return;
+                        }
+                        if (data.ErrorOccured == 1) {
+                          txtError = data.ErrorMessage;
+                          txtErrorType = "0";
+                          DisplayModal(txtErrorType, txtError);
+                        }
+                      else {
+                            url= "@Url.Action("SalesInvoiceReportViewer", "SalesInvoiceInquiry")";    
+                            window.open(url, '_blank', 'location=yes,height=570,width=900,scrollbars=yes,status=yes' )  ;
+                            //window.location.href=url;
+                        }
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        txtError = "@Resources.Resource.MsgInfo3";
+                        txtErrorType = "0";
+                        DisplayModal(txtErrorType, txtError);
+                    }
+                }); // ajax end 
+
+            }
+
+            if ($(this).attr("id")=="btnDownloadCSV" || $(this).attr("id")=="btnDownloadXLS" ) 
+            { 
+                if($(this).attr("id")=="btnDownloadCSV")
+                {var ExportParams = {InvoiceNumber: strInvoiceNumber , blnDirectShipment: flagDirectShipment, txtFileFormate: "0"};}
+                else if($(this).attr("id")=="btnDownloadXLS")
+                {var ExportParams = {InvoiceNumber: strInvoiceNumber , blnDirectShipment: flagDirectShipment, txtFileFormate: "1"};}
+                
+                 
+        $.ajax(
+                {
+                    cache: false,
+                    type: "POST",
+                    url: "@Url.Action("ExportInvoice", "SalesInvoiceInquiry", null)",
+                    data: ExportParams,
+                    success: function (data) {
+                
+                    $("#divLoading").remove();
+
+                     
+                    if(CheckForSessionExpiry(data))
+                    {                              
+                        SessionExpiredRedirect();
+                        return;
+                    }                                                                                                        
+                    
+                    if(CheckForServerSideError(data))
+                    {
+                        $(".modal-header").removeClass("ModalDesign"); 
+                        $(".hiddenForm").html(data);
+                        DisplayModal(txtErrorType,txtError) ;              
+                    }
+                    else
+                    {
+                        $(".modal-header").removeClass("ModalDesign");
+                        txtError=data.ErrorMessage;
+                        txtErrorType="1";
+                        DisplayModal(txtErrorType,txtError) ;  
+                        window.location.href=data.RedirectToUrl;                   
+                    }
+                                          
+                }
+                ,
+
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    txtError = "@Resources.Resource.MsgInfo3";
+                    txtErrorType = "0";
+                    DisplayModal(txtErrorType, txtError);                           
+                    }
+                }
+            ); //ajax end
+
+
+
+
+            }
+            if ($(this).attr("id")=="btnDownloadXLS") 
+            {  
+                alert("Export XLS for Invoice: " + stInvoiceNumber);
+            }
+              
+            event.stopPropagation();
+
+
+        });  
+</script>
+    }
+
+}
+
+
+ 
+
+
+
+

@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Error In Parts Ordering System";
+    
+}
+
+ <div class="container childcontent">
+<div class="panel panelLogin panel-default">
+<div class="panel-heading" style="background-color: rgb(249, 249, 249);">
+<h2 class="panel-title" style="color:Red">
+An Error Has Occured.</h2>
+</div>
+<div class="panel-body">
+<p style="font-size: 20px;"> An Error Has Occured.
+<br />
+@if (Session["MailSent"] !=null)
+{
+   @Html.Raw(Session["MailSent"].ToString())
+    Session["MailSent"] = null;
+}
+
+</p>
+</div><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<button style=" width:15% !important" id="btnGoBack" class="btn">Return to Dashboard</button>
+</div>
+</div>
+<script>
+    $("#btnGoBack").on("click", function () {
+        var previousPageURI = GetParameterValues("aspxerrorpath");
+        //window.location.href = previousPageURI; 
+        //window.location.href = "@Url.Action("Index","Home",null)"; 
+        window.location.href = "@System.Configuration.ConfigurationManager.AppSettings["SSODashboardURL"]";
+    });
+</script>
+<script>
+    function GetParameterValues(param) {
+        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < url.length; i++) {
+            var urlparam = url[i].split('=');
+            if (urlparam[0] == param) {
+                return urlparam[1];
+            }
+        }
+    }
+
+</script>

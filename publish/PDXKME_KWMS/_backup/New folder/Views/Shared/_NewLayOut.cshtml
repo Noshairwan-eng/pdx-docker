@@ -1,0 +1,730 @@
+﻿@{  
+    string strUserInfoDisplay = "";
+    string strCurrentUserRole = "";
+    if (Session["UserID"] != null)
+    {
+        strCurrentUserRole = Session["Role"].ToString();
+        if (Session["SelectedLang"] != null)
+        {
+            if (Session["SelectedLang"].ToString() != "ar-AE")
+            {
+                strUserInfoDisplay = /*Resources.Resource.Welcome + " ," +*/ Session["UserName"].ToString() + ", " + Resources.Resource.Master_lblDataBase + ": " + Session["DataBase"].ToString();
+            }
+            else
+            {
+                strUserInfoDisplay = Session["DataBase"].ToString() + "  " + Resources.Resource.Master_lblDataBase + ":" + Session["UserName"].ToString();
+            }
+        }
+        else
+        {
+            strUserInfoDisplay = Session["UserName"].ToString() + Resources.Resource.Master_lblDataBase + " :" + Session["DataBase"].ToString();
+
+        }
+    }
+
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> 
+<![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" lang="en"> 
+<![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<head>
+    <title>KME</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    @Scripts.Render("~/bundles/MainScripts")
+    @Styles.Render("~/Content/MainStyles")
+    @{
+        string strSupportedVersion = "8";
+        string strIeBrowserTitle = "ie";
+        if (Request.Browser.Browsers.Contains(strIeBrowserTitle))
+        {
+            if (Request.Browser.MajorVersion < 8)
+            {
+                string str = "Internet Explorer " + Request.Browser.MajorVersion.ToString() + " is not supported";
+        <script>            var warning = "@str"; alert(warning);</script>
+            }
+            else
+            { 
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+       
+            }
+             
+        <style>
+            #footerWrapper .PanelTitle, .FooterStyle
+            {
+                background-color: #e5e4e6 !important;
+            }
+            .reportframe
+            {
+                margin: 0 !important;
+            }
+        </style>
+
+        }
+        else
+        {
+
+
+
+
+        }
+       
+      
+    }
+    <!-- 
+    Compass Template
+    http://www.templatemo.com/preview/templatemo_454_compass
+    -->
+    <meta charset="UTF-8">
+    @*    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+        rel='stylesheet' type='text/css'>*@
+    <!-- CSS Bootstrap & Custom -->
+    @*    <link rel="stylesheet" href="@Url.Content("~/content/Site/font-awesome.min.css")">*@
+    @*    <link rel="stylesheet" href="@Url.Content("~/images/ico/favicon.ico")">*@
+    <style type="text/css">
+           .info{ font-size: 11px !important;}
+        @@media screen and  (min-width:767px) and (max-width:768px)  
+        {
+            
+        .kmelogo label{ font-size:10px !important; }
+        
+        }
+        
+        @@media screen and  (max-width:1024px)  
+        {
+        .kmelogo label{ font-size:10px !important; }
+        
+        }
+        
+       
+        @@media screen and  (max-width:521px)  
+        {
+            .clsImg{ float:right !important;}
+            .lineBreak { display:block !important;}
+        .customeTopPadding{ padding-top:8px  !important;}
+         .customHidden{ display:none !important}
+        
+        }
+         .lblLangDiv
+        {
+           
+          width:200px;
+          text-align:right;
+          margin-bottom:-6px;
+          
+        }
+        .main-header{ padding-top:0 !important}
+        div#home{ margin-bottom:-2px !important}
+       
+       
+       
+         @@media screen and  (min-width:768px) and (max-width:991px)  
+        {
+        #lblVersionInfo{  color: red;font-size: 15px !important;font-weight: bold;}
+    
+    
+        .TestVersionDiv{ margin-right: -255px;}
+        
+        }
+           @@media screen and  (min-width:991px) and (max-width:1199px)  
+        {
+        #lblVersionInfo{  color: red;font-size: 15px;font-weight: bold;}
+    
+    
+        .TestVersionDiv{ margin-right:-25px !important;}
+        
+        }
+          @@media screen and (max-width:767px)  
+        {
+        .TestVersionDiv{ margin-right:0px !important;  float:left !important}
+        }
+        
+        .clsBoldMsg
+        {
+            font-weight: bold; 
+            color: red !important; 
+            font-size: 16px !important;
+        }
+        .clsNormalMsg
+        {
+            font-weight: bold; 
+            color: red !important; 
+            font-size: 10px !important;           
+        }
+          
+    </style>
+    <script>
+        //This Method makes sure that No Further Search Queries should be made possible if
+        //1-There is already an AJAX request on going
+        //2-There is a popup opened
+
+        function PostGetPreCheck() {
+            if ($.active == 0 && !$("#MessageModal").hasClass("in")) { return true }
+            else { return false; }
+
+        }
+    </script>
+</head>
+<body>
+    <div>
+    </div>
+    <div id="home">
+        <div class="site-header">
+            <div class="top-header" style="display: none">
+                <div class="container">
+                </div>
+                <!-- /.container -->
+            </div>
+            <!-- /.top-header -->
+            <div class="main-header">
+                <div class=" container kowaTemp">
+                    <div class="row">
+                        @if (ViewBag.Title != null && ViewBag.Title == "Login")//Dont Display Banner While on Login Screen
+                        {
+                            <div class="col-md-4 col-sm-3 col-xs-1 col-lg-5 InfoRight komatsuLogo  ">
+                                <div class="logo">
+                                    <img src="@Url.Content("~/images/Logo1.png")" alt="Komatsu" >
+                                    @*          <h1><a href="#" title="Dreri">Komatsu</a></h1>*@
+                                </div>
+                                <!-- /.logo -->
+                            </div> 
+                        }
+                        else//Render Banner Other Then Login Screens
+                        {
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 kowaTemp1">
+                                <img src="@Url.Content("~/images/banner.png")" alt="Komatsu"  style="width: 100%;" />
+                            </div>
+                        }
+                        @{
+                            if (ViewData["Login"] != null)
+                            {
+                            <div class="col-md-4 pull-right col-sm-4 col-xs-6  col-lg-3 InfoRight">
+                                <div id="languageSelector" class="pull-right">
+                                    <select class="form-control" id="ddlLanguage" style="height: 25px; margin: 0 0 0 11px;
+                                        width: 93% !important" name="langId">
+                                        @foreach (PDXWEB.Models.LanguageModel item in (List<PDXWEB.Models.LanguageModel>)Session["Languages"])
+                                        {
+                                            <option value="@item.key"  selected="@item.Selected" >@item.value</option>
+                                          
+                                        }
+                                    </select>
+                                </div>
+                                @*<br />*@
+                                <div style="" class="pull-right customeTopPadding">
+                                    <img src="@Url.Content("~/images/KME_Name.png")" alt="" class="clsImg" style=" display:inline;" />
+                                </div>
+                            </div>
+                            }
+                            else
+                            {
+                                if (Session["UserID"] != null)
+                                {
+                            <div class="col-md-7 pull-right col-sm-9 col-xs122  col-lg-6  DisplayInfo">
+                                <div id="languageSelector" class="pull-right lblLangDiv">
+                                    @*     <label id="lbllang" style="font-size:11px !important;  " for="name">@Session["UserSelectedLanguage"]</label>*@
+                                </div>
+                                @*<br />*@
+                                <div id="KmelogoDiv" class="pull-right kmelogo">
+                                    <img src="@Url.Content("~/images/KME_Name.png")" alt="" class="clsImg" style=" display:inline;" />
+                                    <label id="FirstPipe" class="customHidden spitterPipe">
+                                        |</label>
+                                    <br class="hidden-lg hidden-md hidden-sm  hidden-xs lineBreak " />
+                                    <label class="info" style="font-size: 11px; font-weight: 600;" style="display: inline;">
+                                        @strUserInfoDisplay.Trim()
+                                    </label>
+                                    <label id="ScndPipe" class="hideOnSmall spitterPipe">
+                                        |</label>
+                                    <label id="HomeNav" class=" ">@Html.ActionLink("Home", "Index", "Home", null, null)</label>
+                                    <label id="ThrdPipe" class="hideOnSmall spitterPipe">
+                                        |</label>
+                                    @if (Session["userID"] != null)
+                                    { <label id="lblLogout" style="display: inline;"><a href="#" id="logOut">@Resources.Resource.Logout</a>
+                                    </label>}
+                                    else
+                                    {
+                                        <label style="display: inline;">
+                                            @Html.ActionLink(Resources.Resource.Login, "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</label> 
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-2 pull-right col-sm-7 col-xs-12  col-lg-6  TestVersionDiv" style="float: left !important;
+                                margin-right: -255px;">
+                               <label id="lblVersionInfo" class = "clsBoldMsg">
+                                    
+                                </label>
+                                
+                            </div>
+                                }
+                                else
+                                {
+                            <div class="col-md-5 pull-right col-sm-7 col-xs-6  col-lg-4 RightInfo InfoDisplayNA">
+                                <div id="languageSelector" class="pull-right">
+                                    <select class="form-control" id="ddlLanguage" style="height: 25px; margin: 0 0 0 11px;
+                                        width: 93% !important" name="langId">
+                                        @foreach (PDXWEB.Models.LanguageModel item in (List<PDXWEB.Models.LanguageModel>)Session["Languages"])
+                                        {
+                                            <option value="@item.key"  selected="@item.Selected" >@item.value</option>
+                                          
+                                        }
+                                    </select>
+                                </div>
+                                @* <br/>*@
+                                <div style="" class="pull-right">
+                                    <img src="@Url.Content("~/images/KME_Name.png")" alt="" class="clsImg" style=" display:inline;" />
+                                    <label style="font-size: 11px !important; font-weight: 600;" style="display: inline;">
+                                        @strUserInfoDisplay.Trim()
+                                    </label>
+                                    |
+                                    @if (Session["userID"] != null)
+                                    { <label id="lblLogout" style="display: inline;">
+                                        <a style="font-size: 11px !important; font-weight: 600;" href="#" id="logOut">@Resources.Resource.Logout</a>
+                                    </label>}
+                                    else
+                                    {<label style="display: inline;">
+                                        @Html.ActionLink(Resources.Resource.Login, "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</label>  }
+                                </div>
+                            </div>
+                                }
+
+
+                            }
+                        }
+                    </div>
+                </div>
+                <!-- /.container -->
+                <div class="container">
+                    @Html.Partial("_NewMenuPartial")</div>
+            </div>
+            <!-- /.header -->
+        </div>
+        <!-- /.site-header -->
+    </div>
+    <!-- /#home -->
+    <!-- //Shabbir-20161123 --Post currentUserID with all Post Request to intercept invalid data posting -->
+    <script>
+         var currentUserID = "@Session["UserID"].ToString()";
+                    $.ajaxSetup({
+                            data: {userID: currentUserID}
+                                });
+    </script>
+    @RenderBody()
+    <!-- /.site-footer -->
+    <div class="container childcontent">
+        <footer id="footerWrapper" class="footer4 FooterStyle"> 
+	<section id="mainFooter">
+		<div class="container">
+			<div class="row">
+
+	 
+               
+          <div class="col-md-3 col-sm-2 hidden-xs hidden-sm">
+					<div class="footerWidget">
+						<h3>@Resources.Resource.UsefulLinks:</h3>
+						<ul class="list-unstyled iconList borderList">					 
+                             <li><a href="@Url.Action("Index", "Home", null)">@Resources.Resource.Home</a></li>
+                           <li><a href="https://home.komatsu/en/" target="_blank">@Resources.Resource.Layout_KomatsuGlobal</a></li>
+                         @*    <li><a href="#">@Resources.Resource.ServiceAndSupport</a></li>
+                            <li><a href="#">@Resources.Resource.FindADistributor</a></li> *@
+                           
+
+					 
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-4">
+					<div class="footerWidget">
+						<h3>About Komatsu:</h3>
+						<article class="boxTestimonial">
+
+						<blockquote style="font-size: 11px;">
+								@Resources.Resource.KomatsuIntro
+							</blockquote>
+
+							<div class="clientIcon">
+								 
+								 
+							</div>
+
+						</article>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-4">
+					<div class="footerWidget">
+						<h3>@Resources.Resource.KomatsuGenuineParts:</h3>
+						<ul class="list-unstyled iconList borderList">	
+                        @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("Z01S100_12"))
+                        {				 
+                             <li><a href="@Url.Action("PartsMasterInquiry", "StockInquiry", null)">@Resources.Resource.Layout_PartsInfo</a></li>
+                        }
+                        @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("Z01S110_11"))
+                        {
+                            <li><a href="@Url.Action("StockInquiry", "StockInquiry", null)">@Resources.Resource.Layout_StockInquiry</a></li>
+                        }  
+
+					 
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-4">
+					<div class="footerWidget">
+
+						<h3>@Resources.Resource.ContactUs:</h3>
+						 
+						<h4> @Resources.Resource.KomatsuRegion</h4>
+						<address>
+							<p  style=" font-size:11px !important;" >
+                            @Resources.Resource.ADDRESS: @Resources.Resource.AddressPart1, 
+                             <br /> @Resources.Resource.AddressPart2
+                             <br />
+                             @Resources.Resource.AddressPart3
+                             <br />
+                             @Resources.Resource.AddressPart4
+
+                          
+								 <br /> @Resources.Resource.TEL: +971-04-876 7502<br /> 
+								<i class="icon-mail-alt"></i>@Resources.Resource.Email:<a href="mailto:info@komatsu.ae"> @Resources.Resource.EmailId</a>
+							</p>
+						</address>
+
+						     
+					</div>
+				</div>
+            
+          
+
+ </div>
+   
+        
+            
+		</div>
+	</section>
+    
+<div class="row">	
+   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+<div class="panel-heading PanelTitle">
+ 
+  <div class="row">
+   
+     <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4  ">
+     <img src="@Url.Content("~/images/Proven1.jpg")" alt="Komatsu">     
+     
+      </div>
+      
+    <div class="col-lg-5 col-md-4 col-sm-5 col-xs-5  "  >
+       <p id="copyRight"> @Resources.Resource.CopyRights &copy; @DateTime.Now.Year - @Resources.Resource.Copyright<br />@Resources.Resource.AllRightsReserved.</p>
+       
+       </div>
+    
+ <div class="col-md-5 hidden-xs col-lg-3 col-sm-5 col-xs-4 pull-right" style="padding-top: 25px;">
+            
+           <span class="pull-right" style="font-size: 10px;"> @Resources.Resource.Poweredby:   <a href="https://home.kps.komatsu/" target="_blank" style="font-size: 10px ! important;">  Komatsu Pakistan Soft </a> </span>
+            
+            </div>
+  
+  </div>
+   
+</div>
+    </div>
+    
+    
+    
+    </div>
+    </div>
+    </footer>
+    <script>
+
+    var CurrentUserRole="@strCurrentUserRole";
+
+        $(document).ready(function () {
+
+          //Test Run animation 
+//          var sppOffMessage = "@HttpContext.Current.Application["ApplicationOffMessage"]";
+//          if(sppOffMessage=='Y')
+//          {
+//          if($(".TestVersionDiv").length>0)
+//          {
+//          setInterval(
+//          function(){ 
+//         $("#lblVersionInfo").html('KME Webiste will be offline').show().fadeToggle("slow")},
+//          100);          
+//          }          
+//          }
+//          else
+//          {
+//            $("#lblVersionInfo").html('');
+//          }
+
+ 
+
+            var selectedLang = "@Session["SelectedLang"]";
+            if (selectedLang==null ) 
+            {
+             $("#ddlLanguage").val("en-US");
+            }else{ $("#ddlLanguage").val(selectedLang);  }
+
+        });
+    </script>
+    <script> 
+    
+   
+         $("#ddlLanguage").change(function () {
+
+        
+
+               $.ajax({
+                             type: "POST",
+                             data: {culture:$("#ddlLanguage").val()},
+                             url:"@Url.Action("ChangeCurrentCulture", "Language", null, Request.Url.Scheme)",
+                             success: function (redUrl) 
+                             {
+
+                             
+                                 //window.location.href="@Url.Action("Index", "Home", null)";
+                                        window.location.href=    redUrl;
+
+                             }
+              
+                         });
+
+
+         });
+
+
+            $("#logOut").click(function () {
+            $.post("@Url.Action("LogOff", "User", null)","",function (url) 
+                {
+                  //  window.location.href=url;
+                    window.location.href="@Url.Action("Login", "User", null)";
+                 });
+                 });
+
+
+    </script>
+    <script>
+   //set focus to first textbox in the screen
+  $("body input[type=text]").eq(0).focus();
+  ///This Method Redirects to the Login Screen when session is expired,used by different methods
+   function SessionExpiredRedirect()
+   {
+       window.location.href =  "@System.Configuration.ConfigurationManager.AppSettings["SSODashboardURL"]";
+   }
+//this Method checks the response data
+//if it contains a redirect due to session expiry 
+//then Page is redirected to Login Screen
+    function CheckForSessionExpiry(data)  
+    {
+        var ssoAppURL="@System.Configuration.ConfigurationManager.AppSettings["SSOAppName"].ToString()";
+        var ssoDashboard = "@System.Configuration.ConfigurationManager.AppSettings["SSODashboardURL"].ToString()"; //20161029 Hassan
+
+       var tempData = JSON.stringify(data);
+       var zTempData = tempData.replace(/^"(.*)"$/,'$1');
+       if ((tempData.indexOf(ssoAppURL) > -1 && tempData.length == ssoAppURL.length) || zTempData.toUpperCase() == ssoDashboard.toUpperCase()) { //20161029 Hassan
+           return true;
+       }
+       else
+       {
+           return false;                
+       }
+    }
+
+ //this Events checks the response data
+//if it contains a redirect due to session expiry 
+//then Page is redirected to Login Screen
+   	$(document).ajaxSuccess(function (event, xhr, settings) {
+	if (CheckForSessionExpiry(xhr.responseText))
+	 {
+		SessionExpiredRedirect();
+	 }
+     if(JSON.stringify(xhr.responseText).indexOf("Redirector") > 1)
+     {
+        window.location.href = "@System.Configuration.ConfigurationManager.AppSettings["SSODashboardURL"]";
+     } 
+});
+	function CheckForServerSideError(data)
+	{
+		var tempData = JSON.stringify(data);
+		if (tempData.indexOf("Sorry,") > -1)
+		{
+		return true;        
+		}   
+	}
+
+//this method adds the spinner classs to div when an ajax operation starts
+  $( document ).ajaxStart(function(event) {  
+   
+    $("div#divLoading").addClass('show');
+     
+    });
+    //this method Removes  the spinner classs to div when an ajax operation Ends
+    $( document ).ajaxStop(function() {
+    $("div#divLoading").removeClass('show');
+    });
+     //this method Removes  the spinner classs to div when an ajax operation ended due to an error
+     $( document ).ajaxError(function(event, jqxhr, settings, thrownError) {
+   // $("div#divLoading").removeClass('show');
+    if (CheckForSessionExpiry(jqxhr.responseText))
+	 {
+		SessionExpiredRedirect();
+	 }
+    });
+
+         //Event for handling Enter Key Press Behaviour
+         $(document).keypress(function (e) { 
+      //if pressed key is Enter
+      if (e.which == 13) {
+      
+       var $firstTxT=  $("body input[type=text]").eq(0);
+       //check if first textbox of the screen is focused ,if not then do do anything
+       if(!$firstTxT.is(":focus")){return;}
+       ///check if search button is focused then trigger only one event from search and Enter Press
+             var  $focused = $(':focus');
+             if(   ($focused!=null && $focused.attr("id")=="btnSearch" )    )
+             {
+             //prevent multiple postbacks to server using PostGetPreCheck() method
+             if( !PostGetPreCheck()){e.stopPropagation() }
+           else{   } 
+             }
+             else{ if(PostGetPreCheck()){ $("#btnSearch").trigger("click")}}
+           }
+       });
+
+  $('div[role=dialog]').on('shown.bs.modal', function () {
+ $(".modal-footer").find("button").focus();
+})  ;
+
+    </script>
+    <script type="text/javascript">
+        var rightsArray = '@Html.Raw(ViewBag.ScreenRights)';
+        var ScreenRights = [];
+        if (rightsArray.length > 0)
+            ScreenRights = JSON.parse(rightsArray);
+
+        function HasRight(rightID) {
+            var count = 0;
+            for (var i = 0; i < ScreenRights.length; i++) {
+                if (ScreenRights[i]["RightId"] == rightID && ScreenRights[i]["HasRight"] == "True") {
+                    count++;
+                }
+            }
+
+            if (count > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        ///hst107
+        ///For now,the Sorting is enabled but behaviour is stopped 
+        function Unbind() {
+
+            $('th[scope=col] a[data-swhglnk="true"]').click(function (event) {
+                event.stopPropagation()
+                event.preventDefault();
+
+            });
+        }
+    </script>
+    <div class="modal fade" id="AbouModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog modal-sm" style="margin: 10px auto; width: 45%;">
+            <!-- Modal content-->
+            <div class="modal-content" style="width: 400px; margin: 0 auto;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.Help_About</h4>
+                </div>
+                <div class="modal-body" id="ConfirmModalBody" style="display: inline;">
+                    <img  src="@Url.Content("/SSO/Images/pdx.png")" width="15%" height = "15%" style="vertical-align:top"/>
+                    <label id="lbl1" style="font-weight: bold">
+                        KME Distributor Portal</br>
+                        <label id="lbl4">
+                            Parts System (PDX)
+                        </label></br>
+                        <label style="font-weight: bold" id="lbl2">
+                            </br>Version 1.0.0.0</br>
+                        </label></br>
+                        <label style="text-decoration: none" id="lbl3">
+                            Last Release: (Jun 10, 2021 - KWMS)
+                        </label> <!--Last Release: Last Release: (May 28, 2021 - KWMS)(May 7, 2021 - KWMS)(May 5, 2021 - KWMS)(Apr 5, 2021 - KWMS)(Feb 17, 2021 - KWMS)(Jan 22, 2021 - KWMS)(Dec 18, 2020 - KWMS)(Nov 20, 2020 - KWMS)(Nov 9, 2020 - KWMS)(Nov 4, 2020 - KWMS) (Nov 2, 2020 - KWMS)(Oct 6, 2020 - KWMS)(Sep 8, 2020 - KWMS)(Sep 4, 2020 - KWMS)(Aug 20, 2020 - KWMS)(Aug 19, 2020 - KWMS)(Aug 5, 2020 - KWMS)(Jul 30, 2020 - KWMS)(Jul 22, 2020 - KWMS)(Jul 10, 2020 - KWMS)(Jul 07, 2020 - KWMS)(Jul 06, 2020 - KWMS)(Apr 09, 2020 - KWMS)(Mar 27, 2020 - KWMS)(Mar 12, 2020 - KWMS)(Mar 12, 2020 - KWMS (UAT))(Mar 10, 2020 - KWMS (UAT))(Jan 30, 2020 - KWMS) (Jan 27, 2020 - KWMS) (Nov 06, 2019 - KWMS) (Nov 01, 2019 - KWMS) (Sep 30, 2019 - KWMS) (Sep 27, 2019 - KWMS) (Sep 20, 2019 - KWMS) (Aug 30, 2019 - KWMS) (Jul 10, 2019 - KWMS) (Jul 5, 2019 - KWMS)  -->
+                    </label>
+                    @*<p style="padding-left: 100px; padding-top: 10px;padding-right: 5px;">
+                        Provide Spare-Parts Business Solutions for Smaller / Medium Business Unit of Komatsu Family. Support Standard Procedure for Komatsu Spare-Parts Business & Operations developed with latest technologies.
+                    </p>*@
+                </div>
+                <div class="modal-footer" style="font-size: smaller; margin: 0px auto; text-align: center;">
+                    Copyright © 2016. Komatsu Middle East FZE. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $(document).on('click', "#btnAbout", function () {
+
+            $("#AbouModal").modal();
+        });
+    
+    </script>
+    @*========================================================================================*@
+    @*JS references for SignalR and Hub*@
+    <script src="~/Scripts/SignalR/jquery.signalR-1.1.4.min.js" type="text/javascript"></script>
+    <script src="@Url.Content("~/signalr/hubs")" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    $(function () {
+        ///This is proxy method call to Start Communication
+        $.connection.hub.start().done(function () {
+        });
+    });
+
+        var chat = $.connection.clientAlertHub;
+  
+        chat.client.BroadCastClient = function (Message, dtOffLine, dtAtWhichShowMessage, dtCurrent, dtOnLine) 
+        {          
+          //Cond: Current server time is less than PDX offline DateTime and difference is also less than 15 mins.
+          //      Notification is shown to loggedin users  
+          if(new Date(dtCurrent) >= new Date(dtAtWhichShowMessage) && new Date(dtCurrent) < new Date(dtOffLine))
+          {
+            if($(".TestVersionDiv").length>0)
+            {              
+                $("#lblVersionInfo").html(Message);    
+                $("#lblVersionInfo").removeClass('clsBoldMsg');
+                $("#lblVersionInfo").addClass('clsNormalMsg');         
+            }          
+          }
+          else 
+          {
+              $("#lblVersionInfo").html('');              
+          }           
+
+          //Cond: Current server time is greater than eqaul to offline DateTime.
+          //      Logout and redirect to SSO dashboard
+          if(new Date(dtCurrent) >= new Date(dtOffLine) && new Date(dtCurrent) <= new Date(dtOnLine))
+          {
+               $.post("@Url.Action("LogOff", "User", null)","",function (url) 
+                {
+                  window.location.href=url;
+                    //window.location.href="@Url.Action("Login", "User", null)";
+
+                 });
+          }
+
+        };     
+
+        
+
+    </script>
+</body>
+</html>

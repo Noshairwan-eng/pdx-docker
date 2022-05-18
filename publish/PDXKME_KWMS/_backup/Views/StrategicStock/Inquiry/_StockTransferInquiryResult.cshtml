@@ -1,0 +1,123 @@
+﻿@model IEnumerable<PDXWEB.Models.StratagicStock.StockTransferReqInquiry.StockTransferReqInquiryGridModel>
+@{
+    string strMessage = "";
+    if (Session["Error"] != null)
+    {
+        strMessage = Session["Error"].ToString();
+    }
+    
+ }
+@if (Model!=null && Model.Count() > 0)
+{ 
+    WebGrid grid = new WebGrid(source: Model,
+    canSort: true,
+    rowsPerPage: 10,
+    ajaxUpdateContainerId: "main",
+    ajaxUpdateCallback: "afterLoad",
+    canPage: true);              
+ 
+ <div id="main"  >
+
+        @if (Model.Count()>10)
+        {
+           <div class="NewPaging row   " id="HeadPaging" style=" text-align:center ">  
+        <div class="span9">   @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")</div> 
+        </div>
+        }
+           <div class="datagrid table-responsive" style="overflow: auto;">
+
+        @grid.Table(
+            displayHeader: true,
+            tableStyle: "table table-striped table-hover",
+            headerStyle: "gridHead",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "stockTransferInquiryGrid" }, 
+                           columns: grid.Columns(
+
+//  grid.Column("TranfeRequestNo", @Resources.Resource.thTransferRequestNo, style: "rightAlign"),
+grid.Column("TranfeRequestNo", @Resources.Resource.thTransferRequestNo, style: "rightAlign", format: @<text><label id="l_TranfeRequestNo"  style="font-size: 10px ! important;  margin-right: 8px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.TranfeRequestNo</label></text>),
+
+//grid.Column("TranferOrderNo", @Resources.Resource.thTransferOrderNo, style: "rightAlign"),
+    grid.Column("TranferOrderNo", @Resources.Resource.thTransferOrderNo, style: "rightAlign", format: @<text><label id="l_TranferOrderNo"  style="font-size: 10px ! important;  margin-right: 8px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.TranferOrderNo</label></text>),
+
+  grid.Column("Distributor_OrderNo", @Resources.Resource.thDistributorOrderNo, style: "leftAlign"),
+  grid.Column("Distributor_Name", @Resources.Resource.thDistributorName, style: "leftAlign"),
+        //grid.Column("Warehouse", @Resources.Resource.thWareHouse, style: "leftAlign"),
+  grid.Column("Warehouse", @Resources.Resource.thWareHouse, style: "rightAlign", format: @<text><label id="l_WareHouse"  style="font-size: 10px ! important;  margin-right: 14px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.Warehouse</label></text>),
+
+    grid.Column("OrderType", @Resources.Resource.thOrderType, style: "leftAlign"),
+    grid.Column("CreationDate", @Resources.Resource.thCreationDate, style: "leftAlign"),
+              grid.Column("Country", @Resources.Resource.thCountry, style: "leftAlign", format: @<text><label id="l_Country"  style="font-size: 10px ! important;  margin-left: 1px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;  ">@item.Country</label></text>),
+
+    //grid.Column("Country", @Resources.Resource.thCountry, style: "leftAlign"),
+    grid.Column("Status", @Resources.Resource.thStatus, style: "leftAlign"),
+    grid.Column("TotalPriceAmount", @Resources.Resource.thTotalPriceAmount, format: @<text> @Html.Raw(item.TotalPriceAmount) <input type="hidden"  class="hdnDetail" value=" @item.DetailExist"   /> <input type="hidden" value="@item.isCreator.ToString()" id="hfCreator" />
+                                                  
+<input type="hidden" value="@item.DistributorsCode.ToString()" id="hfDBCode" />
+</text>, style: "rightAlign")
+
+                                                                                                                                                            ) //grid.columns
+
+
+                                                                                                                                             ) @* grid.GetHtml *@
+                                       @Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+</div>
+  </div>
+    <script type="text/javascript">
+      $("#btnExportData").removeAttr("Disabled");
+    </script>
+    
+}
+
+else
+{
+    <div class="datagrid table-responsive" style="overflow: auto;">
+    <table  id="stockTransferInquiryGrid" class="table table-striped table-hover">
+    <thead>
+        <tr class="gridHead ">
+            <th scope="col">
+@Resources.Resource.thTransferRequestNo            </th>
+            <th scope="col">
+@Resources.Resource.thTransferOrderNo            </th>
+            <th scope="col">
+@Resources.Resource.thDistributorOrderNo            </th>
+            <th scope="col">
+@Resources.Resource.thDistributorName            </th>
+            <th scope="col">
+@Resources.Resource.thWareHouse            </th>
+            <th scope="col">
+@Resources.Resource.thOrderType            </th>
+            <th scope="col">
+@Resources.Resource.thCreationDate            </th>
+            <th scope="col">
+@Resources.Resource.thCountry            </th>
+            <th scope="col">
+@Resources.Resource.thStatus            </th>
+            <th scope="col">
+@Resources.Resource.thTotalPriceAmount            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  class="noRecordsRow" > <td colspan="13"> </td></tr>
+    </tbody>
+    </table>
+    </div>
+    <script type="text/javascript">
+        $("#btnExportData").attr("disabled", true);
+         txtError= "@Session["Error"].ToString()";
+        txtErrorType="@Session["ErrorType"].ToString()";
+        DisplayModal(txtErrorType,txtError) ;
+          $("#MessageModal").modal();
+
+    </script>
+}
+
+  <script type="text/javascript">
+
+      $(document).ready(function () {
+          afterLoad();
+      }); 
+
+  </script>
+

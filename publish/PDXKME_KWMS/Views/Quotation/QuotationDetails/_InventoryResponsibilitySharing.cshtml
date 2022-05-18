@@ -1,0 +1,68 @@
+﻿@* Created By: Shabbir Hussain @ 07-Dec-2017 *@
+@model PDXWEB.Models.Quotation.QuotationDetails.INVRModel
+@{
+    ViewBag.Title = "Inventory Responsibility Sharing";
+}
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content" >
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                &times;</button>
+            <h4 class="modal-title">Create Sub-Quotation</h4>
+        </div>
+        <div class="modal-body" id="IRSModalBody">
+            <div class="FormElements">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="OTYPDiv">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            @Html.Label(@Resources.Resource.OrderTypeDesc, new { id = "lblOrderType" })
+                        </div>
+                        @*//hst001 Shabbir Hussain @ 18-Jan-2018 Added condition for Spike Order Control mechanism task.*@
+                        @if (ViewBag.gbInventoryResponsibilityError)
+                        {
+                        <div class="editor-label SizeOnXs multiDB">
+                            @Html.DropDownListFor(model => Model.OTYP, Model.OTYP as List<SelectListItem>, new { @id = "ddlOrderType", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" }) @*@id = "ddlOrderType", @class = "form-control InputElements", multiple = "multiple" })*@
+                            <span id="spnOrderType"></span>
+                        </div>
+                        }
+                        else
+                        {
+                            <div class="editor-label SizeOnXs multiDB">
+                            @Html.TextBoxFor(model => model.OTYPLE, new { @id = "chkOrderType", maxlength = "20", style = "display: -webkit-inline-flex;display:inline-flex;display: inline", @class = "form-control InputElements", @readonly = "readonly" })
+                            <span id="spnOrderType"></span>
+                        </div>
+                        }
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="TCODDiv">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            @Html.Label(@Resources.Resource.lblTransportation, new { id = "lblTransportationCode" })
+                        </div>
+                        <div class="editor-label SizeOnXs multiDB">
+                            @*Html.DropDownListFor(model => Model.TCOD, Model.TCOD as List<SelectListItem>, new { @id = "ddlTransportationCode", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements", @readonly = "readonly" }) @* @id = "ddlTransportationCode", @class = "form-control InputElements", multiple = "multiple" })*@
+                            @Html.TextBoxFor(model => Model.TCOD, new { @id = "ddlTransportationCode", maxlength = "20", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements", @readonly = "readonly" })
+                            <span id="spnTransportationCode"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="DivDBDetails">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            @Html.Label(@Resources.Resource.DistributorOrderNoDesc, new { id = "lblDBRef" })
+                        </div>
+                        <div class="editor-label SizeOnXs multiDB">
+                            @Html.TextBoxFor(model => model.CQUN, new { @id = "DistributerOrderNo", maxlength = "20", style = "display: -webkit-inline-flex;display:inline-flex;display: inline", @class = "form-control InputElements" }) 
+                            <span id="spnDistributerOrderNo"></span>
+                        </div>
+                    </div>
+                    
+                </div>
+              
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="btnCreateQtn" class="btn btn-default pull-left" data-dismiss="modal"> Create</button>
+            <button id="btnINVRCreateCancel" class="btn btn-default pull-right" data-dismiss="modal">@Resources.Resource.btnCancel</button>
+        </div>
+    </div>
+</div>

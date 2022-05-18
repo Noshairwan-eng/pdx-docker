@@ -1,0 +1,485 @@
+﻿@*
+
+hst001 : Noshairwan Farooq |09-03-2020|
+         - Added a new hidden column in grid to restrict the line update feature on the already updated lines (old lines).
+hst002: rMehmood @Oct 28, 2020
+      Added Commodity Code Columns
+*@
+
+@model IEnumerable<PDXWEB.Models.Quotation.QuotationDetails.DTMainModel>
+@{
+    string strMessage = "";
+    string strErrorType = "";
+    string strPartsCount = Model != null && Model.Count() > 0 ? Model.Count().ToString() : "0";
+    if (Session["Error"] != null && ViewBag.InventoryMsg == "0")
+    {
+        strMessage = Session["Error"].ToString();
+        if (strMessage.LastIndexOf(".") != -1)
+        {
+            strMessage = strMessage.Substring(0, strMessage.LastIndexOf(".") + 1);
+        }
+        if (Session["ErrorType"] != null)
+        {
+            strErrorType = Session["ErrorType"].ToString();
+        }
+    }
+    else
+        if (Session["Error"] != null && Session["ErrorType"] != null)
+        {
+            strMessage = Session["Error"].ToString();
+            strErrorType = Session["ErrorType"].ToString();
+        }
+    Layout = null;  
+   
+}
+
+<style>
+    .table
+    {
+        margin: 0px 2px 2px 0px ! important;
+    
+     }
+     .hidden-column
+     {
+         display : none !important;
+     }
+</style>
+
+
+<div id="main"  class="datagrid " >      
+      
+      @if (Model.Count() > 0)
+      {
+          WebGrid grid = new WebGrid(source: Model,
+          canSort: true,
+          ajaxUpdateCallback: "AfterLoad",
+          rowsPerPage: 10,
+          ajaxUpdateContainerId: "main",
+          canPage: true
+
+          );
+          if (Request.Form["page"] != null)///hst004.
+          {
+              grid.PageIndex = grid.PageCount - 1;
+          }
+          var gridColumns = new List<WebGridColumn>();
+         @*  grid.Column(@Resources.Resource.thPriceAmount, style: "col-control", canSort: true, format: @<text> @item.PriceAmount.ToString("#,##0.00")</text>),*@
+          
+          gridColumns.Add(new WebGridColumn { ColumnName = "Line_No", Header = Resources.Resource.thLineNo, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_LineNo'  style='font-size: 10px ! important;  margin-right: 10px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.Line_No + "</label>") });
+          gridColumns.Add(new WebGridColumn { ColumnName = "Subordinate_No", Header = Resources.Resource.thSubLineNo, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_Subordinate_No'  style='font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.Subordinate_No + "</label>") });
+          gridColumns.Add(new WebGridColumn { ColumnName = "CTO", Header = Resources.Resource.thCountryOfOrigin, Style = "col-alpha", CanSort = true, Format = (item) => Html.Raw("<label id='l_CTO'  style='font-size: 10px ! important;  margin-left: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.CTO + "</label>") });
+          gridColumns.Add(new WebGridColumn { ColumnName = "RequestedPartNo", Header = Resources.Resource.thRequestedPartNo, Style = "col-alpha", CanSort = true, Format = (item) => Html.Raw("<label id='l_RequestedPartNo'  style='font-size: 10px ! important;  margin-left: 2px  !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.RequestedPartNo + "</label>") });
+          gridColumns.Add(new WebGridColumn { ColumnName = "ProcessedPartNo", Header = Resources.Resource.thProcessedPartNo, Style = "col-alpha", CanSort = true, Format = (item) => Html.Raw("<label id='l_ProcessedPartNo'  style='font-size: 10px ! important;  margin-left: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.ProcessedPartNo + "</label>") });
+          gridColumns.Add(new WebGridColumn { ColumnName = "Parts_Description", Header = Resources.Resource.thPartDescription, Style = "col-alpha", CanSort = true, Format = (item) => Html.Raw("<label id='l_Parts_Description'  style='font-size: 10px ! important;  margin-left: 4px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.Parts_Description + "</label>") });
+          gridColumns.Add(new WebGridColumn { ColumnName = "Requested_Quantity", Header = Resources.Resource.thRequestedQuantity, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_LineNo'  style='font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.Requested_Quantity + "</label>") });
+          gridColumns.Add(new WebGridColumn { ColumnName = "OnHoldQuantity", Header = Resources.Resource.thOnHoldQuantity, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_LineNo'  style='font-size: 10px ! important;  margin-right: 4px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.OnHoldQuantity + "</label>") });
+
+          gridColumns.Add(new WebGridColumn { ColumnName = "Accepted_Quantity", Header = Resources.Resource.thAcceptedQuantity, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_Accepted_Quantity'  style='font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.Accepted_Quantity + "</label>") });
+
+          gridColumns.Add(new WebGridColumn { ColumnName = "Unit_Price", Header = Resources.Resource.thUnitPrice, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_LUnit_Price'  style='font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.Unit_Price + "</label>") });
+
+
+
+          //hst101
+          if (HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Admin).ToString()))
+          {
+              // gridColumns.Add(new WebGridColumn { ColumnName = "Discount", Header = @Resources.Resource.thDiscountPerItem, CanSort = true });//Code Commented
+              //gridColumns.Add(new WebGridColumn { ColumnName = "Discount", Header = Resources.Resource.thDiscountPerItem, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_LineNo'  style='font-size: 10px ! important;  margin-right: 1px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.Unit_Price.ToString()) + "</label>") });
+              gridColumns.Add(new WebGridColumn { ColumnName = "Discount", Header = Resources.Resource.thDiscountPerItem, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_LineNo'  style='font-size: 10px ! important;  margin-right: 1px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.Discount.ToString()) + "</label>") });
+
+          }
+
+
+          // gridColumns.Add(new WebGridColumn { ColumnName = "Price_Amount", Header = @Resources.Resource.thPriceAmount, CanSort = true });//Code Commented
+          // gridColumns.Add(new WebGridColumn { ColumnName = "Price_Amount", Header = Resources.Resource.thPriceAmount, Style = "col-control", CanSort = true, Format = (item) => { { return (PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.Price_Amount.ToString())); } } });
+          gridColumns.Add(new WebGridColumn { ColumnName = "Price_Amount", Header = Resources.Resource.thPriceAmount, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_Price_Amount'  style='font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.Price_Amount.ToString()) + "</label>") });
+
+
+
+          gridColumns.Add(new WebGridColumn { ColumnName = "TaxRate", Header = Resources.Resource.thTaxRate, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_TaxRate'  style='font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.TaxRate.ToString()) + "</label>") });
+
+
+          // gridColumns.Add(new WebGridColumn { ColumnName = "TaxRate", Header = @Resources.Resource.thTaxRate, CanSort = true });
+
+
+          gridColumns.Add(new WebGridColumn { ColumnName = "TaxAmount", Header = Resources.Resource.thTaxAmount, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_TaxRate'  style='font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.TaxAmount.ToString()) + "</label>") });
+
+
+
+
+          //  gridColumns.Add(new WebGridColumn { ColumnName = "TaxAmount", Header = @Resources.Resource.thTaxAmount, CanSort = true });
+
+          //gridColumns.Add(new WebGridColumn { ColumnName = "SellingPrice", Header = @Resources.Resource.thSellingPrice, CanSort = true });;//Code Commented
+          //gridColumns.Add(new WebGridColumn { ColumnName = "SellingPrice", Header = Resources.Resource.thSellingPrice, Style = "col-control", CanSort = true, Format = (item) => { { return (PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.SellingPrice.ToString())); } } });
+
+          gridColumns.Add(new WebGridColumn { ColumnName = "SellingPrice", Header = Resources.Resource.thSellingPrice, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_TaxRate'  style='font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.SellingPrice.ToString()) + "</label>") });
+
+          //hst102
+          if (HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Admin).ToString()))
+          {
+              //  gridColumns.Add(new WebGridColumn { ColumnName = "PriceCost", Header = @Resources.Resource.thPriceCost, CanSort = true });
+              //  gridColumns.Add(new WebGridColumn { ColumnName = "PriceCost", Header = Resources.Resource.thPriceCost, Style = "col-control", CanSort = true, Format = (item) => { { return (PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.PriceCost.ToString())); } } });
+              gridColumns.Add(new WebGridColumn { ColumnName = "PriceCost", Header = Resources.Resource.thPriceCost, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_PriceCost'  style='font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.PriceCost.ToString()) + "</label>") });
+
+          }
+
+
+          gridColumns.Add(new WebGridColumn { ColumnName = "Weight", Header = Resources.Resource.thWeight, Style = "col-numeric", CanSort = true, Format = (item) => Html.Raw("<label id='l_Weight'  style='font-size: 10px ! important;  margin-right: 3px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(item.Weight.ToString()) + "</label>") });
+          gridColumns.Add(new WebGridColumn { ColumnName = "Error_", Header = Resources.Resource.thError, Style = "col-alpha", CanSort = true, Format = (item) => Html.Raw("<label id='l_Error_'  style='font-size: 10px ! important;  margin-right: 5px !important;font-family: verdana ! important; font-weight: normal; color: red ! important;'  >" + item.Error_ + "</label>") });
+          gridColumns.Add(new WebGridColumn { ColumnName = "ErrorDescription", Header = Resources.Resource.thErrorDescription, Style = "col-alpha", CanSort = true, Format = (item) => Html.Raw("<label id='l_ErrorDescription'  style='font-size: 10px ! important;  margin-right: 8px !important;font-family: verdana ! important; font-weight: normal; color: red ! important;'  >" + item.ErrorDescription + "</label>") });
+
+          gridColumns.Add(new WebGridColumn { ColumnName = "OldLine", Header = "OldLine", Style = "col-alpha hidden-column", CanSort = true, Format = (item) => Html.Raw("<input type='hidden' value = '" + item.OldLine + "'") }); //hst001         
+          gridColumns.Add(new WebGridColumn { ColumnName = "CommodityCode", Header = Resources.Resource.thCommodityCode, Style = "col-alpha", CanSort = true, Format = (item) => Html.Raw("<label id='l_CommodityCode'  style='font-size: 10px ! important;  margin-left: 6px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'  >" + item.CommodityCode + "</label>") });//hst002
+
+
+
+          //gridColumns.Add(new WebGridColumn { ColumnName = "Weight", Header = @Resources.Resource.thWeight, CanSort = true });
+          //gridColumns.Add(new WebGridColumn { ColumnName = "Error_", Header = @Resources.Resource.thError, Style = "wgErrorColumn", CanSort = true });
+          //gridColumns.Add(new WebGridColumn { ColumnName = "ErrorDescription", Header = @Resources.Resource.thErrorDescription, Style = "wgErrorColumn", CanSort = true });
+    
+       <div class="NewPaging PagingStyle" >
+          @grid.PagerList(WebGridPagerModes.All, firstText: "<<", lastText: ">>", previousText: "<", nextText: ">")
+         </div>
+ <div >
+
+   @grid.Table(
+
+            tableStyle: "table table-hover",
+            headerStyle: "gridHead",
+            footerStyle: "gridFooter",
+            rowStyle: "gridRow",
+            alternatingRowStyle: "gridAltRow",
+            htmlAttributes: new { id = "PartsInquiry" },
+            columns: gridColumns.ToArray()) @* grid.GetHtml *@ 
+           @Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+ </div>
+      
+
+          
+          <script>
+              $(".hideonLoad").show(); //Show Lagend
+           $("#chkSelectAll").removeAttr("disabled"); //Remove Disabled Attribute from ChkselectAll
+              $("#chkSelectAll").attr('checked', false);
+          </script>         
+    
+      }
+      else
+      {
+           <div  style="height:388px;">
+            <table  id="PartsInquiry" class="table table-striped table-hover">
+    <thead>
+        <tr class="gridHead">
+            <th scope="col">
+@Resources.Resource.thLineNo            </th>
+            <th scope="col">
+ @Resources.Resource.thSubLineNo          </th>
+            <th scope="col">
+ @Resources.Resource.thCountryOfOrigin          </th>
+            <th scope="col">
+ @Resources.Resource.thRequestedPartNo            </th>
+            <th scope="col">
+@Resources.Resource.thProcessedPartNo            </th>
+            <th scope="col">
+@Resources.Resource.thPartDescription         </th>
+            <th scope="col">
+@Resources.Resource.thRequestedQuantity           </th> 
+ <th scope="col">
+@Resources.Resource.thOnHoldQuantity           </th>
+            <th scope="col">
+ @Resources.Resource.thAcceptedQuantity            </th>
+    @*<th scope="col">Available Stock         </th>*@
+
+            <th scope="col"> @Resources.Resource.thUnitPrice
+         </th>
+
+           @if (HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Admin).ToString()))   //hst101
+           { 
+              <th scope="col"> @Resources.Resource.thDiscountPerItem
+              </th>
+           
+           
+           }     
+
+  <th scope="col">@Resources.Resource.thPriceAmount
+         </th>
+  <th scope="col">@Resources.Resource.thTaxRate
+         </th>
+  <th scope="col">@Resources.Resource.thTaxAmount
+         </th>
+  <th scope="col">@Resources.Resource.thSellingPrice
+         </th>
+          @if (HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Admin).ToString()))
+          {
+               <th scope="col">@Resources.Resource.thPriceCost</th>
+          }
+  <th scope="col"> @Resources.Resource.thWeight
+         </th>
+  <th scope="col">@Resources.Resource.thError
+         </th>
+  <th scope="col"> @Resources.Resource.thErrorDescription
+         </th>
+ 
+ <th scope="col"> @Resources.Resource.thCommodityCode </th> @*hst002*@
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+    </table>
+           
+           </div>
+   
+          
+         <script>
+             $("#txtShippingCharges").attr("disabled", true)
+             $("#txtAdjustedPrice").attr("disabled", true)
+         </script>
+        
+      }
+      
+</div>    
+  @if (Session["QuotationDetailsViewModel"] != null)
+  {
+      var objDetail = Session["QuotationDetailsViewModel"] as PDXWEB.Models.Quotation.QuotationDetails.QuotationDetailsViewModel2;
+      if (objDetail.QuotationDetails != null)
+      { 
+            <script>
+                ClearSearchHistory();
+                quotationStatus = "@objDetail.QuotationDetails.Status";
+                $("#txtTotalPriceAmount").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.TotalPriceAmount)");
+                $("#txtTotalSellingPrice").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.TotalSellingPrice)");
+                $("#txtTotalPriceCost").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.TotalPriceCost)");
+                $("#txtTotalWeight").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.TotalWeight)");
+                $("#txtNameOfOtherCharge1").val("@objDetail.QuotationDetails.NameOfOtherCharges1");
+                $("#txtOtherCharge1").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.OtherCharges1)");
+                $("#txtTax").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.Tariff)"); 
+                $("#txtNameOfOtherCharge2").val("@objDetail.QuotationDetails.NameOfOtherCharges2");
+                $("#txtOtherCharge2").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.OtherCharges2)");
+                $("#txtAdjustedPrice").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.AdjustedAmount)");
+                $("#txtShippingCharges").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.ShippingCharges)");
+                $("#txtGrandTotal").val("@PDXWEB.BusinessModels.Common.NumericFormat.NumericFormat.GetCurrencyFormat(objDetail.QuotationDetails.GrandTotal)");
+                $("#txtGrossMarginRate").val("@objDetail.QuotationDetails.GrossMarginRate");
+                $("#txtQuotationNumber").val("@objDetail.QuotationDetails.QuotationNo");
+                $("#txtQuotationSubNo").val("@objDetail.QuotationDetails.SubQuotationNo");
+                $("#txtStatus").val("@objDetail.QuotationDetails.Status");
+                $("#txtCurrency").val("@objDetail.QuotationDetails.Currency");
+                $("#txtDistributerCode").val("@objDetail.QuotationDetails.DistributerCode");
+                $("#txtDistributerName").val("@Html.Raw(objDetail.QuotationDetails.DistributerName)");
+                $("#txtTotalDiscount").val("@objDetail.QuotationDetails.TotalDiscount");
+                $("#txtCustomerCode").val("@objDetail.QuotationDetails.CustomerCode");
+                $("#txtCustomerName").val("@objDetail.QuotationDetails.CustomerName");
+
+               
+                
+                            
+            </script>
+          if (objDetail.AcceptableCTOs != null && objDetail.PriorityWareHouseList != null)
+          {
+                       <script>
+                  		 $("#WareHouseContainer").html("");
+                		 $("#CTOContainer").html("");
+                            var CTOList = @Html.Raw(Json.Encode(objDetail.AcceptableCTOs));
+                            if(isRealValue(CTOList)){populateCTO(CTOList);}
+               
+                            var WareHousesList = @Html.Raw(Json.Encode(objDetail.PriorityWareHouseList));
+                            if(isRealValue(WareHousesList)){populateWareHousesList(WareHousesList);}
+                       </script>
+          }
+      }
+      else
+      {
+                   <script>
+                       ClearSearchHistory();
+                      
+                             
+                   </script>
+      }
+  }
+  @if (ViewBag.IsCreator != null && !(bool)ViewBag.IsCreator)
+  {
+                 
+        <script>
+            DisableAllControls();
+         
+            isCreator = false;
+        </script>
+  }
+  else
+  {
+      <script>
+            
+            isCreator = true;
+        </script>
+      
+  }
+  <script>
+      var HasInventoryRespError1 = "@ViewBag.gbInventoryResponsibilityError";
+      //hst001 Shabbir Hussain: 18-Jan-2018 Added following two values for Spike Order Control mechanism.
+      var HasExceedQuantityError2 = "@ViewBag.gbExceededQuantityError";
+      var HasNoMappingOrderType = "@ViewBag.gbNoMappingOrderTypeExist";
+ </script>
+   <script>
+       //Shabbir Start
+       totalPartsCount = "@strPartsCount";
+       //Shabbir End
+ </script>
+
+    <script type="text/javascript">
+        AfterLoad();
+        PartsCount = "@strPartsCount";
+        $("#chkSelectAll").attr('checked', false); 
+        if ((quotationStatus == "In Process" || quotationStatus == "1" )&& isCreator) {
+            if (PartsCount == "0") {
+                $("#btnImport").removeAttr("disabled")
+                $("#fuUploadCSV").removeAttr("disabled");
+                $("#btnAddParts").removeAttr("disabled");
+                $("#btnCalculate").attr("disabled", "disabled");
+                $("#btnUpdate").attr("disabled", "disabled");
+                $("#btnDelete").attr("disabled", "disabled");
+                $("#chkSelectAll").attr('checked', false);
+                $("#btnDownload").attr("disabled", "disabled");
+                $(".group-span-filestyle").removeAttr("disabled");
+            }
+            else {
+
+                $("#btnDownload").removeAttr("disabled");
+                $("#btnCalculate").removeAttr("disabled");
+                $("#btnUpdate").removeAttr("disabled");
+                $("#btnImport").removeAttr("disabled");
+                $("#fuUploadCSV").removeAttr("disabled");
+                $("#ddlFileType").removeAttr("disabled");
+                $("#btnAddParts").removeAttr("disabled");
+
+                $("#txtNameOfOtherCharge1").removeAttr("disabled");
+                $("#txtNameOfOtherCharge2").removeAttr("disabled");
+                $("#txtOtherCharge1").removeAttr("disabled");
+                $("#txtOtherCharge2").removeAttr("disabled");
+                $("#txtShippingCharges").removeAttr("disabled");
+                $("#txtAdjustedPrice").removeAttr("disabled");
+                $("#txtTotalDiscount").removeAttr("disabled");
+                $("#txtTotalPriceCost").removeAttr("disabled");
+                $("#txtGrossMarginRate").removeAttr("disabled");
+                $(".group-span-filestyle").removeAttr("disabled");
+            }
+        }
+        else {
+            $("#btnDownload").removeAttr("disabled");
+            $("#btnCalculate").attr("disabled", "disabled");
+            $("#btnUpdate").attr("disabled", "disabled");
+            $("#btnImport").attr("disabled", "disabled");
+            $("#btnAddParts").attr("disabled", "disabled");
+            $("#btnDelete").attr("disabled", "disabled");
+        }
+            
+    </script>
+    @if (strMessage != "")
+    {
+        if (HttpContext.Current.Items["UpdateSuccessfull"] != null)//hst107
+        {
+            if (HttpContext.Current.Items["BoxQtyFlag"] != null && (bool)HttpContext.Current.Items["BoxQtyFlag"])//hst107
+            {
+              <script>
+                  $(".logerrorImg").attr("src", "../Images/success.png");
+                  $(".lblLog").html("@Resources.Resource.BoxQtyWarningWhileUpdated");
+                  $("#ViewLogFileModal").modal();    
+        
+                 </script>  
+            }
+            else//hst107
+            {
+             <script>
+                 $(".logerrorImg").attr("src", "../Images/error.png");
+                 $(".lblLog").html("@Resources.Resource.BoxQtyWarning");
+                 $("#ViewLogFileModal").modal();
+                
+        
+              </script>  
+            }
+
+        }
+        else
+        {
+              <script>
+            $("#lblMessage").html("@strMessage").attr("style", "color:red");
+            lblMsg = "@strMessage";
+            txtErrorType = "@strErrorType";
+            txtError = "@strMessage";
+            txtError = txtError.replace("&lt;/br&gt;", "<br>");
+            DisplayModal(txtErrorType, txtError);           
+        
+        </script>
+        }
+
+    }
+    else if (HttpContext.Current.Items["BoxQtyFlag"] != null && (bool)HttpContext.Current.Items["BoxQtyFlag"])//hst107
+    {
+        if (HttpContext.Current.Items["UpdateSuccessfull"] != null)//hst107
+        {
+        <script>
+            $(".logerrorImg").attr("src", "../Images/success.png");
+            $(".lblLog").html("@Resources.Resource.BoxQtyWarningWhileUpdated");
+            $("#ViewLogFileModal").modal();            
+         </script>
+
+        }
+        @*else
+        {
+            <script>
+            $(".logerrorImg").attr("src", "../Images/error.png");
+            $(".lblLog").html("@Resources.Resource.BoxQtyWarning");
+            $("#ViewLogFileModal").modal();                
+            </script>
+        }*@
+        
+    }
+  
+ @if (ViewBag.LastSortedBy != null)
+ {
+     <script>         $("#dir").remove();     $("#col").remove()</script>
+     <input type="hidden" value="@ViewBag.LastSortedBy" name="col" id="col" />
+     <input type="hidden" value="@ViewBag.LastSortDir" name="dir" id="dir" />
+      <script>          setArrowImages();</script>
+ }
+ 
+ <script>
+     //Shabbir Start
+      if(status != "1" && !isCreator)
+      {
+        $("#chkSelectAll").attr('disabled','disabled');
+      }
+      var data = @Html.Raw(Json.Encode(Model));
+//        $(document).on("change", "#chkSelectAll", function () 
+//        {
+//        if (this.checked) 
+//        {
+//           var data = @*@Html.Raw(Json.Encode(Model));*@
+//           AddItemsForSelectAll(data); 
+//        }
+//        else
+//        {
+//            RemoveItemsForSelectAll();
+//        }
+//    });
+     //Shabbir End
+ 
+ </script>
+ <script>
+     $("thead th").each(function (index) {
+         var columnClass = $('tbody tr:eq(0) td:eq(' + index + ')').attr('class');
+         $(this).removeAttr('class');
+         $(this).addClass(columnClass);
+         
+     });
+</script>
+<script type="text/javascript">
+    var RecordsMerged = '@ViewBag.RecordsMerged';
+    if (RecordsMerged == "True") {
+        var txtError = "Duplicate lines are merged.";
+        var txtErrorType = "1";
+        DisplayModal(txtErrorType, txtError); 
+    }
+</script>
+ 
+ 
+
+

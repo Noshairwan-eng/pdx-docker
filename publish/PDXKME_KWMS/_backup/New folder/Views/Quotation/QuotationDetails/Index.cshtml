@@ -1,0 +1,2393 @@
+﻿@* hst001: Shabbir Hussain - 07-Dec-2017
+            -Changes made for Inventory Responsibility Sharing List.
+   hst002: Shabbir Hussain - 18-Jan-2018
+            -Changes made for Spike Order Control mechanism 
+   hst003:rMehmood @Oct 28, 2020
+        added td in empty row for commodity Code and fixed old Line initiallly it was hidden but was being shown on paging change or sorting
+        fixed background issue of action row(add button row)
+   hst004: Noshairwan Farooq @09-03-2020
+            - Made changes to make the lines editable (quantity can be changed) after the lines is added 
+              and calculated.
+   hst005: rMehmood @ Dec 18, 2020
+           added td To in empty row and newly added Row to match tds count with header count/to resolve background color issue
+            
+*@
+@{     
+    bool isInternetExplorer = false;
+    if (Request.Browser.Browsers.Contains("ie"))
+    {
+        isInternetExplorer = true;
+        if (Request.Browser.MajorVersion < 8)
+        {
+        }
+    }  
+}
+@Scripts.Render("~/bundles/InquiryJSBundle")
+@Styles.Render("~/Content/InquiryCSSBundle")
+<script src="@Url.Content("~/Scripts/FileUpload/bootstrap-filestyle.min.js")" type="text/javascript"></script>
+<style type="text/css"> 
+    @*hst003*@
+    .trBtnAddNewParts>td{
+    background-color: #e4e4e4 !important;
+    }
+     .MultiDownload{ margin: 4px -1px 0 9px }
+	.SelectAll { margin: 0px 5px -25px -16px !important ; } 
+	.accordianRows{height:150px !important;}
+	.legColumn label{color: #0066ff !important;font-size: 11px;font-weight: bold;}
+	.modal-sm { width: 369px;}
+	.addSign{background-image: url("../Images/add.png");background-repeat: no-repeat;background-position: left;cursor:url("../Images/add.png"),pointer;}
+	 #ConfirmModalBody { padding: 7px 3px 9px 4px !important; } 
+	.gridFooter td>a:last-child {border-bottom-right-radius: 4px;  border-top-right-radius: 4px;  }  
+	 label.btn-default{  color: White !important;}
+	.bootstrap-filestyle input[type=text]{ height:30px} 
+	.group-span-filestyle[disabled]{opacity: 0.3; cursor: not-allowed; pointer-events: none;}
+	.gridFooter td> a {background-color: #fff; border: 1px solid #ddd;color: #337ab7;float: left; line-height: 1.42857; margin-left: -1px; padding: 6px 12px;position: relative; text-decoration: none;}
+	 textbox#txtQuotationSubNo{ width:12% !important; } 
+	.btnMargin{ margin-left:10px; margin-top:4px;  }
+	.form-inline .form-group{  margin-right: 15px; padding-right:10px; padding:0px;margin-bottom:0px; } 
+
+@@media screen and (min-width:768px) and (max-width: 991px) 
+{#btnDownload{width:85px !important;}
+    .MultiDownload {margin: 4px -14px 0 -22px !important;}  
+	.customMargin  select{ height: 30px !important;margin: 4px 0 0 11px !important; width: 90% !important; }      
+	.btn{width:77px !important; padding:0px !important; } 
+	.customMargin {margin: 0 0 0 -32px !important; width: 15%;  }
+	.fileContainer{width: 21% !important;    margin-left: 0px !important; }
+	.legendTitle  {width:9.2% !important; }
+	.legentContent {   width:39% !important; } 
+	.ui-accordion-content  {  height:75px !important; }  
+	 
+ }
+	
+ @@media screen and (min-width:991px) and (max-width: 1199px) 
+{  #btnDownload{width:100px !important;}
+    .MultiDownload {4px -4px 0 -56px !important;} 
+	  .PagingStyle {margin: -37px 0 0 300px !important;}
+	  #txtQuotationSubNo{ width: 43% !important; }
+	  .customMargin  select{ height: 30px !important; margin: 4px 0 0 11px !important; width: 65% !important; }
+	  .btn { width:77px !important; padding:0px !important;} 
+	  .customMargin {margin: 0 0 0 -66px !important; width: 15%; }
+	  .fileContainer{width: 21% !important; margin-right: 28px !important;}
+	  .legendTitle {    width:7.2% !important;}
+	  .legentContent  {  width:17% !important;  }   
+	  .ui-accordion-content {  height:75px !important; }    
+}      
+  
+	   
+@@media screen and  (min-width: 1200px) 
+{ 
+    #btnDownload{width:100px !important;}
+    #btnStockSearch{width:115px !important;}
+	.PagingStyle {  margin: -37px 0 0 410px !important; }
+	.fileContainer { margin-left: 5px;  margin-right: -32px !important; }
+	.legendTitle {  width:5.5% !important; }
+	.legentContent {  width:17% !important; }      
+	 .ui-accordion-content { height:75px !important;} 
+	   
+}      
+	
+  
+@@media screen and (max-width:767px)
+{ 
+.bootstrap-filestyle { margin-right: 11px;} 
+.DropDownButtonContainer{width:100% !important;  margin-top:5px;}
+ 
+.DropDownButtonContainer button { width:94% !important; } 
+.divErrorCheckBox{ padding: 3px 4px 3px 28px !important;}
+#chkDeleteAll{  margin: 0 7px -25px -37px !important;}
+.PagingStyle { margin: -37px 0 0 184px !important;}
+.modal-sm { margin-left: 15px !important; width: 87% !important; }     
+.controlsGroup button, .controlsGroup file,.controlsGroup select,.MultiDownload button { width:94% !important; margin-left: 11px !important; } 
+.DropDownButtonContainer{width:100% !important; margin-left: -9px !important;}    
+.DownLoadDropDown {left: 10px;margin: 2px 0 0; min-width: 95%; padding: 1px 0;} 
+.InputElements{ width:97% !important;}    
+.perc68{ width:66% !important;}
+.perc30{ width:30% !important;}   
+button#btnSearch{margin-left:0px !important;}     
+.btn,input[type=file],select{ margin-left:0px !important;}
+#ConfirmModal { padding-left: 95px;  }
+.legendTitle { width:9.2% !important; }
+.legentContent{  width:39% !important; }
+.ui-accordion-content{  height:75px !important; }     
+.TopMarginAtXs{ margin-top:5px; width:100% !important;  }
+.SelectAll { margin: 0px 5px -24px -34px  !important;  }
+label.btn-default {    color: White !important; margin-right: 12px !important;}
+.input-group .form-control {float: left;  margin-bottom: 0;position: relative; width: 100%; margin-left: 11px !important;z-index: 2;}       
+}    
+  #txtCDateT,#txtCDateF {  background-image:url('/Images/calender.png'); background-repeat: no-repeat;  background-position:right top;  }   
+  input[type=file]   {font-size: 10px;  height: 29px; display: inline-flex; }    
+		 
+		   @@media screen and (max-width:736px)  
+			{
+				.twoElements{  width: 63% !important;}       
+			}  
+	  
+		   @@media screen and (min-width:767px)   and (max-width: 991px) 
+			{
+			 .PagingStyle { margin: -37px 0 0 210px !important;}   
+			} 
+			@@media screen and (min-width:300px) and (max-width: 540px) 
+			{
+				.PagingStyle {margin: -39px 0 0 110px !important;}   
+			}
+				 
+			#PartsInquiry tr td { white-space:nowrap;}
+     #priorityWareHouse1,#cbperffereOrigins1{ margin-left:5px}
+     label[for=cbpriorityWareHouse1],label[for=cbperffereOrigins1]{ margin-left:5px}
+ </style>
+@* IE Specific Style for File *@
+@{
+	  
+    string strIeBrowserTitle = "ie";
+    if (Request.Browser.Browsers.Contains(strIeBrowserTitle))
+    {
+		
+    <style>
+		
+		 @@media screen and  (max-width: 768px) 
+        { 
+           input[type=file] {width:150%  !important;}
+   
+        }
+	 </style>
+    }
+			
+			
+			
+}
+<div class="container QuotationDetailsMain  childcontent ">
+    <div class="panel panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left" style="font-weight: bold; margin-right: 30px !important">
+                @Resources.Resource.QuotationDetail</h3>
+        </div>
+        <div class="panel-body" style="margin-top: -11px ! important;">
+            <div class="row" style="margin: 2px 0px -20px -14px ! important;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button class=" btn TopMarginAtXs" id="btnSearch">
+                        @Resources.Resource.btnSearch</button>
+                    <button class=" btn TopMarginAtXs" id="btnCondition">@Resources.Resource.btnCondition</button>
+                    @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S030_03_006"))
+                    {
+				  
+                        <button class=" btn  TopMarginAtXs" id="btnStockSearch" style="width: 115px">
+                            @Resources.Resource.btnStockSearch</button>
+                    }
+                </div>
+                <span id="lblMsg" style="color: Red; padding-left: 14px;"></span>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblQuotationNo)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtQuotationNumber", null, new { style = "display: inline; width: 44%;", @class = "form-control InputElements perc68 " })
+                        @Html.TextBox("txtQuotationSubNo", "0", null, new { style = "display: inline; width: 30% ", @class = "form-control InputElements perc30" })
+                        <span id="spnQuotation"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblStatus)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtStatus", null, new { disabled = "disabled", @class = "form-control InputElements" })
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblCurrency)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtCurrency", null, new { disabled = "disabled", @class = "form-control InputElements" })
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblDistributorCode)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtDistributerCode", null, new { disabled = "disabled", @class = "form-control InputElements" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-3 col-sm-6  col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblDistributorName)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtDistributerName", null, new { disabled = "disabled", @class = "form-control InputElements", style = "width: 88.5%;" })</div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3  col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblCustomerCode)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtCustomerCode", null, new { disabled = "disabled", @class = "form-control InputElements" })</div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3  col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblCustomerName)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtCustomerName", null, new { disabled = "disabled", @class = "form-control InputElements" })</div>
+                </div>
+            </div>
+            <div class="row">
+                @if (Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Admin).ToString()))
+                { 
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div>
+                            <label>@Resources.Resource.lblWareHouse</label>
+                            <label for="chkWareHouse" id="lblWareHouse">
+                            </label>
+                        </div>
+                        <div id="WareHouseContainer" class="divOrigins" style="border: 1px solid; overflow: scroll;
+                            height: 80px; width: 191px; border-radius: 6px;">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div>
+                            <label>@Resources.Resource.lblPreferedOrigins</label>
+                        </div>
+                        <div id="CTOContainer" class="divOrigins" style="border: 1px solid; overflow: scroll;
+                            height: 80px; width: 191px; border-radius: 6px;">
+                        </div>
+                    </div>
+                }
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 divErrorCheckBox" style="padding-top: 25px;
+                    padding-left: 29px;">
+                    <label>
+                        <input type="checkbox" style="width: inherit;" name="chkSelectAll" id="chkSelectAll"
+                            class="form-control InputElements SelectAll" />
+                        <input type="hidden" value="false" name="cbxUnprocess">
+                        @Resources.Resource.lblSelectAll
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="hfqutnToDelete" />
+</div>
+<div class="container childcontent " style="padding-top: 0px ! important;">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div class="row controlsGroup">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 fileContainer" style="padding-top: 4px;">
+                @if (isInternetExplorer)
+                {
+                    <form id="frmIEUpload" action="@Url.Action("UploadFile", "QuotationDetails", null, Request.Url.Scheme)" enctype="multipart/form-data"  method="post" >
+                    <input type="file" id="fuUploadCSV" class="filestyle form-control1" name="fuUploadCSV"
+                        data-buttontext="Browse" style="display: none" />
+                    </form>
+                }
+                else
+                {
+                    <input type="file" id="fuUploadCSV" class="filestyle form-control1" data-buttontext="Browse"
+                        style="display: none" />
+                }
+            </div>
+            @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S030_03_002"))
+            { 
+                <div class="col-lg-1 col-md-2 col-sm-2 customMargin col-xs-12">
+                    <button class="btn btn-sm btn-primary custom btnMargin" id="btnImport">
+                        @Resources.Resource.btnImport</button>
+                </div>
+
+            }
+            @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S030_03_003"))
+            {
+                <div class="col-lg-1 col-md-2 col-sm-2 MultiDownload   col-xs-12">
+                    @*<button class="btn btn-sm btn-primary custom btnMargin" id="btnDownload">@Resources.Resource.btnDownload</button>*@
+                    <div class="btn-group DropDownButtonContainer">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" id="btnDownload"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @Resources.Resource.btnDownload<span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu DownLoadDropDown">
+                            <a class="dropdown-item" href="#" onclick="DownloadFile('0')">CSV</a> <a class="dropdown-item"
+                                href="#" onclick="DownloadFile('1')">XLS</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col-lg-1 col-md-2 customMargin col-sm-2 col-xs-12">
+                <button class="btn btn-sm btn-primary custom btnMargin" id="btnAddParts">
+                    Add</button>
+            </div>
+            @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S030_03_005"))
+            {
+                <div class="col-lg-1 col-md-2 customMargin col-sm-2 col-xs-12">
+                    <button class="btn btn-sm btn-primary custom btnMargin" id="btnCalculate">
+                        @Resources.Resource.btnCalculate</button>
+                </div>
+				  
+            }
+            @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S030_03_001"))
+            {
+                <div class="col-lg-1 col-md-2 customMargin col-sm-2 col-xs-12">
+                    <button class="btn btn-sm btn-primary custom btnMargin" id="btnUpdate">
+                        @Resources.Resource.btnUpdate</button>
+                </div>
+
+            }
+            <div class="col-lg-1 col-md-2 customMargin col-sm-2 col-xs-12">
+                <button class="btn btn-sm btn-primary custom btnMargin" id="btnDelete" data-confirm="Are you sure you want to delete?"
+                    disabled="disabled">
+                    @Resources.Resource.btnDelete</button>
+            </div>
+        </div>
+        <div id="divParts" style="margin-top: 38px; height: 340px; overflow: scroll">
+        </div>
+        <div id="outer" style="margin-left: 10px; margin-top: 9px; margin-bottom: 18px;">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblTotalPriceAmount)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtTotalPriceAmount", "0", new { style = "text-align:right;", @readonly = "readonly", @class = "form-control  InputElements " })</div>
+                </div>
+                @*Price Amount*@
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblTotalSellingPrice)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtTotalSellingPrice", "0", null, new { style = "text-align:right;", @readonly = "readonly", @class = "form-control  InputElements" })</div>
+                </div>
+                @*Total Selling Price *@
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblOtherCharges1)</div>
+                    <div>
+                        @Html.TextBox("txtNameOfOtherCharge1", null, new { style = " width: 38% ;display:inline; ", @class = "form-control twoElements  InputElements ", placeholder = "Name" })
+                        @Html.TextBox("txtOtherCharge1", "0", null, new { style = "width:35% !important;display:inline;text-align:right;", @class = "form-control   InputElements " })</div>
+                </div>
+                @* Other Charges 1  *@
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblWeightgm)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtTotalWeight", "0", null, new { style = "text-align:right;", @readonly = "readonly", @class = "form-control InputElements " })</div>
+                </div>
+                @*Total Weight *@
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblTax)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtTax", "0", null, new { style = "text-align:right;", @readonly = "readonly", @class = "form-control  InputElements" })</div>
+                </div>
+                @*Tax *@
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblShippingCharges)</div>
+                    <div>
+                        @Html.TextBox("txtShippingCharges", "0", null, new { style = "text-align:right;", @class = "form-control  InputElements" })</div>
+                </div>
+                @*Shippig Charges *@
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblOtherCharges2)
+                    </div>
+                    <div>
+                        @Html.TextBox("txtNameOfOtherCharge2", null, new { style = " width: 38% ;display:inline; ", @class = "form-control  twoElements InputElements", placeholder = "Name" })
+                        @Html.TextBox("txtOtherCharge2", "0", null, new { style = "width:35% !important;display:inline;text-align:right;", @class = "form-control InputElements " })
+                    </div>
+                </div>
+                @* Other Charges 2  *@
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 ">
+                    <div>
+                        @Html.Label(@Resources.Resource.lblGrandTotal)</div>
+                    <div>
+                        @Html.TextBox("txtGrandTotal", "0", null, new { style = " font-weight:bold !important;text-align:right;  ", @readonly = "readonly", @class = "form-control  InputElements" })</div>
+                </div>
+                @* Grand Total  *@
+            </div>
+            @if (Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+            {
+
+
+            }
+            else
+            {
+                ////Display Fields only Specific to User Type           
+                <div class="row">
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                        <div>
+                            @Html.Label(@Resources.Resource.lblTotalCostPrice1)
+                        </div>
+                        <div>
+                            @Html.TextBox("txtTotalPriceCost", "0", null, new { style = "text-align:right;", @readonly = "readonly", @class = "form-control  InputElements" })</div>
+                    </div>@* Cost Price  *@
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                        <div>
+                            @Html.Label(@Resources.Resource.lblAdjustedPrice, new { style = "color:red !important" })</div>
+                        <div>
+                            @Html.TextBox("txtAdjustedPrice", "0", null, new { style = "text-align:right;", @class = "form-control  InputElements" })
+                        </div>
+                    </div>@* Adjusted Price  *@
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                        <div>
+                            @Html.Label(@Resources.Resource.lblTotalDiscount)</div>
+                        <div>
+                            @Html.TextBox("txtTotalDiscount", "0", null, new { style = "text-align:right;", @readonly = "readonly", @class = "form-control InputElements " })</div>
+                    </div>@* Total Discount  *@
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                        <div>
+                            @Html.Label(@Resources.Resource.lblGrossMargin)
+                        </div>
+                        <div>
+                            @Html.TextBox("txtGrossMarginRate", "0", null, new { style = "text-align:right;", @readonly = "readonly", @class = "form-control  InputElements" })</div>
+                    </div>@* Gross Margin  *@
+                </div> 
+				 
+            }
+        </div>
+        <div class="lagends accordion hideonLoad " style="display: none">
+            <a href="#">@Resources.Resource.Legends <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e">
+            </span></a>
+            <div class="accordianRows" style="height: 130px !important">
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.thLineNo:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.LineNoDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.thSubLineNo:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.SubLineNoDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thRequestedQuantity:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.RequestedQuantityDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.thAcceptedQuantity:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.AcceptedQuantityDesc
+                        </label>
+                    </div>
+                    @if (HttpContext.Current.Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Admin).ToString()))
+                    {
+                        <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                            <label>@Resources.Resource.thDiscountPerItem:
+                            </label>
+                        </div>
+                        <div class=" legDescColumn col-lg-2  col-md-3  col-sm-6 col-xs-6 ">
+                            <label>@Resources.Resource.DiscountPerItemDesc
+                            </label>
+                        </div>
+                    }
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.thTaxAmount:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.TaxAmountDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.thOnHoldQuantity:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.thOnHoldQuantityDesc
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hiddenDiv" style="display: none">
+    <select class="ddlCTO">
+        <option></option>
+    </select>
+</div>
+<div class="HiddenDataFill" style="display: none">
+</div>
+@*This Div is Hidden and used to Populate the CTO Dropdown in background *@
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="ErrorModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.QuotationDetail</h4>
+                </div>
+                <div class="modal-body" id="divModalBody">
+                    <span id="lblMessage"></span>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* Model Dialoge *@
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="ConfirmModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog modal-sm" style="margin: 10px auto;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.btnDelete.</h4>
+                </div>
+                <div class="modal-body" id="ConfirmModalBody">
+                    <img  src="@Url.Content("~/images/question.png")" />
+                    @*<label style="color: Red !important">
+						Are you sure you want to delete selected part?</label>*@
+                    <label style="color: Red !important">
+                        @Resources.Resource.MsgInfo20
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnOkDelete" class="btn btn-default pull-left" data-dismiss="modal">
+                        @Resources.Resource.btnOK</button>
+                    <button id="btnCancleDelete" class="btn btn-default pull-right" data-dismiss="modal">
+                        @Resources.Resource.btnCancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* Confirm Dialoge *@
+<div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;</button>
+                <h4 class="modal-title">
+                    @Resources.Resource.QuotationDetail</h4>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dialogueImage">
+                        <img class="imgError" /></div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <label id="lblMessageText" class="lblError">
+                    </div>
+                </div>
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button style="text-align: center; margin-left: auto !important; float: none !important;"
+                    id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                    @Resources.Resource.btnOK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ViewLogFileModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" style="">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;</button>
+                <h4 class="modal-title">@Resources.Resource.QuotationDetail</h4>
+            </div>
+            <div class="modal-body" id="ViewLogFileModalBody">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <img alt="Error" src="" class="logerrorImg" /></div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <label class="lblLog" style="color: Red !important">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnDownloadLog" class="btn btn-default pull-left" data-dismiss="modal">@Resources.Resource.btnDownload</button>
+                <button id="btnCancelDownload" class="btn btn-default pull-right" data-dismiss="modal">@Resources.Resource.btnCancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="InventoryResponsibilitySharingModal" role="dialog" style="padding-top: 169px;
+    overflow: hidden;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" style="">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;</button>
+                <h4 class="modal-title">@Resources.Resource.QuotationDetail</h4>
+            </div>
+            <div class="modal-body" id="InventoryResponsibilitySharingModalBody">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <img alt="Error" src="@Url.Content("~/images/question.png")" class="logerrorImg" /></div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <label class="lblLog" style="color: Red !important" id="lblDemandControl">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnINVROK" class="btn btn-default pull-left" data-dismiss="modal">
+                    OK</button>
+                <button id="btnINVRCancel" class="btn btn-default pull-right" data-dismiss="modal">
+                    Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="IRPopup" role="dialog" style="padding-top: 169px;">
+</div>
+<div class="hiddenForm" style="display: none !important;">
+    <form method="post" action="@Url.Action("DownloadFile", "QuotationDetails", null)" >
+    </form>
+</div>
+<style>
+    #PartsInquiry thead tr th, #PartsInquiry tbody tr td
+    {
+        text-align: left;
+    }
+    .header_TaxAmount
+    {
+        text-align: right !important;
+    }
+    .header_CTO
+    {
+        text-align: left !important;
+    }
+    .header_RequestedPartNo
+    {
+        text-align: left !important;
+    }
+    .header_ProcessedPartNo
+    {
+        text-align: left !important;
+    }
+    .header_Parts_Description
+    {
+        text-align: left !important;
+    }
+    .header_Subordinate_No
+    {
+        text-align: right !important;
+    }
+    .header_Discount
+    {
+        text-align: right !important;
+    }
+    .header_Error_
+    {
+        text-align: left !important;
+    }
+    .header_Weight
+    {
+        text-align: right !important;
+    }
+    /*hst003*/
+    .header_OldLine
+    {
+        display: none !important;
+    }
+</style>
+@* Hidden Form.Purpose is to Triggger a Full PostBack in case it is Necessary  *@
+<script type="text/javascript">
+var HasInventoryRespError = "";//hst001
+var CurrentRole;
+var txtErrorType;
+var txtError;
+var PartsCount;
+var DBCode;
+var isCreator=true;
+var UpdateOriginal = false;
+var ItemsForReCalculation = []; //hst003
+ $(document).on("click","#PartsInquiry>tbody>tr", function (event) {
+   
+	   if(  !($(this).hasClass("trBtnAddNewParts")) && !($(this).hasClass("NewPartsRow")) &&  (quotationStatus=="In Process" ||quotationStatus=="1"  )&& isCreator==true)
+	   {
+		//$("#btnDelete").attr("disabled",false);//Shabbir
+		//$(".group-span-filestyle").attr("disabled",false);
+        var state = $(this).hasClass('highlight');
+
+                if(CurrentRole==1)
+                {
+                    OldLineFlagColumn = 19;
+                }
+                else
+                {
+                    OldLineFlagColumn = 17;
+                }
+
+                //hst004 Start
+                var target = $( event.target );
+                if(target.is("input"))
+                { return; }
+
+                var requested_quantity =  0;
+                var req_element = $(this).children("td").eq(6).children();
+                
+                if(req_element.is("input"))
+                {requested_quantity = req_element.val();} 
+                else
+                {requested_quantity = req_element.text();}
+                var OldLineFlag = $(this).children("td").eq(OldLineFlagColumn).children("input").eq(0).val();
+                //hst004 End
+                
+                
+
+                
+                if (!state)
+			    {
+				    $(this).addClass('highlight');
+                    console.log(OldLineFlag);
+                    
+                    //hst004 Start
+                    if(OldLineFlag == "False")
+                    {
+                        if($(this).children("td").eq(1).text()=="0")
+                        {
+                            var ChangedPartLineString = $(this).children("td").eq(0).text() + "|" + $(this).children("td").eq(1).text() + "|" + $(this).children("td").eq(3).text();
+                            var InputHTMLString = "<input type='text' onchange='QuantityChanged(this.value, \""+ChangedPartLineString+"\")' class='addQuantityinGrid clsQuan form-control' value='"+requested_quantity+"'>"
+                            
+                            $(this).children("td").eq(6).html(InputHTMLString);
+                            $(this).children("td").eq(6).children(0).focus();
+                            $(this).children("td").eq(6).children(0).select();
+                        }
+                    }
+                     //hst004 End
+                    
+                     
+                    if (!isItemInArray(gselectedList, [$.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text())])) 
+                    {
+                        gselectedList.push([$.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text())]);
+                    }
+			    } 
+                else
+                {
+                    $(this).removeClass('highlight');
+
+                    //hst004 Start
+                   if(OldLineFlag == "False")
+                   {
+                        $(this).children("td").eq(6).html("<label style='font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'>"+requested_quantity+"</label>");
+                   }
+                   //hst004 End
+                    
+
+
+                    if (isItemInArray(gselectedList, [$.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text())])) 
+                    {
+                        RemoveUnSelected($.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text()));
+                    }
+                }
+
+                //To Check/UnCheck Check-All checkbox
+                if(gselectedList.length == parseInt(totalPartsCount))
+                {
+                    $("#chkSelectAll").prop("checked",true);
+                }
+                else
+                {
+                    $("#chkSelectAll").prop("checked",false);
+                }
+
+                //To enable or disable Delete button
+                if(gselectedList.length > 0)
+                {
+                     $("#btnDelete").attr("disabled",false);
+                }
+                else
+                {
+                     $("#btnDelete").attr("disabled",true);
+                }
+                
+                $(".group-span-filestyle").attr("disabled",false);
+	   }
+	   else
+	   {   
+		$("#btnDelete").attr("disabled",true);
+	   }
+       
+	});
+
+    //hst004 Method to Identify Quantity Change on Line.
+    function QuantityChanged(input_value , QuantityChanged)
+    {
+        var SplitString = QuantityChanged.split("|");
+        var RecalculateItem = {Line_No:SplitString[0], Subordinate_No:SplitString[1],RequestedPartNo:SplitString[2],Requested_Quantity:input_value};        
+        var blnItemExists = false;
+        ItemsForReCalculation.forEach(element => {
+            if(element.Line_No==RecalculateItem.Line_No && element.Subordinate_No==RecalculateItem.Subordinate_No && element.RequestedPartNo==RecalculateItem.RequestedPartNo)
+            {
+                blnItemExists = true;
+            }
+            
+        });
+        if(!blnItemExists)
+        {
+            ItemsForReCalculation.push(RecalculateItem);    
+        }
+    }
+
+//Shabbir Start
+function isItemInArray(gselectedList, item) 
+{
+    for (var i = 0; i < gselectedList.length; i++) {
+        if (gselectedList[i][0] == item[0] && gselectedList[i][1] == item[1]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function RemoveUnSelected(lineno,sublineno) {
+    for (i=0; i<gselectedList.length; i++){
+            if (gselectedList[i][0] === lineno && gselectedList[i][1] === sublineno)
+            {
+                gselectedList.splice(i--,1);
+            }
+        }
+ }
+ //Shabbir End
+
+ $("#btnStockSearch").click(function(){
+	
+	window.location.href="@Url.Action("StockInquiry", "StockInquiry", null)";
+	});    
+
+  $("#txtShippingCharges,#txtOtherCharge1,#txtOtherCharge2,#txtAdjustedPrice").on("focusout", function ()
+   {
+   // if( ($(this).val()=="" || $(this).val()=="0.00" || $(this).val()=="0")  ){return;}
+	var postData={
+	shippingCharges:$("#txtShippingCharges").val(),
+	otherCharges1:$("#txtOtherCharge1").val(),
+	otherCharges2:$("#txtOtherCharge2").val(),
+	nameOfOtherCharges1:$("#txtNameOfOtherCharge1").val(),
+	nameOfOtherCharges2:$("#txtNameOfOtherCharge2").val() ,
+	adjustedPrice:($("#txtAdjustedPrice").val()!=null && $("#txtAdjustedPrice").val()!="")?$("#txtAdjustedPrice").val():"0.0"
+	};
+	 $.post("@Url.Action("ReCalculate", "QuotationDetails", null)",postData,
+			  function (PartsDetails) 
+				{
+				if(CheckForSessionExpiry(PartsDetails))
+				   {
+		   
+				   SessionExpiredRedirect();
+					return;
+				   }
+				 else
+				 {
+				var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+				var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+				$('#divParts').html(PartsDetails);    
+				}
+				});      ///End Post
+
+	});
+
+  $("#btnUpdate").on("click", function () {
+		UpdateQuotationDetails();
+	});
+	$(document).on("click", "#btnCalculate", function () {
+		 $("#lblMsg").html("");
+		 Calculate();                 
+
+	});
+ 
+	  var quotationStatus=0;
+	  var maxLineNo;
+	  var maxLineNoBackup;
+	 $("#btnAddParts").click(function () {
+	 var newPartsFromUser = [];
+	  $(".NewPartsRow").each(function () {                
+				var currRow=$(this);
+				var ctoFromRow=currRow.find(".CTO").val();
+				var reqPartNo= currRow.find(".addPartsinGrid").val();
+				var reqQuantity= currRow.find(".addQuantityinGrid").val();
+				var unitPrice=currRow.find(".addUnitPrice").val();
+				var discountPerItem=currRow.find(".addDiscountPerItem").val(); 
+                var DistributorCode = $("#txtDistributerCode").val();               
+				if(reqPartNo=="" || reqQuantity=="")
+				{ 
+                // if(reqPartNo==""){currRow.find(".addPartsinGrid").next("span").html("*").attr("style","color:red"); } //hstShabbir No need to add "*"
+                // if( reqQuantity==""){currRow.find(".addQuantityinGrid").next("span").html("*").attr("style","color:red");} //hstShabbir No need to add "*"
+				 return; 				
+				}
+				
+				if(reqPartNo!="" && reqQuantity!="" &&reqQuantity!="0" )
+				{
+					if(unitPrice!="" && discountPerItem!=""){ 
+					newPartsFromUser.push({RequestedPartNo:reqPartNo,Requested_Quantity:reqQuantity,Unit_Price:unitPrice,Discount:discountPerItem,CTO:ctoFromRow,DCOD:DistributorCode});		   
+				 }
+				else if(unitPrice==""){ newPartsFromUser.push({RequestedPartNo:reqPartNo,Requested_Quantity:reqQuantity,Unit_Price:0,Discount:discountPerItem  });   }
+				else if(discountPerItem==""){ newPartsFromUser.push({RequestedPartNo:reqPartNo,Requested_Quantity:reqQuantity,Unit_Price:unitPrice,Discount:0  });   }
+			
+				}
+				else{ return;}
+		});
+
+		if(newPartsFromUser.length==0){return;}
+		  $.post("@Url.Action("AddNewParts", "QuotationDetails", null)", {strNewParts:JSON.stringify(newPartsFromUser) ,page:$("li.active a[data-swhglnk=true]").text()},
+			  function (PartsDetails) 
+				{
+				 if (CheckForSessionExpiry(PartsDetails))
+					 {
+						SessionExpiredRedirect();
+						return;
+					 }
+					 var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+					 var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+					 $('#divParts').html(PartsDetails);    
+					 // $("#divParts").prepend("<div id='divLoading'></div>");                 
+
+				});      ///End Post
+				 //ReloadInformation();
+	
+	});
+    	 
+
+ $('#btnDelete').click(function () 
+  {				
+		$("#ConfirmModal").modal();				 
+
+	});///End btnDelete Click  
+
+ $('#btnOkDelete').click(function () 
+  {  
+  $("body").css("padding-right", "0px");
+  $("#ConfirmModal").modal('hide');
+				
+			  PerformDeletion();
+				
+
+ }); 
+ 
+ //hst001 Start
+
+ $.fn.showConfirmation = function(){ 
+        $("#InventoryResponsibilitySharingModal").modal();
+    }
+
+ $('#btnINVRCancel').click(function () 
+  {  
+  $("#InventoryResponsibilitySharingModal").modal('hide');			
+ }); 
+ 
+ $('#btnINVROK').click(function() {
+        $.get('@Url.Action("InventoryResponsibility", "QuotationDetails")', function (response) { 
+        $('#IRPopup').html(response);
+
+            $('#IRPopup').modal();
+            CreateButtonFunction();
+        });
+   });
+
+    //20171213 - to remove incremental padding if we invoke modal from modal.
+    $('#IRPopup').on('hidden.bs.modal', function () {
+        $('body').css('padding-right','0');    
+    }); 
+
+ //hst001 End
+
+
+//	
+//	
+//	$(document).on("keypress", ".addDiscountPerItem", function (e) {
+//		if (e.which == 13 || e.keyCode == 9) {
+//			e.stopPropagation();
+//			var val = $(this).closest('tr');
+//			val.after("<tr class='NewPartsRow'><td class='lineNo'></td> <td> </td><td class='Origin'></td><td><input type='text' class='addPartsinGrid'/><span></span></td><td> </td><td></td><td><input type='text' class='addQuantityinGrid'/> <span></span>   </td>  <td></td>   <td><input type='text' class='addUnitPrice' value='0'/><span></span>  </td>   <td><input type='text' class='addDiscountPerItem' value='0'/><span></span> </td>   <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+//			var select = $(".ddlCTO");
+//			select.clone().appendTo(val.next("tr").children("td.Origin")).addClass("CTO");
+//			val.next("tr").find("td.Origin select").removeClass("ddlCTO");
+//			if (e.keyCode == 9) { val.next("tr").find(".addPartsinGrid").focus(); e.preventDefault(); } else { val.next("tr").find(".addPartsinGrid").focus(); }
+//		}
+//		
+//	});
+
+//	$(document).on("keypress", ".addQuantityinGrid", function (e) {
+//		if (e.which == 13 || e.keyCode == 9) {
+//			e.stopPropagation();
+//			var val = $(this).closest('tr');
+//			val.after("<tr class='NewPartsRow'><td class='lineNo'></td> <td> </td><td class='Origin'></td><td><input type='text' class='addPartsinGrid'/><span></span></td><td> </td><td></td><td><input type='text' class='addQuantityinGrid'/> <span></span>   </td>  <td></td>   <td><input type='text' class='addUnitPrice' value='0'/><span></span>  </td>   <td><input type='text' class='addDiscountPerItem' value='0'/><span></span> </td>   <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+//			var select = $(".ddlCTO");
+//			select.clone().appendTo(val.next("tr").children("td.Origin")).addClass("CTO");
+//			val.next("tr").find("td.Origin select").removeClass("ddlCTO");
+//			if (e.keyCode == 9) { val.next("tr").find(".addPartsinGrid").focus(); e.preventDefault(); } else { val.next("tr").find(".addPartsinGrid").focus(); }
+//				if(CurrentRole!="1")
+//			 {
+//			 $(".addUnitPrice").hide();
+//			 $(".addDiscountPerItem").hide();
+//			 
+//			 }else 
+//			 {
+//			  $(".addUnitPrice").show();
+//			 $(".addDiscountPerItem").show();
+//			 
+//			 }
+//		}
+//		
+//	});
+var gselectedList = [];//Shabbir
+	  $(document).on("click", '#PartsInquiry> tbody>tr', function () {
+      if(!$(this).hasClass("trBtnAddNewParts") &&!$(this).hasClass("NewPartsRow"))//make sure not to perform highlighting on New Parts Add row
+      {
+        //Shabbir Commented below code
+//        var countHighlightedRows=0;
+//		
+//			var state = $(this).hasClass('highlight')  ;
+//			if (!state)
+//			 {
+//				$(this).addClass('highlight');				 
+//			 
+//			  } else{$(this).removeClass('highlight');}
+//              $('.highlight').each(function () {
+//			countHighlightedRows+=1;
+//		     });             
+//              if(countHighlightedRows>0 &&(quotationStatus=="In Process" || quotationStatus=="1"))
+//              {
+//              $("#btnDelete").removeAttr("disabled" )
+//              }else{  $("#btnDelete").attr("disabled",true)}
+//Shabbir End Comment
+            }
+});
+
+	$(document).on("focusout", ".addPartsinGrid ,.addQuantityinGrid, .addUnitPrice ,.addDiscountPerItem", function () {
+		//if ($(this).hasClass("addUnitPrice") || $(this).hasClass("addDiscountPerItem")) {
+
+        if ($.trim($(this).val()) == "")
+        {
+             $(this).attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080; height:20px;");
+        }
+        else
+        {
+            $(this).attr("style","border-color:#ccc !important;box-shadow: inset 0 1px 1px rgba(0,0,0,.075);height:20px;");
+        }
+
+
+        //hstShabbir Start
+		//}
+        //		else {
+        //			if ($.trim($(this).val()) == "") { 
+        //             $(this).attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080; height:20px;");
+        //				//$(this).next("span").html("*").attr("style", "color:red;")
+        //			}
+        //			else {
+        //             $(this).attr("style","border-color:#ccc !important;box-shadow: inset 0 1px 1px rgba(0,0,0,.075);height:20px;");
+        //				//$(this).next("span").html("");
+        //			}
+		//}
+        //hstShabbir End
+	});
+
+	 
+
+	$(document).ready(function () { 
+	 $("#divParts").parent("div").prepend("<div id='divLoading'></div>");     
+	NewPartsOperations() 
+	 CurrentRole="@Session["Role"].ToString()";
+	DisableAllControls();
+    $(".lagends").removeAttr("style");
+		$(".accordion").accordion({autoHeight:true,
+			collapsible: true,
+			active: false
+		});
+	//	$(".hideonLoad").hide();
+		DisableControls();
+		var fileUploadViaIE="@ViewBag.ieFileUpload"
+		if(fileUploadViaIE=="True")
+		{
+		}
+		else
+		{        
+		var quotationNo = GetParameterValues('strQUTN');
+		var subQuotationNo = GetParameterValues('strQutnSubNo');
+        DBCode=GetParameterValues('DBCode');
+		if (quotationNo != null && quotationNo != "") {
+			$("#txtQuotationNumber").val(quotationNo);
+		}
+		if (subQuotationNo != "" && subQuotationNo != null) {
+			$("#txtQuotationSubNo").val(subQuotationNo);
+		}
+
+		if (quotationNo != null && quotationNo != "") {
+			LoadQuotationData();
+		}
+		}
+		
+
+	});
+  
+ $(document).on( 'li a[data-swhglnk="true"]','click',function () 
+{    
+	maxLineNo=maxLineNoBackup;
+});
+
+	$(document).on('keydown', '#txtQuotationNumber', function (e) {if(this.value.length>= 10 && e.keyCode!=8 ) {   e.preventDefault();return false; } -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+	$(document).on('keydown', '#txtQuotationSubNo', function (e) {if(this.value.length>= 2 && e.keyCode!=8 ) {   e.preventDefault();return false; } -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+	$(document).on('keydown', '#txtTotalPriceAmount', function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+	//$(document).on('keydown', '#txtShippingCharges', function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+	$(document).on('keydown', '#txtAdjustedPrice', function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+	$(document).on('keydown', '#txtOtherCharge1,#txtOtherCharge2,#txtShippingCharges,#txtAdjustedPrice', function (e) { if(this.value.length>= 24 && e.keyCode!=8 ) {   e.preventDefault();return false; }  -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+//	$(document).on('keydown', '', function (e) {if(this.value.length>= 24 && e.keyCode!=8 ) {   e.preventDefault();return false; }  -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() });
+	
+    $(document).on('keydown', '#txtNameOfOtherCharge1,#txtNameOfOtherCharge2', function (e) { if(this.value.length>= 14 && e.keyCode!=8 ) /*Ignore Backspace*/ {  var txtValue=$(this).val().substring(0,14);  $(this).val(txtValue); }});
+	 
+	$( "#txtOtherCharge1" ).on("paste", function(event) {setTimeout( function() {   if( !$.isNumeric(  $( "#txtOtherCharge1" ).val().trim() ) ){ $( "#txtOtherCharge1" ).val(""); false;}         }, 1); });
+	$( "#txtOtherCharge2" ).on("paste", function(event) {setTimeout( function() {   if( !$.isNumeric(  $( "#txtOtherCharge2" ).val().trim() ) ){ $( "#txtOtherCharge2" ).val(""); false;}         }, 1); });
+	$( "#txtQuotationNumber" ).on("paste", function(event) {setTimeout( function() {   if( !$.isNumeric(  $( "#txtQuotationNumber" ).val().trim() ) ){ $( "#txtQuotationNumber" ).val(""); false;}         }, 1); });
+	$( "#txtNameOfOtherCharge2" ).on("paste", function(event) {setTimeout( function() {   if(   $( "#txtNameOfOtherCharge2" ).val().trim().length>14  ){ var txtValue=$( "#txtNameOfOtherCharge2" ).val().substring(0,14);  $( "#txtNameOfOtherCharge2" ).val(txtValue);          }         }, 1); });
+	$( "#txtNameOfOtherCharge1" ).on("paste", function(event) {setTimeout( function() {   if(   $( "#txtNameOfOtherCharge1" ).val().trim().length>14  ){ var txtValue=$( "#txtNameOfOtherCharge1" ).val().substring(0,14);  $( "#txtNameOfOtherCharge1" ).val(txtValue);          }         }, 1); });
+	$(document).on('keydown', '.addUnitPrice', function (e) { -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() ; if(this.value.length>= 9 && e.keyCode!=8 )  { $(this).next("span").html("@Resources.Resource.MsgInfo21").attr("style","color:red !important ").show().fadeToggle("slow") ; e.preventDefault() ;return false;}});
+   
+   $(document).on('keydown', '.addDiscountPerItem', function (e) {
+   -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() 
+	   if(this.value.length>= 9 && e.keyCode!=8 ) ///Ignore BackSpace Key
+		  {
+
+//          $(this).next("span").html("Maximum allowed limit is 9").attr("style","color:red !important ").show().fadeToggle("slow") ;
+		//	$(this).next("span").html("@Resources.Resource.MsgInfo21").attr("style","color:red !important ").show().fadeToggle("slow") ;
+		  e.preventDefault()
+		  return false;
+		  }
+   
+   });
+	 $(document).on('keydown', '.addQuantityinGrid', function (e) {
+   -1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || /65|67|86|88/.test(e.keyCode) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault() 
+	   if(this.value.length>= 6 && e.keyCode!=8 ) ///Ignore BackSpace Key
+		  {
+
+//          $(this).next("span").html("Maximum allowed limit is 6").attr("style","color:red !important ").show().fadeToggle("slow") ;
+		//  $(this).next("span").html("@Resources.Resource.MsgInfo22").attr("style","color:red !important ").show().fadeToggle("slow") ;
+		  e.preventDefault()
+		  return false;
+		  }
+   
+   });
+
+
+ $(document).on('keydown', '.addPartsinGrid', function (e) { 
+	if(this.value.length>= 20 && e.keyCode!=8 ) ///Ignore Backspace
+		  {
+		 // $(this).next("span").html("Maximum allowed limit is 20").attr("style","color:red !important ").show().fadeToggle("slow") ;
+	//	 $(this).next("span").html("@Resources.Resource.MsgInfo23").attr("style","color:red !important ").show().fadeToggle("slow") ;
+		  e.preventDefault()
+		  return false;
+		  }
+	
+});
+
+	 
+	$("#btnSearch").click(function () 
+	{
+     if( !PostGetPreCheck()){return;}//This Check makes sure that there is not any exsiting Ajax Request ,in other case the call is returned void and doesnt proceeds to next code
+		 $("#lblMsg").html("");
+		if ($.trim($("#txtQuotationNumber").val()) == "") { 
+		 txtError = "Please Enter Quotation No";
+		   txtErrorType = "0";
+		   DisplayModal(txtErrorType, txtError);  
+		 
+		 /*$("#spnQuotation").html("*").attr("style", "color: red;  ");*/
+		  $("#txtQuotationNumber").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;width: 44%;display: inline");
+			return;
+		}
+		else if (isNaN($.trim($("#txtQuotationNumber").val()))) {
+		
+		  txtError = "@Resources.Resource.MsgInfo24";
+		   txtErrorType = "0";
+		   DisplayModal(txtErrorType, txtError);  
+		   
+			  $("#spnQuotation").html("*").attr("style", "color:red");
+		   // $("#txtQuotationNumber").val("");
+			return;
+		}
+		else {
+		 $("#txtQuotationNumber").attr("style","width: 44%;display: inline");
+			LoadQuotationData();
+		}
+
+        //Shabbir Start
+        RemoveItemsForSelectAll();
+        $("#btnDelete").attr("disabled",true);
+        $("#chkSelectAll").prop("checked",false);
+        //Shabbir End
+
+	});      //End of btnSearch Click 
+
+	  
+	$(document).on("mouseenter mouseleave",".trBtnAddNewParts",function(){
+	$(this).children("td").eq(0).toggleClass("addSign"); 
+	}) 
+
+   
+</script>
+@* Jquery/JavaScript Events*@
+<script>
+ 
+
+  function PerformDeletion()
+				{                    
+					var partsToDelete = [];      
+                     //Shabbir Start Commented below block
+//					 $('.highlight').each(function (){ //hst006
+//					  var selectedRow=$(this); 
+//					  var LineNo=selectedRow.children("td").eq(0).text();
+//					  var LineSubNo=selectedRow.children("td").eq(1).text();
+//					  partsToDelete.push({Line_No:LineNo,Subordinate_No:LineSubNo});
+//					 });    
+					//Shabbir End Commented
+                    //Shabbir Start Update Now we will not take rows Line No and 
+                    //Sub Line No from highlighted rows but from array
+                       for(var i = 0 ; i < gselectedList.length;i++)
+                       {
+                            partsToDelete.push({Line_No:gselectedList[i][0],Subordinate_No:gselectedList[i][1]});
+                       }
+                    //Shabbir End
+				 
+					if (partsToDelete.length!=0) 
+					{                           
+					  var formData = { strPartsToDelete:JSON.stringify(partsToDelete),sortBy:$("#col").val(), sortDir:$("#dir").val()  };  
+					
+						  $.ajax({
+							  type: "POST",
+							  data: formData,
+							  url:"@Url.Action("DeletePart", "QuotationDetails", null, Request.Url.Scheme)",
+							  success: function (PartsDetails) 
+							  {
+							   if(CheckForSessionExpiry(PartsDetails))
+                                   {                              
+                                     SessionExpiredRedirect();
+                                     return;
+                                   }                       
+							else
+							
+							 {
+									$( "#chkSelectAll").prop('checked', false);
+									if(CheckForServerSideError(PartsDetails))
+									{
+									DisplayModal(txtErrorType,txtError) ;
+									}
+									else 
+									{                          
+							  
+									var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+									var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+									$('#divParts').html(PartsDetails);                                   
+								  //  $("#divParts").prepend("<div id='divLoading'></div>");                                  
+																		  
+									
+									 }///End Else 
+								 
+							  }
+							  
+							  },
+							  error: function (data) 
+							  {       
+							  // txtError = "An Error Occured While Deleting Parts";
+							  txtError = "@Resources.Resource.MsgInfo25";
+							 txtErrorType = "0";
+							  DisplayModal(txtErrorType, txtError);  
+													
+								
+							  }
+						  });
+						   
+					 }
+
+        //Shabbir Start
+        RemoveItemsForSelectAll();
+        $("#btnDelete").attr("disabled",true);
+        $("#chkSelectAll").prop("checked",false);
+        //Shabbir End
+
+}
+
+//Shabbir Start
+function AddItemsForSelectAll(data) {
+   for (var i = 0; i < data.length; i++) {
+            if (!isItemInArray(gselectedList, [$.trim(data[i].Line_No), $.trim(data[i].Subordinate_No)])) {
+                gselectedList.push([$.trim(data[i].Line_No), $.trim(data[i].Subordinate_No)]);
+            }
+        }
+    }
+
+    function RemoveItemsForSelectAll() {
+        gselectedList = [];
+    }
+//Shabbir End
+
+var  calculateAfterDelete=false;
+ function Calculate() {
+		FirstCheckedCTO();
+		PriorityWareHouseList();
+		var formData={
+		perffereOrigins:firsCheckedCTO,
+		priorityWareHouse:priorityWareHouse,
+		currency:$("#txtCurrency").val(),
+		tax:$("#txtTax").val(),
+		nameOfOtherCharges1:$("#txtNameOfOtherCharge1").val(),
+		nameOfOtherCharges2:$("#txtNameOfOtherCharge2").val(),
+		otherCharges1:$("#txtOtherCharge1").val(),
+		otherCharges2:$("#txtOtherCharge2").val(),
+		sellingPrice:$("#txtTotalSellingPrice").val(),
+		shippingCharges:$("#txtShippingCharges").val(),
+		adjustedPrice:$("#txtAdjustedPrice").val() ,
+		calculateAfterDelete:calculateAfterDelete
+		};
+
+
+        //hst004 Start: If Recalculation Items List has items then call "ReCalculateForQuantityChange" instead of "Calculate"
+        var data_to_send = null;
+        if(ItemsForReCalculation.length<=0)
+        {
+            data_to_send = formData;
+        }			
+        else
+        {
+            data_to_send = {strPartsToRecalculate:JSON.stringify(ItemsForReCalculation), calculateAfterDelete:false};
+        }
+        //hst004 End;
+
+		$.ajax({
+				type: "POST",
+				data: data_to_send, //hst004
+				url:"@Url.Action("Calculate", "QuotationDetails", null, Request.Url.Scheme)", //hst004
+				success: function (PartsDetails) 
+				{     
+				 if(CheckForSessionExpiry(PartsDetails))
+				   {
+		   
+				   SessionExpiredRedirect();
+					return;
+				   }
+				  else
+				  {
+					if(CheckForServerSideError(PartsDetails))
+					 {               
+						   
+						$(".hiddenForm").html(PartsDetails);      
+						txtError = error;
+							  txtErrorType = "0";
+							  DisplayModal(txtErrorType, txtError);      
+
+					 }  
+					 else 
+					 {
+					  
+					   var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+					   var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+					   $('#divParts').html(PartsDetails);  
+                       ItemsForReCalculation = [];  //hst004 : Resetting List of Recalculation after calcultaion
+					 }                                                
+				}                  
+				},
+				error: function (data) 
+				{      
+							  //txtError = "An Error Occured While performing calculation";
+							  txtError = "@Resources.Resource.MsgInfo26";
+							  txtErrorType = "0";
+							  DisplayModal(txtErrorType, txtError);          
+							 
+				   
+				}
+			});       
+ 
+ }
+ function UpdateQuotationDetails() {
+
+		FirstCheckedCTO();
+		PriorityWareHouseList();
+		var formData={
+		perffereOrigins:firsCheckedCTO,
+		priorityWareHouse:priorityWareHouse,
+		currency:$("#txtCurrency").val(),
+		tax:$("#txtTax").val(),
+		nameOfOtherCharges1:$("#txtNameOfOtherCharge1").val(),
+		nameOfOtherCharges2:$("#txtNameOfOtherCharge2").val(),
+		otherCharges1:$("#txtOtherCharge1").val(),
+		otherCharges2:$("#txtOtherCharge2").val(),
+		sellingPrice:$("#txtTotalSellingPrice").val(),
+		shippingCharges:$("#txtShippingCharges").val(),
+		adjustedPrice:$("#txtAdjustedPrice").val()};  
+
+        //hst004
+        var data_to_send = null;
+        if(ItemsForReCalculation.length>0)
+        {
+            data_to_send = {strPartsToRecalculate:JSON.stringify(ItemsForReCalculation)};
+        }
+        else
+        {
+            data_to_send = formData;
+        }
+        //hst004
+				   
+	  $.post("@Url.Action("UpdateDetails", "QuotationDetails", null, Request.Url.Scheme)" ,data_to_send ,function  (PartsDetails) {
+		 if(CheckForSessionExpiry(PartsDetails))
+		   {
+		   
+		   SessionExpiredRedirect();
+			return;
+		   }
+		  
+			if(CheckForServerSideError(PartsDetails))
+			{
+				$(".hiddenForm").html(PartsDetails);      
+			   DisplayModal(txtErrorType,txtError) ;
+			}
+           else {           
+				var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+				var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+				$('#divParts').html(PartsDetails); 
+
+
+				
+			}
+            //hst001
+            if(HasInventoryResponsibilityError() || HasExceededQuantityError())
+            {
+               $(".hiddenForm").html(PartsDetails);     
+               if(HasInventoryResponsibilityError())//hst001
+               {
+                    $("#lblDemandControl").text("Detail contains Inventory Responsibility Sharing list parts. Do you want to make sub-quotation for those parts?");
+                    $.fn.showConfirmation();
+               } 
+               else if(HasExceededQuantityError())//hst002
+               {
+                    $("#lblDemandControl").text(" Detail contains parts for which monthly demand limit has been exceeded. Do you want to make sub-quotation for those parts with exceeded quantity?");
+                    $.fn.showConfirmation();
+               }
+               }
+               else if(HasNoMappingNMOrderType())//hst002
+               {
+                    DisplayModal(txtErrorType,"Order Limit has been consumed for part(s), please create Quotation of different Order Type!") ;
+               } 
+
+               ItemsForReCalculation = []; //hst004   
+			
+			 });
+      //Shabbir Start
+      RemoveItemsForSelectAll();
+        $("#btnDelete").attr("disabled",true);
+        $("#chkSelectAll").prop("checked",false);
+        //Shabbir End
+	}
+
+
+	 function LoadQuotationData() 
+
+					{   
+					DisableAllControls();
+				   var formData = { qtno:$.trim( $("#txtQuotationNumber").val()), subqtno: $.trim($("#txtQuotationSubNo").val() ),DBCode:DBCode};
+				   $.ajax(
+					{
+						cache: false,
+						type: "POST",
+						url: "@Url.Action("Search", "QuotationDetails", null)",
+						data: formData,
+						success: function (Data) 
+						{   
+							if(CheckForSessionExpiry(Data))
+							   {		   
+							   SessionExpiredRedirect();
+								return;
+							   }
+							 
+								var Data=Data.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+								var Data=Data.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+								$('#divParts').html(Data); 
+							   // ClearSearchHistory();
+							   
+														 
+							}
+						 
+						 ,
+						error: function (xhr, ajaxOptions, thrownError) {
+					   // txtError = "Failed to retrieve data.";
+						txtError = "@Resources.Resource.MsgInfo3";
+						txtErrorType = "0";
+						DisplayModal(txtErrorType, txtError);          
+						 
+					   
+						}
+					}); // End of ajax   
+	
+					}
+ 
+		   
+
+	 function NewPartsOperations() {
+		 $(document).on("click", ".tdReqPartNo input,.tdReqQuantity input", function (event) {
+			 event.stopPropagation();
+
+		 });
+
+		  $(".trBtnAddNewParts").off("click");//Undelegate the Event as it is registered multiple time as long as the Partial View is Rendred 
+		 $(".trBtnAddNewParts").on("click", function () {
+			 $(this).before("<tr class='NewPartsRow'><td class='lineNo'></td> <td> </td><td class='Origin'></td><td><input type='text' class='addPartsinGrid clsPnum form-control'/><span></span></td><td> </td><td></td><td><input type='text' class='addQuantityinGrid clsQuan form-control'/> <span></span> </td><td></td><td></td><td class='adminOnly'> <input type='text' class='addUnitPrice form-control' style = 'height:20px' value='0'/><span></span> <td class='adminOnly'><input type='text' class='addDiscountPerItem clsQuan form-control' style = 'height:20px' value='0'/><span></span> </td> </td>  <td> </td>   <td> </td>     <td></td><td></td><td></td><td></td><td></td><td></td><td></td>  </tr>");//hstShabbir Added style and classes to make it bootstrap look.//hst005
+			   var select = $(".ddlCTO");
+			 select.clone().appendTo($(this).prev("tr").children("td.Origin")).addClass("CTO");
+			 $(this).prev("tr").find("td.Origin select").removeClass("ddlCTO");
+			 $(this).prev("tr").find(".addPartsinGrid").focus();
+			 if(CurrentRole!="1")
+			 {
+			 $("#main #PartsInquiry > tbody >tr").children("td.adminOnly").detach();///hst101
+			 $(".addUnitPrice").hide();
+			 $(".addDiscountPerItem").hide();
+			 
+			 }else 
+			 {
+			  $(".addUnitPrice").show();
+			 $(".addDiscountPerItem").show();
+			 
+			 }
+			 
+
+			
+		 });
+
+	 }
+
+	 function populateCTO(data) {
+		 var select = $(".ddlCTO");
+		 select.empty();
+		 $.each(data, function (index, itemData) {
+			 addCheckbox(itemData.Value);
+			 select.append($('<option/>', {
+				 value: itemData.Value,
+				 text: itemData.Text
+			 }
+
+		   ));
+		 });
+	 }
+
+	 function ClearSearchHistory() {
+	 $("#lblMsg").html("")
+	   //  $("#lblMessage").html("");
+		 $("#txtStatus").val("");
+		 $("#txtCurrency").val("");
+		 $("#txtDistributerCode").val("");
+		 $("#txtDistributerName").val("");
+		 $("#outer input[type=text]").each(function () 
+		 {
+		   if($(this).attr("id")=="txtNameOfOtherCharge1" || $(this).attr("id")=="txtNameOfOtherCharge2")
+				{
+			   
+				}
+				else
+				{
+				 $(this).val("0");
+				
+				}
+		});
+		
+		 $("#lblMsg").html("");
+
+		 $("#spnQuotation").html("");
+	 }
+
+ function DisablePagingForNoRecord() {
+		var Li_Count = $(".NewPaging li").length;
+		var disabledLi_Count = $(".NewPaging li.disabled").length;
+		if (Li_Count == disabledLi_Count) {
+			$(".NewPaging").hide();
+		}
+		 
+	}
+  
+	function AfterLoad() 
+	{
+        $(".gridHead th a").each(function(){
+       
+  $(this).addClass( "a_"+ $(this).attr("href").split("sort=")[1].split("&")[0]) ;
+
+   $(this).parent("th").addClass( "header_"+ $(this).attr("href").split("sort=")[1].split("&")[0]) ;
+});
+	  //$("#btnDelete").attr("disabled", "disabled");  
+	   // $( "#chkSelectAll").prop('checked', false);
+	 $('.NewPaging ul').addClass("pagination");
+	 DisablePagingForNoRecord();      
+	 maxLineNo=maxLineNoBackup;
+
+	 $('a[data-swhglnk="true"]').attr('href', function () 
+	 {
+
+	 ///Change to index 5 when running on Localhost IIIS
+	 //Or Change to Index 4 on default Development Server
+	   var correctURL = this.href.split('/')[5].split('?')[0];         
+	   return this.href.replace(correctURL, 'PartsDetails');
+		   
+		});        
+		  if(parseInt(totalPartsCount) == 0)
+          {
+            $("#btnDelete").attr("disabled",true);
+            $("#chkSelectAll").attr("disabled",true);
+          }
+
+	   setArrowImages();
+	   if ((quotationStatus=="In Process" || quotationStatus=="1") && isCreator==true) 
+	   {
+	   // $("#btnImport").removeAttr("disabled");
+		 
+		 
+		$("#main #PartsInquiry > tbody").append("<tr class='trBtnAddNewParts' style=' background-color: #e4e4e4 !important;'><td>&nbsp </td>  <td ></td><td >  </td><td ></td><td></td><td> </td><td></td><td></td><td> </td><td class='adminOnly'></td><td class='adminOnly'></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> <td></td><td></td>  </tr>");//hst005
+		
+		if(CurrentRole!="1"   ){$("#main #PartsInquiry > tbody >tr").children("td.adminOnly").detach();}///hst101
+
+        //Shabbir Start
+      if(gselectedList.length != "0" && gselectedList.length == parseInt(totalPartsCount))
+       {
+         $("#chkSelectAll").prop("checked",true);
+         $("#main #PartsInquiry > tbody>tr").each(function(){
+           if($.trim($(this).children("td").eq(0).text()) != "")
+                {$(this).addClass('highlight');}
+         });
+       }
+       else
+       {
+         $("#chkSelectAll").prop("checked",false);
+
+         $("#main #PartsInquiry > tbody>tr").each(function(){
+            $(this).removeClass('highlight');
+            if(isItemInArray(gselectedList, [$.trim($(this).children("td").eq(0).text()),$.trim($(this).children("td").eq(1).text())]))
+            {
+                $(this).addClass('highlight');
+            }
+         });
+       }
+       if(gselectedList.length > 0)
+                {
+                     $("#btnDelete").attr("disabled",false);
+                }
+                else
+                {
+                     $("#btnDelete").attr("disabled",true);
+                }
+       //Shabbir End
+		
+	   }
+	   else 
+	   {
+	   // DisableControls();
+		$('#chkSelectAll').attr("disabled",true);//hst006
+		  $(".group-span-filestyle").attr("disabled",true);
+		   
+	   }
+		   
+		 NewPartsOperations();
+	  
+	}
+	function setArrowImages() {
+
+		var dir = $('#dir').val();
+		var col = $('#col').val();
+		 var header = $('th a[href*=' + col + ']') ;
+		
+		if (dir == 'Ascending') 
+		{
+			header.text(header.text() + ' ▲');
+		}
+		if (dir == 'Descending') 
+		{
+		   header.text(header.text() + ' ▼');
+		}
+	} 
+ 
+
+	function CheckForServerSideError(data)
+	{
+		var tempData = JSON.stringify(data);
+		if (tempData.indexOf("Sorry,") > -1)
+		{
+		return true;        
+		}   
+	}
+
+    //hst001
+    function HasInventoryResponsibilityError()
+	{
+        var InventoryResponsibilityError = HasInventoryRespError1;
+
+		if (InventoryResponsibilityError == "True")
+		    return true;        
+        else 
+            return false;
+	}
+    //hst002
+    function HasExceededQuantityError()
+	{
+        var ExceededQuantityError = HasExceedQuantityError2;
+
+		if (ExceededQuantityError == "True")
+		    return true;        
+        else 
+            return false;
+	}
+    //hst002
+    function HasNoMappingNMOrderType()
+	{
+        var NoMappingOrderTypeError = HasNoMappingOrderType;
+
+		if (NoMappingOrderTypeError == "True")
+		    return true;        
+        else 
+            return false;
+	} 
+
+	function isRealValue(obj) 
+	{
+    if(obj != null){return true;}
+    else if(typeof obj!="undefined"){return true;}
+	   else{return false;}
+	}
+
+   function DisableControls() {
+	  //  $("#btnDownload").attr("disabled", "disabled");
+		 $("#btnCalculate").attr("disabled", "disabled");
+		$("#btnUpdate").attr("disabled", "disabled");
+		 $("#btnImport").attr("disabled", "disabled");
+		$("#fuUploadCSV").attr("disabled", "disabled");
+		$("#ddlFileType").attr("disabled", "disabled");
+		$("#btnAddParts").attr("disabled", "disabled");
+		$("#btnDelete").attr("disabled", "disabled");
+	}
+
+	function EnableControls() {
+		$("#btnDownload").removeAttr("disabled");
+		$("#btnCalculate").removeAttr("disabled");
+		$("#btnUpdate").removeAttr("disabled");
+		$("#btnImport").removeAttr("disabled");
+		$("#fuUploadCSV").removeAttr("disabled");
+		$("#ddlFileType").removeAttr("disabled");
+		$("#btnAddParts").removeAttr("disabled");
+	}
+
+	  function DisableAllControls() {
+
+		$("#btnDownload").attr("disabled", "disabled");
+		$("#btnCalculate").attr("disabled", "disabled");
+		$("#btnUpdate").attr("disabled", "disabled");
+	   $("#btnImport").attr("disabled", "disabled");
+ $(".group-span-filestyle").attr("disabled", "disabled");
+
+
+		$("#fuUploadCSV").attr("disabled", "disabled");
+		$("#ddlFileType").attr("disabled", "disabled");
+		$("#btnAddParts").attr("disabled", "disabled");
+		$("#btnDelete").attr("disabled", "disabled");
+		$("#txtNameOfOtherCharge1").attr("disabled", "disabled");
+		$("#txtNameOfOtherCharge2").attr("disabled", "disabled");
+		$("#txtOtherCharge1").attr("disabled", "disabled");
+		$("#txtOtherCharge2").attr("disabled", "disabled");
+		$("#txtShippingCharges").attr("disabled", "disabled");
+		$("#txtAdjustedPrice").attr("disabled", "disabled");
+		$("#txtTotalDiscount").attr("disabled", "disabled");
+		 $("#txtTotalPriceCost").attr("disabled", "disabled"); 
+		 $("#txtGrossMarginRate").attr("disabled", "disabled");
+	   $("#txtGrandTotal").attr("disabled", "disabled");
+		 $("#txtTotalWeight").attr("disabled", "disabled");
+		$("#txtTotalPriceAmount").attr("disabled", "disabled");
+		$("#txtTax").attr("disabled", "disabled");
+		$("#txtTotalSellingPrice").attr("disabled", "disabled");
+		 $( "#chkSelectAll").attr("disabled", "disabled");
+
+
+
+
+
+
+	}
+	var isNewPartAddReq = false;
+	function GetParameterValues(param) {
+		var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for (var i = 0; i < url.length; i++) {
+			var urlparam = url[i].split('=');
+			if (urlparam[0] == param) {
+				return urlparam[1];
+			}
+		}
+	}
+	 var lblMsg;
+	var firsCheckedCTO;
+	var priorityWareHouse;
+	function FirstCheckedCTO() {
+
+		$("#CTOContainer input:checkbox[class=perffereOrigins]:checked").each(function () {
+			if ($(this).val() != "" && $(this).val() != null) {
+				firsCheckedCTO = $(this).val();
+
+			}
+
+		});
+	  
+	}
+
+	function PriorityWareHouseList() {
+
+		$("#WareHouseContainer input:checkbox[class=priorityWareHouse]:checked").each(function () {
+			if ($(this).val() != "" && $(this).val() != null) {
+				priorityWareHouse = $(this).val();
+				
+			}
+
+		});
+	  
+	}
+
+	function addCheckbox(name) {
+		var container = $('#CTOContainer');
+		var inputs = container.find('input');
+		var id = inputs.length + 1;
+		$('<input />', { type: 'checkbox', class: 'perffereOrigins', id: 'cbperffereOrigins' + id, value: name, checked: true }).appendTo(container);
+		$('<label />', { 'for': 'cbperffereOrigins' + id, text: name }).appendTo(container);
+	}
+
+
+	function AddWareHouseList(name) {
+		var container = $('#WareHouseContainer');
+		var inputs = container.find('input');
+		var id = inputs.length + 1;
+		$('<input />', { type: 'checkbox', class: 'priorityWareHouse', id: 'priorityWareHouse' + id, value: name,checked:true }).appendTo(container);
+		$('<label />', { 'for': 'cbpriorityWareHouse' + id, text: name }).appendTo(container);
+	}
+	function populateWareHousesList(data) {
+		$.each(data, function (index, itemData) {
+			AddWareHouseList(itemData.Value);
+
+
+		});
+	}
+	function DownloadFile(fileType)
+    {
+    
+		 var formData = {  txtFileFormate:fileType};
+		 $.post("@Url.Action("DownloadFile", "QuotationDetails", null)",formData,function (data) {            
+		   if(CheckForSessionExpiry(data))
+		   {
+		   
+		   SessionExpiredRedirect();
+			return;
+		   }			 
+			else
+			{			
+			 if(CheckForServerSideError(data))
+			 {
+				$(".hiddenForm").html(data);                          
+		     }
+			 else 
+			 {
+		         $(".hiddenForm").html(data);
+			 }
+			}
+				 
+			}); 
+    }
+</script>
+@*JavaScript Methods  *@
+@if (Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+{
+	
+    <script>
+
+        $(".addUnitPrice").hide();
+        $(".addDiscountPerItem").hide();
+    </script>
+	
+	
+}
+else
+{ 
+
+    <script>
+
+        $(".addUnitPrice").show();
+        $(".addDiscountPerItem").show();
+    </script>
+
+}
+@if (isInternetExplorer)///Render Different File upload method to hande in-compatability of Async file upload issue with IE
+{
+    <script>
+        $("#btnImport").removeAttr("disabled");
+
+        $('#btnImport').click(function () {
+            if ($('.bootstrap-filestyle input[type=text]').val().trim() == "") {
+                txtError = "Please select csv  file";
+                txtErrorType = "0";
+                DisplayModal(txtErrorType, txtError);
+
+                return;
+            }
+
+            var form = $('#frmIEUpload');
+
+            form.submit();
+
+        });
+    </script>
+  
+}
+else
+{
+	
+    <script>
+ $("#btnImport").attr("disabled",true);
+ 
+$('#fuUploadCSV').on("change",function (){
+var totalFiles = document.getElementById("fuUploadCSV").files.length;
+		 if (totalFiles.toString() == "0") 
+		 {
+		  $("#btnImport").attr("disabled","disabled");
+		  
+		 }
+		 else
+		 {                             
+					 var ext = $(this).val().split('.').pop().toLowerCase();
+					if($.inArray(ext, ['CSV','csv']) == -1) 
+					{
+						$("#btnImport").attr("disabled","disabled");
+						 $("#lblMessage").html("").attr("style", "color:red");
+//                        txtError = "invalid file Formate ";
+					   txtError = "@Resources.Resource.MsgInfo27";
+					   txtErrorType = "0";
+					   DisplayModal(txtErrorType, txtError);  
+						 
+						  
+				   
+					}
+					else 
+					{
+					
+					$("#btnImport").removeAttr("disabled");
+					
+					}
+
+		 }
+
+ 
+
+
+
+});
+
+	 
+	 
+	 
+	 $('#btnImport').click(function () {
+		 var formData = new FormData();
+		 var totalFiles = document.getElementById("fuUploadCSV").files.length;
+		 if (totalFiles.toString() == "0") {
+			// txtError = "Please Select CSV File";
+			 txtError = "@Resources.Resource.MsgInfo28";
+		   txtErrorType = "0";
+		   DisplayModal(txtErrorType, txtError);  
+		  
+			 return false;
+		 }
+		 for (var i = 0; i < totalFiles; i++) {
+			 var file = document.getElementById("fuUploadCSV").files[i];
+			 formData.append("FileUpload", file);
+             formData.append("QuotationDistributorCode", $("#txtDistributerCode").val());
+		 }
+		 $.ajax({
+			 type: "POST",
+			  url:"@Url.Action("UploadFile", "QuotationDetails", null, Request.Url.Scheme)",      
+			 data: formData,
+			 contentType: false,
+			 processData: false,
+			 beforeSend: function (xhr) {
+			  
+			 },
+			 success: function (PartsDetails) {
+				  if(CheckForServerSideError(PartsDetails))
+					{   
+						$(".hiddenForm").html(PartsDetails);      
+						$("#ErrorModal").modal();
+					  
+					}
+					else {
+					var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+					var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+					$('#divParts').html(PartsDetails);  
+					$("#fuUploadCSV").val(""); //hstA02
+					$(".bootstrap-filestyle input[type=text]").val("");//hstA02
+					}
+
+
+
+			 },
+			 error: function (data) {  
+			//txtError = "Failed to retreive data";
+
+			 txtError = "@Resources.Resource.MsgInfo3";
+		   txtErrorType = "0";
+		   DisplayModal(txtErrorType, txtError);        
+				
+				
+			 }
+		 })
+	 });
+    </script>
+
+
+}
+@if (Session["ieFileUpload"] != null)//hst001
+{
+    <script type="text/javascript">
+	quotationStatus="@Session["Status"]";
+
+	   $.post("@Url.Action("PartsDetails", "QuotationDetails", null)",null,function (PartsDetails) { 
+				  if(CheckForServerSideError(PartsDetails))
+					{   
+						$(".hiddenForm").html(PartsDetails);      
+						$("#ErrorModal").modal();                      
+					}
+					else {
+					var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+					var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+					$('#divParts').html(PartsDetails);  
+					
+					}
+	   
+	   
+		 }); 
+		 AfterLoad();
+    </script>
+}
+<script type="text/javascript">
+
+    $(document).on("change", "#chkSelectAll", function () {///hst006
+
+
+        if (this.checked) {
+            $('#PartsInquiry> tbody>tr').each(function (itr_row) {
+
+
+                if (CurrentRole == 1) {
+                    OldLineFlagColumn = 19;
+                }
+                else {
+                    OldLineFlagColumn = 17;
+                }
+
+
+                //hst004 Start
+                var requested_quantity = 0;
+                var req_element = $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(6).children();
+                if (req_element.is("input"))
+                { requested_quantity = req_element.val(); }
+                else
+                { requested_quantity = req_element.text(); }
+                var OldLineFlag = $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(OldLineFlagColumn).children("input").eq(0).val();
+                //hst004 End
+
+                if (!$(this).hasClass("NewPartsRow") && !$(this).hasClass("trBtnAddNewParts")) {
+                    $(this).addClass('highlight');
+
+                    //hst004 Start
+                    if (OldLineFlag == "False") {
+                        var ChangedPartLineString = $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(0).text() + "|" + $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(1).text() + "|" + $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(3).text();
+
+                        if ($("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(1).text() == "0") {
+                            var InputHTMLString = "<input type='text' onchange='QuantityChanged(this.value, \"" + ChangedPartLineString + "\")' class='addQuantityinGrid clsQuan form-control' value='" + requested_quantity + "'>"
+
+                            $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(6).html(InputHTMLString);
+                            $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(6).children(0).focus();
+                            $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").children(0).select();
+                        }
+                    }
+                    //hst004 End
+                }
+            });
+            $("#btnDelete").removeAttr("disabled");
+        }
+        else {
+            $('#PartsInquiry> tbody>tr').each(function (itr_row) {
+                if (!$(this).hasClass("NewPartsRow") && !$(this).hasClass("trBtnAddNewParts")) {
+                    $(this).removeClass('highlight');
+
+                    //hst004 Start
+                    var OldLineFlag = $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(19).children("input").eq(0).val();
+                    var requested_quantity = 0;
+                    var req_element = $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(6).children();
+
+                    if (req_element.is("input"))
+                    { requested_quantity = req_element.val(); }
+                    else
+                    { requested_quantity = req_element.text(); }
+
+                    if (OldLineFlag == "False") {
+                        $("#PartsInquiry").children("tbody").eq(0).children("tr").eq(itr_row).children("td").eq(6).html("<label style='font-size: 10px ! important;  margin-right: 2px !important;font-family: verdana ! important; font-weight: normal; color: rgb(51, 51, 51) ! important;'>" + requested_quantity + "</label>");
+                    }
+                    //hst004 End
+                }
+            });
+            $("#btnDelete").attr("disabled", true);
+        }
+        //Shabbir Start
+        if (this.checked) {
+            AddItemsForSelectAll(data);
+        }
+        else {
+            RemoveItemsForSelectAll();
+        }
+        //Shabbir End
+
+
+
+    });
+  
+</script>
+<script type="text/javascript">
+	$(document).ready(function () {
+    if ($(window).width() <= 767) {
+            $("#btnStockSearch").removeAttr("style")
+        }
+	  $("#btnCondition").click(function () {
+	  if ($.trim($("#txtQuotationNumber").val()) == "")
+	   { 
+		 //txtError = "Please Enter Quotation No";
+		 txtError = "@Resources.Resource.MsgInfo33";
+		 txtErrorType = "0";
+		 DisplayModal(txtErrorType, txtError);  
+		 
+		/* $("#spnQuotation").html("*").attr("style", "color: red;  ");*/
+		$("#txtQuotationNumber").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;width: 44%;display: inline");
+			return;
+		}
+
+		 url= "@Url.Action("Index", "QuotationCondition")";
+		 var curl=url+"?quotationNo="+$("#txtQuotationNumber").val()+"&subquotationNo="+$("#txtQuotationSubNo").val()+"&DBCode="+$("#txtDistributerCode").val();
+		 var valuee = { strQuotationNo: $("#txtQuotationNumber").val(),strQuotSeqNo:$("#txtQuotationSubNo").val(),DBCode:$("#txtDistributerCode").val().trim() }   
+		 
+		  $.ajax({
+			   cache: false,
+			   type: "POST",
+			   url:"@Url.Action("IsConditionDataExist", "QuotationDetails", null)",
+			   data: valuee,
+			   success: function (data2)
+				{ 
+
+				   if(CheckForSessionExpiry(data2))
+				   {                              
+					 SessionExpiredRedirect();
+					 return;
+				   }
+
+				  if(data2.ErrorOccured)
+					 {
+					  txtError = data2.ErrorMessage;
+					  txtErrorType = "0";
+					  DisplayModal(txtErrorType, txtError); 
+					  return;
+					 }
+				  if (data2.DataCheck=="1") 
+				  {            
+				   // txtError = " No Record Found";
+					txtError = "@Resources.Resource.MsgInfo18 ";
+					txtErrorType = "0";
+					DisplayModal(txtErrorType, txtError);  
+												
+					 return;
+				   }
+				 if(data2.DataCheck!="1")
+				  {
+				   window.location.href=curl;
+				  }
+
+				   
+			 },
+		   error: function (xhr, ajaxOptions, thrownError)  {
+							 txtError = "@Resources.Resource.MsgInfo3";
+							 txtErrorType = "0";
+							 DisplayModal(txtErrorType, txtError);
+		  
+		  }
+		})//ajax endnd        
+			
+		})//click end
+
+	}); //doc.ready end
+
+</script>
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    });
+
+    $(document).on('click', '#btnDownloadLog', function () {
+        
+          $.post("@Url.Action("DownloadLog", "QuotationDetails", null)",null,function (response) { 
+            if(CheckForSessionExpiry(response))
+				   {                              
+					 SessionExpiredRedirect();
+					 return;
+				   }
+          $(".HiddenDataFill").html(response);
+            
+          
+          });
+    }); 
+</script>
+<script>
+
+  
+    function CreateButtonFunction() {
+      $('#btnCreateQtn').click(function () {
+      
+        if(HasInventoryResponsibilityError())
+        {
+            CreateSubQuotationInventoryResponsibility();
+        }
+        else if(HasExceededQuantityError())
+        {
+            CreateSubQuotationExceededQuantity();
+        }
+    }); 
+}
+    //hst001
+  function CreateSubQuotationInventoryResponsibility()
+				{
+                
+                var QuotationInfo =$("#ddlTransportationCode").val()+";"+$("#ddlOrderType").val()+";"+$("#DistributerOrderNo").val()+";"+$("#txtDistributerCode").val();  
+				                    
+					if (QuotationInfo.length!=0) 
+					{                           
+					
+						  $.ajax({
+							  type: "POST",
+							  data:{"QuotationInfo":QuotationInfo},
+							  url:"@Url.Action("CreateInventoryResponsibilityQtn", "QuotationDetails", 1, Request.Url.Scheme)",
+							  success: function (PartsDetails) 
+							  {
+							   if(CheckForSessionExpiry(PartsDetails))
+                               {                              
+                                    SessionExpiredRedirect();
+                                    return;
+                                }                       
+							    else
+							    {
+									if(CheckForServerSideError(PartsDetails))
+									{
+								    	DisplayModal(txtErrorType,txtError) ;
+									}
+									else 
+									{   
+                                        var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+									    var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+									    $('#divParts').html(PartsDetails);                                       
+                                        UpdateOriginal = true;                   
+						
+                                        //End Update Actual Quotation
+                                                                                                 
+							        }
+								 
+							  }
+							  
+							  },
+							  error: function (data) 
+							  {       
+							    txtError = "@Resources.Resource.MsgInfo25";
+							    txtErrorType = "0";
+							    DisplayModal(txtErrorType, txtError);  
+							  }
+						  });
+						   
+					 }
+}
+
+    //hst002
+  function CreateSubQuotationExceededQuantity()
+				{
+                
+                var QuotationInfo =$("#ddlTransportationCode").val()+";"+$("#chkOrderType").val()+";"+$("#DistributerOrderNo").val()+";"+$("#txtDistributerCode").val();  
+				                    
+					if (QuotationInfo.length!=0) 
+					{                           
+					
+						  $.ajax({
+							  type: "POST",
+							  data:{"QuotationInfo":QuotationInfo},
+							  url:"@Url.Action("CreateExceededQuantityQtn", "QuotationDetails", 1, Request.Url.Scheme)",
+							  success: function (PartsDetails) 
+							  {
+							   if(CheckForSessionExpiry(PartsDetails))
+                               {                              
+                                    SessionExpiredRedirect();
+                                    return;
+                                }                       
+							    else
+							    {
+									if(CheckForServerSideError(PartsDetails))
+									{
+								    	DisplayModal(txtErrorType,txtError) ;
+									}
+									else 
+									{
+                                       
+                                    var PartsDetails=PartsDetails.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+									var PartsDetails=PartsDetails.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+									$('#divParts').html(PartsDetails);
+                                     
+                                    UpdateOriginal = true;                      
+									
+                                        //End Update Actual Quotation                                                           
+							        }
+								 
+							  }
+							  
+							  },
+							  error: function (data) 
+							  {       
+							    txtError = "@Resources.Resource.MsgInfo25";
+							    txtErrorType = "0";
+							    DisplayModal(txtErrorType, txtError);  
+							  }
+						  });
+						   
+					 }
+
+}
+    $("#MessageModal").on("hidden.bs.modal", function () {
+        if(UpdateOriginal && $("#lblMessageText").text().startsWith("Newly generated Sub-Quotation"))
+        {
+            UpdateQuotationDetails();
+            UpdateOriginal = false;
+        }
+    });
+
+</script>

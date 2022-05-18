@@ -1,0 +1,267 @@
+﻿@model IEnumerable<PDXWEB.Models.Master.StockInquiry.DTZ01011A010> 
+
+@{
+
+    ViewBag.Title = "Multiple Parts Stock Inquiry";
+    
+}  
+@if (Model != null && Model.Count() > 0)
+{
+    
+    <div id="main" class="datagrid table-responsive">
+     <table class="table table-striped table-hover"> 
+         <tr>
+            @*<td rowspan="2"  class="customHeader">Select</td>*@
+            <td rowspan="1"  class="customHeader">Part No</td>
+            <td  rowspan="1" class="customHeader"> </td>
+            <td  rowspan="1" class="customHeader">@Resources.Resource.thPartDescription </td>
+            <td rowspan="1" class="customHeader">@Resources.Resource.thCharacterCode </td>
+            <td rowspan="1" class="customHeader">IC </td>
+            <td rowspan="1" class="customHeader">LPN</td>
+            <td rowspan="1" class="customHeader">KME Stock</td>
+            <td  rowspan="1" class="customHeader">KME EOR </td>
+            <td  rowspan="1" class="customHeader">@Resources.Resource.thKMEOnOrder </td>
+            <td class="KmeLocationsColumns" rowspan="1">@Resources.Resource.thKLTDTotal</td>       
+            <td rowspan="1" class="customHeader">@Resources.Resource.thKMEListPrice </td>
+            <td rowspan="1" class="customHeader">@Resources.Resource.thWeightgm </td>
+            <td rowspan="1" class="customHeader">@Resources.Resource.thKLTDLeadProductionPerMonth </td>
+            <td rowspan="1" class="customHeader">MOR </td>
+            <td rowspan="1" class="customHeader">OR </td>
+            <td rowspan="1" class="customHeader">@Resources.Resource.thQuantityByUnit</td>
+             <td rowspan="1" class="customHeader">BQ</td>
+            <td rowspan="1" class="customHeader">@Resources.Resource.thReturnableCode</td>
+            <td   rowspan="1"  class="customHeader">@Resources.Resource.thCommodityGroupCodeNew </td>
+            <td  rowspan="1"   class="customHeader">@Resources.Resource.thCommodityCodeNew </td>
+            <td  rowspan="1" class="customHeader">@Resources.Resource.thCommodityGroupCodeOld</td>
+            <td rowspan="1" class="customHeader">@Resources.Resource.thCommodityCodeOld </td>
+            <td rowspan="1" class="customHeader">@Resources.Resource.thSupplierBornDate</td>        
+            <td rowspan="1" class="customHeader">@Resources.Resource.thProductionLot </td>
+            <td rowspan="1" class="customHeader">@Resources.Resource.thModelGroupCode </td>
+            <td rowspan="1"  class="customHeader">@Resources.Resource.thModelCode</td> 
+            <td   rowspan="1"  class="customHeader">@Resources.Resource.thHSCodeLocal</td>    
+            <td   rowspan="1"  class="customHeader">@Resources.Resource.thServiceNewsNumber</td>
+              
+         </tr> 
+         <tr>
+          <td  class="KmeLocationsColumns" style="display:none;">O430 </td>
+         <td  class="KmeLocationsColumns" style="display:none;">O440 </td>
+         <td  class="KmeLocationsColumns" style="display:none;">O450 </td>
+         <td  class="KmeLocationsColumns" style="display:none;"> O460</td>
+         <td  class="KmeLocationsColumns" style="display:none;">@Resources.Resource.thOthers </td>
+         <td  class="KmeLocationsColumns" style="display:none;">@Resources.Resource.thKLTDTotal </td>
+          </tr>
+
+
+
+
+       @foreach (var item in Model)
+       {
+           if (item != null)
+           {
+                  <tr class="gridChildRow">  
+        @*<td class="centerAlign">*@   
+        @*<input id="Select" class="ClsSelect" type="checkbox" value="@Html.Raw(@item.PartNumber + "," +@item.PartDescription)" name="Select"/></td>*@
+        
+            <td >@item.PartNumber </td> 
+            <td style="color:Red" >@item.ChainExist</td>
+            <td >@item.PartDescription</td>
+         <td class="centerAlign">@item.CharacterCode</td>
+            <td class="centerAlign">@item.InterchageableCode</td>
+               
+            <td >@item.LatestPartNumber</td>
+            <td class="centerAlign">@item.StockAvailable</td>
+            <td class="centerAlign">@item.EOReserveQuantity</td>
+            <td class="centerAlign">@item.OnOrderQuantity</td>
+           
+            <td  class="kltdLocationData" style="display:none;">@item.O430</td>
+            <td class="kltdLocationData" style="display:none;">@item.O440</td>
+            <td class="kltdLocationData" style="display:none;">@item.O450</td>
+            <td class="kltdLocationData" style="display:none;">@item.O460</td>
+            <td class="kltdLocationData" style="display:none;">@item.Others</td>
+            <td class="kltdLocationData">@item.Total</td>
+           
+            <td class="centerAlign">@item.KMEListPrice</td>
+            <td class="centerAlign">@item.Weight</td>
+            <td >@item.KLTDLeadTime</td>
+
+            <td class="centerAlign">@item.KMEMortality</td>
+            <td class="centerAlign">@item.KMEOrderRank</td>
+
+
+
+             <td class="centerAlign">@item.QuantityByUnit</td>
+            <td class="centerAlign">@item.BoxQuantity</td>
+            <td class="centerAlign">@item.ReturnableCode</td>
+            <td >@item.CommodityGroupCodeNew</td>
+            <td >@item.CommodityCodeNew</td>
+            <td >@item.CommodityGroupCodeOld</td>
+            <td >@item.CommodityCodeOld</td>
+            <td >@item.BornDate</td>
+            <td >@item.ProductionLot</td>
+            <td >@item.ModelGroupCode</td>
+           <td >@item.ModelCode</td>
+           <td >@item.HSCode</td>
+           <td >@item.ServiceNewsNo</td>
+             </tr>  
+           }
+       }
+      
+      
+       </table>
+  
+
+  </div>
+   
+        <script>
+
+            EnableControls();
+    
+   
+    
+    </script>
+}
+else
+{
+      
+     <div id="main" class="datagrid table-responsive"   style="   height:300px" >
+     <table class="table table-striped table-hover">
+   
+                               
+  
+    
+         <tr>
+            <td rowspan="2"  class="customHeader">Select</td>
+            <td rowspan="2"  class="customHeader">Part No</td>
+            <td  rowspan="2" class="customHeader"> </td>
+            <td  rowspan="2" class="customHeader">@Resources.Resource.thPartDescription </td>
+            <td rowspan="2" class="customHeader">@Resources.Resource.thCharacterCode </td>
+            <td rowspan="2" class="customHeader">IC </td>
+            <td rowspan="2" class="customHeader">LPN</td>
+            <td rowspan="2" class="customHeader">KME Stock</td>
+            <td  rowspan="2" class="customHeader">KME EOR </td>
+            <td  rowspan="2" class="customHeader">@Resources.Resource.thKMEOnOrder </td>
+            <td class="customHeader" colspan=6 rowspan="1">@Resources.Resource.thKLTDLocation </td>       
+            <td rowspan="2" class="customHeader">@Resources.Resource.thKMEListPrice </td>
+            <td rowspan="2" class="customHeader">@Resources.Resource.thWeightgm </td>
+            <td rowspan="2" class="customHeader">@Resources.Resource.thKLTDLeadProductionPerMonth </td>
+            <td rowspan="2" class="customHeader">MOR </td>
+            <td rowspan="2" class="customHeader">OR </td>
+            <td rowspan="2" class="customHeader">@Resources.Resource.thQuantityByUnit</td>
+             <td rowspan="2" class="customHeader">BQ</td>
+            <td rowspan="2" class="customHeader">@Resources.Resource.thReturnableCode</td>
+            <td   rowspan="2"  class="customHeader">@Resources.Resource.thCommodityGroupCodeNew </td>
+            <td  rowspan="2"   class="customHeader">@Resources.Resource.thCommodityCodeNew </td>
+            <td  rowspan="2" class="customHeader">@Resources.Resource.thCommodityGroupCodeOld</td>
+            <td rowspan="2" class="customHeader">@Resources.Resource.thCommodityCodeOld </td>
+            <td rowspan="2" class="customHeader">@Resources.Resource.thSupplierBornDate</td>        
+            <td rowspan="2" class="customHeader">@Resources.Resource.thProductionLot </td>
+            <td rowspan="2" class="customHeader">@Resources.Resource.thModelGroupCode </td>
+            <td rowspan="2"  class="customHeader">@Resources.Resource.thModelCode</td> 
+            <td   rowspan="2"  class="customHeader">@Resources.Resource.thHSCodeLocal</td>    
+            <td   rowspan="2"  class="customHeader">@Resources.Resource.thServiceNewsNumber</td>
+              
+         </tr> 
+         <tr>
+          <td  class="customHeader">O430 </td>
+         <td  class="customHeader">O440 </td>
+         <td  class="customHeader">O450 </td>
+         <td  class="customHeader"> O460</td>
+        <td  class="customHeader">@Resources.Resource.thOthers </td>
+         <td  class="customHeader">@Resources.Resource.thKLTDTotal </td>
+          </tr>
+      
+ 
+              @*    <tr>  
+            <td > </td>
+            <td > </td>
+            <td > </td>
+             <td > </td>
+             <td > </td>
+            <td > </td>
+  <td > </td>
+           
+          <td > </td>
+            <td > </td>
+           <td > </td>
+             <td > </td>
+            <td > </td>
+            <td > </td>
+                 <td > </td>
+            <td > </td>
+             <td > </td>
+             <td > </td>
+            <td > </td>
+  <td > </td>
+           
+          <td > </td>
+            <td > </td>
+           <td > </td>
+             <td > </td>
+            <td > </td>
+            <td > </td>
+      <td > </td>
+            <td > </td>
+             <td > </td>
+             <td > </td>
+            <td > </td>
+  <td > </td>
+           
+          <td > </td>
+            <td > </td>
+           <td > </td>
+             <td > </td>
+            <td > </td>
+            <td > </td>
+             </tr>  
+ *@
+      
+       </table>
+  
+
+  </div>
+    
+    <script>
+        DisableControlsOnLoad();
+    
+    </script>
+    
+}
+
+
+
+  <script type="text/javascript">
+
+      $(document).ready(function () { 
+      
+          
+          lblMessage = "@Session["lblMsg"].ToString()";
+          AfterLoad();
+
+      }); 
+
+  </script>
+
+
+
+  @if ( Session["ImportData"]!=null)
+  {
+      <script>
+          $("#btnExportPartsMasterData").removeAttr("disabled");
+      
+      </script>
+     // Session["ImportData"] = null;
+  }
+  else
+  {
+      <script>
+          $("#btnExportPartsMasterData").attr("disabled", true);
+      
+      </script>
+  }
+
+
+
+
+
+
+

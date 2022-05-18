@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <theme>
+    <predefined>true</predefined>
+  </theme>
+  <!-- Section with general text messages. -->
+  <strings>
+    <!-- Text of the label in popup message shown on loading a topic. -->
+    <topicSpinnerText>Laster inn...</topicSpinnerText>
+  </strings>
+  <!-- Section with text that is shown in the topic area. -->
+  <topic>
+    <strings>
+      <!-- This message is shown when topic cannot be loaded. -->
+      <notfoundText>Emne ikke funnet</notfoundText>
+      <!-- This window title is shown when topic cannot be loaded. -->
+      <notfoundTitle>Emne ikke funnet</notfoundTitle>
+    </strings>
+  </topic>
+  <!-- Section with text that is shown in the Index page. -->
+  <index>
+    <strings>
+      <!-- Tooltip for the Index text box. -->
+      <filterTooltip>Filtrer stikkord</filterTooltip>
+      <!-- This message is shown when keywords aren't found in Index. -->
+      <notfound>Finner ingen stikkord.</notfound>
+      <!-- This message is shown when one or more keywords are found. This message can contain a #{count} macro that is replaced with a found keywords number. -->
+      <found>#{count} stikkord funnet.</found>
+      <!-- Text of the "more" link in keyword list. -->
+      <more>Flere emner...</more>
+    </strings>
+  </index>
+  <!-- Section with text that is shown in the Search page. -->
+  <search>
+    <!-- Buttons used on the search page. -->
+    <buttons>
+      <!-- Go button that starts search. -->
+      <go>
+        <!-- Text (or tooltip) for the Go button to start search. -->
+        <label>Søk</label>
+      </go>
+    </buttons>
+    <strings>
+      <!-- Tooltip for the Search text box. -->
+      <filterTooltip>Søk i emner</filterTooltip>
+      <!-- This text will be shown in a popup when the user clicks the "Help" button on the search tab. -->
+      <helpMessage>Du kan bruke logiske operatorer i søkestrengen: #{and}, #{or}, #{not}. Eksempler: football #{or} hockey, sports #{and} #{not} baseball</helpMessage>
+      <!-- This message is shown in the search results area while data is loading. -->
+      <loading>Laster inn søkemotor...</loading>
+      <!-- This message is shown if data fails to load. -->
+      <loaderror>Feil: Kan ikke laste inn søkemotor.</loaderror>
+      <!-- This message is shown when search is disabled. -->
+      <disabled>Søk er deaktivert.</disabled>
+      <!-- This message is shown when no topics are found. -->
+      <notfound>Ingen emner funnet.</notfound>
+      <!-- This message is shown when topics are found. This message can contain a #{count} macro that is replaced with a found topics number. -->
+      <found>#{count} emne(r) funnet.</found>
+      <!-- This message is shown when search engine suggests a search string correction to the user. This message can contain a #{query} macro that is replaced with a link to the corrected search string (default: "Did you mean: #{query}") -->
+      <correcting>Mente du: #{query}</correcting>
+      <!-- Text of the "more" link in search results list. -->
+      <more>Flere emner...</more>
+    </strings>
+    <!-- These strings define logical operators for search. -->
+    <operators>
+      <!-- The logical operator AND. -->
+      <and>OG</and>
+      <!-- The logical operator OR. -->
+      <or>ELLER</or>
+      <!-- The logical operator NOT. -->
+      <not>IKKE</not>
+    </operators>
+  </search>
+  <!-- Text (or tooltips) for buttons. -->
+  <buttons>
+    <toc>
+      <!-- Text (or tooltips) for the Contents button in the header. -->
+      <label>Innhold</label>
+    </toc>
+    <index>
+      <!-- Text (or tooltips) for the Index button in the header. -->
+      <label>Stikkord</label>
+    </index>
+    <prev>
+      <!-- Text (or tooltips) for the Previous button at the top of the topic area. -->
+      <label>Forrige emne</label>
+    </prev>
+    <next>
+      <!-- Text (or tooltips) for the Next button at the top of the topic area. -->
+      <label>>Neste emne</label>
+    </next>
+    <prevBottom>
+      <!-- Text (or tooltips) for the Previous button at the bottom of the topic area. -->
+      <label>Forrige emne</label>
+    </prevBottom>
+    <nextBottom>
+      <!-- Text (or tooltips) for the Next button at the bottom of the topic area. -->
+      <label>>Neste emne</label>
+    </nextBottom>
+  </buttons>
+  <!-- Strings shown only if Accessibility Mode is set to Section 508. -->
+  <accessibility>
+    <!-- The title for icons in the table of contents. -->
+    <toc>
+      <!-- The title for closed books without topic. -->
+      <closedBook>Lukket bok uten underemner</closedBook>
+      <!-- The title for closed books with topic. -->
+      <closedBookTopic>Lukket bok med underemner</closedBookTopic>
+      <!-- The title for topic items. -->
+      <topic>Emne</topic>
+    </toc>
+    <!-- The title for collapsible section icon. -->
+    <collapsibleSections>
+      <!-- The title for a section in collapsed state. -->
+      <collapsed>Klikk for å vise</collapsed>
+      <!-- The title for a section in expanded state. -->
+      <expanded>Klikk for å skjule</expanded>
+    </collapsibleSections>
+    <!-- List header for the list of topics of a keyword or group link (if there is more than one topic). This string can contain "#{count}" macro. -->
+    <akLinksMenuHeader>#{count} emner funnet</akLinksMenuHeader>
+  </accessibility>
+</settings>

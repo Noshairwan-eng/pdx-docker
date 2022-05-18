@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title> </title>
+    <link id="c1themecss" rel="stylesheet" type="text/css" media="all" href="theme.css" />
+    <link id="c1customiconscss" rel="stylesheet" type="text/css" media="all" href="custom-icons.css" class="apply-to-frame" />
+    <link id="c1usercss" rel="stylesheet" type="text/css" media="all" href="user.css" class="apply-to-frame" />
+    <script id="c1themejs" type="text/javascript" src="theme.js"></script>
+    <script id="c1userjs" type="text/javascript" src="user.js"></script>
+</head>
+<body>
+	<div data-role="page" id="c1topicPage">
+            
+        <div data-role="header" id="c1caption" data-theme="b">
+            <img id="c1captionLogo" alt="Logo" style="float:left" src="images/d2h_logo_placeholder.png" data-inline="true" />
+            <h1 id="c1captionText"></h1>
+        </div>
+        <div data-role="header" id="c1header" data-theme="b">
+            <table id="c1toolbarTable" class="fill-h">
+                <tr id="c1toolbarRow0">
+                    <td id="c1toolbarContentsCell" class="noBorder"><a id="c1contentsButton" class="ui-btn-block" data-role="button" href="#c1tocPage" data-icon="home" data-iconpos="left">Contents</a></td>
+                    <td id="c1toolbarIndexCell" class="noBorder"><a id="c1indexButton" class="ui-btn-block" data-role="button" href="#c1indexPage" data-icon="home" data-iconpos="left">Index</a></td>
+                    <td id="c1toolbarSearchCell" class="noBorder">
+                        <div id="c1toolbarSearchDiv" class="ui-input-search c1-input-search ui-shadow-inset ui-btn-corner-all ui-btn-shadow ui-body-b">
+                            <input id="c1searchFilter" title="Filter" type="text">
+                            <a id="c1searchButton" class="c1-input-go" data-role="button" title="Search" href="#" data-icon="search" data-iconpos="notext">Search</a>
+                        </div>
+                    </td>
+                </tr>
+            </table> 
+        </div>
+        <table id="c1topicNavigationTop" class="fill-h">
+            <tr id="c1topicNavigationTopRow0">
+                <td id="c1topicNavigationTopPreviousCell" class="buttonCell">
+                    <button id="c1topicPreviousButton" data-inline="true" data-icon="arrow-l">Previous</button>                        
+                </td>
+                <td id="c1topicNavigationTopCenterCell" class="fillCell">
+                </td>
+                <td id="c1topicNavigationTopNextCell" class="buttonCell">
+                    <button id="c1topicNextButton" data-inline="true" data-icon="arrow-r" data-iconpos="right">Next</button>
+                </td>
+            </tr>
+        </table>   
+        <div data-role="content" id="c1topic">
+        </div>        	    
+        <div id="c1topicFooter">
+            <table id="c1topicNavigationBottom" style="width:100%">
+                <tr id="c1topicNavigationBottomRow0">
+                    <td id="c1topicNavigationBottomPreviousCell" class="buttonCell">
+                        <button id="c1topicBottomPreviousButton" data-inline="true" data-icon="arrow-l">Previous</button>                        
+                    </td>
+                    <td id="c1topicNavigationBottomCenterCell" class="fillCell">
+                    </td>
+                    <td id="c1topicNavigationBottomNextCell" class="buttonCell">
+                        <button id="c1topicBottomNextButton" data-inline="true" data-icon="arrow-r" data-iconpos="right">Next</button>
+                    </td>
+                </tr>
+            </table> 
+        </div>
+    </div>
+    <div data-role="page" id="c1tocPage">
+        <div data-role="content" id="c1tocContent">
+            <ul data-role="listview" id="c1toc">
+            </ul>
+        </div>
+    </div>
+    <div data-role="page" id="c1indexPage">
+        <div data-role="header" id="c1indexHeader" data-theme="b">
+			<div id="c1indexFilterInputBlock">
+				<input type="search" id="c1indexFilter" title="Filter" />
+			</div>
+        </div>
+		<div data-role="content" id="c1indexContent">
+            <ul id="c1index" data-role="listview" data-input="#c1indexFilter"></ul>
+		</div>		
+    </div>
+    <div data-role="page" id="c1searchPage">		
+        <div id="c1searchContent" data-role="content">            
+		    <ul id="c1search" data-role="listview" data-input="#c1searchFilter"></ul>
+        </div>
+    </div>
+</body>
+</html>

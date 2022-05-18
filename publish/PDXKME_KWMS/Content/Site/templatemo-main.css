@@ -1,0 +1,1251 @@
+﻿/*
+Compass Template
+http://www.templatemo.com/preview/templatemo_454_compass
+*/
+
+/* 
+http://meyerweb.com/eric/tools/css/reset/ 
+v2.0 | 20110126
+License: none (public domain)
+*/
+
+ 
+  
+ h2.new { width:100%; text-align:left; border-bottom: 1px dotted #000; line-height:0.1em; margin:10px 0 20px; } 
+h2.new span { background:#fff; padding:0 10px; }
+
+.navbar-collapse {
+    border-top: 1px solid transparent; 
+    
+    overflow-x: visible;
+    padding-left: 0px !important;  
+    padding-right: 15px;
+}
+ .form-control {       
+    padding: 0px 2px !important;
+    font-size: 11px !important;
+  }
+
+.container-fluid {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.navbar .divider-vertical 
+{
+    border-left: 1px solid #f2f2f2;
+  
+    height: 30px;
+}
+
+.navbar-inverse .divider-vertical {
+border-right-color: #222222;
+border-left-color: #111111;
+}
+
+@media (max-width: 767px) 
+{
+       
+.navbar-collapse .nav > .divider-vertical {
+    display: none;
+  }
+}
+
+
+
+@media only screen and (max-width: 767px) 
+{   .navbar-nav {
+    margin: 7.5px 23px;
+}
+  }
+
+  .FooterStyle{           
+             
+     background: rgba(0, 0, 0, 0) linear-gradient(to right, #cecdcf 0px, #fcfcfd 100%) repeat scroll 0 0;
+    border-top: 1px solid #fff;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
+             
+             
+             }
+       
+ 
+
+
+@media only screen and (max-width: 350px) 
+{
+    
+      .zeroMarginOnSmall  
+   {
+        margin:0 0 0 0 !important;
+       
+       
+       }
+    .XsClass
+    {
+         float:left !important;
+        
+        
+    }
+    
+    .col-xs-6
+    {
+        
+     
+        
+        
+    }
+    
+    
+    
+    
+    
+    .flexslider {
+    margin-top: 120px !important;  
+      }
+      
+      #languageSelection
+      {
+           width:100% !important;
+          
+          
+          }
+    
+    
+}
+
+
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*------------------------------------------------------
+	Basic Styling 
+--------------------------------------------------------*/
+body {
+  font: 13px/23px "Open Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  word-wrap: break-word;
+  color: #777777;
+}
+
+a {
+   
+}
+
+input::-moz-focus-inner {
+  border: 0;
+}
+
+a:hover, a:active, a:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans", sans-serif;
+  color:  Black;
+}
+
+.top-header .right-header ul.social-icons, .main-header .menu ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#services, #portfolio, #about, #contact {
+  padding-top: 120px;
+}
+
+/*------------------------------------------------------
+	Header Styles 
+--------------------------------------------------------*/
+.top-header {
+ background: #f9d508 none repeat scroll 0 0;
+    color: white;
+    height: 5px;
+  
+  
+}
+.top-header .left-header span {
+  display: inline-block;
+  margin: 8px 30px 0 0;
+}
+.top-header .left-header span i {
+  margin-right: 10px;
+}
+.top-header .right-header ul.social-icons li {
+  display: inline-block;
+}
+.top-header .right-header ul.social-icons li a {
+  color: white;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 30px;
+  border: 1px solid white;
+  -webkit-border-radius: 16px;
+  border-radius: 16px;
+  margin: 0 5px;
+  
+}
+.top-header .right-header ul.social-icons li a:hover {
+  background-color: white;
+  color: #e3722e;
+}
+
+.main-header {
+  
+  width: 100%;
+  z-index: 9999;
+  padding: 5px 0;
+  background: white;
+ 
+  
+}
+.main-header .logo {
+  margin-top: 5px;
+}
+.main-header .logo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.main-header .logo h1 a {
+  color: #444444;
+}
+.main-header .menu {
+  margin-top: 10px;
+}
+.main-header .menu ul li {
+  display: inline-block;
+  margin-left: 15px;
+}
+.main-header .menu ul li a {
+  text-transform: uppercase;
+  color: #777777;
+  font-size: 15px;
+  padding: 8px 15px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.main-header .menu ul li a.current {
+  background: #e3722e;
+  color: white;
+}
+
+.main-header-shrink {
+   
+}
+
+.responsive-menu {
+  position: relative;
+  top: -20px;
+}
+.responsive-menu .toggle-menu {
+  font-size: 24px;
+  color: #e3722e;
+}
+.responsive-menu .menu {
+  display: none;
+  position: absolute;
+  top: 52px;
+  width: 100%;
+  background-color: #e3722e;
+}
+.responsive-menu .menu ul li {
+  display: block;
+  text-align: left;
+  border-bottom: 1px solid #d1601c;
+  margin: 0;
+}
+.responsive-menu .menu ul li:last-child {
+  border-bottom: 0;
+}
+.responsive-menu .menu ul li a {
+  color: white;
+  padding: 15px 20px;
+  display: block;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+.responsive-menu .menu ul li a.current {
+  background-color: #444444;
+}
+
+/*------------------------------------------------------
+	Basic Layout Styles 
+--------------------------------------------------------*/
+.title-section {
+  margin-bottom: 80px;
+}
+.title-section h2 {
+  font-size: 24px;
+  font-weight: normal;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 20px;
+}
+.title-section span {
+  display: block;
+  width: 70px;
+  height: 4px;
+  background: #e3722e;
+  margin: 0 auto;
+}
+
+.widget-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.mainBtn {
+  background-color: #e3722e;
+  color: white;
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 10px 15px;
+  font-weight: 600;
+  font-size: 14px;
+ 
+}
+.mainBtn:hover {
+  background-color: #444444;
+}
+
+/*------------------------------------------------------
+	Services Styles 
+--------------------------------------------------------*/
+#services .service-item .service-header {
+  padding-bottom: 20px;
+  clear: both;
+}
+#services .service-item .service-header i {
+  color: #e3722e;
+  font-size: 24px;
+  float: left;
+  margin-right: 25px;
+}
+#services .service-item .service-header h3 {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/*------------------------------------------------------
+	Portfolio Styles 
+--------------------------------------------------------*/
+#portfolio {
+  padding-bottom: 80px;
+  margin-top: 100px;
+  background: #3d3f3f;
+}
+#portfolio .title-section h2 {
+  color: white;
+}
+#portfolio .portfolio-thumb {
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 30px;
+}
+#portfolio .portfolio-thumb img {
+  width: 100%;
+  height: auto;
+}
+#portfolio .portfolio-thumb .overlay {
+  opacity: 0;
+  visibility: visible;
+  background: rgba(227, 114, 46, 0.9);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+ 
+}
+#portfolio .portfolio-thumb .overlay .inner {
+  position: absolute;
+  padding: 20px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+#portfolio .portfolio-thumb .overlay .inner h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#portfolio .portfolio-thumb .overlay .inner h4 a {
+  color: white;
+}
+#portfolio .portfolio-thumb .overlay .inner span {
+  font-weight: 300;
+  color: white;
+}
+#portfolio .portfolio-thumb:hover .overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/*------------------------------------------------------
+	About Styles 
+--------------------------------------------------------*/
+#about .progess-bars li .progress {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  background: #e6e6e6;
+  height: 30px;
+  margin-bottom: 15px;
+}
+#about .progess-bars li .progress-bar {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  line-height: 30px;
+  background: #e3722e;
+  text-transform: uppercase;
+}
+#about .our-team {
+  margin-top: 80px;
+}
+#about .our-team .team-member {
+  overflow: hidden;
+}
+#about .our-team .team-member .member-img {
+  width: 100%;
+  position: relative;
+}
+#about .our-team .team-member .member-img img {
+  width: 100%;
+  height: auto;
+}
+#about .our-team .team-member .member-img .overlay {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+ 
+}
+#about .our-team .team-member .member-img .overlay .social {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#about .our-team .team-member .member-img .overlay .social li {
+  display: inline-block;
+  float: left;
+  margin-right: 1px;
+}
+#about .our-team .team-member .member-img .overlay .social li a {
+  display: block;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+#about .our-team .team-member .member-img .overlay .social li a:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+#about .our-team .team-member .member-img:hover .overlay {
+  opacity: 1;
+  visibility: visible;
+}
+#about .our-team .team-member .inner-content {
+  background: whitesmoke;
+  border: 1px solid #d6d6d6;
+  border-top: 0;
+  padding: 20px;
+}
+#about .our-team .team-member .inner-content h5 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #e3722e;
+  margin-bottom: 10px;
+}
+#about .our-team .team-member .inner-content span {
+  color: #9d9d9d;
+  margin-bottom: 15px;
+  display: block;
+}
+
+/*------------------------------------------------------
+	Contact Styles 
+--------------------------------------------------------*/
+#contact .contact-form .full-row {
+  width: 100%;
+  margin-bottom: 20px;
+}
+#contact .contact-form input, #contact .contact-form textarea {
+  outline: 0;
+  display: block;
+  border: 1px solid #cccccc;
+  width: 100%;
+  max-width: 100%;
+  padding: 8px 10px;
+  color: #777777;
+}
+#contact .contact-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+#contact .contact-form input.mainBtn {
+  display: inline-block;
+  width: auto;
+  border: 0;
+  padding: 10px 15px;
+  color: white;
+}
+#contact .map-holder {
+  padding: 5px;
+  background-color: white;
+  border: 1px solid #d6d6d6;
+}
+#contact .contact-info {
+  margin-top: 30px;
+}
+#contact .contact-info span {
+  margin-top: 20px;
+  display: block;
+  font-size: 14px;
+}
+#contact .contact-info span i {
+  color: #e3722e;
+  font-size: 16px;
+  margin-right: 12px;
+}
+
+.flexslider {
+  
+  width: 100% !important ;
+  max-width: 100%;
+ 
+  overflow: hidden;
+}
+
+.flex-direction-nav a {
+  color: #444444;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  margin: -20px 0 0 0;
+  text-align: center;
+  line-height: 40px;
+}
+
+.flex-caption {
+  position: absolute;
+  top: 39%;
+  width: 100%;
+  text-align: center;
+  z-index: 999;
+  color: white;
+}
+.flex-caption h2 {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 45px;
+}
+.flex-caption p {
+  font-size: 12px;
+  font-family: 'Droid Serif', serif;
+  line-height: 28px;
+}
+.flex-caption span {
+  background: url(../images/slider-dec.png) no-repeat;
+  width: 60px;
+  height: 9px;
+  display: block;
+  margin: 30px auto;
+}
+
+/*------------------------------------------------------
+	Footer Styles 
+--------------------------------------------------------*/
+.site-footer {
+  margin-top: 100px;
+  background-color: #e3722e;
+  color: white;
+  padding: 25px 0;
+}
+.site-footer p {
+  margin-top: 10px;
+}
+.site-footer a {
+  color: white;
+  text-align: center;
+  display: block;
+}
+.site-footer .go-top {
+  float: right;
+  text-transform: uppercase;
+}
+.site-footer .go-top i {
+  display: block;
+}
+
+/********************************
+IPAD LANDSCAPE (1024x768)
+********************************/
+/********************************
+IPAD PORTRAIT (768x1024)
+********************************/
+@media only screen and (max-width: 960px) {
+  .flexslider {
+  
+  }
+
+  .main-header {
+    
+  }
+  .main-header .logo {
+   
+  }
+
+  .service-item, .team-member {
+    margin-bottom: 50px;
+  }
+
+  .our-skills {
+    margin-top: 60px;
+  }
+
+  .flex-caption {
+    top: 20%;
+  }
+  .flex-caption h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .flex-caption p {
+    font-size: 14px;
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .left-header, .right-header {
+    text-align: center;
+  }
+}
+/********************************
+IPHONE 4-4S-5 LANDSCAPE (568x320)
+********************************/
+@media only screen and (max-width: 760px) {
+  .flex-caption {
+    display: none !important;
+  }
+
+  .contact-form {
+    margin-bottom: 60px;
+  }
+
+  .main-header {
+   
+  }
+  .main-header .logo {
+    margin: 0;
+  }
+
+  . 
+  .responsive-menu .menu {
+    top: 32px;
+  }
+}
+/********************************
+OverRidden Styles
+********************************/
+
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    background-color:#FAC902 !important;
+    color: #555;
+}
+    
+    
+ 
+.navbar-nav > li > a 
+{
+    
+    padding-top:5px !important; 
+    padding-bottom:5px !important;
+    color: white !important;
+     font-weight: bold;
+     
+    }
+    
+     
+    
+    .navbar-nav > li > a:hover,.navbar-nav > li > a:active
+    {
+         background-color:#F6D308 !important;
+          color:Black !important;
+         
+        
+        }
+        
+         
+        
+.navbar 
+{
+    min-height:32px !important;
+      z-index:7;
+       margin-bottom: 0 !important;
+}
+     
+     .navbar-default
+     {
+         background-color:#000099 !important;  
+         
+      }
+     
+     
+     
+     .infodisplay 
+     {
+         
+          float:right !important;
+         
+         
+         }
+         
+ .navbar-toggle {
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    float: right;
+    height: 32 !important;
+    margin-bottom: 0px !important;
+    margin-right: 15px;
+    margin-top: 0px !important;
+    padding: 9px 10px;
+    position: relative;
+}
+
+.seperator
+{
+    
+ color: #333;
+    display: inline-block;
+    float: right;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1em 0;
+     
+    }
+    
+ 
+
+    
+ .btn {
+  background-color:rgba(0, 0, 153, 1) !important;
+  
+  -webkit-border-radius: 1;
+  -moz-border-radius: 1;
+  border-radius: 1px;
+  width:90px !important;
+  height:30px !important;
+ 
+  font-family:  Sans-Serif, open sans;
+  color:  White;
+      font-size: 13px !important;
+    font-weight: 600 !important;
+ 
+  padding:4px 12px;
+  text-decoration: none;
+  
+  
+  
+   
+
+   
+  
+  
+  
+}
+
+.btn:hover 
+{
+    color:Black;
+  background: #fac902 !important;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+ 
+ .headerDivider {
+     
+border-right: 1px solid gray;
+    height: 271px;
+    top: 52%;
+    width: 1%;
+}
+
+ ul.dropdown-menu>li a:hover,.DownLoadDropDown a:hover
+ {
+      background-color:#FAC902 !important;
+     
+     }
+     
+      
+     .dropdown-menu {
+  
+      background-color:#EAE9EB !important;
+     
+     }
+       
+        
+        
+           .lagends .row .col-lg-1
+    {
+        
+       
+        color: #0066ff;
+        font-size: 11px;
+      
+        }
+        
+        fieldset 
+        {
+        padding: 0 0 0 15px !important;    
+            
+        }
+        
+     .lagends .row .col-lg-1 label
+    {
+        
+         font-size: 11px !important;
+         
+        
+        }
+        
+        
+        @media (max-width: 768px) 
+        {
+            .addLeftMargin
+            {
+                 padding-left:0px !important;
+                
+                }
+.panelLogin ,panelInquiryControls 
+{
+    
+}
+
+
+}
+
+ @media (max-width: 760px) 
+        {
+            
+           
+.ContentContainer
+{
+    
+     padding-top:55px !important;
+    
+    }
+ 
+            
+            
+            }
+  
+        @media (min-width: 992px) {
+.FormElements {
+   
+      }  
+}
+
+ 
+  
+      
+ 
+ 
+ .panel 
+ {
+      margin:0! important;
+     
+     
+     }
+ .PanelTitle
+ {
+    background-color: #fac902 !important;
+    color: black !important;    
+    height: 30px;
+ padding: 3px 4px 0 6px !important
+     
+     }
+   .PanelTitle h3
+     
+   {         
+   font-size: 14px !important;
+    font-weight: 700 !important;
+    
+   }
+   
+   .InlineElements
+   {
+        display:inline-block;
+      
+       
+  }
+   .InlineElements button
+   {
+        
+  }
+ .InputElements
+ { background-color:White !important;
+      border: 1px solid grey !important;
+       height: 25px  !important;
+    width: 75%  ;
+     }
+     
+
+     @@media screen and (min-width:386px) and (max-width: 780px) 
+  {
+    
+   
+     .InfoRight
+      {
+       width:100% !important;
+       display:inline-block;
+       }
+      
+} 
+
+
+
+    
+
+  .InlineElements
+   {
+        display:inline-block;
+       width:8% !important;
+       
+  }
+  
+  #footerWrapper p, #footerWrapper a
+  {
+        font-size:12px ;
+        
+      
+      }
+      
+           #footerWrapper h3
+        {
+        font-size:12px !important;
+         font-weight:600 !important;
+        
+      
+      }
+      
+      .lagends label
+      {
+           font-size:12px !important;
+          }
+          
+          
+          /*
+
+Quotation Details
+ 
+
+*/
+ 
+#outer label
+{
+     font-size:12px !important;
+ }
+
+.gridActionButtons
+{
+    
+    background-color: rgba(0, 0, 153, 1) !important;
+    color: White;
+    
+    }
+    
+       .highlight
+  {
+       background-color:#FAC902 !important;
+       
+      }
+      
+      
+      
+      li.dropdown>a
+      {
+          
+          
+          
+          
+          
+          }
+         #footerWrapper p, #footerWrapper blockquote
+          
+          {
+              line-height: 1.6; 
+          }
+      .btn.active.focus,.btn.active:focus,.btn.focus,.btn:active.focus,.btn:active:focus,.btn:focus
+      {
+           color: White !important;
+      }
+      
+      
+ .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.34;
+    pointer-events: none;
+}
+
+
+  @media screen and (min-width:991px) and (max-width: 1190px) 
+  {
+    
+   .marginMD
+   {
+       
+       margin-left:22% !important;
+       
+       }
+     .middleMargin 
+      {
+      margin-left:17% !important;
+       }
+      
+} 
+
+ 
+  
+    label {
+    color: #022279 !important;
+    font-family: Candara;
+    font-size: 13px !important;
+    font-weight: 600;
+}
+.panel-title {
+    color: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+ 
+#footerWrapper .PanelTitle
+{
+    background: rgba(0, 0, 0, 0) linear-gradient(to right, #cecdcf 0px, #fcfcfd 100%) repeat scroll 0 0;
+    border-top: 1px solid #fff;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
+     height:50px; 
+     margin-top: 10px !important;
+    
+    }
+    
+    body a,body p,body label ,label a{
+    
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif !important ;
+ 
+    
+}
+.pagination
+{
+    margin: 2px 0 !important;
+    
+}
+/*
+Fix Size for Accordian
+*/
+
+
+ui-accordion-content
+{
+    
+    height: 90px !important;
+ }
+ 
+
+
+      @media screen and (max-width:655px)   
+        {
+        
+    #footerWrapper p
+ {
+   font-size:8px !important;
+     
+     }
+            
+            
+            }
+            
+            
+            
+#divLoading.show
+{
+    display : block;
+    position : fixed;
+    z-index: 100;
+    background-image : url('../Images/AjaxSpinner.gif');
+    background-color:#666;
+    opacity : 0.3;
+    background-repeat : no-repeat;
+    background-position : center;
+    left : 0;
+    bottom : 0;
+    right : 0;
+    top : 0;
+}
+#loadinggif.show
+{
+    left : 50%;
+    top : 50%;
+    position : absolute;
+    z-index : 101;
+    width : 32px;
+    height : 32px;
+    margin-left : -16px;
+    margin-top : -16px;
+}
+ 
+.ajax-loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -32px; /* -1 * image width / 2 */
+  margin-top: -32px; /* -1 * image height / 2 */
+}
+
+.ModalDesign ,.modal-header{
+    background-color: #fac902 !important;
+    border-radius: 4px;
+    color: black !important;
+    padding: 6px !important;
+}
+
+.ui-datepicker
+{
+ z-index:9999 !important;
+ font-size: 13px !important;
+}
+
+button.ui-datepicker-close {display: none;}​
+
+/*Set DatePicker Background Icon */
+
+
+
+/*Set DatePicker Size */
+ 
+ .errorText
+ {
+    color:Red !important;
+     
+ }
+       .modal-sm {
+    width: 369px;
+}
+    #ConfirmModalBody
+    {
+       padding: 7px 3px 9px 4px !important;    
+    }  
+    
+.accordianRows{height:150px !important;}
+.legColumn label{color: #0066ff !important;font-size: 11px;font-weight: bold; white-space:nowrap;}
+.KmeLocationsColumns{  background-color: #fac902;    color: rgba(0, 0, 152, 1);    font-weight: bold; text-align:center !important}   
+.accordianRows{height: 80px !important;    min-height: 110px;}
+.legDescColumn { white-space:nowrap;}
+.DownLoadDropDown{background-color: #fff; left: 0; margin: 2px 0 0; min-width: 129px;padding: 1px 0; } 
+.DownLoadDropDown a.dropdown-item {clear: both;color: #333;display: block;  font-weight: 400;line-height: 1.42857;padding: 3px 20px;white-space: nowrap;} 
+span.caret{margin: 1px -1px 1px 6px !important;}
+.gridActionButtons[disabled] {box-shadow: none;  cursor: not-allowed;opacity: 0.34;pointer-events: none;}
+    button.dropdown-toggle{ padding-left:10px}
+   b.caret{  float:right; margin-top:6px !important} 
+    
+    
+
+.multiselect-container{ height: 120px !important; overflow-y: auto; } 
+button.multiselect {background-color: White !important;    border-radius: 1px;    color: White;    font-family: sans-serif,open sans;    font-size: 13px !important;  
+ font-weight: 600 !important;    height: 26px !important;    padding: 4px 12px; text-decoration: none;  width: 100% !important; border:1px solid gray;border-radius: 6px; } 
+.multiselect-selected-text {      color:#777777;      float: left;  font-size:11px;       }   
+.multiselect-container li.active{background-color:Gray;  }  
+.multiselect-container { background-color:White !important; list-style-type : none; margin: 0; padding: 0; position: absolute; width: 100% !important; }  
+.multiselect-container>li>a>label{cursor:pointer;font-weight:inherit;height:100%;margin:0;padding:1px20px3px24px;} 
+   .modal-title{ font-weight:bold !important}
+     #tblInvoice tr td,#tblInvoice tr th{ white-space:nowrap;  padding-left: 5px;   text-align:left !important}
+    #divInvoiceModalBody{ padding:0 !important;}
+    .kltdLocationData,.centerAlign{ text-align:center !important}
+    .leftAlign{ text-align:left !important;}
+     
+     input[disabled=disabled],textarea[disabled=disabled]{ background-color:#EEEEEE !important}
+     .dialogueImage{ margin-right: -38px;}
+     
+.col-numeric{text-align:right !important;}
+.col-alpha{text-align:left !important;}
+.col-control{text-align:center !important;}
+.clsPnum{width:100px !important;height:20px;}
+.clsQuan{width:50px !important;height:20px;}

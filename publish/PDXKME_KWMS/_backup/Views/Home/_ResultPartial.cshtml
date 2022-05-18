@@ -1,0 +1,36 @@
+﻿ @if (ViewBag.Result!=null)
+ {
+	 
+	 
+	 
+	 
+ }
+ 
+ 
+ @if (  ViewBag.ValidDBCode == "0")
+ {
+	 
+	 <script>
+		 $("#spnDBCode").html("Invalid Customer Code");
+		 $("#txtDBCode").attr("data-valid", "false");
+	 </script>
+ }
+ else
+ {
+ <script>
+	 $("#spnDBCode").html("");
+	 $("#txtDBCode").removeAttr("data-valid");
+	 </script>
+
+
+ }
+
+ @if (ViewBag.Message != null)
+ {                 
+	  <script>
+		  txtError = "@ViewBag.Message";
+		  txtErrorType = "@ViewBag.MessageType";
+		  DisplayModal(txtErrorType, txtError);
+	 </script>
+ }
+ 

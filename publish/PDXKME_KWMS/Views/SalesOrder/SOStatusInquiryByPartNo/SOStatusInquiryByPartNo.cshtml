@@ -1,0 +1,904 @@
+﻿@* hst001: Imran Shahzad @ 01-Dec-2016
+           - Added Legends for column A.Qty (Accepted Quantity) and set alignment
+   hst002: Noshairwan Farooq @18-03-2020
+           - Made changes to have Distributor Code and Customer Code in Selection Filter and in Detail.
+   hst003: Noshairwan Farooq @09-04-2020
+           - Made Distributor Code Multiselect Disabled.
+   hst004: Noshairwan Farooq @07-07-2020
+           - Changed path of the Controller to get Distributor Customer Code.
+   hst005: Shabbir Hussain @09-Nov-2020
+           - Updated Invoice quantity index in grid to accomodate Part's description column
+
+*@
+@model PDXWEB.Models.SalesOrder.SOStatusInquiry.SOStausInquiryModel
+@Scripts.Render("~/bundles/InquiryJSBundle")
+@Styles.Render("~/Content/InquiryCSSBundle")
+<style>
+   .ddlFile { height: 30px ! important;  width: 90px;}  
+   .table{ margin:0 !important;}
+   #tblSoStatusbyPart tr td,#tblSoStatusbyPart thead tr th  {  white-space:nowrap;  text-align:left; padding-left:5px !important} 
+ 
+  .pagination > li > a, .pagination > li > span { font-size: 12px !important; }
+   #txtOrderDateTo,#txtOrderDatefrom { background-position: right center;   background-repeat: no-repeat; background-image:url('../Images/calendar.png'); }       
+    #tblSoStatusbyPart tr td {white-space:nowrap;} 
+   
+          #btnDownload{ width:100px  !important} 
+       
+  @@media screen and (max-width: 767px) 
+{   
+    .multiDB .btn-group {width: 100%  !important;} 
+     button.multiselect 
+        {
+           background-color: White !important; border-radius: 1px; color: White; font-family: sans-serif,open sans;
+           font-size: 13px !important; font-weight: 600 !important; height: 26px !important; padding: 4px 12px; text-decoration: none;  
+           border-radius: 6px; width:97% !important;            
+        }
+     #btnDownload { width: 100%  !important;} 
+      .DropDownButtonContainer{width:100%;  margin-top:5px;}
+.bootstrap-filestyle{  margin: 0;    }
+.DropDownButtonContainer button { width:94% !important; } 
+    .InputElements 
+    {
+    background-color: White !important; border: 1px solid grey !important; height: 25px !important; width: 97%;
+    } 
+          
+    .TopMarginAtXs
+    {
+    margin-top:5px; 
+    width:100% !important;  
+    }            
+        
+} /* media 767 end*/
+/*Center Align Sales Order Column*/
+ 
+.dropdown-menu>.active>a,.dropdown-menu>.active>a:focus,.dropdown-menu>.active>a:hover{background-color:white;color:#fff;outline:0none;text-decoration:none;}
+.header_RQQT, .header_PAQU{ text-align: right !important;}@*hst001 - Alignment for column Order Quantity*@ 
+.btn.disabled.multiselect {opacity: 1.0 !important; border: 1px solid gray;} /*hst003*/
+.btn-group {cursor:no-drop;} /*hst003*/
+.click-link { cursor:pointer;}
+</style>
+@{
+    ViewBag.Title = @Resources.Resource.OrderStatusInquiryByPartNo;
+                //Layout = Url.Content("~/Views/Shared/_NewLayOut.cshtml");
+}
+<div class="container childcontent ">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3>@Resources.Resource.OrderStatusInquiryByPartNo</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row" style="margin: -9px 0px 10px -13px ! important;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                    <button class=" btn TopMarginAtXs" id="btnSearch">@Resources.Resource.btnSearch</button>
+                    @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("S01S090_05_001"))
+                    {
+                        <div class="btn-group DropDownButtonContainer">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" id="btnDownload"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Resources.Resource.btnDownload<span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu DownLoadDropDown">
+                                <a class="dropdown-item" href="#" onclick="DownloadFile('0')">CSV</a> <a class="dropdown-item"
+                                    href="#" onclick="DownloadFile('1')">XLS</a>
+                            </div>
+                        </div>
+                    } 
+           
+         
+@* <button class=" btn " id="btnUpdate" >Update</button> *@
+                </div>
+            </div>
+            <div id="workingArea" class="FormElements">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            @Html.Label(@Resources.Resource.lblPartNo)
+                        </div>
+                        <div class="editor-label SizeOnXs">
+                            @Html.TextBoxFor(model => Model.PartNo, new { @id = "txtPartNo", maxlength = "20", @class = "form-control InputElements" })
+                            <span id="spnddlSearchBy"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            @Html.Label(@Resources.Resource.lblDistributorCode)
+                        </div>
+                        <div class="editor-label SizeOnXs multiDB">
+                            @Html.DropDownListFor(model => Model.DistributerCode, Model.DistributerCode as List<SelectListItem>, new { @id = "ddlDistributerCode", @class = "form-control InputElements", multiple = "multiple" })
+                            <span id="spnDistributerCode"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            @Html.Label(@Resources.Resource.lblCustomerCode)
+                        </div>
+                        <div class="editor-label SizeOnXs multiDB">
+                            @Html.DropDownListFor(model => Model.CustomerCode, Model.CustomerCode as List<SelectListItem>, new { @id = "ddlCustomerCode", @class = "form-control InputElements", multiple = "multiple" })
+                            <span id="spnCustomerCode"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            @Html.Label(@Resources.Resource.lblStatus)
+                        </div>
+                        <div class="editor-label SizeOnXs">
+                            @Html.DropDownListFor(model => Model.SOStatus, Model.SOStatus as List<SelectListItem>, new { @id = "ddlSOStatus", @class = "form-control InputElements" })
+                            <span id="spnSOStatus"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @if (!Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+                    {
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="editor-label SizeOnXs clsEdtLabel">
+                                @Html.Label(@Resources.Resource.lblCountryOfOrigin)
+                            </div>
+                            <div class="editor-label SizeOnXs">
+                                @Html.DropDownListFor(model => Model.CountryOfOrigion, Model.CountryOfOrigion as List<SelectListItem>, new { @id = "ddlCountryOfOrigion", @class = "form-control InputElements" })
+                                <span id="spnCountryOfOrigion"></span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    { 
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="editor-label SizeOnXs clsEdtLabel">
+                                @Html.Label(@Resources.Resource.lblOrderType)
+                            </div>
+                            <div class="editor-label SizeOnXs">
+                                @Html.DropDownListFor(model => Model.OrderType, Model.OrderType as List<SelectListItem>, new { @id = "ddlOrderType", @class = "form-control InputElements" })
+                                <span id="spnOrderType"></span>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblDateFrom)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.TextBoxFor(model => model.OrderDatefrom, new { id = "txtOrderDatefrom", @style = " background-color:White !important;", @class = " calendarPicker form-control InputElements txtDatePicker" })
+                            <span id="spnQuotationValidity"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblDateTo)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.TextBoxFor(model => model.OrderDateTo, new { @id = "txtOrderDateTo", @style = " background-color:White !important;", @class = " calendarPicker form-control InputElements txtDatePicker" })
+                            <span id="spnRequestedDeliveryTime"></span>
+                        </div>
+                    </div>
+                    @if (!Session["Role"].ToString().Equals(((int)PDXWEB.BusinessModels.Common.Enumerations.Roles.Dealer).ToString()))
+                    {
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="editor-label SizeOnXs clsEdtLabel">
+                                @Html.Label(@Resources.Resource.lblOrderType)
+                            </div>
+                            <div class="editor-label SizeOnXs">
+                                @Html.DropDownListFor(model => Model.OrderType, Model.OrderType as List<SelectListItem>, new { @id = "ddlOrderType", @class = "form-control InputElements" })
+                                <span id="spnOrderType"></span>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <div class="form-group form-inline">
+                            @*@Html.CheckBoxFor(model => Model.StockTransferOrder, new { @id = "chkStock", @class = "form-control InputElements" })  
+                     @Html.Label("Stock Transfer Order", new { style = "margin-top: 20px;" })    *@
+                            <label style="margin-top: 25px;">
+                                <input type="checkbox" id="chkStock" style="margin-right: 3px;" />@Resources.Resource.lblStockTransferOrder</label>
+                            <span id="spnStockTransferrOrder"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*2nd Panel*@
+<div class="container childcontent " style="padding-top: 0px ! important;">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div id="divToUpdate2" style="height: auto; overflow: auto">
+        </div>
+        <div id="divToUpdate" style="height: 355px;">
+        </div>
+        <div class="lagends accordion hideonLoad " style="display: none">
+            <a href="#">@Resources.Resource.Legends <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e">
+            </span></a>
+            <div class="accordianRows" style="height: 140px !important; min-height: 135px">
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thOrderType:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.OrderTypeDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thLineNo:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.LineNoDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thSubLineNo:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.SubLineNoDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thDistributorOrderNo:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.DistributorOrderNoDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thOrderDate:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.OrderDateDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thCTO:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.CountryOfOriginDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thOrderQuantity:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.OrderQuantityDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thUnprocess:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.UnprocessDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thBackOrder:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.BackOrderDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thStockAllocated:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.StockAllocatedDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thPickingInstructed:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.PickingInstructedDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thPackedQuantity:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.PackedQuantityDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thShippingInstructed:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.ShippingInstructedDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thInvoiced:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>@Resources.Resource.InvoicedDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thCancelled:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.CancelledDesc
+                        </label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class=" legColumn col-lg-1 col-md-1 col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thOnHoldQuantity:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thOnHoldQuantityDesc
+                        </label>
+                    </div>
+                    @*hst001 - Added legend for A.Qty column*@
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thAcceptdQuantity:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thAcceptdQuantityDesc
+                        </label>
+                    </div>
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thDistributorCode:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thDistributorCodeDes
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thCustomerCode:
+                        </label>
+                    </div>
+                    <div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+                        <label>
+                            @Resources.Resource.thCustomerCodeDes
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;</button>
+                <h4 class="modal-title">
+                    @Resources.Resource.OrderStatusInquiryByPartNo</h4>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <img class="imgError" />
+                <label id="lblMessageText" class="lblError">
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button style="text-align: center; float: none !important;" id="btnOk" class="btn btn-default center-block"
+                    data-dismiss="modal">
+                    @Resources.Resource.btnOK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display: none" class="hiddenDiv">
+</div>
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="InvoiceModal" role="dialog" style="padding-top: 220px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        @Resources.Resource.InvoiceData</h4>
+                </div>
+                <div class="modal-body" id="divInvoiceModalBody">
+                    <label id="lblInvoicemsg">
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button style="text-align: center; float: none !important;" id="btnOkInvoice" class="btn btn-default center-block"
+                        data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #tblInvoice tr th
+    {
+        padding: 2px !important;
+        text-align: left !important;
+    }
+    #tblInvoice tr td
+    {
+        text-align: left !important;
+    }
+    #main2
+    {
+        width: 40% !important;
+        min-height: 45px;
+        height: 70px;
+    }
+    .multiDB .btn-group
+    {
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        width: 75%;
+    }
+    
+    .header_DDON, .header_LINN, .header_LINS, .header_DOQU, .header_HQUA, .header_UQUA, .header_SOQU, .header_OOAQ, .header_SAQU, .header_PQUA, .header_SLSQ, .header_IQUA, .header_CQUA
+    {
+        text-align: right !important;
+    }
+</style>
+@*Repopulate order type dropdown from db on stock transfer order checkbox check*@
+<script type="text/javascript">
+
+    //hst003 Start
+    var CurrentUserRole = @Session["Role"].ToString(); 
+    if(CurrentUserRole=="3")
+    {
+          $("#ddlDistributerCode").attr("disabled", true);          
+    }
+    //hst003 End
+
+      $('#ddlDistributerCode').multiselect();
+      $('#ddlCustomerCode').multiselect(        {
+            buttonText: function(options) {
+                if(options.length==0)
+                {
+                    return "None selected";
+                }
+                else
+                {
+                    var selected = 0;
+                    options.each(function () {
+                    selected += 1;
+                    });
+                    return selected +  ' Selected ';
+                }
+
+        }}); //hst002
+
+
+      $(".multiselect - container").css("height", "100px !important")
+      $(".multiselect ").attr('width', '3');
+      var txtErrorType;
+      var txtError;
+       $(document).ready(function () {
+         
+
+        $('#txtPartNo').keypress(function (event) {
+             var key = event.which;
+
+             if (this.value.length >= 20 && key != 8 && key != 13) {
+                 return false;
+             }
+         })
+
+        $('#InvoiceModal').on('hidden.bs.modal', function () {
+            $(".ClsSelect").each(function(){          
+            $(this).attr("checked",false);
+          });
+        });
+
+    //hst002 Start
+    $("#ddlDistributerCode").on("change", function(){
+        SelectCustomerCodes();
+    });
+    //hst002 End
+    SelectCustomerCodes();
+    //hst002 Start
+    function SelectCustomerCodes()
+    {
+        $("#ddlCustomerCode option:selected").removeAttr("selected");
+        $("#ddlCustomerCode").multiselect("refresh");
+        
+        var tempDistributors = $("#ddlDistributerCode").val();
+        if(tempDistributors==null)
+        {return;}
+        var DbCodes = tempDistributors.join();
+        var params = {Distributors: DbCodes};
+            
+        $.post("@Url.Action("GetDistributorCustomerCodes", "SOStatusInquiryByPartNo", null)",params,function(result) //hst004
+        {
+        if(CheckForSessionExpiry(result))
+        {
+            SessionExpiredRedirect();
+            return;
+        }
+    
+        result.forEach(function(cust_code)
+        {    
+            $("#ddlCustomerCode").find("option[value='"+cust_code.CustomerCode+"']").prop("selected", "selected");
+            $("#ddlCustomerCode").multiselect("refresh");
+
+        });          
+        });
+        
+    }
+    //hst002 End
+
+       
+
+
+
+
+ 
+       $(".lagends").removeAttr("style");
+       $(".accordion").accordion({
+            collapsible: true,
+            active: false
+        }); 
+
+       $("#chkStock").click(function () {   
+        var check={check:$(this).is(":checked")}  
+         
+        $.post("@Url.Action("StockTransferCheckboxChange", "SOStatusInquiryByPartNo", null)",check,function(Result){
+                if (CheckForSessionExpiry(Result)) 
+                    {
+                      SessionExpiredRedirect();
+                        return;
+                     }
+        
+                      var OrderTypesDrp = $("#ddlOrderType");                                 
+                      OrderTypesDrp.empty();   
+                      $.each(Result.OrderType,function(index,itemData) {
+
+                      OrderTypesDrp.append($('<option/>', {
+                                value: itemData.Value, 
+                                text: itemData.Text 
+                        }  
+                      ));//apend and option brace
+    
+                    });//.each
+                      
+                 });//post end
+           });//click end
+
+       });  //doc.ready end
+</script>
+@* /******************************************************/*@ @*get Invoice data on checkbox check event*@
+@*     <script type="text/javascript">
+       $(document).on("click", ".ClsSelect", function (event) {         
+           if($(this).is(":checked")) { 
+            $('.ClsSelect').not(this).attr('checked', false);                           
+               var params = { SalesOrder: $(this).closest("tr").find('td').eq(2).text(), LineNumber: $(this).closest("tr").find('td').eq(3).text(),
+                   SubLineNumber: $(this).closest("tr").find('td').eq(4).text(), PartNumber: $(this).closest("tr").find('td').eq(7).text() }
+                   
+                    
+                $.post("@Url.Action("GetInvoiceData", "SOStatusInquiryByPartNo", null)",params,function(result){
+                
+                  if (CheckForSessionExpiry(result)) 
+                    {
+                      SessionExpiredRedirect();
+                        return;
+                     }
+                   else 
+                      {                                                            
+                      var result=result.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                      var result=result.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if(  !($(this).parent('li').hasClass('disabled')) && !($(this).parent('li').hasClass('active')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                       $("#divInvoiceModalBody").html("");
+                       $("#divInvoiceModalBody").html(result);           
+                          
+                      }     
+                            
+              });//post end
+
+           } // if brace
+//           else
+//           {
+//           $("#divToUpdate2").hide();
+//           }
+
+
+
+       });
+   </script>*@ @* /******************************************************/*@ @* btn Search*@
+<script type="text/javascript"> 
+       $(document).ready(function () {
+      
+         $("#btnSearch").click(function () { 
+         if( !PostGetPreCheck()){return;}//This Check makes sure that there is not any exsiting Ajax Request ,in other case the call is returned void and doesnt proceeds to next code
+           var count=0;
+            if(($("#txtPartNo").val()=="" || $("#txtPartNo").val()==null)&&($("#ddlSOStatus").val()=="" || $("#ddlSOStatus").val()==null)) 
+            {
+             // txtError = " Enter PartNo OR Status";
+           txtError = " @Resources.Resource.MsgInfo45";
+           txtErrorType = "0";
+           DisplayModal(txtErrorType, txtError);  
+            
+             return false;
+           
+            }
+
+     if ($('#txtOrderDateTo').val() != "" && $('#txtOrderDatefrom').val() == "") 
+      {
+       //txtError="Please Specify Date From";
+       txtError="@Resources.Resource.MsgInfo5";
+       txtErrorType="0";
+       DisplayModal(txtErrorType,txtError) ;   
+        // $("#divModalBody").html("");
+       //  $("#divModalBody").prepend("<span>Please Specify Date From</span>").attr("style", "color:red");
+        // $("#MessageModal").modal();
+         return false;
+       }
+   var dateTimeFrom = new Date($("#txtOrderDatefrom").datepicker("getDate"));
+   var dateTimeTo   = new Date($("#txtOrderDateTo").datepicker("getDate"));
+   if($('#txtOrderDateTo').val() != "")
+   {
+       if(dateTimeFrom>dateTimeTo)
+        {
+         //txtError="From date can not be greater than To date.";
+         txtError="@Resources.Resource.MsgInfo6";
+         txtErrorType="0";
+          DisplayModal(txtErrorType,txtError) ;    
+          return false;
+        }
+    }
+             var listValO = new Array();
+            $("#ddlDistributerCode option:selected").each(function()
+            {
+                var idOption = $(this).val();     
+                listValO.push(idOption);      
+            });
+           var lstDbCode = listValO.join();
+
+            //hst002 Start
+            var listValC = new Array();
+            $("#ddlCustomerCode option:selected").each(function(){
+                var idOption = $(this).val();
+                listValC.push(idOption);
+            });
+            var lstCustCode = listValC.join();
+            //hst002 End
+
+
+            $("#btnDownload").attr("disabled", "disabled");                    
+               var Params ={
+                 PartNo:$("#txtPartNo").val(),
+                 ddlDbCodeSelectedVal:lstDbCode,
+                 ddlCustCodeSelectedVal:lstCustCode, //hst002
+               ddlCntrSelectedVal:$("#ddlCountryOfOrigion").val(), ddlSOStatusSelectedVal:$("#ddlSOStatus").val(),OrderDatefrom:$("#txtOrderDatefrom").val(),
+               OrderDateTo:$("#txtOrderDateTo").val(),ddlOrderTypeSelectedval:$("#ddlOrderType").val(),
+               StockTransferOrder:$("#chkStock").is(":checked"),
+               CustomerCode:$("#ddlCustomerCode").val()
+                 };
+                  $.post("@Url.Action("SearchByPartNo", "SOStatusInquiryByPartNo", null)",Params,function(result){
+                    if (CheckForSessionExpiry(result)) 
+                    {
+                      SessionExpiredRedirect();
+                        return;
+                     }
+                    else 
+                      {
+                   
+                      var result=result.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                      var result=result.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if(  !($(this).parent('li').hasClass('disabled')) && !($(this).parent('li').hasClass('active')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                      $("#divToUpdate").html(result);
+//                       $("#btnDownload").attr("disabled",false);
+                      }     
+                    });
+
+
+           });
+       });
+</script>
+@* /******************************************************/*@
+<script type="text/javascript"> 
+   
+       function DownloadFile(fileType)
+    {
+    
+		 var formData = {  txtFileFormate:fileType};
+		 $.post("@Url.Action("DownloadOrderStatusCsv", "SOStatusInquiryByPartNo", null)",formData,function (data) {            
+		   if(CheckForSessionExpiry(data))
+		   {
+		   
+		   SessionExpiredRedirect();
+			return;
+		   }			 
+			else
+			{			
+			 if(CheckForServerSideError(data))
+			 {
+				$(".hiddenDiv").html(data);                          
+		     }
+			 else 
+			 {
+		         $(".hiddenDiv").html(data);
+			 }
+			}
+				 
+			}); 
+    }
+
+       function afterLoad() {
+        $(".gridHead th a").each(function(){
+  $(this).addClass( "a_"+ $(this).attr("href").split("sort=")[1].split("&")[0]) ;
+
+   $(this).parent("th").addClass( "header_"+ $(this).attr("href").split("sort=")[1].split("&")[0]) ;
+});
+           setArrowImages();
+            $('.NewPaging ul').addClass("pagination");
+        }
+
+     function isRealValue(obj) {
+            return obj && obj !== "null" && obj !== "undefined";
+        }    
+         function CheckForServerSideError(data)
+	{
+		var tempData = JSON.stringify(data);
+		if (tempData.indexOf("Sorry,") > -1)
+		{
+		return true;        
+		}   
+	}
+</script>
+<script type="text/javascript">
+       $(document).ready(function () {
+           $("#divToUpdate").parent("div").prepend("<div id='divLoading'></div>"); 
+        //hstU001 start 
+        var dateFormat="@Session["DateCulture"].ToString()";  
+        if(dateFormat==null || dateFormat==""){dateFormat="mm/dd/yy"}
+        InitializeCalander(dateFormat);//from refrencing JavaScript File
+        //hstU001 end 
+
+           $("#btnDownload").attr("disabled","disabled");
+
+       });  //doc.ready end
+</script>
+<script type="text/javascript">
+
+    function setArrowImages() {
+
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+        var header = $('th a[href*=' + col + ']');
+        if (dir == 'Ascending') {
+            header.text(header.text() + ' ▲');
+        }
+        if (dir == 'Descending') {
+            header.text(header.text() + ' ▼');
+        }
+    } 
+</script>
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    }); 
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        if ($(window).width() <= 767) {
+            $("#btnDownload").removeAttr("style")
+        }
+    });         // doc.ready end
+</script>
+<script type="text/javascript">
+     
+            $(document).on("click",".gridRow,.gridAltRow", function () {
+      //hst001 - Incremented column index of Invoice Qty after adding column Accepted Qty
+      if(!$(this).next("tr").hasClass("InvoiceRow") && parseInt($.trim($(this).closest("tr").find('td').eq(20).text())) > 0)// Send call back only when Invoiced Qty is greater than 0//hst005 updated index from 19-20
+      {          
+            var selected = $(this).hasClass("highlight");
+            $("#tblSoStatusbyPart tr").removeClass("highlight");
+            if(!selected)
+            $(this).addClass("highlight");
+              var CurrntRow=this;
+             
+             $(".InvoiceRow").remove();
+               var params = { SalesOrder: $(this).closest("tr").find('td').eq(3).text(), LineNumber: $(this).closest("tr").find('td').eq(4).text(),
+                   SubLineNumber: $(this).closest("tr").find('td').eq(5).text(), PartNumber: $(this).closest("tr").find('td').eq(8).text() }
+                  
+                    
+                $.post("@Url.Action("GetInvoiceData", "SOStatusInquiryByPartNo", null)",params,function(result){
+                
+                  if (CheckForSessionExpiry(result)) 
+                    {
+                      SessionExpiredRedirect();
+                        return;
+                     }
+                   else 
+                      {    
+                      if($.trim(result)!=""){  var result=result.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+                       var result=result.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if(  !($(this).parent('li').hasClass('disabled')) && !($(this).parent('li').hasClass('active')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+                       //$("#divInvoiceModalBody").html("");
+                        $(CurrntRow).after("<tr class='InvoiceRow'><td colspan=20>"+result+"</tr></td>");  }                                                        
+                              
+                          //  $(CurrntRow).after('<tr><td>  <table> <thead> <tr ><th>Date</th> <th>Qty</th> </tr> </thead>    <tbody><tr><td>as</td><td>as</td>  </tr>     <tr><td>sds</td> <td>sds</td> </tr></tbody>   </table>    </td></tr>');    
+                      }     
+                            
+              });//post end
+
+       
+//           else
+//           {
+//           $("#divToUpdate2").hide();
+//           }
+}
+else  if($(this).next("tr").hasClass("InvoiceRow"))
+{
+$(".InvoiceRow").remove();
+
+}
+
+       });
+</script>
+@if (Session["CustId"] != null && !string.IsNullOrEmpty(Session["CustId"].ToString()))//This Code Checks For Current User and sets his Distributor Code Checked
+{
+    <script>
+         var currentDB  = "@Session["CustId"].ToString()"; 
+             $("#ddlDistributerCode").multiselect().find(":checkbox[value='" + currentDB + "']").attr("checked", "checked");
+             $("#ddlDistributerCode option[value='" + currentDB + "']").attr("selected", 1);
+             $("#ddlDistributerCode").multiselect("refresh");
+       
+     
+    </script>
+}

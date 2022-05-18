@@ -1,0 +1,998 @@
+﻿@{
+     ViewBag.Title = Resources.Resource.MultiplePartsStockInquiry;
+    bool isInternetExplorer = false;
+    if (Request.Browser.Browsers.Contains("ie"))
+    {
+        isInternetExplorer = true;
+        if (Request.Browser.MajorVersion < 8)
+        {
+        }
+    }
+}
+@Scripts.Render("~/bundles/InquiryJSBundle")
+@Styles.Render("~/Content/InquiryCSSBundle")
+<script src="@Url.Content("~/Scripts/FileUpload/bootstrap-filestyle.min.js")" type="text/javascript"></script>
+<style type="text/css"> 
+#divModalBody{padding:0 !important}
+
+    
+
+
+.accordianRows{height: 80px !important;    min-height: 80px;}
+.legColumn label{color: #0066ff !important;font-size: 11px;font-weight: bold;} 
+label.btn-default{  color: White !important;}
+.legendTitle span{ width:3% !important;}
+.bootstrap-filestyle input[type=text]{ height:30px;min-width:100%}   
+.input-group-btn {width: auto !important}
+.bootstrap-filestyle{ width:30% !important; display: inline-flex;  margin-left: -145px; }
+  
+   
+ @@media screen and (max-width:768px) 
+{
+.fileContainer{  margin: 9px 0 1px 1px !important;}
+.DropDownButtonContainer{width:100%; }
+.bootstrap-filestyle{  margin: 0;    width: 87% !important;}
+.DropDownButtonContainer button { width:94% !important; }     
+.PartInput div{ margin-bottom:0% !important; }  
+.ExceedingColumn{margin-left:0% !important;}
+#ddlManufacturer,#lblDdlManufacturer{margin-left: -10px !important; margin-bottom:-5px;width:100%  !important;; } 
+.panel-body input {  width:100% !important; } 
+.panel-body button,  .panel-body select{margin-top:8px !important;width:100% !important;} 
+    
+}
+
+
+ @*Target the Ipad Vertivcal  Resolution as well as Small  Bootstrap Resolution  *@
+ @@media screen and (min-width:768px)  and  (max-width:991px) 
+{
+.ExportDataDiv{margin-right: 6px;} 
+.ExportPMdataDiv{margin-right: 6px;}  
+.bootstrap-filestyle{ width:30% !important;display: inline-flex; margin-left: -55px;} 
+.fileContainer{ margin-left: 62px !important; margin-right: 0!important;  } 
+#ddlManufacturer,#lblDdlManufacturer{margin-left:  0px !important;margin-bottom:-5px;}   
+#btnSearch{width: 71px !important;} 
+#btnIntrChngblty{width: 134px !important;margin-left:  0px !important; } 
+#btnExport {margin-left:15px !important;  width: 105px !important; } 
+#ddlFileType{ margin-left: 7px; width: 60% !important; }  
+#FileUpload {margin-left:  0px;   margin-top:8px;}  
+#btnImport{margin-left:  -23px !important;padding: 0 !important;} 
+#btnExportPartsMasterData{margin-left: -1px !important;width: 130px !important; } 
+.ExceedingColumn{ margin:0 0 0 0 !important;  }  
+.ModalDesign{background-color: #fac902 !important; color: black !important;  border-radius: 4px; padding: 6px !important;  }  
+   
+}
+ @*Target the Ipad Horizontal Resolution as well as medium Bootstrap Resolution  *@
+ @@media screen and (min-width:992px)  and  (max-width:1200px) 
+{    
+    .ExportDataDiv{margin-right: 34px;} 
+    .ExportPMdataDiv{margin-right: 39px;}  
+    .fileContainer{ } 
+    .ImportDiv{ margin-left: -142px;} 
+    #btnSearch {width: 71px !important;} 
+    #btnIntrChngblty{margin-left: 10px;width: 134px !important; } 
+    #btnExport{margin-left: -3px;width: 105px !important;} 
+    #ddlFileType {width: 160% !important;margin-left: -146px}; 
+    #FileUpload {     margin-left: 00px;} 
+    #btnImport{margin-left:13px;padding: 0 !important;} 
+    #btnExportPartsMasterData{margin-left: -85px !important; width: 130px !important; } 
+    .ModalDesign{ background-color: #fac902 !important; color: black !important;  }       
+   
+ }
+  @*Target  Bootstrap Large and Extra Large Resolutions    *@
+ @@media screen and (min-width:1201px)  
+{ 
+.ExportDataDiv{margin-right: 9px;} 
+.ExportPMdataDiv{margin-right: 9px;}  
+#btnIntrChngblty{  width: 134px !important; }   
+#btnExport{ width: 110px !important;}    
+#ddlFileType{margin-left:-145px; width: 160% !important;} 
+#FileUpload{   margin-left: -30px; }   
+#btnImport {margin-left: -193px;width: 100px !important; } 
+#btnExportPartsMasterData{margin-left: -85px !important; width: 140px !important;}   
+.ModalDesign{background-color: #fac902 !important; color: black !important;  }   
+   .bootstrap-filestyle{ width:30% !important; display: inline-flex;  margin-left: -145px; }
+   .fileContainer{margin-left:6px !important}
+ } 
+     tblSoStatus tbody>tr>td.col1{padding-top:2px !important;} 
+     .table{ margin:0 !important;}      
+.legColumn label{color: #0066ff !important;font-size: 11px;font-weight: bold;} 
+label.btn-default{  color: White !important;}
+.legendTitle span{ width:3% !important;} 
+.table tr { white-space: nowrap; }
+.redText { color: Red !important;}
+#btlInterchanginility{margin:0% !important;  }
+.WidthAtLg { width:118px !important;}
+.rowBottomMargin{margin-bottom: 3px; }
+  @@media screen and (min-width:992px)
+    {
+      br { display:  none; }     
+    }
+    @@media screen and (max-width:991px)
+    {
+     .WidthAtXs { margin-bottom :5px !important;  } 
+    }    
+    
+    @@media screen and (max-width:767px)
+    {
+      .WidthAtXs {   width:100% !important; margin-bottom :5px !important;  }
+      .WidthOfddlFileTypeAtXs  {  width:20% !important;}
+     /* .MarginOf11N12lblAtXs {margin: 0px 0px 0px -7px ; }*/
+    }
+        .table {margin: 0px 2px 2px 0 !important;}
+        .table-striped thead tr th, .table-striped tr td {text-align: left; padding-left: 5px !important;}
+    
+      .ChainedPart
+      {
+      background-color:#C6C6E6 !important;
+      }
+
+      
+
+      .chainParent
+      {
+      display:none;
+      }
+      #tblWH{ table-layout: fixed;}
+</style>
+
+
+ 
+<div class="container childcontent ">
+    <div class="panel panelInquiryControls panel-primary panelWidth">
+        <div class="panel-heading PanelTitle">
+            <h3 class="panel-title pull-left "> @Resources.Resource.WareHouseStockStatusMultipleParts</h3>
+        </div>
+        <div class="panel-body">
+        <span id="lblMsg"></span>
+         <div class="row ">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 SearchDiv" >
+                 <button class="btn btn-sm btn-primary  "  id="btnSearch">@Resources.Resource.btnSearch</button>
+                </div>
+                    <div class="  col-lg-2 col-md-2 col-sm-2 col-xs-12 ExportDataDiv">
+
+                    <div class="btn-group DropDownButtonContainer">
+
+                      <button type="button" class="btn btn-secondary dropdown-toggle" id="btnExport" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     @Resources.Resource.btnExportData<span class="caret"></span>
+                      </button>
+                      <div class="dropdown-menu DownLoadDropDown">
+                        <a class="dropdown-item" href="#" onclick="DownloadFile('0')">CSV</a>
+                        <a class="dropdown-item" href="#"  onclick="DownloadFile('1')">XLS</a>
+ 
+                      </div>
+                    </div>
+                      
+                    </div>
+                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ExportPMdataDiv">
+
+                         <div class="btn-group DropDownButtonContainer">
+
+  <button type="button" class="btn btn-secondary dropdown-toggle" id="btnExportPartsMasterData" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   @Resources.Resource.btnExportPartMasterData<span class="caret"></span>
+  </button>
+  <div class="dropdown-menu DownLoadDropDown">
+    <a class="dropdown-item" href="#" onclick="DownloadFile('0','pmFlag')">CSV</a>
+    <a class="dropdown-item" href="#"  onclick="DownloadFile('1','pmFlag')">XLS</a>
+ 
+  </div>
+</div>
+                         
+                         </div>                             
+                  
+                  
+                   
+                           <div class="col-lg-2 col-md-1 col-sm-1 col-xs-12 fileContainer" >
+
+                   @if (isInternetExplorer)
+                    {
+                        <style>
+                        .bootstrap-filestyle{width:100% !important}
+                        .fileContainer{ margin-right:20px !important}
+                        </style>
+                        <form id="frmIEUpload" action="@Url.Action("ImportPartsFile", "WHStockStatus", null, Request.Url.Scheme)" enctype="multipart/form-data"  method="post" >
+                        <input type="file" id="FileUpload" class="filestyle hiddenOnLoad" name="FileUpload" data-buttontext="Browse" style=" display:none"  />
+                        </form>
+                    }
+                    else
+                    {
+                         <input type="file" id="FileUpload" class="filestyle hiddenOnLoad" name="FileUpload" data-buttontext="Browse" style=" display:none" />
+                    }
+
+                    </div>                   
+                   <div class="col-lg-2 col-md-1 col-sm-2 col-xs-12 ImportDiv">
+                   <button class="btn btn-sm btn-primary "  id="btnImport">@Resources.Resource.btnImportData</button>
+                   </div>
+                                       
+                  
+                           
+          </div>
+
+            <div class="row" style="margin-bottom: 10px; padding-left: 11px;">
+               
+            </div>
+            <div class="PartInput">   
+            <div class="row rowBottomMargin">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+
+                    <div>
+                        @Html.Label("1", new { style = "display:inline" }) @Html.TextBox("txtPart1", null, new { @class = "form-control InputElements", style = "display:inline" })
+                    </div>
+               </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label("2", new { style = "display:inline" }) @Html.TextBox("txtPart2", null, new { @class = "form-control InputElements", style = "display:inline" })</div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label("3", new { style = "display:inline" }) @Html.TextBox("txtPart3", null, new { @class = "form-control InputElements", style = "display:inline" })</div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label("4", new { style = "display:inline" }) @Html.TextBox("txtPart4", null, new { @class = "form-control InputElements", style = "display:inline" })</div>
+                </div>
+            </div>
+            <div class="row rowBottomMargin" >                
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label("5", new { style = "display:inline" }) @Html.TextBox("txtPart5", null, new { @class = "form-control InputElements", style = "display:inline" })</div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label("6", new { style = "display:inline" }) @Html.TextBox("txtPart6", null, new { @class = "form-control InputElements", style = "display:inline" })</div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label("7", new { style = "display:inline" }) @Html.TextBox("txtPart7", null, new { @class = "form-control InputElements", style = "display:inline" })</div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label("8", new { style = "display:inline" }) @Html.TextBox("txtPart8", null, new { @class = "form-control InputElements", style = "display:inline" })</div>
+                </div>
+            </div>
+            <div class="row rowBottomMargin" >
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div>
+                        @Html.Label("9", new { style = "display:inline" }) @Html.TextBox("txtPart9", null, new { @class = "form-control InputElements", style = "display:inline" })</div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ExceedingColumn" style="margin: 0px 0px 0px -7px ">
+                    <div>
+                        @Html.Label("10", new { style = "display:inline" })
+                         @Html.TextBox("txtPart10", null, new { @class = "form-control InputElements", style = "display:inline" })
+                         </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 MarginOf11N12lblAtXs" >
+                    <div>
+                        @Html.Label("11", new { style = "display:inline" })
+                         @Html.TextBox("txtPart11", null, new { @class = "form-control InputElements", style = "display:inline" })
+                         </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 MarginOf11N12lblAtXs" >
+                    <div>
+                        @Html.Label("12", new { style = "display:inline" })
+                        @Html.TextBox("txtPart12", null, new { @class = "form-control InputElements", style = "display:inline" })
+                     </div>
+                </div>
+            </div>
+            
+            
+            </div>
+
+              <div id="divToUpdate2" style="display: inline-block; position: absolute; top: 222px;">
+           
+               </div>
+
+        </div>
+    </div>
+</div>
+<div class="container childcontent " style="padding-top: 0px ! important;">
+    <div class="panel panelInquiryControls panel-primary panelWidth">        
+        <div id="divToUpdate" style="height: 410px; overflow: auto">
+
+        </div> 
+        <div>
+       <label>
+       Note: KLTD Stock Information is as of end of the day.
+       </label>
+       </div> 
+        <div class="  hideonLoad" >
+    
+
+    <div class="lagends accordion hideonLoad "  style="display:none">
+			<a href="#">@Resources.Resource.Legends <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e">
+			</span></a>
+			<div class="accordianRows"  >
+				<div class=" row">
+					<div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+						<label>  @Resources.Resource.thInterchangeability:
+						</label>
+					</div>
+					<div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+						<label> @Resources.Resource.InterchangeabilityExistDesc
+						</label>
+					</div>
+				 
+                @* <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+						<label>    @Resources.Resource.thEOReserveQuantity:
+						</label>
+					</div>
+					<div class=" legDescColumn col-lg-3 col-md-3  col-sm-6 col-xs-6 ">
+						<label>  @Resources.Resource.EOReserveQuantityDesc
+						</label>
+					</div>*@
+					
+                    <div class=" legColumn col-lg-1 col-md-1  col-sm-6 col-xs-6 ">
+						<label> FSQ:
+						</label>
+					</div>
+					<div class=" legDescColumn col-lg-2 col-md-3  col-sm-6 col-xs-6 ">
+						<label>Free Stock Quantity
+						</label>
+					</div>
+
+
+				</div>
+                 
+                 
+			</div>
+		</div>
+
+</div>
+    </div>
+</div>
+
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="ErrorModal" role="dialog" style="padding-top: 220px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header"  >
+                    <button type="button" class="close" data-dismiss="modal"> &times;</button>
+                    <h4 class="modal-title">@Resources.Resource.InterchangeablityInformation</h4>
+                </div>
+                <div class="modal-body" id="divModalBody">
+                    
+                </div>
+                <div class="modal-footer">
+                <button style=" text-align:center;float: none !important;" id="btnOkInterChangeablityInfo" class="btn btn-default center-block" data-dismiss="modal">
+                   @Resources.Resource.btnOK
+                 </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modals">
+    <!-- Modal -->
+    <div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                    <h4 class="modal-title">
+                         @Resources.Resource.WareHouseStockStatusMultipleParts
+                    </h4>
+                </div>
+                <div class="modal-body" id="modalBody">
+                <img  class="imgError"/>
+                <label id="lblMessageText"  class="lblError"></label>
+                </div>
+                <div class="modal-footer">
+                  <button style=" text-align:center;float: none !important;" id="btnOk" class="btn btn-default center-block" data-dismiss="modal">
+                        @Resources.Resource.btnOK
+                  </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*btnSearch click function*@
+<script type="text/javascript"> 
+    var txtErrorType;
+        var txtError;
+        var lblMessage;
+        var PartCount=0;
+        var PartCount=12;
+      $(document).ready(function () {   
+   
+       $('#ErrorModal').on('hidden.bs.modal', function () {
+          $(".ClsSelect").each(function(){          
+          $(this).attr("checked",false);      
+          }); });
+      $(".lagends").removeAttr("style");
+      $(".accordion").accordion({
+               collapsible: true,
+               active: false
+           }); 
+       $(".bootstrap-filestyle input[type=text]").addClass("hidden-sm hidden-md ");
+       $("#btnSearch").on("click", function () { 
+       if( !PostGetPreCheck()){return;}//This Check makes sure that there is not any exsiting Ajax Request ,in other case the call is returned void and doesnt proceeds to next code
+           $("#txtPartNo").next("span").html(" ") ;
+            var arrParams=new Array();
+            CheckCount();  
+             if(PartCount<=0)
+             {
+             PartCount=12;
+
+              //txtError="Please enter at least one Part No";
+              txtError="@Resources.Resource.MsgInfo58";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ; 
+ 
+              return false
+             } 
+             PartCount=12;        
+            if($("#txtPart1").val()!="" && $("#txtPart1").val()!=null)
+            {       
+              arrParams.push( $("#txtPart1").val());
+            }
+           if($("#txtPart2").val()!="" && $("#txtPart2").val()!=null)
+            {
+             arrParams.push( $("#txtPart2").val());
+         
+             }
+          if($("#txtPart3").val()!="" && $("#txtPart3").val()!=null)
+            {
+             arrParams.push( $("#txtPart3").val());
+              
+             }
+           if($("#txtPart4").val()!="" && $("#txtPart4").val()!=null)
+            {
+             arrParams.push( $("#txtPart4").val());
+          
+             }
+           if($("#txtPart5").val()!="" && $("#txtPart5").val()!=null)
+            {
+             arrParams.push( $("#txtPart5").val());
+    
+             }
+          if($("#txtPart6").val()!="" && $("#txtPart6").val()!=null)
+            {
+             arrParams.push( $("#txtPart6").val());
+             
+             }
+           if($("#txtPart7").val()!="" && $("#txtPart7").val()!=null)
+            {
+             arrParams.push( $("#txtPart7").val());
+           
+             }
+           if($("#txtPart8").val()!="" && $("#txtPart8").val()!=null)
+            {
+             arrParams.push( $("#txtPart8").val());
+             }
+           if($("#txtPart9").val()!="" && $("#txtPart9").val()!=null)
+            {
+             arrParams.push( $("#txtPart9").val());
+               
+             }
+           if($("#txtPart10").val()!="" && $("#txtPart10").val()!=null)
+            {
+             arrParams.push( $("#txtPart10").val());
+             }
+           if($("#txtPart11").val()!="" && $("#txtPart11").val()!=null)
+            {
+             arrParams.push( $("#txtPart11").val());
+            
+             }
+           if($("#txtPart12").val()!="" && $("#txtPart12").val()!=null)
+            {
+             arrParams.push( $("#txtPart12").val());
+               
+             }
+            
+           var strParams=arrParams.join();        
+           var strMultipleParams = { strMultipleParams:strParams };           
+           $.post("@Url.Action("WHStockStatusMultipleParts", "WHStockStatus", null)",strMultipleParams,function (data) {           
+             if (CheckForSessionExpiry(data)) 
+               {
+                   SessionExpiredRedirect();
+                            return;
+                }
+
+          //  $("#lblMsg").html(lblMessage);
+            if(isRealValue(data))
+            {
+            var data=data.replace("$(containerId).parent().delegate","$(containerId).parent().undelegate();$(containerId).parent().delegate ");                     
+            var data=data.replace("$(containerId).swhgLoad($(this).attr('href'), containerId, callback);"," if( !($(this).parent('li').hasClass('disabled')) ) { $(containerId).swhgLoad($(this).attr('href'), containerId, callback);}");
+            $("#divToUpdate").html(data);
+            $("#btnExport").attr("disabled", false);
+            }
+           
+
+            });
+       });
+ 
+    });//doc.ready
+          	
+</script>
+
+@*/*********************************************************/*@
+
+
+@*/*********************************************************/*@
+
+@* assign values to textboxes*@
+  <script type="text/javascript">
+  function  AssignValuesToTxts(data) 
+  {
+       for(var name in data) 
+     {
+     
+         $(".PartInput input[type=text]").each(function () {
+             if( $(this).attr("id")==name )
+             {
+             
+              $(this).val(data[name]);
+             }
+
+
+           });          
+                    
+     }
+
+
+
+  } 
+     
+    function isRealValue(obj) 
+    {
+                  return obj && obj !== "null" && obj !== "undefined";
+    }
+   
+     function AfterLoad() {
+
+        $('.NewPaging ul').addClass("pagination");
+    }
+</script>
+
+@*/*********************************************************/*@
+
+@*checjbox change function*@
+<script type="text/javascript">
+    $(document).on("click", ".gridRow,.gridAltRow", function () {
+
+        if ($.trim($(this).find('td').eq(1).text()) == $.trim($(this).next('tr').find('td').eq(1).text())
+            && $.trim($(this).find('td').eq(0).text()) == "1" && $.trim($(this).next('tr').find('td').eq(0).text()) == "0"
+            && ($.trim($(this).next('tr').next('tr').find('td').eq(0).text()) == "1" || $.trim($(this).next('tr').next('tr').find('td').eq(0).text()) == ""))
+            {
+            return;
+            }
+
+        if ($.trim($(this).find('td').eq(0).text()) != "0") {
+            var expandedRows = $(".expanded");
+
+            expandedRows.not(this).each(function () {
+
+                $(this).removeClass("expanded");
+                $(this).removeClass("highlight");
+
+                $("tr.hideChild").each(function () {
+
+                    var isChained = $.trim($(this).next('tr').find('td').eq(0).text());
+                    if (typeof isChained != 'undefined' && isChained == "1") {
+                        $(this).removeClass("hideChild").addClass("chainParent");
+                        return false;
+                    }
+                    $(this).removeClass("hideChild").addClass("chainParent");
+                });
+            });
+        }
+        //============================================================================
+
+        if (!$(this).hasClass("expanded") && $.trim($(this).find('td').eq(0).text()) == "1") {
+            $(this).addClass("expanded");
+            $(this).addClass("highlight");
+
+            $(this).nextAll().each(function () {
+
+                if ($(this).hasClass('chainParent')) {
+                    var isChained = $.trim($(this).next('tr').find('td').eq(0).text());
+
+                    if (typeof isChained != 'undefined' && isChained == "1") {
+                        $(this).removeClass("chainParent").addClass("hideChild").addClass("ChainedPart");
+                        return false;
+                    }
+                    $(this).removeClass("chainParent").addClass("hideChild").addClass("ChainedPart");
+                } //end if
+            }); //end each loop
+
+        } //end if
+        else if ($(this).hasClass("expanded") && $.trim($(this).find('td').eq(0).text()) == "1") {
+            $(this).removeClass("expanded");
+            $(this).removeClass("highlight");
+
+            $("tr.hideChild").each(function () {
+
+                var isChained = $.trim($(this).next('tr').find('td').eq(0).text());
+                if (typeof isChained != 'undefined' && isChained == "1") {
+                    $(this).removeClass("hideChild").addClass("chainParent");
+                    return false;
+                }
+                $(this).removeClass("hideChild").addClass("chainParent");
+            });
+        }
+    });
+</script>
+@*/*********************************************************/*@
+
+@*btnExportPartsMasterData click function*@
+
+<script type="text/javascript">
+    function DownloadFile() 
+    {    
+         if(arguments.length>1)
+         {
+         DownloadPartsMasterData(arguments[0]);
+         }
+         else
+         {
+         DownloadData(arguments[0]);
+         }
+    }
+    function DownloadPartsMasterData(fileType) 
+    {
+        
+         var postData={txtFileFormate:fileType};
+         $.post("@Url.Action("ExportPartMasterData", "WHStockStatus", null)",postData,function (data) {
+            
+               if (CheckForSessionExpiry(data)) 
+                {
+                    SessionExpiredRedirect();
+                    return;
+                 }  
+                  
+             if(isRealValue(data.ErrorOccured))
+             {                
+              //$("#MessageModalBody").html("");
+              //$("#MessageModalBody").prepend(data.ErrorMessage).attr("style", "color:red");
+             // $("#MessageModal").modal();
+               txtError=data.ErrorMessage;
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ;
+             }
+             else
+             {
+            // $("#lblMsg").html(data.ErrorMessage).attr("style","color:red;position:relative");
+                if(data.ErrorMessage=="" || data.ErrorMessage==null )  
+                {
+                   //$("#MessageModalBody").html("");
+                  // $("#MessageModalBody").prepend("Data Exported successfully").attr("style", "color:red");
+                  // $("#MessageModal").modal();
+                    txtError="@Resources.Resource.MsgInfo46";
+                    txtErrorType="1";
+                    DisplayModal(txtErrorType,txtError) ;
+                    window.location.href=data.RedirectToUrl;
+                 }
+             else{
+                    //$("#MessageModalBody").html("");
+                    //$("#MessageModalBody").prepend(data.ErrorMessage).attr("style", "color:red");
+                   // $("#MessageModal").modal();
+                      txtError=data.ErrorMessage;
+                      txtErrorType="0";
+                      DisplayModal(txtErrorType,txtError) ;
+                 }
+           }
+            
+
+            });///End of Post
+         
+         
+
+   }
+   function DownloadData(fileType)
+ {
+    
+           var postData={txtFileFormate:fileType};
+
+         $.post("@Url.Action("ExportGridData", "WHStockStatus", null)",postData,function (data) {
+            
+             if (CheckForSessionExpiry(data)) 
+                {
+                    SessionExpiredRedirect();
+                    return;
+                 }  
+             if(isRealValue(data.ErrorOccured))
+             {
+              //$("#MessageModalBody").html("");
+             // $("#MessageModalBody").prepend(data.ErrorMessage).attr("style", "color:red");
+             // $("#MessageModal").modal();
+                      txtError=data.ErrorMessage;
+                      txtErrorType="0";
+                      DisplayModal(txtErrorType,txtError) ;
+              
+             }
+             else
+             {
+             if(data.ErrorMessage=="" || data.ErrorMessage==null )  
+                {
+               
+                    txtError="@Resources.Resource.MsgInfo46";
+                    txtErrorType="1";
+                    DisplayModal(txtErrorType,txtError) ;
+                    window.location.href=data.RedirectToUrl;
+                   
+                   window.location.href=data.RedirectToUrl;
+              }
+          else{
+               txtError=data.ErrorMessage;
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ; 
+               
+              }
+           }
+            
+
+            });///End of Post
+         
+         
+}
+</script>
+
+@*/*********************************************************/*@
+
+@* BtnExport Grid data*@
+
+ 
+
+@*/*********************************************************/*@
+
+ <script type="text/javascript">
+     $(document).ready(function () {
+         $("#divToUpdate").parent("div").prepend("<div id='divLoading'></div>"); 
+     }); //doc.ready end
+
+</script>
+
+ 
+
+ <script type="text/javascript">
+    function CheckCount() {
+        if ($("#txtPart1").val() == "" || $("#txtPart1").val() == null)
+        {
+            //PartCount++;
+            PartCount--;
+        }
+         if ($("#txtPart2").val() == "" || $("#txtPart2").val() == null)
+         {
+            // PartCount++;
+             PartCount--;
+         }
+         if ($("#txtPart3").val() == "" || $("#txtPart3").val() == null)
+         {
+             // PartCount++;
+             PartCount--;
+         }
+         if ($("#txtPart4").val() == "" || $("#txtPart4").val() == null) 
+         {
+             // PartCount++;
+             PartCount--;
+         }
+         if ($("#txtPart5").val() == "" || $("#txtPart5").val() == null)
+         {
+             // PartCount++;
+             PartCount--;
+         }
+         if ($("#txtPart6").val() == "" || $("#txtPart6").val() == null)
+          {
+              // PartCount++;
+              PartCount--;
+         }
+         if($("#txtPart7").val() == "" || $("#txtPart7").val() == null)
+         {
+             //PartCount++;
+             PartCount--;
+         } 
+         if ($("#txtPart8").val() == "" || $("#txtPart8").val() == null)
+         {
+             //PartCount++;
+             PartCount--;
+         }
+         if ($("#txtPart9").val() == "" || $("#txtPart9").val() == null)
+         {
+             // PartCount++;
+             PartCount--;
+         }
+         if ($("#txtPart10").val() == "" || $("#txtPart10").val() == null)
+         {
+             // PartCount++;
+             PartCount--;
+         }
+         if ($("#txtPart11").val() == "" || $("#txtPart11").val() == null)
+          {
+              // PartCount++;
+              PartCount--;
+         }
+         if ($("#txtPart12").val() == "" || $("#txtPart12").val() == null)        
+        {
+            // PartCount++;  
+            PartCount--;
+        }
+    }
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+       $("#btnExportPartsMasterData").attr("disabled", "disabled");
+       $("#btnExport").attr("disabled", "disabled");
+
+    });  //doc.ready end
+</script>
+
+<script type="text/javascript">
+
+</script>
+
+
+@if (isInternetExplorer)///Render Different File upload method to hande in-compatability of Async file upload issue with IE
+{
+    <script>
+        $("#btnImport").removeAttr("disabled");
+
+        $('#btnImport').click(function () {
+            if ($('.bootstrap-filestyle input[type=text]').val().trim() == "") {
+                //txtError = "Please select csv  file";
+                txtError = "@Resources.Resource.MsgInfo52";
+                txtErrorType = "0";
+                DisplayModal(txtErrorType, txtError); 
+                 
+                return;
+            }
+
+            var form = $('#frmIEUpload');
+
+            form.submit();
+
+        });
+    </script>
+  
+}
+else
+{
+    
+    <script>
+ //$("#btnImport").attr("disabled",true);
+ 
+$('#fuUploadCSV').on("change",function (){
+var totalFiles = document.getElementById("FileUpload").files.length;
+         if (totalFiles.toString() == "0") 
+         {
+        //  $("#btnImport").attr("disabled","disabled");
+          
+         }
+         else
+         {                             
+                     var ext = $(this).val().split('.').pop().toLowerCase();
+                    if($.inArray(ext, ['CSV','csv']) == -1) 
+                    {
+
+                        $("#btnImport").attr("disabled","disabled");
+                          $("#divModalBody").html("");
+                        $("#divModalBody").prepend("<span id='lblMessage'></span>").attr("style","color:red;");
+                          $("#lblMessage").html("Invalid file Formate ");
+                          $("#ErrorModal").modal();     
+                   
+                    }
+                    else 
+                    {
+                    
+                    $("#btnImport").removeAttr("disabled");
+                    
+                    }
+
+         }
+
+ 
+
+
+
+});
+
+ $(document).on('keydown', '.PartInput input[type=text]', function (e) {if (this.value.length >= 20 && e.keyCode != 8){e.preventDefault()  ;return false; } });  
+     $( ".PartInput input[type=text]" ).on("paste change", function(event) {  var currentTxt=$(this) ;  setTimeout( function() {   if( currentTxt.val().trim().length>21   ){  currentTxt.val( jQuery.trim(currentTxt.val()).substring(0, 20))  }         }, 1); });
+
+$('#btnImport').click(function () 
+{
+var formData = new FormData();
+var totalFiles = document.getElementById("FileUpload").files.length;
+    if (totalFiles.toString() == "0") 
+    {
+               //txtError="Please Select CSV File";
+               txtError="@Resources.Resource.MsgInfo52";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ; 
+   
+    
+    return false;
+    }
+    for (var i = 0; i < totalFiles; i++) 
+    {
+    var file = document.getElementById("FileUpload").files[i];
+    formData.append("FileUpload", file);
+    }
+
+$.ajax({
+type: "POST",
+url:"@Url.Action("ImportPartsFile", "WHStockStatus", null, Request.Url.Scheme)",           
+data: formData,
+contentType: false,
+processData: false ,
+success: function (data) 
+{
+ if (CheckForSessionExpiry(data)) {
+                            SessionExpiredRedirect();
+                            return;
+                        }
+if(isRealValue(data.ErrorMessage))
+{ 
+    $("#divModalBody").html("");
+    
+               txtError=data.ErrorMessage;
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ;       
+    
+    $("#btnExportPartsMasterData").attr("disabled" ,true)
+
+
+}    else{AssignValuesToTxts(data);$("#btnExportPartsMasterData").removeAttr("disabled" );}                  
+ 
+
+},
+error: function (data) {
+//                 $.each(data, function (index, value) {
+//                     alert(index)
+//                 });
+//                
+               //txtError="Failed to retreive data";
+               txtError="@Resources.Resource.MsgInfo3";
+               txtErrorType="0";
+               DisplayModal(txtErrorType,txtError) ; 
+    
+ 
+}
+})
+});
+    </script>
+
+
+}
+@if (Session["ieFileUpload"] != null)//hst001
+{
+    <script> 
+
+       $.post("@Url.Action("MultiPartsStockInq_ImportFileHandlerForIE", "WHStockStatus", null)",null,function (PartsDetails) { 
+                  
+                        if(isRealValue(PartsDetails))
+                            { 
+                               AssignValuesToTxts(PartsDetails);
+
+                            }
+                    
+                   
+       
+       
+         });
+         AfterLoad();
+    </script>
+}
+
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    });
+
+    $(document).on('click', '#btnOkInterChangeablityInfo', function () {
+        $("#ErrorModal").modal('hide');
+
+    }); 
+
+</script>
+
+ 

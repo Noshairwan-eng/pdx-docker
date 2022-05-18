@@ -1,0 +1,2631 @@
+﻿@* <history>
+       /// Roles:  Admin = 1 ; Distributor = 3
+       /// hst001: Shabbir Hussain @26-Oct-2016
+                   - Fixed right based checks for Dealer and 'KMEUser(Administrator/EndUSer/Admin)'.
+       /// hst002: Imran Shahzad @27-Oct-2016
+                   - Fixed right based checks for Dealer and 'KMEUser(Administrator/EndUSer/Admin)'.
+       /// hst003: Shabbir Hussain @4-Nov-2016
+                   - Show Billing Rates Readonly to Distributors (Role == 3) for other Billing rates will be enabled.
+       /// hst004: Noshairwan Farooq @03-07-2019
+                   - Disabled Tax Rate drop down for Distributors.
+       /// hst005: Noshairwan Farooq @20-09-2019
+                   - Updated process so that Transportation code is populated first from the Quotation Condition and then w.r.t Distributor (from Z99)
+       /// hst006: Noshairwan Farooq @09-04-2020
+                   - Made change to show Customer Name in the dropdown.
+       /// hst007: Noshairwan Farooq @07-07-2020
+                   - Made change to select Default Unloading Port from Z100
+       //  hst008: rMehmood @May 24, 2021
+                   Made changes related to discount rates
+       //  hst009: rMehmood @May 27, 2021
+                     Show premium rates based on Condition
+       //  hst010: rMehmood @Jun 04, 2021
+                   Highlighted Premium Rate and Discount rate Label
+
+
+    </history> *@
+@model PDXWEB.Models.Quotation.QuotationConditionViewModel
+<style type="text/css">
+    input[type=text]:focus {
+        outline: none;
+    }
+</style>
+@Styles.Render("~/Content/jQueryUICSS")
+@Scripts.Render("~/bundles/jQueryUI")
+@{
+    ViewBag.Title = Resources.Resource.QuotationCondition;
+
+    string strCheckRole = "";
+    string strCheckDetails = "0";
+    if (Session["role"] != null)
+    {
+        //if (Session["role"].ToString() == "1")//hst001
+        if (Session["role"].ToString() != "3")//hst001
+        {
+            strCheckRole = Session["role"].ToString();
+        }
+        else
+        {
+            strCheckRole = "0";
+        }
+
+    }
+
+}
+<style type="text/css">
+    /*hst010*/
+    .clsRedColor {
+        color: red !important;
+    }
+    .clsInvalidExchangeRate {
+        border-color: #ff8080 !important;
+        box-shadow: 0px 0px 5px 0px #ff8080 !important;
+    }
+    .ModelInputFormGrp {
+        width: 24%;
+    }
+
+    .txtModel {
+        width: 94% !important;
+    }
+
+    .QuotationNo {
+        width: 44% !important
+    }
+
+    .QuotationSubNo {
+        width: 30% !important
+    }
+
+    #txtCDateT, #txtCDateF {
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-image: url('../Images/calendar.png');
+    }
+
+    .txtBillingRates {
+        width: 63px !important;
+    }
+
+    .Dname {
+        width: 88%;
+    }
+
+
+
+    @@media Screen and (max-width: 1200px) {
+
+        .BratAtMd {
+            width: 90% !important;
+        }
+
+        .CommentstsAtMd {
+            width: 90% !important;
+        }
+
+        .MemoAtMd {
+            width: 90% !important;
+        }
+    }
+
+    @@media screen and (max-width: 767px) {
+        .modal-confirm {
+            width: auto
+        }
+
+        .CommentstsAtMd {
+            width: 97% !important;
+        }
+
+        .MemoAtMd {
+            width: 97% !important;
+        }
+
+        .SaddAtMd {
+            width: 97% !important;
+        }
+
+        .txtModel {
+            width: 97% !important;
+        }
+
+        .ModelInputFormGrp {
+            width: 100%;
+            margin-bottom: 3px;
+        }
+
+        button.multiselect {
+            background-color: White !important;
+            border-radius: 1px;
+            color: White;
+            font-family: sans-serif,open sans;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            height: 26px !important;
+            padding: 4px 12px;
+            text-decoration: none;
+            border-radius: 6px;
+            width: 97% !important;
+        }
+
+        .QuotationNo {
+            width: 66% !important
+        }
+
+        .QuotationSubNo {
+            width: 31% !important
+        }
+
+        .btn-group, .btn-group-vertical {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            width: 97% !important;
+        }
+
+        .InputElements {
+            background-color: White !important;
+            border: 1px solid grey !important;
+            height: 25px !important;
+            width: 97%;
+        }
+
+        div#xyz {
+            margin-left: 0px !important;
+        }
+
+        input, select {
+            width: auto;
+        }
+
+        br {
+            display: none;
+        }
+
+        .TopMarginAtXs {
+            margin-top: 5px;
+            width: 100% !important;
+        }
+    }
+    /* media 767 end*/
+    @@media screen and (max-width: 459px) {
+        .QuotationSubNo {
+            width: 30% !important
+        }
+    }
+
+
+    div#SCM > element {
+        border: 1px solid !important;
+    }
+
+    textarea {
+        border: 1px solid !important;
+    }
+
+    div.BratAtMd element {
+        border: 1px solid !important;
+    }
+
+    .form-control {
+        white-space: nowrap;
+        padding: 3px 0px 3px 2px !important;
+        font-size: 11px !important;
+        border: 1px solid gray !important;
+    }
+
+    div.BratAtMd > element {
+        height: auto;
+        border: 1px solid;
+    }
+
+
+    .panel-body {
+        padding-top: 4px !important;
+    }
+
+    #QuotationValidity, #RequestedDeliveryTime {
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-image: url('../Images/calendar.png');
+    }
+
+    .txtDatePicker, .txtDatePicker {
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-image: url('../Images/calendar.png');
+    }
+
+    @@media screen and (min-width: 767px) {
+        .modal-confirm {
+            width: 450px
+        }
+    }
+</style>
+<div class="container  childcontent">
+    <div class="panel panelInquiryControls panel-primary">
+        <div class="panel-heading PanelTitle clearfix" style="background-color: #FAC902 !important;">
+            <h3 class="panel-title pull-left " style="font-weight: bold; margin-right: 20px !important">@Resources.Resource.QuotationCondition</h3>
+        </div>
+        @*<div style="height:0px; padding-left:18px;"><span id="spnMsg"></span></div>*@@*col-sm-push-6*@
+        <div class="panel-body">
+            <div class="row" style="margin: -12px 0px 5px -14px ! important; margin-top: 2px !important;
+                margin-bottom: 10px !important">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button class=" btn TopMarginAtXs" id="btnSearch">@Resources.Resource.btnSearch</button>
+                    @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S020_02_001"))
+                    {
+                        <button class=" btn TopMarginAtXs" id="btnNew">
+                            @Resources.Resource.btnNew
+                        </button>
+                    }
+                    @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S020_02_002"))
+                    {
+                        <button class=" btn TopMarginAtXs" id="btnSave">@Resources.Resource.btnSave</button>
+                    }
+                    @if (PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S020_02_003"))
+                    {
+                        <button id="btnDetail" class=" btn  TopMarginAtXs">@Resources.Resource.btnDetail</button>
+                    }
+                </div>
+            </div>
+            <div class="FormElements">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            @Html.Label(@Resources.Resource.lblQuotationNo)
+                        </div>
+                        <div class="editor-label SizeOnXs">
+                            @Html.TextBoxFor(model => model.QuotationNo, null, new { @id = "QuotationNo", @class = "form-control InputElements NumericOnly QuotationNo", style = "display: inline; " })
+                            @Html.TextBoxFor(model => model.QuotationSeqNo, "00", new { @id = "QuotationSeqNo", @class = "form-control InputElements NumericOnly QuotationSubNo", style = "display: inline-flex;display: inline; " })
+                            <span id="spnQuotationNo"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs clsEdtLabel">
+                            @Html.Label(@Resources.Resource.lblOriginalQuotationNo)
+                        </div>
+                        <div class="editor-field SizeOnXs ">
+                            @Html.TextBoxFor(model => model.OrigQuotationNo, new { @id = "OrigQuotationNo", @class = "form-control InputElements QuotationNo", style = "display: inline; " })
+                            @Html.TextBoxFor(model => model.OrigQuotationSeqNo, new { @id = "OrigQuotationSeqNo", @class = "form-control InputElements QuotationSubNo", style = "display: inline-flex;display: inline; " })
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblDistributerOrderNo)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.TextBoxFor(model => model.DistributerOrderNo, new { @id = "DistributerOrderNo", maxlength = "20", style = "display: -webkit-inline-flex;display:inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnDistributerOrderNo"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblQuotationValidityDate)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.TextBoxFor(model => model.QuotationValidity, new { id = "QuotationValidity", @style = " background-color:White !important;", @class = "form-control InputElements txtDatePicker" })
+                            <span id="spnQuotationValidity"></span>
+                        </div>
+                    </div>
+                </div>
+                @*rowend*@
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblDistributorCode)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("DistributerCodes", Model.DistributerCodes as List<SelectListItem>, new { @id = "DistributerCode", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnDistributerCodes"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblDistributorName)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.TextBoxFor(model => model.DistributerName, new { @id = "DistributerName", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements Dname" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblPersonIncharge)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.TextBoxFor(model => model.PersonIncharge, new { @id = "PersonIncharge", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblCustomerCode)
+                        </div>
+                        @*<div class="editor-field SizeOnXs">
+                                @Html.DropDownList("CustomerCodes", Model.CustomerCodes as List<CustomerCodesM>, new { @id = "CustomerCodes", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements" })
+                                <span id="spnCustomerCodes"></span>
+                            </div>*@
+                        <div class="editor-field SizeOnXs">
+                            <select id="ddlCustomerCodes" style="display: -webkit-inline-flex;
+                                display: inline" class="form-control InputElements">
+                                <option value=""></option>
+                            </select>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblCustomerName)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.TextBoxFor(model => model.DistributerName, new { @id = "CustomerName", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements Dname" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblTaxRate)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("TaxRate", Model.TaxRate as List<SelectListItem>, new { @id = "TaxRate", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnTaxRate"></span>
+                        </div>
+                    </div>
+                </div>
+                @*rowend*@
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblSalePriceList)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("SalesPriceList", Model.SalesPriceList1 as List<SelectListItem>, new { @id = "SalesPriceList", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnSalesPriceList"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblCurrency)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("Currency", Model.Currency as List<SelectListItem>, new { @id = "Currency", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnCurrency"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblExchangeRate)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.TextBoxFor(model => model.ExchangeRate, new { @id = "ExchangeRate", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblUsance)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("Usance", Model.Usance as List<SelectListItem>, new { @id = "Usance", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnUsance"></span>
+                        </div>
+                    </div>
+
+                </div>
+                @*rowend*@
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblOrderType)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("OrderType", Model.OrderType as List<SelectListItem>, new { @id = "OrderType", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnOrderType"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblDeliveryTerm)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("DeliveryTerms", Model.DeliveryTerms as List<SelectListItem>, new { @id = "DeliveryTerms", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnDeliveryTerms"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblPaymentTerm)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("PaymentTerms", Model.PaymentTerms as List<SelectListItem>, new { @id = "PaymentTerms", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnPaymentTerms"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblStatus)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("Status", Model.Status as List<SelectListItem>, new { @id = "Status", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnStatus"></span>
+                        </div>
+                    </div>
+
+                </div>
+                @*rowend*@
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblOrderProbability)
+                        </div>
+                        <div class="editor-field SizeOnXs clsForGrpxs">
+                            @Html.DropDownList("OrderPRobability", Model.OrderPRobability as List<SelectListItem>, new { @id = "OrderPRobability", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnOrderPRobability"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblTransportation)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("Transportation", Model.Transportation as List<SelectListItem>, new { @id = "Transportation", style = "display: -webkit-inline-flex;display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnTransportation"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblRegion)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("Region", Model.Region as List<SelectListItem>, new { @id = "Region", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span id="spnRegion"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblExitPoint)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("ExitPoint", Model.ExitPoints as List<SelectListItem>, new { @id = "ExitPoints", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span></span>
+                        </div>
+                    </div>
+                    
+                    </div>@*rowend*@
+            <div class="row">
+              
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        @Html.Label(@Resources.Resource.lblLoadingPort)
+                    </div>
+                    <div class="editor-field SizeOnXs">
+                        @Html.DropDownList("LoadingPort", Model.LoadingPort as List<SelectListItem>, new { @id = "LoadingPort", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                        <span id="spnLoadingPort"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        @Html.Label(@Resources.Resource.lblUnloadingPort)
+                    </div>
+                    <div class="editor-field SizeOnXs">
+                        @Html.DropDownList("UnloadingPort", Model.UnloadingPort1 as List<SelectListItem>, new { @id = "UnloadingPort", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                        <span id="spnUnloadingPort"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="editor-label SizeOnXs">
+                        @Html.Label(@Resources.Resource.lblRequestedDeliveryTime)
+                    </div>
+                    <div class="editor-field SizeOnXs">
+                        @Html.TextBoxFor(model => model.RequestedDeliveryTime, new { @id = "RequestedDeliveryTime", @style = "  background-color:White !important;", @class = "calendarPicker form-control InputElements txtDatePicker" })
+                        <span id="spnRequestedDeliveryTime"></span>
+                    </div>
+                </div>
+                @*if (Session["Role"].ToString() == "1") //hst001*@
+                @if (Session["Role"].ToString() != "3") //hst001
+                {
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblManufacturer)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("Manufacturer", Model.Manufacturer as List<SelectListItem>, new { @id = "Manufacturer", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span></span>
+                        </div>
+                    </div>
+
+                }
+
+
+
+                @*end style = "Display: inline-flex", if*@
+                @*rowend*@ @*if (Session["Role"].ToString() == "1") //hst001*@
+                @if (Session["Role"].ToString() != "3") //hst001
+                {
+
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblPriceSettingCode)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("PriceSettingCodes", Model.PriceSettingCodes as List<SelectListItem>, new { @id = "PriceSettingCodes", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="editor-label SizeOnXs">
+                            @Html.Label(@Resources.Resource.lblSubstitutionCode)
+                        </div>
+                        <div class="editor-field SizeOnXs">
+                            @Html.DropDownList("SubstitutionCodes", Model.SubstitutionCodes as List<SelectListItem>, new { @id = "SubstitutionCodes", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                            <span></span>
+                        </div>
+                    </div>
+                    @*                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="editor-label SizeOnXs">
+                    @Html.Label(@Resources.Resource.lblDestinationCode)
+                </div>
+                <div class="editor-field SizeOnXs">
+                    <select id="ddlDestinations" style="display: -webkit-inline-flex; display: inline-flex;
+                        display: inline" class="form-control InputElements">
+                        <option value=""></option>
+                    </select>
+                    <span></span>
+                </div>
+            </div>*@
+
+                }
+                @*hst008 start//hst009 show conditionaly*@
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 clsDisCountRate hide">
+                    <div class="editor-label SizeOnXs">                       
+                        <label class="clsRedColor">@Resources.Resource.lblPremiumRate</label>@*hst010*@
+                    </div>
+                    <div class="editor-field SizeOnXs">
+                        @Html.TextBoxFor(model => model.PremiumRate, new { @id = "PremiumRate", @readonly = "readonly", style = "display: -webkit-inline-flex;Display: inline-flex;display: inline", @class = "form-control InputElements" })
+                        <span></span>
+                    </div>
+                </div>
+                @*hst008 end*@
+            </div>
+                @*@if (Session["Role"].ToString() == "3")
+                    {
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <div class="editor-label SizeOnXs">
+                                    @Html.Label(@Resources.Resource.lblDestinationCode)
+                                </div>
+                                <div class="editor-field SizeOnXs">
+                                    <select id="ddlDestinations" style="display: -webkit-inline-flex; display: inline-flex;
+                                        display: inline" class="form-control InputElements">
+                                        <option value=""></option>
+                                    </select>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    }*@
+                <div class="row" style="margin-top: 2px;">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 hidden-xs">
+                        <div style="display: inline-block !important;" class="BratAtMd">
+                            @*hst008 start. One of the below label will be hide based on Price calculation method on Document.reayd *@
+                            <label class="clsDisCountRate hide clsRedColor">@Resources.Resource.lblDiscountRates</label>
+                            <label class="clsBillRate">@Resources.Resource.lblBillingRates</label>
+                            @* hst008 end *@
+                            @*<div style=" border:1px solid gray; padding:10px;">*@
+                            <fieldset class="form-control " style="height: 168px;">
+                                <div style="display: inline-block; padding-top: 15px; padding-right: 7px; padding-left: 16px;
+                                    padding-bottom: 20px !important;">
+                                    @Html.Label(@Resources.Resource.lblCGA)
+                                    @Html.TextBoxFor(model => model.BillingRateA, new { @id = "BillingRateA", @class = "form-control InputElements txtBillingRates allownumericwithdecimal" })
+                                    <span id="spnBillingRateA"></span>
+                                    @Html.Label(@Resources.Resource.lblCGB, new { @style = " margin-top:5px;" })
+                                    @Html.TextBoxFor(model => model.BillingRateB, new { @id = "BillingRateB", @class = "form-control InputElements txtBillingRates allownumericwithdecimal" })
+                                    <span id="spnBillingRateB"></span>
+                                </div>
+                                <div style="display: inline-block; padding-top: 15px; padding-right: 7px;">
+                                    @Html.Label(@Resources.Resource.lblCGC)
+                                    @Html.TextBoxFor(model => model.BillingRateC, new { @id = "BillingRateC", @class = "form-control InputElements txtBillingRates allownumericwithdecimal" })
+                                    <span id="spnBillingRateC"></span>
+                                    @Html.Label(@Resources.Resource.lblCGD, new { @style = " margin-top:5px;" })
+                                    @Html.TextBoxFor(model => model.BillingRateD, new { @id = "BillingRateD", @class = "form-control InputElements txtBillingRates allownumericwithdecimal" })
+                                    <span id="spnBillingRateD"></span>
+                                </div>
+                                <div style="display: inline-block; margin-top: 10px; padding-right: 20px;">
+                                    @Html.Label(@Resources.Resource.lblCGE)
+                                    @Html.TextBoxFor(model => model.BillingRateE, new { @id = "BillingRateE", @class = "form-control InputElements txtBillingRates allownumericwithdecimal" })
+                                    <span id="spnBillingRateE"></span>
+                                    @Html.Label(@Resources.Resource.lblCGF, new { @style = " margin-top:5px;" })
+                                    @Html.TextBoxFor(model => model.BillingRateC, new { @id = "BillingRateF", @class = "form-control InputElements txtBillingRates allownumericwithdecimal" })
+                                    <span id="spnBillingRateF"></span>
+                                </div>
+                                @* hst008 start. DIV will be hide based on Price calculation method on Document.reayd*@
+                                <div style="margin-top: -16px; padding-right: 20px; padding-left: 18px;" class="clsDisCountRate">
+                                    <label>@Resources.Resource.lblOther</label>
+                                    @Html.TextBoxFor(model => model.DiscountRateOther, new { @id = "DiscountRateOther", @class = "form-control InputElements txtBillingRates allownumericwithdecimal" })
+                                    <span id="spnDiscountRateO"></span>
+                                </div>
+                                @* hst008 end *@
+                            </fieldset>
+
+                            @*</div>     *@
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div>
+                            @Html.Label(@Resources.Resource.lblShippingAddress)
+                        </div>
+                        <div>
+                            @Html.TextAreaFor(model => model.ShipToAddress, new { @id = "ShipToAddress", style = " width:90%; height:168px;  white-space: normal !important;display: -webkit-inline-flex; Display: inline-flex;display: inline; resize:none", @class = "form-control SaddAtMd" })
+                            <span id="spnShipToAddress"></span>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-md-block visible-sm-block">
+                    </div>
+                    <div id="SCM" class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div>
+                            <label>@Resources.Resource.lblComments</label>
+                        </div>
+                        @Html.TextAreaFor(model => model.Comments, new { @id = "Comments", maxlength = "150", style = " width:100%; height:168px; white-space: normal !important; resize:none", @class = "form-control CommentstsAtMd" })
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div>
+                            <label>@Resources.Resource.lblMemo</label>
+                        </div>
+                        @Html.TextAreaFor(model => model.Memo, new { @id = "Memo", maxlength = "50", style = " width:78%; height:168px;white-space: normal !important; resize:none", @class = "form-control MemoAtMd" })
+                    </div>
+                </div>@*rowend*@
+                <div class="row form-inline" role="form">
+                    <div style="margin-left: 16px; margin-top: 4px;">
+                        <div class="form-group ">
+                            @Html.CheckBoxFor(model => model.AvailableMark, new { @id = "AvailableMark", @style = " margin-right:2px;" })
+                            @Html.Label(@Resources.Resource.lblAvailableMarks, new { @style = "margin-right:20px;" })
+                            @Html.CheckBoxFor(model => model.UseHSCode, new { @id = "UseHSCode", @style = " margin-right:2px;" })
+                            @Html.Label(@Resources.Resource.lblUseHsCode, new { @style = "margin-right:20px;" })
+                        </div>
+                        <div class="form-group ">
+                            @*@if (Session["Role"].ToString() == "1") //hst002*@
+                            @if (Session["Role"].ToString() != "3")//hst002
+                            {
+                                @Html.CheckBoxFor(model => model.DontConsiderEORes, new { @id = "DontConsiderEORes", @style = " margin-right:3px;" })
+                                @Html.Label(@Resources.Resource.lblDoNotConsiderEo, new { @style = "margin-right:20px;" })
+
+                                @Html.CheckBoxFor(model => model.ReserverStock, new { @id = "ReserverStock", @style = " margin-right:3px;" })
+                                @Html.Label(@Resources.Resource.lblReserveStock, new { @style = "margin-right:20px;" })
+
+
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(model => model.DontConsiderEORes, new { @id = "DontConsiderEORes", @style = " margin-right:3px; display:none" })
+                            }
+                        </div>
+                        <div class="form-group ">
+                            @*@if (Session["Role"].ToString() == "1") //hst002*@
+                            @if (Session["Role"].ToString() != "3")//hst002
+                            {
+                                @Html.CheckBoxFor(model => model.FixPrice, new { @style = " margin-right:3px;" })
+                                @Html.Label(@Resources.Resource.lblFixPrice, new { @id = "FixPrice", @style = "margin-right:2px;" })
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-inline">
+                    <div style="margin-left: 16px;">
+                        @Html.Label(@Resources.Resource.lblModelInformation)
+                    </div>
+                    <div class="divModelInput" style="margin-left: 16px; padding-left: 20px; border-radius: 6px;
+                        width: 92%; margin-top: 0px; height: auto; border: 1px solid gray">
+                        <div class="form-group ModelInputFormGrp">
+                            <div>
+                                @Html.Label(@Resources.Resource.lblModelCode, new { @style = " margin-right:15px;" })
+                            </div>
+                            <div>
+                                <input type="text" class=" form-control InputElements txtModel" style="display: inline-flex;display: inline; " id="ModelCode" value=" @Model.ModelInformation.Select(r => r.ModelCode).SingleOrDefault()" />
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="form-group ModelInputFormGrp">
+                            <div>
+                                @Html.Label(@Resources.Resource.lblSerialNo, new { @style = " margin-right:10px;" })
+                            </div>
+                            <div>
+                                <input type="text" style="display: inline-flex;display: inline; " class=" form-control InputElements txtModel" id="SerialNo" value=" @Model.ModelInformation.Select(r => r.SerialNo).SingleOrDefault()" />
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="form-group ModelInputFormGrp">
+                            <div>
+                                @Html.Label(@Resources.Resource.lblEngineSerialNo, new { @style = " margin-right:10px;" })
+                            </div>
+                            <div>
+                                <input type="text" style="display: inline-flex;display: inline; " class=" form-control InputElements txtModel" id="ESerialNo" value=" @Model.ModelInformation.Select(r => r.SerialNo).SingleOrDefault()" />
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="form-group ModelInputFormGrp">
+                            <div>
+                                @Html.Label(@Resources.Resource.lblCustomerDetail, new { @style = " margin-right:10px;" })
+                            </div>
+                            <div>
+                                <input type="text" style="display: inline-flex;display: inline; " class="TexboxCss form-control InputElements txtModel" id="CustomerDetails" value=" @Model.ModelInformation.Select(r => r.CustomerDetails).SingleOrDefault()" />
+                                <span></span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                        </div>
+                    </div>
+                </div>
+            </div>@*// FormElements div*@
+            <div style="margin: 30px;">
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>@*panel body*@
+    </div>
+    @*panel div*@
+    <div style="margin-top: 4px;">
+    </div>
+</div>
+@*conatiner div end*@
+<div class="modal fade" id="ConfirmModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog   modal-confirm" style="margin: 10px auto;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    Confirmation
+                </h4>
+            </div>
+            <div class="modal-body" id="ConfirmModalBody">
+                <img src="@Url.Content("~/images/question.png")" />
+                <label style="color: Red !important">
+                    Are you sure you want to Confrim Quotation?
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button id="btnConfirm" class="btn btn-default pull-left" data-dismiss="modal">
+                    @Resources.Resource.btnOK
+                </button>
+                <button id="btnCancleConfirm" class="btn btn-default pull-right" data-dismiss="modal">
+                    @Resources.Resource.btnCancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MessageModal" role="dialog" style="padding-top: 169px;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    @Resources.Resource.QuotationCondition
+                </h4>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <img class="imgError" />
+                <label id="lblMessageText" class="lblError">
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button style="text-align: center,float: none !important;" id="btnOk" class="btn btn-default center-block"
+                        data-dismiss="modal">
+                    @Resources.Resource.btnOK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //    $("#ReserverStock").change(function () {
+    //    alert("");
+    //    });
+
+</script>
+<script type="text/javascript">
+    var txtErrorType;
+    var txtError;
+    var checkForDetails=@strCheckDetails;
+    var CheckForStatus=0;
+    var blnSearched = false;
+
+    $(document).ready(function () {
+        ShowHideDorBRates("@Model.PriceCalculationMethod");//hst008
+      //hstU001 start
+ $(".panel-body").prepend("<div id='divLoading'></div>");
+        var dateFormat="@Session["DateCulture"].ToString()";
+        if(dateFormat==null || dateFormat==""){dateFormat="mm/dd/yy"}
+        InitializeCalander(dateFormat,"","");//from refrencing JavaScript File
+        //hstU001 end
+      if (!(checkForDetails>0))
+      {
+      $("#btnDetail").attr("disabled","disabled");
+      }
+      else{
+        $("#btnDetail").attr("disabled",false);
+      }
+     $('#Status').on("change", function (e) {
+       if (checkForDetails>0)
+       {
+          if($(this).val()==3)
+           {
+          // alert("Please Perform Copy To SO Operation from Quotation Inquiry Screen ");
+               //txtError = "Please Perform Copy To SO Operation from Quotation Inquiry Screen";
+               txtError = "@Resources.Resource.MsgInfo15";
+                txtErrorType = "0";
+                DisplayModal(txtErrorType, txtError);
+
+            }
+        else if($(this).val()==4)
+           {
+            //txtError = "Quotation can't be Cancelled as Quotation Detail Exists!";
+            txtError = "@Resources.Resource.MsgInfo16";
+                txtErrorType = "0";
+                DisplayModal(txtErrorType, txtError);
+
+           }
+              if($(this).val()==2)
+              {
+              recentConfirmed=true;
+              $("#Status").val("2");
+              }
+          else{
+                $("#Status").val("1");
+               }
+         }
+    else
+        {
+          if (!(checkForDetails>0) && $(this).val()==4 && CheckForStatus==1)
+           {
+           $("#Status").val("4");
+           }
+          else
+           {
+            if($(this).val()==1)
+             {
+              $("#Status").val("1");
+              }
+            else{
+              $("#Status").val("1");
+                // txtError = "Quotation cannot be confirmed as detail does not exist";
+               txtError = "@Resources.Resource.MsgInfo17";
+                txtErrorType = "0";
+                DisplayModal(txtErrorType, txtError);
+
+                }
+          }
+       }
+
+         //  alert($('input:checkbox[class=QutnSelect]:checked').val());
+        //    e.preventDefault();
+        });
+});
+function isRealValue(obj){
+ return obj && obj !== "null" && obj!== "undefined";
+        }
+
+$("#btnSearch").click(function () {
+if( !PostGetPreCheck()){return;}//This Check makes sure that there is not any exsiting Ajax Request ,in other case the call is returned void and doesnt proceeds to next code
+   PerformSearch("fromButton");
+
+  });
+
+
+
+
+</script>
+<script type="text/javascript">
+
+
+
+         var tempCustomerCodes;
+         function populateCustomerCodes(data)
+         {
+            var select = $("#ddlCustomerCodes");
+            var defaultCustomerCode = "";
+            var defaultCustomerAddress = "";
+            var defaultCustomerName = "";
+            var defaultUnloadingPort = ""; //hstNoshair
+            select.empty();
+            $("#CustomerName").val("");
+            tempCustomerCodes = data.CustomerCodes;
+            tempCustomerCodes.forEach(function(cust_code)
+            {
+                var strCustomer = cust_code.CustomerCode + ' "' + cust_code.CustomerName + '"'; //hst006
+                $("#ddlCustomerCodes").append("<option value='"+cust_code.CustomerCode+"'>"+strCustomer+"</option>"); //hst006
+                if(cust_code.CustomerCode=="REG")
+                {
+                    defaultCustomerCode = cust_code.CustomerCode;
+                    defaultCustomerAddress = cust_code.CustomerAddress;
+                    defaultCustomerName = cust_code.CustomerName;
+                    defaultUnloadingPort = cust_code.UnloadingPort; //hstNoshair
+                }
+            });
+            if(tempCustomerCodes.length>0)
+            {
+                $("#ddlCustomerCodes").val(defaultCustomerCode);
+                $("#ShipToAddress").val(defaultCustomerAddress);
+                $("#CustomerName").val(defaultCustomerName);
+                $("#UnloadingPort").val(defaultUnloadingPort); //hstNoshair
+            }
+
+         }
+
+
+        $("#ddlCustomerCodes").change(function(event){
+        if(tempCustomerCodes!=null)
+        {
+            tempCustomerCodes.forEach(function(cust_code)
+            {
+                if(cust_code.CustomerCode == $("#ddlCustomerCodes").val() )
+                {
+                    $("#ShipToAddress").val(cust_code.CustomerAddress);
+                    $("#CustomerName").val(cust_code.CustomerName);
+                    $("#UnloadingPort").val(cust_code.UnloadingPort); //hstNoshair
+                }
+            });
+            if($("#OrderType").val()!="")
+            {OrderTypeOnChange();}
+
+        }
+        });
+
+function OrderTypeOnChange()
+{
+    var strOTYP = $("#OrderType").val();
+    var strDBCode=$("#DistributerCode").val();
+    var strCustCode = $("#ddlCustomerCodes").val();
+    $.post("@Url.Action("OrderTypes_OnChange", "QuotationCondition", null)", {  strOTYP: strOTYP,strDCOD:strDBCode, strCSCD:strCustCode },
+        function (data) {
+            if(CheckForSessionExpiry(data))
+            {
+                SessionExpiredRedirect();
+                return;
+            }
+            $("#Usance").val(data.Usance);
+            $("#Transportation").val(data.Transportation);
+
+            $("#DeliveryTerms").val(data.DeliveryTerms);
+            $("#PaymentTerms").val(data.PaymentTerms);
+
+            //hst008 commented start
+            //$("#BillingRateA").val(data.BillingRateA);
+            //$("#BillingRateB").val(data.BillingRateB);
+            //$("#BillingRateC").val(data.BillingRateC);
+            //$("#BillingRateD").val(data.BillingRateD);
+            //$("#BillingRateE").val(data.BillingRateE);
+            //$("#BillingRateF").val(data.BillingRateF);
+            //hst008 end
+
+            //hst008 start
+           // $('#PremiumRate').val(data.PremiumRate);//hst009 Commented
+            if (gstrPriceCalculationMethod == "D")
+            {
+                $('#PremiumRate').val(data.PremiumRate);//hst009 
+                /*Set Discount rates*/
+                $("#BillingRateA").val(data.DiscountRateA);
+                $("#BillingRateB").val(data.DiscountRateB);
+                $("#BillingRateC").val(data.DiscountRateC);
+                $("#BillingRateD").val(data.DiscountRateD);
+                $("#BillingRateE").val(data.DiscountRateE);
+                $("#BillingRateF").val(data.DiscountRateF);
+                $("#DiscountRateOther").val(data.DiscountRateOther);
+            }
+            else
+            {
+                /*Set billing Rates*/
+                $("#BillingRateA").val(data.BillingRateA);
+                $("#BillingRateB").val(data.BillingRateB);
+                $("#BillingRateC").val(data.BillingRateC);
+                $("#BillingRateD").val(data.BillingRateD);
+                $("#BillingRateE").val(data.BillingRateE);
+                $("#BillingRateF").val(data.BillingRateF);
+            }
+         //hst008 end
+
+            $("#DontConsiderEORes").prop("checked",data.EOReserveSetting);
+            varRoadExitPoint = data.RoadExitPoint;
+            varSeaExitPoint = data.SeaExitPoint;
+            varAirExitPoint = data.AirExitPoint;
+            varExitPoints = data.ExitPoints;
+            ModelInfoMark=data.ModelInfoMark;
+            setExitPointValue();
+
+            if(ModelInfoMark)
+            {
+                $("#ModelCode").attr("disabled",false);
+                $("#SerialNo").attr("disabled",false);
+                $("#ESerialNo").attr("disabled",false);
+                $("#CustomerDetails").attr("disabled",false);
+            }
+            else
+            {
+                $("#ModelCode").val("");
+                $("#SerialNo").val("");
+                $("#ESerialNo").val("");
+                $("#CustomerDetails").val("");
+                $("#ModelCode").attr("disabled","disabled");
+                $("#SerialNo").attr("disabled","disabled");
+                $("#ESerialNo").attr("disabled","disabled");
+                $("#CustomerDetails").attr("disabled","disabled");
+            }            
+            GetDeliveryTermsByTransPortationCode($("#Transportation").val());//hst008
+        });
+
+}
+$("#Transportation").change(function (event) {
+    setExitPointValue();
+    GetDeliveryTermsByTransPortationCode(this.value);//hst008
+});
+
+function setExitPointValue()
+{
+    if(varExitPoints!=null)
+    {
+        varExitPoints.forEach(function(exitPoint){
+            var TransporationCode = $("#Transportation").val();
+            if(TransporationCode==exitPoint.TransportationCode)
+            {
+                $("#ExitPoints").val(exitPoint.ExitPoint);
+            }
+        });
+    }
+}
+
+function populateTransportationCodesOnSearch(data)
+{
+
+    var select = $("#Transportation");
+    select.empty();
+
+    data.Transportation.forEach(function(tcod){
+    $("#Transportation").append("<option value='"+tcod.Value+"'>"+tcod.Text+"</option>");
+    })
+
+}
+
+function PerformSearch()
+{
+
+ var count=0;
+
+        $("#spnQuotationNo").html("")
+
+         /*hst8,Feb 2016  if user press save button then search.. Require indication should be removed from all the controll except quotation no*/
+         $("select option:selected").each(function () {
+           if($(this).val()=="")
+                   {
+                  /*  $(this).parent().next("span").html("*").attr("style","color:red");*/
+                   $(this).parent().attr("style","");
+                   }
+                   else
+                   {
+                   /* style="display: -webkit-inline-flex;display: inline-flex;display: inline"*/
+                    $(this).parent().attr("style","");
+                    /*$(this).parent().next("span").text("");*/
+                    }
+         });
+        $("#DistributerOrderNo").attr("style","");
+        $(".divModelInput input").each(function () { $(this).attr("style",""); });
+        /*hst 8,Feb 2016. end  if user press save button then search.. Require indication should be removed from all the controll except quotation no*/
+        /* $("span").html("");*/
+         if ($('#QuotationNo').val().trim()=="")
+        {
+
+             $("#QuotationNo").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;display: inline"); /*To set border color red */
+            /* $("#spnQuotationNo").html("*").attr("style","color:red");*/
+             return false;
+         }
+         $("#QuotationNo").attr("style","display: inline");
+
+     var OTYPCheck;
+
+     var formData = { strQuotationNo: $('#QuotationNo').val(), strQuotSeqNo: $('#QuotationSeqNo').val(),DBCode:ChooseDBCode(arguments) };
+         $.ajax({
+             type: "POST",
+             data: formData,
+             url:"@Url.Action("Search", "QuotationCondition", null, Request.Url.Scheme)",
+             success: function (data2)
+             {
+
+              if(CheckForSessionExpiry(data2))
+                   {
+                     SessionExpiredRedirect();
+                     return;
+                   }
+                 if(data2.ErrorOccured)
+                 {
+                txtError = data2.ErrorMessage;
+                txtErrorType = "0";
+                DisplayModal(txtErrorType, txtError);
+                return;
+                 }
+
+                 if (data2.DataCheck=="1")
+                  {
+                   // txtError = " No Record Found";
+                    txtError = "@Resources.Resource.MsgInfo18 ";
+                    txtErrorType = "0";
+                    DisplayModal(txtErrorType, txtError);
+                     DisableControls();
+                   }
+
+                else {
+
+                populateTransportationCodesOnSearch(data2);
+                 ModelInfoMark=data2.ModelInfoMark
+                         CheckForStatus=1;
+                         // $("#OrderType").attr("disabled",true)
+                            $("#btnDetail").attr("disabled",false);
+                           if (data2.isDetailsExist>0)
+                           {
+
+
+                                    checkForDetails=data2.isDetailsExist;
+                                    $('#DistributerCode').attr("disabled","disabled");
+                                    $("#OrderType").attr("disabled","disabled");
+                                    $("#ddlCustomerCodes").attr("disabled","disabled");
+
+                                    $("#ReserverStock").attr("disabled", "disabled");
+                                    $("#SalesPriceList").attr("disabled",true);
+                                    $("#Currency").attr("disabled", "disabled");
+                                    $("#ExchangeRate").attr("disabled", "disabled");
+                                    $("#OrderType").attr("disabled", "disabled");
+                                    $("#Usance").attr("disabled", "disabled");
+                                    $("#TaxRate").attr("disabled", "disabled");
+                                    $("#Transportation").attr("disabled", "disabled");
+                                    $("#DeliveryTerms").attr("disabled", "disabled");
+                                    $("#PaymentTerms").attr("disabled", "disabled");
+                                    $("#OrderPRobability").attr("disabled", "disabled");
+                                    $("#Status").attr("disabled","disabled");
+                                    $("#Region").attr("disabled", "disabled");
+                                    $("#LoadingPort").attr("disabled", "disabled");
+                                    $("#UnloadingPort").attr("disabled", "disabled");
+                                    $("#PersonIncharge").attr("disabled", "disabled");
+                                    $("#RequestedDeliveryTime").attr("disabled", "disabled");
+                                    $("#ShipToAddress").attr("disabled", "disabled");
+                                    $('#BillingRateA').attr("readonly","readonly");
+                                    $('#BillingRateB').attr("readonly","readonly");
+                                    $('#BillingRateC').attr("readonly","readonly");
+                                    $('#BillingRateD').attr("readonly","readonly");
+                                    $('#BillingRateE').attr("readonly","readonly");
+                               $('#BillingRateF').attr("readonly", "readonly");
+                               //hst008 start
+                               if (gstrPriceCalculationMethod == "D")
+                               {
+                                   $('#DiscountRateOther').attr("readonly", "readonly");
+                               }//hst008 end
+                                    //if(data2.Role==1)//hst001
+                                    if(data2.Role!=3)//hst001
+                                    {
+                                    $("#Manufacturer").attr("disabled", "disabled");
+                                    $("#SubstitutionCodes").attr("disabled", "disabled");
+                                     $("#PriceSettingCodes").attr("disabled", "disabled");
+                                      $("#ExitPoints").attr("disabled", "disabled");
+                                    }
+                             }
+                           else
+                           {
+                                checkForDetails=0
+                            }
+                     if (isRealValue(data2.ModelInformation))
+                      {
+                        $.each(data2.ModelInformation, function (index, itemData) {
+                           $('#LineNo').text(itemData.LineNo);
+                            $('#ModelCode').val(itemData.ModelCode);
+                            $('#SerialNo').val(itemData.SerialNo);
+                            $('#ESerialNo').val(itemData.EngineSrNo);
+                            $('#CustomerDetails').val(itemData.CustomerDetails);
+                             });
+                          }
+                 $('#QuotationNo').val(data2.QuotationNo);
+                 $('#QuotationSeqNo').val(data2.QuotationSeqNo);
+                 $('#QuotationSeqNo').attr("disabled","disabled");
+                 $('#QuotationNo').attr("disabled","disabled");
+                 $('#OrigQuotationNo').val(data2.OrigQuotationNo);
+                 $('#OrigQuotationSeqNo').val(data2.OrigQuotationSeqNo);
+                 $('#OrigQuotationNo').attr("disabled","disabled");
+                 $('#OrigQuotationSeqNo').attr("disabled","disabled");
+                 $('#DistributerOrderNo').val(data2.DistributerOrderNo);
+
+
+                 populateCustomerCodes(data2);
+
+                 //===Setting Saved Customer Code
+
+                 var SavedCustomerCode = data2.SavedCustomerCode;
+                $("#ddlCustomerCodes").val(SavedCustomerCode);
+                $("#ddlCustomerCodes").trigger("change");
+                //  var blnDestinationExists = false;
+                //  data2.DestinationCodes.forEach(function(des_code){
+                //     if(des_code.DDES == data2.DestinationDescription)
+                //     {
+                //     blnDestinationExists = true;
+                //     }
+                //  });
+
+                //  if(blnDestinationExists)
+                //  {
+                //     $("#ddlDestinations option:contains(" + data2.DestinationDescription + ")").attr('selected', 'selected');
+                //  }
+                //  else
+                //  {
+                //     $("#ddlDestinations").append("<option value='"+data2.DestinationDescription+"'>"+data2.DestinationDescription+"</option>");
+                //     $("#ddlDestinations").val(data2.DestinationDescription);
+
+                //  }
+                 //==============================================
+
+
+
+
+
+
+
+              if (data2.AvailableMark==true)
+                            {
+                             $('#AvailableMark').attr("checked","checked");
+                            }
+                            else { $('#AvailableMark').removeAttr("checked");
+
+                                 }
+                     if (data2.UseHSCode==true)
+                            {
+                             $('#UseHSCode').attr("checked","checked");
+                            }
+                       else { $('#UseHSCode').removeAttr("checked");
+
+                                 }
+                     if (data2.ReserverStock==true)
+                            {
+                             $('#ReserverStock').attr("checked","checked");
+
+                            }
+                         else { $('#ReserverStock').removeAttr("checked");
+
+                                 }
+
+                         if (data2.DontConsiderEORes==true)
+                            {
+                             $('#DontConsiderEORes').attr("checked","checked");
+
+                            }
+                            else { $('#DontConsiderEORes').removeAttr("checked");
+
+                                 }
+                         if (data2.FixPrice==true)
+                            {
+                             $('#FixPrice').attr("checked","checked");
+                            }
+                            else { $('#FixPrice').removeAttr("checked");
+
+                                 }
+                  $.each(data2.DistributerCodes, function (index, itemData) {
+                  $('#DistributerCode').val( itemData.Value);
+                  });
+          $('#DistributerName').val(data2.DistributerName);
+           $.each(data2.SalesPriceList1, function (index, itemData) {
+             if (itemData.Value!=null&&itemData.Value!="")
+                $('#SalesPriceList').val(itemData.Value)
+                 });
+             $.each(data2.OrderType, function (index, itemData2) {
+                                OTYPCheck=itemData2.Value;
+            $('#OrderType').val(itemData2.Value)
+                });
+
+                     $.each(data2.Currency, function (index, itemData2) {
+                     $('#Currency').val(itemData2.Value)
+                     });
+                $('#ExchangeRate').val(data2.ExchangeRate);
+                $.each(data2.Usance, function (index, itemData2) {
+                         $('#Usance').val(itemData2.Value)
+
+                          });
+
+                $.each(data2.TaxRate, function (index, itemData2) {
+                         $('#TaxRate').val(itemData2.Value)
+
+                          });
+           //hst005 Comment Start
+            // $.each(data2.Transportation, function (index, itemData2) {
+            //  $('#Transportation').val(itemData2.Value)
+            // });
+                $('#Transportation').val(data2.SelectedTransportationCode);
+        //hst005 Comment End
+
+
+
+
+                      $.each(data2.DeliveryTerms, function (index, itemData2) {
+                         $('#DeliveryTerms').val(itemData2.Value)
+
+                          });
+
+
+                   $.each(data2.PaymentTerms, function (index, itemData2) {
+                         $('#PaymentTerms').val(itemData2.Value)
+
+                          });
+                    $.each(data2.OrderPRobability, function (index, itemData2) {
+                         $('#OrderPRobability').val(itemData2.Value)
+
+                          });
+                   $.each(data2.Region, function (index, itemData2) {
+                         $('#Region').val(itemData2.Value)
+
+                          });
+               $.each(data2.Status, function (index, itemData2) {
+
+                      if (itemData2.Value>1)
+                        {
+
+                        if (itemData2.Value==2)
+                           {
+                            $('#DistributerOrderNo').attr("disabled",false);
+                            }
+                            else
+                            {
+                             $('#DistributerOrderNo').attr("disabled","disabled");
+                             $("#btnSave").attr("disabled","disabled");
+                            }
+                             if (itemData2.Value==4)
+                             {
+                              $("#btnDetail").attr("disabled","disabled");
+                             }
+                            $('#QuotationSeqNo').attr("disabled","disabled");
+                            $('#QuotationNo').attr("disabled","disabled");
+                            $('#OrderType').attr("disabled","disabled");
+                           // $('#DistributerCode').attr("disabled","disabled");
+                            $('#Status').attr("disabled","disabled");
+                            $('#OrderPRobability').attr("disabled","disabled");
+                            $('#Transportation').attr("disabled","disabled");
+                            $('#LoadingPort').attr("disabled","disabled");
+                            $('#QuotationValidity').attr("readonly","readonly");
+                            $('#Region').attr("disabled","disabled");
+                            $('#UnloadingPort').attr("disabled","disabled");
+                            $('#RequestedDeliveryTime').attr("disabled","disabled");
+                            $('#TaxRate').attr("disabled","disabled");
+                            $('#BillingRateA').attr("readonly","readonly");
+                            $('#BillingRateB').attr("readonly","readonly");
+                            $('#BillingRateC').attr("readonly","readonly");
+                            $('#BillingRateD').attr("readonly","readonly");
+                            $('#BillingRateE').attr("readonly","readonly");
+                          $('#BillingRateF').attr("readonly", "readonly");
+                          //hst008 start
+                          if (gstrPriceCalculationMethod == "D") {
+                              $('#DiscountRateOther').attr("readonly", "readonly");
+                          }//hst008 end
+                            $('#ShipToAddress').attr("readonly","readonly");
+                            $('#AvailableMark').attr("disabled","disabled");
+                            $('#UseHSCode').attr("disabled","disabled");
+                            $('#ReserverStock').attr("disabled","disabled");
+                            $('#DontConsiderEORes').attr("disabled","disabled");
+                            $('#FixPrice').attr("disabled","disabled");
+                            $('#Comments').attr("readonly","readonly");
+                            $('#Memo').attr("readonly","readonly");
+                           $("#btnAdd").attr("disabled","disabled");
+                           $("#btnEdit").attr("disabled","disabled");
+                           $("#btnDelete").attr("disabled","disabled");
+                           $(".divModelInput").find("input,button,textarea").attr("readonly", "readonly");
+                           $("#ExitPoints").val(itemData2.ExitPoint);
+
+                        }
+                        if (itemData2.Value==1 )
+                        {
+                         $("#btnSave").attr("disabled", false);
+                         $("#Status").attr("disabled", false);
+                        if(data2.ModelInfoMark)
+                           {
+                             $(".divModelInput").find("input,button,textarea").attr("disabled", false);
+                           }
+                        }
+
+
+
+                         $('#Status').val(itemData2.Value)
+
+                          });//each function end
+
+                  $.each(data2.LoadingPort, function (index, itemData2) {
+                         $('#LoadingPort').val(itemData2.Value)
+
+                          });
+                    $.each(data2.UnloadingPort1, function (index, itemData2) {
+                         $('#UnloadingPort').val(itemData2.Value)
+
+                          });
+                $.each(data2.SubstitutionCodes, function (index, itemData2) {
+                         $('#SubstitutionCodes').val(itemData2.Value)
+
+                          });
+                     $.each(data2.PriceSettingCodes, function (index, itemData2) {
+                         $('#PriceSettingCodes').val(itemData2.Value)
+
+                          });
+                $('#PersonIncharge').val(data2.PersonIncharge);
+              //   $('#QuotationValidity').val( Date(data2.QuotationValidity));
+                  $('#RequestedDeliveryTime').val(data2.RequestedDeliveryTime);
+                     //hst008 start
+                     /*Calling method to show/hide control*/
+                     ShowHideDorBRates(data2.PriceCalculationMethod);
+                     //$('#PremiumRate').val(data2.PremiumRate);//hst009 Commented
+                     if (data2.PriceCalculationMethod == "D")
+                     {
+                         $('#PremiumRate').val(data2.PremiumRate);//hst009
+                         $('#DiscountRateOther').val(data2.DiscountRateOther);
+                     }
+
+                  //hst008 end
+                 $('#BillingRateA').val(data2.BillingRateA);
+                 $('#BillingRateB').val(data2.BillingRateB);
+                 $('#BillingRateC').val(data2.BillingRateC);
+                 $('#BillingRateD').val(data2.BillingRateD);;
+                 $('#BillingRateE').val(data2.BillingRateE);
+                 $('#BillingRateF').val(data2.BillingRateF);
+                 $('#ShipToAddress').val(data2.ShipToAddress);
+                 $('#Memo').val(data2.Memo);
+                 $('#Comments').val(data2.Comments);
+                 $('#QuotationValidity').val(data2.QuotationValidity);
+                $('#RequestedDeliveryTime').val(data2.RequestedDeliveryTime);
+                 $("#ExitPoints").val(data2.ExitPoint);
+
+                 if(!data2.IsCreator){    DisableControls("LeaveDBCodes");}
+
+            }
+ },
+ error: function (xhr, ajaxOptions, thrownError) {
+                //txtError = "Failed to retrieve data";
+                txtError = "@Resources.Resource.MsgInfo3";
+                txtErrorType = "0";
+                DisplayModal(txtErrorType, txtError);
+
+                    }
+
+
+ });
+
+
+}
+function ChooseDBCode(args)
+{
+    if(args!=null && args.length>0){return $("#DistributerCode").val();}
+    else{return (GetParameterValues('DBCode')!=null &&  GetParameterValues('DBCode')!="" ?GetParameterValues('DBCode'): $("#DistributerCode").val());}
+
+
+
+}
+    var ModelInfoMark=false;
+
+    $(document).ready(function () {
+       $("#ShipToAddress").attr("readonly",true);//make ship address readonly
+    $("#AvailableMark").attr("checked",true);
+    $("#OrigQuotationNo").attr("disabled","disabled");
+    $("#OrigQuotationSeqNo").attr("disabled","disabled");
+    $("#QuotationValidity").attr("disabled","disabled");
+    $("#ModelCode").attr("disabled","disabled");
+    $("#SerialNo").attr("disabled","disabled");
+    $("#ESerialNo").attr("disabled","disabled");
+    $("#DistributerName").attr("disabled","disabled");
+    $("#CustomerName").attr("disabled","disabled");
+    $("#PersonIncharge").attr("disabled","disabled");
+        $("#ExchangeRate").attr("disabled", "disabled");
+        //hst009
+        if (gstrPriceCalculationMethod == "D")
+        {
+            $("#PremiumRate").attr("disabled", "disabled");
+        }
+    @if (Session["Role"].ToString() != "1" && !PDXWEB.BusinessModels.Common.UserRights.hasRight("A01S020_02_004"))
+    {
+        <text>
+            $("#TaxRate").attr("disabled","disabled");
+        </text>
+    }
+    $("#CustomerDetails").attr("disabled","disabled");
+
+    if(strRoleCheck == "0")//hst001
+    {
+      $("#DistributerCode").attr("disabled",true);
+    }
+    else//hst002 - if user is (Admin/Administrator/EndUser) then add empty option in dropdown 'SalesPriceList' as selected
+    {
+        if(!$("#SalesPriceList").hasClass("Appended"))
+        {
+            $("#SalesPriceList").prepend( '<option value="" class="EmptyOption"></option>' ).addClass("Appended").val("");
+        }
+    }
+        $("#TaxRate").val("0");
+        $("#OrderPRobability").val("A");
+       // $("#SalesPriceList").val("USD019");
+        //hst010 commented
+        //$('#BillingRateA').val("");
+        //$('#BillingRateB').val("");
+        //$('#BillingRateC').val("");
+        //$('#BillingRateD').val("");
+        //$('#BillingRateE').val("");
+        //$('#BillingRateF').val("");
+        //hst009
+        if (gstrPriceCalculationMethod == "D") {
+           // $('#DiscountRateOther').val("");//hst008//hst010
+            $('#PremiumRate').val("");//hst008
+        }
+        var strRole=@strCheckRole;
+        //if (strRole==1)//hst002
+        if (strRole==0)//hst002
+        {
+            $("#Currency").attr("disabled","disabled");//hst002
+            $("#Usance").attr("disabled","disabled");
+            $("#PaymentTerms").attr("disabled","disabled");
+            $("#DeliveryTerms").attr("disabled","disabled");
+            $("#SalesPriceList").attr("disabled","disabled");
+
+            //hst003 - Start {
+            //$('#BillingRateA').attr("readonly","readonly");
+            //$('#BillingRateB').attr("readonly","readonly");
+            //$('#BillingRateC').attr("readonly","readonly");
+            //$('#BillingRateD').attr("readonly","readonly");
+            //$('#BillingRateE').attr("readonly","readonly");
+            //$('#BillingRateF').attr("readonly","readonly");
+
+            //$('#BillingRateA').attr("disabled","disabled");
+            //$('#BillingRateB').attr("disabled","disabled");
+            //$('#BillingRateC').attr("disabled","disabled");
+            //$('#BillingRateD').attr("disabled","disabled");
+            //$('#BillingRateE').attr("disabled","disabled");
+            //$('#BillingRateF').attr("disabled","disabled");
+            //} hst003 - End
+
+        }
+        else
+        {
+
+            //$("#Currency").attr("disabled","disabled");//hst002-Commented to enable the fields
+            //$("#Usance").attr("disabled","disabled");
+            //$("#PaymentTerms").attr("disabled","disabled");
+            //$("#DeliveryTerms").attr("disabled","disabled");
+            //$("#SalesPriceList").attr("disabled","disabled");
+            $("#DistributerName").attr("disabled","disabled");
+            //$("#DistributerCode").attr("disabled",false); //hst005
+            $("#ExchangeRate").attr("disabled","disabled");
+            $("#PersonIncharge").attr("disabled","disabled");
+            $("#QuotationValidity").attr("readonly","readonly");
+        }
+
+
+
+
+
+    $("#btnNew").click(function () {
+       window.location.href="@Url.Action("Index", "QuotationCondition", null)";
+    });
+
+    $("#btnDetail").click(function () {
+
+        var count=0;
+        $("#spnQuotationNo").html("")
+        if ($('#QuotationNo').val().trim()=="")
+        {
+            /* $("#spnQuotationNo").html("*").attr("style","color:red");*/
+            $("#QuotationNo").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;display: inline");
+            return false;
+        }
+          $(".NumericOnly").each(function ()
+           {
+                if (isNaN($(this).val()))
+                {
+                    if ($(this).next().attr("id")=="QuotationSeqNo")
+                    {
+                        $(this).next().next("span").html("*").attr("style","color:red");
+                    }
+                    else
+                    {
+                        $(this).next("span").html("*").attr("style","color:red");
+                    }
+                    count++;
+                }
+            });
+
+        if (count>0) { return false; }
+        var ulrToNavigate="@Url.Action("Index", "QuotationDetails", null)" +"?strQUTN="+$('#QuotationNo').val().trim()+"&strQutnSubNo="+$('#QuotationSeqNo').val().trim()+"&DBCode="+$('#DistributerCode').val();
+        window.location.href=ulrToNavigate;
+
+    });//btndetail end
+
+
+    var varRoadExitPoint;
+    var varSeaExitPoint;
+    var varAirExitPoint;
+    var varExitPoints;
+
+  $("#DistributerCode").change(function (event) {
+    $("#ddlCustomerCodes").empty();
+   //if(strRoleCheck!="1"){return;}//hst001
+   if(strRoleCheck=="3"){return;}//hst001
+             var dID= $(this).val();
+    if($(this).val()!="")
+    {
+                $.post("@Url.Action("DistributerCodes_OnChangeLoadCustInfo", "QuotationCondition", null)", { strDistributerCode: dID },
+                function (data) {
+                if(CheckForSessionExpiry(data))
+                {
+                SessionExpiredRedirect();
+                return;
+                }
+                $("#DistributerName").val(data.CustomerName);
+                $("#LoadingPort").val(data.LoadingPort);
+                $("#UnloadingPort").val(data.UnLoadingPort);
+                $("#PriceSettingCodes").val(data.PriceSetupCode);
+                $("#Currency").val(data.CurrencyUnit);
+                $("#Region").val(data.RegionCode);
+                $("#ShipToAddress").val(data.Address);
+                $("#SubstitutionCodes").val(data.IPYN);
+                //if(data.Role!=3)//hst002
+                if(data.Role!=3)//hst002
+                {
+                $("#SalesPriceList").val(data.PriceCode)
+                }
+                varRoadExitPoint = data.RoadExitPoint;
+                varSeaExitPoint = data.SeaExitPoint;
+                varAirExitPoint = data.AirExitPoint;
+
+                populateTransportationCodes(data);
+                populateCustomerCodes(data);
+
+                //Commented Start:  this code as Order types will be populated automatically, Distributor Dropdown onchange was called.
+                //var select = $("#OrderType");
+                //select.empty();
+                //$.each(data.OrderTypes, function (index, itemData) {
+                //select.append($('<option/>', {
+                //        value: itemData.Value,
+                //        text: itemData.Text
+                //    }
+                //
+                //    )); //append end
+                //}); //each end
+                //Comment End:
+
+                }) // json end
+
+    }
+    }); //DistributerCode end
+
+    function populateTransportationCodes(data)
+    {
+
+        var select = $("#Transportation");
+        select.empty();
+
+        data.TransportationCodes.forEach(function(tcod){
+        $("#Transportation").append("<option value='"+tcod.Value+"'>"+tcod.Text+"</option>");
+        })
+
+    }
+
+
+
+
+
+
+
+
+
+
+    $("#Currency").change(function (event) {
+    //if(strRoleCheck!="1"){return;}//hst001
+    if(strRoleCheck=="3"){return;}//hst001
+                var dID= $(this).val();
+    if($(this).val()!="")
+    {
+    $.post("@Url.Action("Currency_Change", "QuotationCondition", null)", { strCCD: $(this).val() },
+                    function (data) {
+                    if(CheckForSessionExpiry(data))
+                    {
+                        SessionExpiredRedirect();
+                        return;
+                    }
+                        $("#ExchangeRate").val(data);
+
+                    }) // json end
+
+    }
+    }); //DistributerCode end
+
+
+   $("#OrderType").change(function () {
+        OrderTypeOnChange();
+         });
+    });
+
+</script>
+<script>
+    //hst010 start
+    function ValidateBillingRates()
+    {
+        var DataValid = true;
+        var minLimit = 0;
+        var maxLimit = 2;
+        $("#BillingRateA,#BillingRateB,#BillingRateC,#BillingRateD,#BillingRateE,#BillingRateF").removeClass("clsInvalidExchangeRate");
+        if (gstrPriceCalculationMethod == "D")
+        {
+            $("#DiscountRateOther").removeClass("clsInvalidExchangeRate");
+            maxLimit = 1;
+            if (!IsvalidRate($("#BillingRateA").val(), minLimit, maxLimit)) {
+                $("#BillingRateA").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateB").val(), minLimit, maxLimit)) {
+                $("#BillingRateB").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateC").val(), minLimit, maxLimit)) {
+                $("#BillingRateC").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateD").val(), minLimit, maxLimit)) {
+                $("#BillingRateD").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateE").val(), minLimit, maxLimit)){
+                $("#BillingRateE").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateF").val(), minLimit, maxLimit)) {
+                $("#BillingRateF").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+
+            if (!IsvalidRate($("#DiscountRateOther").val(), minLimit, maxLimit))
+            {
+                $("#DiscountRateOther").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+        }
+        else
+        {
+            //billing Rates
+            maxLimit = 2;
+            if (!IsvalidRate($("#BillingRateA").val(), minLimit, maxLimit)) {
+                $("#BillingRateA").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateB").val(), minLimit, maxLimit)) {
+                $("#BillingRateB").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateC").val(), minLimit, maxLimit)) {
+                $("#BillingRateC").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateD").val(), minLimit, maxLimit)) {
+                $("#BillingRateD").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateE").val(), minLimit, maxLimit)) {
+                $("#BillingRateE").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+            if (!IsvalidRate($("#BillingRateF").val(), minLimit, maxLimit)) {
+                $("#BillingRateF").addClass("clsInvalidExchangeRate");
+                DataValid = false;
+            }
+        }
+        return DataValid;
+    }
+    function IsvalidRate(valTovalidate,minLimit,maxLimit)
+    {
+        var RateIsValid = true;
+        if (gstrPriceCalculationMethod == "D") {
+            //discount Rates
+            if (valTovalidate == "" || parseFloat(valTovalidate) < minLimit || parseFloat(valTovalidate) > maxLimit)
+            {
+                RateIsValid = false;
+            }
+        }
+        else
+        {
+            //billing rates
+            if (valTovalidate == "" || parseFloat(valTovalidate) <= minLimit || parseFloat(valTovalidate) > maxLimit)
+            {
+                RateIsValid = false;
+            }
+        }
+
+        return RateIsValid;
+    }
+    //hst010 end
+</script>
+
+<script type="text/javascript">
+    var gstrPriceCalculationMethod = "";//hst008
+    $(document).ready(function () {
+        $("#btnSave").click(function () {
+            //hst010
+            if (!ValidateBillingRates())
+            {
+                 txtError = "@Resources.Resource.MsgInfo155";
+                 txtErrorType = "0";
+                 DisplayModal(txtErrorType, txtError);
+                return;
+            }
+            //hst010
+        var count=0;
+        var modelInfo=0;
+        var invalidValue=0;
+        $("#QuotationNo").attr("style","display: inline");/*First click search then save ..on save remove required indication from this controll*/
+        $("select option:selected").each(function () {
+
+                   if($(this).val()=="")
+                   {
+                  /*  $(this).parent().next("span").html("*").attr("style","color:red");*/
+                    $(this).parent().attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+                     count++;
+                   }
+                   else
+                   {
+                   /* style="display: -webkit-inline-flex;display: inline-flex;display: inline"*/
+                    $(this).parent().attr("style","");
+                    /*$(this).parent().next("span").text("");*/
+                    }
+
+                });
+
+           if ($("#DistributerOrderNo").val().trim()=="")
+             {
+             $("#DistributerOrderNo").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+             /*$("#spnDistributerOrderNo").html("*").attr("style","color:red");*/
+
+              count++;
+             }
+             else
+             {
+              $("#DistributerOrderNo").attr("style","");
+              /*$("#spnDistributerOrderNo").empty();*/
+              }
+            if($("#ddlCustomerCodes").val()=="" || $("#ddlCustomerCodes").val() == null )
+            {
+                $("#ddlCustomerCodes").attr("style","border-color:#ff8080 !important; box-shadow: 0px 0px 5px #ff8080;");
+                count++
+            }
+            else
+            {
+                $("#ddlCustomerCodes").attr("style","");
+            }
+
+             if (ModelInfoMark)
+                {
+                  $(".divModelInput input").each(function () {
+                  if($(this).val().trim()=="")
+                    {
+                     /* $(this).next("span").html("*").attr("style","color:red");*/
+                      $(this).attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+                      modelInfo++;
+
+                    }
+                  else
+                      {
+                      $(this).attr("style","");
+                        /*$(this).next("span").text("");*/
+                     }
+
+
+                       });
+
+                    }
+                      else
+                      {
+                       $(".divModelInput input").each(function () {
+                      $(this).attr("style","");
+                        /*$(this).next("span").text("");*/
+                          });
+                     }
+
+
+             if (count>0)
+                 {
+                 return false;
+                 }
+                 if (modelInfo>0)
+                 {
+                  txtError = " Please Provide One Model Information";
+                  txtErrorType = "0";
+                  DisplayModal(txtErrorType, txtError);
+
+                     return false;
+                 }
+
+                 //hstShabbir Start 03-July-2019 If Order Type is EO then Comments should be mandatory.
+                    if($("#OrderType").val() == "EO" && $("#Comments").val() == "")
+                    {
+                         $("#Comments").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080; width:100%; height:168px;");//hst009
+                         return;
+                    }
+                    else{
+                        $("#Comments").attr("style","width:100%; height:168px; white-space: normal !important; resize:none");
+                    }
+                    //hstShabbir End
+
+                 if (invalidValue>0)
+                    {
+
+                        return false;
+                    }
+
+                    if (recentConfirmed && !ConfirmedByUser) {
+                    $("#ConfirmModal").modal();
+
+                    return;
+
+                        }
+      $("#divToUpdate").prepend("<div id='divLoading'></div>");
+       var postData =
+            {
+            OrigQuotationNo:$("#OrigQuotationNo").val(),
+            OrigQuotationSeqNo: $("#OrigQuotationSeqNo").val(),
+            QuotationNo: $("#QuotationNo").val(),
+            QuotationSeqNo: $("#QuotationSeqNo").val(),
+            DistributerOrderNo: $("#DistributerOrderNo").val(),
+            DistributerCodes: $("#DistributerCode").val(),
+            DistributerName: $("#DistributerName").val(),
+            SalesPriceList: $("#SalesPriceList").val(),
+            Currency: $("#Currency").val(),
+            ExchangeRate: $("#ExchangeRate").val(),
+            OrderType: $("#OrderType").val(),
+            Usance: $("#Usance").val(),
+            TaxRate: $("#TaxRate").val(),
+            Transportation: $("#Transportation").val(),
+            DeliveryTerms: $("#DeliveryTerms").val(),
+            PaymentTerms: $("#PaymentTerms").val(),
+            OrderPRobability: $("#OrderPRobability").val(),
+            Region: $("#Region").val(),
+            Status: $("#Status").val(),
+            Manufacturer: $("#Manufacturer").val(),
+            LoadingPort: $("#LoadingPort").val(),
+            UnloadingPort: $("#UnloadingPort").val(),
+            SubstitutionCodes: $("#SubstitutionCodes").val(),
+            PriceSettingCodes: $("#PriceSettingCodes").val(),
+            PersonIncharge: $("#PersonIncharge").val(),
+            QuotationValidity: $("#QuotationValidity").val(),
+           RequestedDeliveryTime: $("#RequestedDeliveryTime").val(),
+            //hst008 start
+           PriceCalculationMethod: gstrPriceCalculationMethod,
+           DiscountRateOther: gstrPriceCalculationMethod == "D" ? $.trim($("#DiscountRateOther").val()): 0,
+           PremiumRate: gstrPriceCalculationMethod == "D" ? $("#PremiumRate").val(): 0,//hst009
+           //hst008 end
+            BillingRateA: $("#BillingRateA").val(),
+            BillingRateB: $("#BillingRateB").val(),
+            BillingRateC: $("#BillingRateC").val(),
+            BillingRateD: $("#BillingRateD").val(),
+            BillingRateE: $("#BillingRateE").val(),
+            BillingRateF: $("#BillingRateF").val(),
+            ShipToAddress: $("#ShipToAddress").val(),
+            AvailableMark:$('#AvailableMark').is(":checked")?$('#AvailableMark').is(":checked"):false ,
+            UseHSCode:$('#UseHSCode').is(":checked")?$('#UseHSCode').is(":checked"):false ,
+            ReserverStock:$('#ReserverStock').is(":checked")?$('#ReserverStock').is(":checked"):false ,
+            DontConsiderEORes:$('#DontConsiderEORes').is(":checked")?$('#DontConsiderEORes').is(":checked"):false ,
+            FixPrice:$('#FixPrice').is(":checked")?$('#FixPrice').is(":checked"):false ,
+            ModelInformation: $("#ModelInformation").val(),
+            Memo: $("#Memo").val()!=""?$("#Memo").val():"",
+            Comments: $("#Comments").val()!=null?$("#Comments").val():"",
+            isDetailsExist: $("#isDetailsExist").val(),
+            LineNo : $("#LineNo").val(),
+            ModelCode : $("#ModelCode").val(),
+            SerialNo : $("#SerialNo").val(),
+            EngineSrNo : $("#ESerialNo").val(),
+            CustomerDetails : $("#CustomerDetails").val(),
+            ModelInfoMark:ModelInfoMark,
+            ExitPoint : $("#ExitPoints").val(),
+            CustomerCode: $("#ddlCustomerCodes option:selected").val()
+            };
+             $.ajax({
+             type: "POST",
+             data: postData,
+             url:"@Url.Action("Save", "QuotationCondition", null, Request.Url.Scheme)",
+             success: function (responseFromServer)
+             {
+                if(CheckForSessionExpiry(responseFromServer))
+                   {
+                     SessionExpiredRedirect();
+                     return;
+                   }
+                         if (isRealValue(responseFromServer))
+                             {
+
+                                        if (responseFromServer.RecordUpdated==1)
+                                         {
+                                            if(recentConfirmed){$("#Status").attr("disabled",true)}//if status is just changed to confirmed,disable  status dropdown
+                                          //$("#spnMsg").html("<lable style='color:red;'> Data Updated successfully</label>");
+                                          //$("#OrderType").attr("disabled",true);
+
+                                          // txtError = "Data Updated successfully";
+                                            //txtErrorType = "1";
+                                           // DisplayModal(txtErrorType, txtError);
+                                          CheckForStatus=1;
+                                          $("#btnSearch").trigger("click");
+                                         // alert("Record Updated Successfully");
+                                          $("#divModalBody").html("");
+
+                                           //txtError = "Data saved successfully";
+                                           txtError = "@Resources.Resource.MsgInfo19";
+                                            txtErrorType = "1";
+                                            DisplayModal(txtErrorType, txtError);
+
+
+                                         }
+
+                                      else if (responseFromServer.RecordInserted==1)
+                                            {
+                                                  $("#spnMsg").html("<lable style='color:red'> Data Added successfully</label>");
+                                                     $("#QuotationSeqNo").val(00);
+                                                     $("#QuotationNo").val(responseFromServer.NewQuotaioonNumber);
+                                                      $("#QuotationNo").attr("disabled","disabled");
+                                                       $("#QuotationSeqNo").attr("disabled","disabled");
+//                                                         $("#OrderType").attr("disabled",true);
+                                                         CheckForStatus=1;
+                                                          $("#btnDetail").attr("disabled",false);
+                                                         // alert("Record Inserted Successfully");
+                                                          $("#divModalBody").html("");
+                                           // txtError = "Data saved successfully";
+                                           txtError = "@Resources.Resource.MsgInfo19";
+                                            txtErrorType = "1";
+                                            DisplayModal(txtErrorType, txtError);
+
+
+
+                                            }
+                                            else if(responseFromServer.ErrorOccured==1)
+                                            {
+                                           // txtError = "An Error Occured..";
+                                            txtError = "@Resources.Resource.MsgInfo3";
+                                            txtErrorType = "0";
+                                            DisplayModal(txtErrorType, txtError);
+
+
+                                                  // alert("An Error Occured..");
+                                            }
+                                            else if(responseFromServer.ErrorOccured==5)
+                                            {
+                                            $("#DistributerCode").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;display: inline");
+                                            txtError = "Please select your own DB Code";
+                                            txtErrorType = "0";
+                                            DisplayModal(txtErrorType, txtError);
+                                            }
+                                            else if(responseFromServer.ErrorOccured ==6)
+                                            {
+                                            //    if($("#BillingRateA").val() <= 0 || $("#BillingRateA").val() >2)
+                                            //    {
+                                            //        $("#BillingRateA").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+                                            //    }
+                                            //    if ($("#BillingRateB").val() <= 0 || $("#BillingRateB").val() >2)
+                                            //    {
+                                            //        $("#BillingRateB").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+                                            //    }
+                                            //    if ($("#BillingRateC").val() <= 0 || $("#BillingRateC").val() >2)
+                                            //    {
+                                            //        $("#BillingRateC").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+                                            //    }
+                                            //    if($("#BillingRateD").val() <= 0 || $("#BillingRateD").val() >2)
+                                            //    {
+                                            //        $("#BillingRateD").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+                                            //    }
+                                            //    if($("#BillingRateE").val() <= 0 || $("#BillingRateE").val() >2)
+                                            //    {
+                                            //        $("#BillingRateE").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+                                            //    }
+                                            //    if($("#BillingRateF").val() <= 0 || $("#BillingRateF").val() >2)
+                                            //    {
+                                            //        $("#BillingRateF").attr("style","border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+                                            //}
+                                            ////hst008 start
+                                            //if (gstrPriceCalculationMethod == "D")
+                                            //{
+                                            //    //if ($("#DiscountRateOther").val() <= 0 || $("#DiscountRateOther").val() > 2)//hst010 commented
+                                            //    if ($("#DiscountRateOther").val() < 0 || $("#DiscountRateOther").val() > 1)//hst010
+                                            //    {
+                                            //        $("#DiscountRateOther").attr("style", "border-color:#ff8080 !important;box-shadow: 0px 0px 5px 0px #ff8080;");
+                                            //    }
+                                            //}
+                                            ValidateBillingRates();//hst010
+                                            //hst008 end
+                                            txtError = "@Resources.Resource.MsgInfo155";
+                                            txtErrorType = "0";
+                                            DisplayModal(txtErrorType, txtError);
+                                            }
+                                            if(responseFromServer.checkForcancelStatus==1)
+                                            {
+                                            //alert("canceled");
+                                            DisableScreen();
+
+                                            }//Incase of quotation cancelation
+
+
+                                    }//response from server
+
+             }//success
+
+
+
+
+
+         });//ajax
+
+
+
+
+        });// btnsave
+
+
+
+
+
+    });//doc.ready
+
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnAdd").click(function () {
+            $("#ModelCode").attr("readonly", "readonly");
+            $("#SerialNo").attr("readonly", "readonly");
+            $("#ESerialNo").attr("readonly", "readonly");
+            $("#CustomerDetails").attr("readonly", "readonly");
+        });
+        $("#btnEdit").click(function () {
+            $("#txtLineNo").attr("readonly", false);
+            $("#ModelCode").attr("readonly", false);
+            $("#SerialNo").attr("readonly", false);
+            $("#ESerialNo").attr("readonly", false);
+            $("#CustomerDetails").attr("readonly", false);
+        });
+        $("#btnDelete").click(function () {
+            $("#ModelCode").val("");
+            $("#SerialNo").val("");
+            $("#ESerialNo").val("");
+            $("#CustomerDetails").val("");
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var quotationNo = GetParameterValues('quotationNo');
+        var subQuotationNo = GetParameterValues('subquotationNo');
+        var DbCode = GetParameterValues('DBCode');
+        var OrgQutn = GetParameterValues('OrgQutn');
+        var OrgQuto = GetParameterValues('OrgQuto');
+
+        if (OrgQutn != null && OrgQutn != "") {
+            $("#OrigQuotationNo").val(OrgQutn)
+        }
+        if (OrgQuto != null && OrgQuto != "") {
+            $("#OrigQuotationSeqNo").val(OrgQuto)
+        }
+
+        if (quotationNo != null && quotationNo != "" && DbCode != null && DbCode != "") {
+            $("#DistributerCode").val(DbCode)
+        }
+        if (quotationNo != null && quotationNo != "") {
+            $("#QuotationNo").val(quotationNo);
+        }
+        if (subQuotationNo != "" && subQuotationNo != null) {
+            $("#QuotationSeqNo").val(subQuotationNo);
+        }
+        if (quotationNo != null && quotationNo != "") {
+            $("#DistributerCode").attr("disabled", "disabled");
+            $("#btnSearch").trigger("click");
+        }
+        if (quotationNo == null) {
+            $("#DistributerCode").trigger("change");
+        }
+
+
+
+
+
+    });
+</script>
+<script type="text/javascript">
+
+    function ToggleValidation() {
+
+    }
+
+    function GetParameterValues(param) {
+        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < url.length; i++) {
+            var urlparam = url[i].split('=');
+            if (urlparam[0] == param) {
+                return urlparam[1];
+            }
+        }
+    }
+</script>
+<script type="text/javascript">
+    if (typeof String.prototype.trim !== 'function') {
+        String.prototype.trim = function () {
+            return this.replace(/^\s+|\s+$/g, '');
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });  //doc.ready end
+
+</script>
+<script type="text/javascript">
+    function DisableScreen() {
+        $('#DistributerOrderNo').attr("disabled", false);
+        $('#DistributerOrderNo').attr("disabled", "disabled");
+        $("#btnSave").attr("disabled", "disabled");
+        $("#btnDetail").attr("disabled", "disabled");
+        $('#QuotationSeqNo').attr("disabled", "disabled");
+        $('#QuotationNo').attr("disabled", "disabled");
+        $('#OrderType').attr("disabled", "disabled");
+        $('#DistributerCode').attr("disabled", "disabled");
+        $('#Status').attr("disabled", "disabled");
+        $('#OrderPRobability').attr("disabled", "disabled");
+        $('#Transportation').attr("disabled", "disabled");
+        $('#LoadingPort').attr("disabled", "disabled");
+        $('#QuotationValidity').attr("readonly", "readonly");
+        $('#Region').attr("disabled", "disabled");
+        $('#UnloadingPort').attr("disabled", "disabled");
+        $('#RequestedDeliveryTime').attr("disabled", "disabled");
+        $('#TaxRate').attr("disabled", "disabled");
+        $('#BillingRateA').attr("readonly", "readonly");
+        $('#BillingRateB').attr("readonly", "readonly");
+        $('#BillingRateC').attr("readonly", "readonly");
+        $('#BillingRateD').attr("readonly", "readonly");
+        $('#BillingRateE').attr("readonly", "readonly");
+        $('#BillingRateF').attr("readonly", "readonly");
+        //hst008 start
+        if (gstrPriceCalculationMethod == "D") {
+            $('#DiscountRateOther').attr("readonly", "readonly");
+        }
+        //hst008 end
+        $('#ShipToAddress').attr("readonly", "readonly");
+        $('#AvailableMark').attr("disabled", "disabled");
+        $('#UseHSCode').attr("disabled", "disabled");
+        $('#ReserverStock').attr("disabled", "disabled");
+        $('#DontConsiderEORes').attr("disabled", "disabled");
+        $('#FixPrice').attr("disabled", "disabled");
+        $('#Comments').attr("readonly", "readonly");
+        $('#Memo').attr("readonly", "readonly");
+        $("#btnAdd").attr("disabled", "disabled");
+        $("#btnEdit").attr("disabled", "disabled");
+        $("#btnDelete").attr("disabled", "disabled");
+        $(".divModelInput").find("input,button,textarea").attr("readonly", "readonly");
+
+    } //function end
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#OrderPRobability').on("change", function (e) {
+            if ($("#OrderPRobability").val() == "A") {
+                $("#ReserverStock").attr("disabled", false);
+            }
+            else {
+                $("#ReserverStock").attr("Checked", false);
+                $("#ReserverStock").attr("disabled", "disabled");
+
+            }
+        }); //function end
+
+    })//doc.ready end
+
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        $("#LoadingPort").val("JEA");
+
+    }); //doc
+</script>
+<script type="text/javascript">
+  var strRoleCheck=@strCheckRole;
+     $(document).ready(function () {
+
+         // (Session["role"].ToString() == "1")
+
+         //if(strRoleCheck=="1")//hst001
+         //if(strRoleCheck!="3")//hst001
+         if(strRoleCheck != "0") //hst003
+         {
+            $(".allownumericwithdecimal").attr("disabled",false);
+
+         }
+      else{
+           $(".allownumericwithdecimal").attr("disabled","disabled");
+         }
+
+     }); //doc.ready end
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".allownumericwithdecimal").keypress(function (event) {
+            var key = event.which;
+            if (!(key >= 48 && key <= 57)) {
+                if (key != 8 && key != 46) {
+                    event.preventDefault();
+
+                }
+            }
+        });
+        $(".allownumericwithdecimal").attr('maxlength', '4');
+    });   //doc.ready end
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".NumericOnly").keypress(function (event) {
+            //To avoid alphabet in textbox
+            var key = event.which;
+            if (!(key >= 48 && key <= 57)) {
+                if (key != 8 && key != 16) {
+                    event.preventDefault();
+                }
+            }
+            //To implement length restriction on numeric
+            if (this.value.length >= 10 && key != 8 && key != 13 && key != 16) {
+                return false;
+            }
+        })
+
+        $(".NumericOnly").on("paste", function (event) {
+            var element = this;
+            setTimeout(function () {
+                if (!$.isNumeric($(".NumericOnly").val().trim())) {
+                    $(".NumericOnly").val(""); false;
+                }
+                var text = $(element).val();
+                if (text.length >= 10) {
+                    $(element).val(text.substr(0, 10));
+                }
+            }, 100);
+        }); //numeric only end
+
+        $('#ShipToAddress').keypress(function (event) {
+            var key = event.which;
+
+            if (this.value.length >= 800 && key != 8 && key != 13) {
+                return false;
+            }
+        })
+
+        $('#ShipToAddress').keyup(function () {
+            if (this.value.length >= 800) {
+                $(this).val($(this).val().substr(0, 800));
+            }
+
+        })
+
+        //         $('#QuotationNo').keypress(function (event) {
+        //             var key = event.which;
+
+        //             if (this.value.length >= 10 && key != 8 && key != 13) {
+        //                 return false;
+        //             }
+        //         })
+
+        //         $('#QuotationNo').keyup(function () {
+        //             if (this.value.length >= 10) {
+        //                 $(this).val($(this).val().substr(0, 10));
+        //             }
+
+        //         })
+
+        $('#QuotationSeqNo').keypress(function (event) {
+            var key = event.which;
+            if (this.value.length >= 2 && key != 8 && key != 13) {
+                return false;
+            }
+        })
+
+        $('#QuotationSeqNo').keyup(function () {
+            if (this.value.length >= 2) {
+                $(this).val($(this).val().substr(0, 2));
+                return false;
+            }
+
+        })
+        $('#DistributerOrderNo').keypress(function (event) {
+            var key = event.which;
+            if (this.value.length >= 20 && key != 8 && key != 13) {
+                return false;
+            }
+        })
+
+        $('#DistributerOrderNo').keyup(function () {
+            if (this.value.length >= 20) {
+                $(this).val($(this).val().substr(0, 20));
+                return false;
+            }
+
+        })
+
+        $('#Comments').keypress(function (event) {
+            var key = event.which;
+            if (this.value.length >= 150 && key != 8 && key != 13) {
+                return false;
+            }
+        })
+
+        $('#Comments').keyup(function () {
+            if (this.value.length >= 150) {
+                $(this).val($(this).val().substr(0, 150));
+                return false;
+            }
+
+        })
+        $('#Memo').keypress(function (event) {
+            var key = event.which;
+            if (this.value.length >= 50 && key != 8 && key != 13) {
+                return false;
+            }
+        })
+
+        $('#Memo').keyup(function () {
+            if (this.value.length >= 50) {
+                $(this).val($(this).val().substr(0, 50));
+                return false;
+            }
+
+        })
+        $("#ModelCode").on("paste keyup", function (event) { var currentTxt = $(this); setTimeout(function () { if (currentTxt.val().trim().length > 20) { currentTxt.val(jQuery.trim(currentTxt.val()).substring(0, 30)) } }, 1); });
+        $("#ModelCode").on('keydown', function (e) { if (this.value.length >= 20 && e.keyCode != 8) { e.preventDefault(); return false; } });
+
+        $("#SerialNo").on("paste keyup", function (event) { var currentTxt = $(this); setTimeout(function () { if (currentTxt.val().trim().length > 30) { currentTxt.val(jQuery.trim(currentTxt.val()).substring(0, 30)) } }, 1); });
+        $("#SerialNo").on('keydown', function (e) { if (this.value.length >= 30 && e.keyCode != 8) { e.preventDefault(); return false; } });
+
+        $("#ESerialNo").on("paste keyup", function (event) { var currentTxt = $(this); setTimeout(function () { if (currentTxt.val().trim().length > 30) { currentTxt.val(jQuery.trim(currentTxt.val()).substring(0, 30)) } }, 1); });
+        $("#ESerialNo").on('keydown', function (e) { if (this.value.length >= 30 && e.keyCode != 8) { e.preventDefault(); return false; } });
+
+        $("#CustomerDetails").on("paste keyup", function (event) { var currentTxt = $(this); setTimeout(function () { if (currentTxt.val().trim().length > 50) { currentTxt.val(jQuery.trim(currentTxt.val()).substring(0, 49)) } }, 1); });
+        $("#CustomerDetails").on('keydown', function (e) { if (this.value.length >= 50 && e.keyCode != 8) { e.preventDefault(); return false; } });
+
+
+
+
+
+
+    });          //doc.ready end
+    function DisableControls() {
+
+
+        if (arguments != null && arguments.length > 0) { $('#btnSave').attr("disabled", "disabled"); }
+        //          else {  }
+        $('#DistributerOrderNo').attr("disabled", "disabled");
+        //$("#btnSave").attr("disabled", "disabled");
+        //$('#QuotationSeqNo').attr("disabled", "disabled");
+        //$('#QuotationNo').attr("disabled", "disabled");
+        $('#OrderType').attr("disabled", "disabled");
+        //$('#DistributerCode').attr("disabled", "disabled");
+        $('#Status').attr("disabled", "disabled");
+        $('#OrderPRobability').attr("disabled", "disabled");
+        $('#Transportation').attr("disabled", "disabled");
+        $('#LoadingPort').attr("disabled", "disabled");
+        $('#QuotationValidity').attr("readonly", "readonly");
+        $('#Region').attr("disabled", "disabled");
+        $('#UnloadingPort').attr("disabled", "disabled");
+        $('#RequestedDeliveryTime').attr("disabled", "disabled");
+        $('#TaxRate').attr("disabled", "disabled");
+        $('#BillingRateA').attr("readonly", "readonly");
+        $('#BillingRateB').attr("readonly", "readonly");
+        $('#BillingRateC').attr("readonly", "readonly");
+        $('#BillingRateD').attr("readonly", "readonly");
+        $('#BillingRateE').attr("readonly", "readonly");
+        $('#BillingRateF').attr("readonly", "readonly");
+        //hst008 start
+        if (gstrPriceCalculationMethod == "D") {
+            $('#DiscountRateOther').attr("readonly", "readonly");
+        }
+        //hst008 end
+        $('#ShipToAddress').attr("readonly", "readonly");
+        $('#AvailableMark').attr("disabled", "disabled");
+        $('#UseHSCode').attr("disabled", "disabled");
+        $('#ReserverStock').attr("disabled", "disabled");
+        $('#DontConsiderEORes').attr("disabled", "disabled");
+        $('#FixPrice').attr("disabled", "disabled");
+        $('#Comments').attr("readonly", "readonly");
+        $('#Memo').attr("readonly", "readonly");
+        $("#btnAdd").attr("disabled", "disabled");
+        $("#btnEdit").attr("disabled", "disabled");
+        $("#btnDelete").attr("disabled", "disabled");
+        $(".divModelInput").find("input,button,textarea").attr("readonly", "readonly");
+
+
+
+
+
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#SubstitutionCodes").val("0")
+
+    }); //doc.ready end
+
+</script>
+<script type="text/javascript">
+    $(document).on('click', '#btnOk', function () {
+        $("#MessageModal").modal('hide');
+
+    });
+</script>
+@*if (strCheckRole != "1") //hst001*@
+@if (strCheckRole == "3")//hst001
+{
+    <script>
+        $("#DistributerCode").attr("disabled", true)
+        $("#ExchangeRate").val("1.0")
+    </script>
+}
+else
+{
+    <script>
+
+        $("#ExchangeRate").val("1.0")
+    </script>
+
+}
+<script>
+    var ConfirmedByUser = false
+    var recentConfirmed = false;
+    $("#btnConfirm").click(function () {
+        $("#ConfirmModal").modal("hide")
+        ConfirmedByUser = true;
+        $("#btnSave").trigger("click");
+
+    });
+    $("#btnCancelConfirm").click(function () {
+        $("#ConfirmModal").modal("hide")
+
+
+    });
+</script>
+@* hst008 start*@
+<script>
+    function ShowHideDorBRates(strPriceCalMethod) {
+        /**/
+        if (strPriceCalMethod == "D") {
+            $(".clsDisCountRate").removeClass("hide");
+            $(".clsBillRate").addClass("hide");
+            gstrPriceCalculationMethod = "D";
+        }
+        else {
+            $(".clsBillRate").removeClass("hide");
+            $(".clsDisCountRate").addClass("hide");
+            gstrPriceCalculationMethod = "B";
+        }
+    }
+
+function GetDeliveryTermsByTransPortationCode(strTCOD)
+{
+    var strDCOD = $("#DistributerCode").val();
+    var strCSCD = $("#ddlCustomerCodes").val();
+    var strOTYP = $("#OrderType").val();
+    if (!(strDCOD == "" || strCSCD == "" || strOTYP == "" || strTCOD == ""))
+    {
+   
+        $.post("@Url.Action("FilterDeliveryTermsByTransportationCode", "QuotationCondition", null)", { strDCOD: strDCOD, strCSCD: strCSCD, strOTYP: strOTYP, strTCOD: strTCOD },
+            function (data) {
+                if (CheckForSessionExpiry(data)) {
+                    SessionExpiredRedirect();
+                    return;
+                }
+
+                $("#DeliveryTerms").val(data.DeliveryTerms);
+            });
+     }
+}
+
+</script>
+@* hst008 end*@
